@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innovaq Solution | Seguridad, Calidad y Cumplimiento Normativo</title>
+    <meta name="description" content="Soluciones integrales en Capacitación, Auditoría MINTRA e Implementación ISO para Minería y Construcción.">
+    
+    <!-- Tailwind CSS (Estilos) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM (Lógica) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel (Para entender el código React en el navegador) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Fuente Inter (Opcional, para mejor estética) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body>
+    <!-- Contenedor Raíz donde React montará la app -->
+    <div id="root"></div>
+
+    <!-- Script de la Aplicación -->
+    <script type="text/babel">
+        const { useState } = React;
+
+        // --- COMPONENTES DE ICONOS (SVG Directos para evitar dependencias externas) ---
+        const IconMenu = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>;
+        const IconX = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>;
+        const IconChevronRight = ({className}) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m9 18 6-6-6-6"/></svg>;
+        const IconCheckCircle = ({className}) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>;
+        const IconShieldCheck = ({className}) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>;
+        const IconHardHat = ({className}) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a3 3 0 0 0-3-3H5a3 3 0 0 0-3 3z"/><path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/><path d="M4 15v-3a6 6 0 0 1 6-6h0"/><path d="M14 6h0a6 6 0 0 1 6 6v3"/></svg>;
+        const IconFileText = ({className}) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>;
+        const IconAward = ({className}) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>;
+        const IconFactory = ({className}) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg>;
+        const IconTruck = ({className}) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>;
+        const IconGlobe = ({size, className}) => <svg xmlns="http://www.w3.org/2000/svg" width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>;
+        const IconMail = ({size, className}) => <svg xmlns="http://www.w3.org/2000/svg" width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>;
+        const IconPhone = ({size, className}) => <svg xmlns="http://www.w3.org/2000/svg" width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>;
+        const IconMapPin = ({size, className}) => <svg xmlns="http://www.w3.org/2000/svg" width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>;
+
+        // --- COMPONENTE PRINCIPAL ---
+        const InnovaqWebsite = () => {
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+            const services = [
+                {
+                    title: "Capacitación y Entrenamiento Especializado",
+                    icon: <IconAward className="w-10 h-10 text-orange-500" />,
+                    description: "Cursos in-house y virtuales diseñados para la certificación de competencias técnicas y operativas.",
+                    items: [
+                        "Trabajos de Alto Riesgo (Altura, Espacios Confinados, Caliente, Excavaciones)",
+                        "Investigación de Accidentes (Metodología ICAM)",
+                        "Gestión de Riesgos Críticos (Metodología BowTie e IPERC)",
+                        "Interpretación de Normas ISO 9001, 14001, 45001"
+                    ]
+                },
+                {
+                    title: "Auditorías de Cumplimiento",
+                    icon: <IconShieldCheck className="w-10 h-10 text-orange-500" />,
+                    description: "Verificación rigurosa de estándares legales y normativos para evitar sanciones y garantizar la operatividad.",
+                    items: [
+                        "Auditorías Legales de SST (Ley 29783 / MINTRA) - +500 horas acreditadas",
+                        "Auditorías Internas de Sistemas de Gestión (Trinorma + ISO 37001)",
+                        "Homologación de proveedores y contratistas",
+                        "Inspecciones de cumplimiento normativo sectorial"
+                    ]
+                },
+                {
+                    title: "Implementación y Consultoría SIG",
+                    icon: <IconFileText className="w-10 h-10 text-orange-500" />,
+                    description: "Desarrollo de sistemas de gestión robustos adaptados a la realidad operativa de la minería y construcción.",
+                    items: [
+                        "Implementación ISO 9001, 14001, 45001 e ISO 37001 (Antisoborno)",
+                        "Adaptación a DS 024-2016-EM (Minería)",
+                        "Adaptación a Norma G.050 (Construcción)",
+                        "Gestión Estratégica de Riesgos y Compliance"
+                    ]
+                }
+            ];
+
+            return (
+                <div className="font-sans text-gray-800 bg-white">
+                
+                {/* --- TOP BAR --- */}
+                <div className="bg-blue-900 text-white text-xs py-2 px-6 flex justify-between items-center hidden md:flex">
+                    <div className="flex gap-4">
+                    <span className="flex items-center gap-1"><IconGlobe size={12}/> Perú</span>
+                    <span className="flex items-center gap-1"><IconMail size={12}/> contacto@innovaqsolution.com</span>
+                    </div>
+                    <div className="flex gap-4">
+                    <span>Ingeniería | Minería | Construcción</span>
+                    </div>
+                </div>
+
+                {/* --- HEADER --- */}
+                <header className="sticky top-0 z-50 bg-white shadow-md">
+                    <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+                    {/* Logo Brand */}
+                    <div className="flex items-center gap-2">
+                        <div className="bg-orange-500 p-1 rounded-sm">
+                        <IconShieldCheck className="text-white w-6 h-6" />
+                        </div>
+                        <div className="leading-tight">
+                        <h1 className="text-2xl font-bold text-blue-900 tracking-tighter">INNOVAQ</h1>
+                        <p className="text-xs text-gray-500 font-semibold tracking-widest uppercase">Solution</p>
+                        </div>
+                    </div>
+
+                    {/* Desktop Nav */}
+                    <nav className="hidden md:flex space-x-8 text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                        <a href="#home" className="hover:text-orange-500 transition-colors">Inicio</a>
+                        <a href="#servicios" className="hover:text-orange-500 transition-colors">Servicios</a>
+                        <a href="#nosotros" className="hover:text-orange-500 transition-colors">Nosotros</a>
+                        <a href="#contacto" className="bg-orange-500 text-white px-5 py-2 rounded-sm hover:bg-orange-600 transition-colors">
+                        Solicitar Cotización
+                        </a>
+                    </nav>
+
+                    {/* Mobile Menu Button */}
+                    <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                        {isMenuOpen ? <IconX /> : <IconMenu />}
+                    </button>
+                    </div>
+
+                    {/* Mobile Nav */}
+                    {isMenuOpen && (
+                    <div className="md:hidden bg-gray-50 border-t p-4 flex flex-col space-y-4">
+                        <a href="#home" className="block text-gray-700 font-medium" onClick={() => setIsMenuOpen(false)}>Inicio</a>
+                        <a href="#servicios" className="block text-gray-700 font-medium" onClick={() => setIsMenuOpen(false)}>Servicios</a>
+                        <a href="#nosotros" className="block text-gray-700 font-medium" onClick={() => setIsMenuOpen(false)}>Nosotros</a>
+                        <a href="#contacto" className="block text-orange-600 font-bold" onClick={() => setIsMenuOpen(false)}>Solicitar Cotización</a>
+                    </div>
+                    )}
+                </header>
+
+                {/* --- HERO SECTION --- */}
+                <section id="home" className="relative h-[600px] flex items-center bg-gray-900 text-white">
+                    {/* Background Image Overlay */}
+                    <div className="absolute inset-0 z-0 opacity-40">
+                    <img 
+                        src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop" 
+                        alt="Operaciones Mineras e Industriales" 
+                        className="w-full h-full object-cover"
+                    />
+                    </div>
+                    
+                    <div className="container mx-auto px-6 relative z-10 grid md:grid-cols-2">
+                    <div className="space-y-6">
+                        <div className="inline-block bg-orange-500 text-white text-xs font-bold px-3 py-1 uppercase tracking-wider mb-2">
+                        Excelencia Técnica y Legal
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+                        Elevando Estándares en Seguridad, Calidad y Cumplimiento Normativo
+                        </h2>
+                        <p className="text-lg text-gray-200 max-w-lg">
+                        Soluciones integrales en Capacitación Especializada, Auditoría MINTRA e Implementación ISO para los sectores de Minería y Construcción.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                        <a href="#contacto" className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-sm text-center transition-all">
+                            Solicitar Cotización Corporativa
+                        </a>
+                        <a href="#servicios" className="border-2 border-white hover:bg-white hover:text-blue-900 text-white font-bold py-3 px-8 rounded-sm text-center transition-all">
+                            Ver Catálogo de Cursos
+                        </a>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+
+                {/* --- TRUST BAR (Sectores) --- */}
+                <div className="bg-gray-100 py-6 border-b border-gray-200">
+                    <div className="container mx-auto px-6">
+                    <p className="text-center text-xs text-gray-500 font-bold uppercase tracking-widest mb-4">
+                        Experiencia en sectores de alta exigencia
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale">
+                        <div className="flex items-center gap-2 font-bold text-xl text-gray-600"><IconHardHat/> MINERÍA</div>
+                        <div className="flex items-center gap-2 font-bold text-xl text-gray-600"><IconFactory/> INDUSTRIA</div>
+                        <div className="flex items-center gap-2 font-bold text-xl text-gray-600"><IconTruck/> CONSTRUCCIÓN</div>
+                        <div className="flex items-center gap-2 font-bold text-xl text-gray-600"><IconGlobe/> INFRAESTRUCTURA</div>
+                    </div>
+                    </div>
+                </div>
+
+                {/* --- SERVICES SECTION --- */}
+                <section id="servicios" className="py-20 bg-white">
+                    <div className="container mx-auto px-6">
+                    <div className="text-center mb-16 max-w-3xl mx-auto">
+                        <h3 className="text-3xl font-bold text-blue-900 mb-4">Nuestros Servicios</h3>
+                        <p className="text-gray-600">
+                        Ofrecemos un portafolio técnico diseñado para cerrar brechas de cumplimiento y potenciar la cultura de seguridad en su organización.
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {services.map((service, index) => (
+                        <div key={index} className="bg-white border border-gray-200 rounded-sm hover:shadow-xl transition-shadow duration-300 p-8 group">
+                            <div className="mb-6 group-hover:scale-110 transition-transform duration-300">
+                            {service.icon}
+                            </div>
+                            <h4 className="text-xl font-bold text-blue-900 mb-3">{service.title}</h4>
+                            <p className="text-gray-600 text-sm mb-6 leading-relaxed">
+                            {service.description}
+                            </p>
+                            <ul className="space-y-3">
+                            {service.items.map((item, i) => (
+                                <li key={i} className="flex items-start text-sm text-gray-700">
+                                <IconChevronRight className="w-4 h-4 text-orange-500 mr-2 flex-shrink-0 mt-1" />
+                                <span>{item}</span>
+                                </li>
+                            ))}
+                            </ul>
+                            <div className="mt-8 pt-6 border-t border-gray-100">
+                            <a href="#contacto" className="text-sm font-bold text-blue-900 hover:text-orange-500 flex items-center">
+                                Más información <IconChevronRight className="w-4 h-4 ml-1"/>
+                            </a>
+                            </div>
+                        </div>
+                        ))}
+                    </div>
+                    </div>
+                </section>
+
+                {/* --- ABOUT / AUTHORITY SECTION --- */}
+                <section id="nosotros" className="py-20 bg-gray-50">
+                    <div className="container mx-auto px-6">
+                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                        
+                        {/* Image Side */}
+                        <div className="relative">
+                        <div className="absolute top-0 left-0 w-20 h-20 bg-orange-500 -translate-x-4 -translate-y-4 rounded-sm"></div>
+                        <img 
+                            src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2071&auto=format&fit=crop" 
+                            alt="Ingeniero Auditor en Campo" 
+                            className="relative z-10 w-full rounded-sm shadow-lg object-cover h-[500px]"
+                        />
+                        <div className="absolute bottom-8 right-8 bg-white p-4 shadow-lg z-20 max-w-xs border-l-4 border-blue-900">
+                            <p className="font-bold text-blue-900">Ing. Alvaro Ruiz Reyna</p>
+                            <p className="text-xs text-gray-500">Gerente Técnico & Auditor Líder</p>
+                            <p className="text-xs text-gray-500">CIP 210152 | MBA</p>
+                        </div>
+                        </div>
+
+                        {/* Content Side */}
+                        <div>
+                        <h3 className="text-3xl font-bold text-blue-900 mb-6">Liderazgo Técnico y Experiencia Comprobada</h3>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            En Innovaq Solution, entendemos que la seguridad y la calidad no son solo requisitos documentales, sino pilares operativos. Bajo la dirección técnica del <strong>Ing. Alvaro Ruiz Reyna</strong>, brindamos soluciones basadas en más de <strong>19 años de experiencia real en campo</strong>.
+                        </p>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                            <div className="flex items-start gap-3">
+                            <IconCheckCircle className="w-6 h-6 text-orange-500 flex-shrink-0" />
+                            <div>
+                                <h5 className="font-bold text-gray-800">Auditor Acreditado</h5>
+                                <p className="text-sm text-gray-600">+500 horas de auditoría MINTRA acreditadas y experiencia en ISO 37001 (Antisoborno).</p>
+                            </div>
+                            </div>
+                            <div className="flex items-start gap-3">
+                            <IconCheckCircle className="w-6 h-6 text-orange-500 flex-shrink-0" />
+                            <div>
+                                <h5 className="font-bold text-gray-800">Experiencia Major Projects</h5>
+                                <p className="text-sm text-gray-600">Trayectoria en proyectos emblemáticos como Antamina, Chinalco, OHLA y Aeropuerto Jorge Chávez.</p>
+                            </div>
+                            </div>
+                            <div className="flex items-start gap-3">
+                            <IconCheckCircle className="w-6 h-6 text-orange-500 flex-shrink-0" />
+                            <div>
+                                <h5 className="font-bold text-gray-800">Especialista HSEQ</h5>
+                                <p className="text-sm text-gray-600">Dominio de metodologías avanzadas como ICAM, BowTie y gestión integral de riesgos.</p>
+                            </div>
+                            </div>
+                        </div>
+
+                        <a href="#contacto" className="inline-block border border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white font-semibold py-3 px-8 rounded-sm transition-colors">
+                            Conocer Perfil Profesional
+                        </a>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+
+                {/* --- CONTACT SECTION --- */}
+                <section id="contacto" className="py-20 bg-blue-900 text-white relative overflow-hidden">
+                    {/* Decorative elements */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+
+                    <div className="container mx-auto px-6 relative z-10">
+                    <div className="grid md:grid-cols-2 gap-16">
+                        <div>
+                        <h3 className="text-3xl font-bold mb-6">Solicite una Cotización Corporativa</h3>
+                        <p className="text-gray-300 mb-8">
+                            ¿Necesita implementar ISO 37001, realizar una Auditoría MINTRA o capacitar a su personal en trabajos de alto riesgo? Déjenos sus datos y un especialista técnico se contactará a la brevedad.
+                        </p>
+                        
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-4">
+                            <div className="bg-orange-500 p-2 rounded-full"><IconPhone size={20}/></div>
+                            <div>
+                                <p className="text-xs text-gray-400 uppercase">Teléfono / WhatsApp</p>
+                                <p className="font-bold">+51 938 430 657</p>
+                            </div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                            <div className="bg-orange-500 p-2 rounded-full"><IconMail size={20}/></div>
+                            <div>
+                                <p className="text-xs text-gray-400 uppercase">Correo Electrónico</p>
+                                <p className="font-bold">alvaro.ruiz.r.2024@gmail.com</p>
+                            </div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                            <div className="bg-orange-500 p-2 rounded-full"><IconMapPin size={20}/></div>
+                            <div>
+                                <p className="text-xs text-gray-400 uppercase">Ubicación</p>
+                                <p className="font-bold">Trujillo - Perú (Cobertura Nacional)</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        {/* Formulario Estilo Corporativo */}
+                        <div className="bg-white p-8 rounded-sm shadow-2xl text-gray-800">
+                        <form className="space-y-4">
+                            <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-xs font-bold text-gray-600 mb-1">NOMBRE</label>
+                                <input type="text" className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none" placeholder="Su nombre" />
+                            </div>
+                            <div>
+                                <label className="block text-xs font-bold text-gray-600 mb-1">EMPRESA</label>
+                                <input type="text" className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none" placeholder="Nombre empresa" />
+                            </div>
+                            </div>
+                            <div>
+                            <label className="block text-xs font-bold text-gray-600 mb-1">EMAIL CORPORATIVO</label>
+                            <input type="email" className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none" placeholder="ejemplo@empresa.com" />
+                            </div>
+                            <div>
+                            <label className="block text-xs font-bold text-gray-600 mb-1">SERVICIO DE INTERÉS</label>
+                            <select className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none text-gray-600">
+                                <option>Auditoría MINTRA / Ley 29783</option>
+                                <option>Capacitación / Cursos In-house</option>
+                                <option>Implementación ISO / SIG</option>
+                                <option>Consultoría Antisoborno ISO 37001</option>
+                            </select>
+                            </div>
+                            <div>
+                            <label className="block text-xs font-bold text-gray-600 mb-1">MENSAJE</label>
+                            <textarea className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none h-24" placeholder="Detalles de su requerimiento..."></textarea>
+                            </div>
+                            <button type="button" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-sm transition-colors uppercase tracking-wider">
+                            Enviar Solicitud
+                            </button>
+                        </form>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+
+                {/* --- FOOTER --- */}
+                <footer className="bg-gray-800 text-gray-400 py-12 border-t border-gray-700 text-sm">
+                    <div className="container mx-auto px-6 grid md:grid-cols-4 gap-8">
+                    <div>
+                        <h5 className="text-white font-bold mb-4 uppercase tracking-widest">Innovaq Solution</h5>
+                        <p className="mb-4">Especialistas en transformar el cumplimiento normativo en una ventaja competitiva para su empresa.</p>
+                    </div>
+                    <div>
+                        <h5 className="text-white font-bold mb-4 uppercase tracking-widest">Servicios</h5>
+                        <ul className="space-y-2">
+                        <li><a href="#" className="hover:text-white">Auditoría MINTRA</a></li>
+                        <li><a href="#" className="hover:text-white">Capacitación ICAM</a></li>
+                        <li><a href="#" className="hover:text-white">ISO 37001 Antisoborno</a></li>
+                        <li><a href="#" className="hover:text-white">Consultoría SIG</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 className="text-white font-bold mb-4 uppercase tracking-widest">Sectores</h5>
+                        <ul className="space-y-2">
+                        <li><a href="#" className="hover:text-white">Minería</a></li>
+                        <li><a href="#" className="hover:text-white">Construcción</a></li>
+                        <li><a href="#" className="hover:text-white">Infraestructura</a></li>
+                        <li><a href="#" className="hover:text-white">Industrial</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 className="text-white font-bold mb-4 uppercase tracking-widest">Legal</h5>
+                        <ul className="space-y-2">
+                        <li><a href="#" className="hover:text-white">Política de Privacidad</a></li>
+                        <li><a href="#" className="hover:text-white">Términos y Condiciones</a></li>
+                        </ul>
+                    </div>
+                    </div>
+                    <div className="container mx-auto px-6 mt-12 pt-8 border-t border-gray-700 text-center">
+                    <p>© 2024 Innovaq Solution. Todos los derechos reservados.</p>
+                    </div>
+                </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<InnovaqWebsite />);
+    </script>
+</body>
+</html>
