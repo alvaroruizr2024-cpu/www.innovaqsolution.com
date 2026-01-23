@@ -6,33 +6,42 @@
     <title>Innovaq Solution | Seguridad, Calidad y Cumplimiento Normativo</title>
     <meta name="description" content="Soluciones integrales en Capacitación, Auditoría MINTRA e Implementación ISO para Minería y Construcción.">
     
-    <!-- Tailwind CSS (Estilos) -->
+    <!-- 1. Carga de Estilos (Tailwind CSS) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- React & ReactDOM (Lógica) -->
+    <!-- 2. Carga de React (Motor de la web) -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     
-    <!-- Babel (Para entender el código React en el navegador) -->
+    <!-- 3. Carga de Babel (Para interpretar el código) -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- Fuente Inter (Opcional, para mejor estética) -->
+    <!-- 4. Fuente Inter (Tipografía profesional) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        
+        /* Animaciones para el Chatbot */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        .typing-dot { animation: typing 1.4s infinite ease-in-out both; }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
     </style>
 </head>
 <body>
-    <!-- Contenedor Raíz donde React montará la app -->
+    <!-- Aquí es donde React "pintará" tu sitio web -->
     <div id="root"></div>
 
-    <!-- Script de la Aplicación -->
+    <!-- CÓDIGO EDITABLE DE LA PÁGINA WEB -->
     <script type="text/babel">
-        const { useState } = React;
+        const { useState, useEffect, useRef } = React;
 
-        // --- COMPONENTES DE ICONOS (SVG Directos para evitar dependencias externas) ---
-        const IconMenu = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>;
-        const IconX = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>;
+        // --- SECCIÓN DE ÍCONOS SVG ---
+        const IconMenu = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>;
+        const IconX = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>;
         const IconChevronRight = ({className}) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m9 18 6-6-6-6"/></svg>;
         const IconCheckCircle = ({className}) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>;
         const IconShieldCheck = ({className}) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>;
@@ -45,10 +54,226 @@
         const IconMail = ({size, className}) => <svg xmlns="http://www.w3.org/2000/svg" width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>;
         const IconPhone = ({size, className}) => <svg xmlns="http://www.w3.org/2000/svg" width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>;
         const IconMapPin = ({size, className}) => <svg xmlns="http://www.w3.org/2000/svg" width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>;
+        const IconWhatsApp = ({size, className}) => <svg xmlns="http://www.w3.org/2000/svg" width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>;
+        const IconMessageCircle = ({size, className}) => <svg xmlns="http://www.w3.org/2000/svg" width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>;
+        const IconSend = ({size, className}) => <svg xmlns="http://www.w3.org/2000/svg" width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>;
+        const IconMinimize = ({size, className}) => <svg xmlns="http://www.w3.org/2000/svg" width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
 
-        // --- COMPONENTE PRINCIPAL ---
+        // --- COMPONENTE: CHATBOT AGENTE IA (Simulado) ---
+        const ChatBot = () => {
+            const [isOpen, setIsOpen] = useState(false);
+            const [messages, setMessages] = useState([
+                { sender: 'bot', text: '¡Hola! 👋 Soy el asistente virtual de Innovaq. ¿En qué puedo ayudarte hoy?' }
+            ]);
+            const [input, setInput] = useState('');
+            const [isTyping, setIsTyping] = useState(false);
+            const messagesEndRef = useRef(null);
+
+            const scrollToBottom = () => {
+                messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+            };
+
+            useEffect(() => {
+                scrollToBottom();
+            }, [messages, isTyping]);
+
+            // Base de Conocimiento del Agente IA (Respuestas Pre-definidas Avanzadas)
+            const getBotResponse = (query) => {
+                const q = query.toLowerCase();
+                
+                // Frase de cierre estándar para derivación técnica
+                const contactClosure = " Dado el nivel técnico de este requisito, le sugiero conversar directamente con nuestro especialista técnico, el Ing. Alvaro Ruiz.";
+
+                // 1. ISO 37001 (Antisoborno) - Enfoque Licitaciones/Estado
+                if (q.includes('37001') || q.includes('soborno') || q.includes('compliance') || q.includes('antisoborno')) {
+                    return "La implementación de la ISO 37001:2016 es crítica para garantizar la integridad en contratos con el Estado y cumplir con la Ley 30424. Nosotros no solo gestionamos la documentación, sino que implementamos controles financieros y de debida diligencia para blindar legalmente a su organización." + contactClosure;
+                }
+
+                // 2. ISO 45001 / Seguridad / OHSAS / Ley 29783
+                if (q.includes('45001') || q.includes('seguridad') || q.includes('sso') || q.includes('29783') || q.includes('ohsas')) {
+                    return "Si busca migrar a ISO 45001:2018 o cumplir con la Ley 29783, el enfoque debe estar en la participación de los trabajadores y el liderazgo visible. Recuerde que las auditorías legales MINTRA son obligatorias y deben ser realizadas por auditores registrados para evitar multas de SUNAFIL." + contactClosure;
+                }
+
+                // 3. ISO 9001 (Calidad)
+                if (q.includes('9001') || q.includes('calidad') || q.includes('procesos') || q.includes('gestion')) {
+                    return "En ISO 9001:2015, nuestro enfoque va más allá del certificado: buscamos optimizar su cadena de valor para reducir 'No Conformidades' y reprocesos. Diseñamos un sistema ágil que se integre con sus operaciones actuales, ya sea en minería o construcción." + contactClosure;
+                }
+
+                // 4. ISO 14001 (Medio Ambiente)
+                if (q.includes('14001') || q.includes('ambiente') || q.includes('ambiental') || q.includes('residuos')) {
+                    return "Para la ISO 14001:2015, es vital una correcta identificación de aspectos e impactos ambientales y el cumplimiento de la matriz legal (EIA, Pama) para evitar sanciones de la OEFA. Le ayudamos a gestionar riesgos ambientales desde una perspectiva de ciclo de vida." + contactClosure;
+                }
+
+                // 5. Auditorías MINTRA / SUNAFIL
+                if (q.includes('auditoria') || q.includes('mintra') || q.includes('sunafil') || q.includes('fiscalizacion')) {
+                    return "Las Auditorías MINTRA bajo la Ley 29783 son un requisito legal fiscalizable. Nuestro Gerente Técnico, Ing. Alvaro Ruiz, cuenta con más de 500 horas de auditoría acreditadas, lo que garantiza que el informe final tenga plena validez ante cualquier inspección de SUNAFIL." + contactClosure;
+                }
+
+                // 6. Capacitación Técnica (ICAM / BowTie / Alto Riesgo)
+                if (q.includes('curso') || q.includes('capacitacion') || q.includes('icam') || q.includes('bowtie') || q.includes('riesgo') || q.includes('altura') || q.includes('confinado')) {
+                    return "Nuestras capacitaciones no son charlas genéricas. Ofrecemos entrenamiento especializado en metodologías de clase mundial como ICAM (Investigación de Incidentes) y BowTie (Gestión de Riesgos Críticos), así como cursos de Trabajos de Alto Riesgo, esenciales para operaciones mineras e industriales." + contactClosure;
+                }
+                
+                // 7. Precios / Cotización
+                if (q.includes('precio') || q.includes('costo') || q.includes('cotiza') || q.includes('presupuesto')) {
+                    return "Para brindarle una propuesta económica responsable, necesitamos evaluar el alcance (número de sedes, cantidad de trabajadores y norma a implementar). Una cotización mal dimensionada puede generar sobrecostos futuros." + contactClosure;
+                }
+
+                // Saludo o General
+                if (q.includes('hola') || q.includes('buenos') || q.includes('dias') || q.includes('tardes')) {
+                    return "¡Bienvenido a Innovaq Solution! Soy su asistente técnico. ¿Su consulta está relacionada a Implementación de Normas ISO, Auditorías Legales MINTRA o Capacitación Especializada?";
+                }
+                
+                // Default
+                return "Entiendo su consulta. Para ofrecerle una solución técnica precisa y adaptada a su rubro, es indispensable que nuestro Gerente Técnico analice su caso. ¿Le gustaría que le derivemos directamente con el Ing. Alvaro Ruiz?";
+            };
+
+            const handleSend = () => {
+                if (!input.trim()) return;
+                
+                const userMsg = input;
+                setMessages(prev => [...prev, { sender: 'user', text: userMsg }]);
+                setInput('');
+                setIsTyping(true);
+
+                // Simular retraso de "pensando"
+                setTimeout(() => {
+                    const botReply = getBotResponse(userMsg);
+                    setMessages(prev => [...prev, { sender: 'bot', text: botReply }]);
+                    setIsTyping(false);
+                    
+                    // Si el usuario deja un correo (detección simple), guardar en "base de datos" simulada
+                    if (userMsg.includes('@')) {
+                        setTimeout(() => {
+                            setMessages(prev => [...prev, { sender: 'bot', text: "¡Gracias! He registrado su correo. El Ing. Ruiz se pondrá en contacto a la brevedad para profundizar en su requerimiento." }]);
+                        }, 1000);
+                    }
+                }, 1500);
+            };
+
+            return (
+                <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+                    {/* Ventana de Chat */}
+                    {isOpen && (
+                        <div className="bg-white rounded-lg shadow-2xl w-80 md:w-96 mb-4 overflow-hidden border border-gray-200 animate-fade-in flex flex-col h-[450px]">
+                            {/* Header Chat */}
+                            <div className="bg-blue-900 text-white p-4 flex justify-between items-center">
+                                <div className="flex items-center gap-3">
+                                    <div className="bg-orange-500 p-1.5 rounded-full">
+                                        <IconMessageCircle size={16} />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-sm">Innovaq AI Agent</h4>
+                                        <p className="text-xs text-blue-200 flex items-center gap-1">
+                                            <span className="w-2 h-2 bg-green-400 rounded-full inline-block"></span> En línea
+                                        </p>
+                                    </div>
+                                </div>
+                                <button onClick={() => setIsOpen(false)} className="hover:bg-blue-800 p-1 rounded">
+                                    <IconMinimize size={18} />
+                                </button>
+                            </div>
+
+                            {/* Cuerpo Mensajes */}
+                            <div className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4">
+                                {messages.map((msg, idx) => (
+                                    <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                                        <div className={`max-w-[90%] rounded-lg p-3 text-sm leading-relaxed ${
+                                            msg.sender === 'user' 
+                                            ? 'bg-blue-900 text-white rounded-tr-none' 
+                                            : 'bg-white border border-gray-200 text-gray-700 rounded-tl-none shadow-sm'
+                                        }`}>
+                                            {msg.text}
+                                        </div>
+                                    </div>
+                                ))}
+                                {isTyping && (
+                                    <div className="flex justify-start">
+                                        <div className="bg-white border border-gray-200 rounded-lg p-3 rounded-tl-none shadow-sm flex gap-1 items-center">
+                                            <div className="w-2 h-2 bg-gray-400 rounded-full typing-dot"></div>
+                                            <div className="w-2 h-2 bg-gray-400 rounded-full typing-dot"></div>
+                                            <div className="w-2 h-2 bg-gray-400 rounded-full typing-dot"></div>
+                                        </div>
+                                    </div>
+                                )}
+                                <div ref={messagesEndRef} />
+                            </div>
+
+                            {/* Input Area */}
+                            <div className="p-3 bg-white border-t border-gray-200 flex gap-2">
+                                <input 
+                                    type="text" 
+                                    value={input}
+                                    onChange={(e) => setInput(e.target.value)}
+                                    onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                                    placeholder="Escribe tu consulta..."
+                                    className="flex-1 bg-gray-100 border-none rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-orange-500 outline-none"
+                                />
+                                <button onClick={handleSend} className="bg-orange-500 text-white p-2 rounded-full hover:bg-orange-600 transition-colors">
+                                    <IconSend size={18} />
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Botón Flotante */}
+                    <button 
+                        onClick={() => setIsOpen(!isOpen)}
+                        className={`${isOpen ? 'bg-gray-600' : 'bg-orange-500 hover:bg-orange-600'} text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center gap-2`}
+                    >
+                        {!isOpen && <span className="text-sm font-bold hidden md:block">¿Consultas Técnicas?</span>}
+                        <IconMessageCircle size={28} />
+                    </button>
+                </div>
+            );
+        };
+
+
+        // --- INICIO DE LA APLICACIÓN PRINCIPAL ---
         const InnovaqWebsite = () => {
             const [isMenuOpen, setIsMenuOpen] = useState(false);
+            
+            // --- ESTADOS DEL FORMULARIO ---
+            const [formData, setFormData] = useState({
+                nombre: '',
+                empresa: '',
+                email: '',
+                servicio: 'Auditoría MINTRA / Ley 29783',
+                mensaje: ''
+            });
+
+            const handleInputChange = (e) => {
+                setFormData({ ...formData, [e.target.name]: e.target.value });
+            };
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+
+                // 1. LÓGICA GOOGLE SHEETS (Base de Datos)
+                // Para que esto funcione, debes crear un Google Apps Script y publicar como Web App.
+                // Reemplaza 'URL_DE_TU_SCRIPT_DE_GOOGLE' con la URL real que te da Google.
+                const GOOGLE_SCRIPT_URL = 'URL_DE_TU_SCRIPT_DE_GOOGLE_AQUI'; 
+
+                /* CÓDIGO COMENTADO PARA ACTIVAR CUANDO TENGAS EL SCRIPT:
+                try {
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        body: JSON.stringify(formData)
+                    });
+                    console.log("Datos enviados a Google Sheets");
+                } catch (error) {
+                    console.error("Error enviando a Sheets", error);
+                }
+                */
+
+                // 2. LÓGICA DE CORREO (Canalizar Comunicación)
+                // Construimos un enlace mailto que abre el correo del cliente listo para enviar
+                const subject = `Solicitud Web: ${formData.servicio} - ${formData.empresa}`;
+                const body = `Hola Innovaq Solution,%0D%0A%0D%0AMe interesa el servicio de: ${formData.servicio}.%0D%0A%0D%0ADATOS DE CONTACTO:%0D%0ANombre: ${formData.nombre}%0D%0AEmpresa: ${formData.empresa}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AMensaje Adicional:%0D%0A${formData.mensaje}`;
+                
+                // Redirigir al cliente a su gestor de correo
+                window.location.href = `mailto:contacto@innovaqsolution.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+            };
 
             const services = [
                 {
@@ -89,21 +314,23 @@
             return (
                 <div className="font-sans text-gray-800 bg-white">
                 
-                {/* --- TOP BAR --- */}
+                {/* --- BARRA SUPERIOR AZUL --- */}
                 <div className="bg-blue-900 text-white text-xs py-2 px-6 flex justify-between items-center hidden md:flex">
                     <div className="flex gap-4">
                     <span className="flex items-center gap-1"><IconGlobe size={12}/> Perú</span>
-                    <span className="flex items-center gap-1"><IconMail size={12}/> contacto@innovaqsolution.com</span>
+                    <a href="mailto:contacto@innovaqsolution.com" className="flex items-center gap-1 hover:text-orange-400 transition-colors">
+                        <IconMail size={12}/> contacto@innovaqsolution.com
+                    </a>
                     </div>
                     <div className="flex gap-4">
                     <span>Ingeniería | Minería | Construcción</span>
                     </div>
                 </div>
 
-                {/* --- HEADER --- */}
+                {/* --- ENCABEZADO / MENÚ --- */}
                 <header className="sticky top-0 z-50 bg-white shadow-md">
                     <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-                    {/* Logo Brand */}
+                    {/* Logo */}
                     <div className="flex items-center gap-2">
                         <div className="bg-orange-500 p-1 rounded-sm">
                         <IconShieldCheck className="text-white w-6 h-6" />
@@ -114,7 +341,7 @@
                         </div>
                     </div>
 
-                    {/* Desktop Nav */}
+                    {/* Navegación Escritorio */}
                     <nav className="hidden md:flex space-x-8 text-sm font-semibold text-gray-700 uppercase tracking-wide">
                         <a href="#home" className="hover:text-orange-500 transition-colors">Inicio</a>
                         <a href="#servicios" className="hover:text-orange-500 transition-colors">Servicios</a>
@@ -124,13 +351,13 @@
                         </a>
                     </nav>
 
-                    {/* Mobile Menu Button */}
-                    <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                    {/* Botón Menú Móvil */}
+                    <button className="md:hidden text-gray-700" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                         {isMenuOpen ? <IconX /> : <IconMenu />}
                     </button>
                     </div>
 
-                    {/* Mobile Nav */}
+                    {/* Menú Móvil Desplegable */}
                     {isMenuOpen && (
                     <div className="md:hidden bg-gray-50 border-t p-4 flex flex-col space-y-4">
                         <a href="#home" className="block text-gray-700 font-medium" onClick={() => setIsMenuOpen(false)}>Inicio</a>
@@ -141,9 +368,9 @@
                     )}
                 </header>
 
-                {/* --- HERO SECTION --- */}
+                {/* --- SECCIÓN HERO (PORTADA) --- */}
                 <section id="home" className="relative h-[600px] flex items-center bg-gray-900 text-white">
-                    {/* Background Image Overlay */}
+                    {/* Imagen de Fondo */}
                     <div className="absolute inset-0 z-0 opacity-40">
                     <img 
                         src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop" 
@@ -175,7 +402,7 @@
                     </div>
                 </section>
 
-                {/* --- TRUST BAR (Sectores) --- */}
+                {/* --- BARRA DE CONFIANZA (SECTORES) --- */}
                 <div className="bg-gray-100 py-6 border-b border-gray-200">
                     <div className="container mx-auto px-6">
                     <p className="text-center text-xs text-gray-500 font-bold uppercase tracking-widest mb-4">
@@ -190,7 +417,7 @@
                     </div>
                 </div>
 
-                {/* --- SERVICES SECTION --- */}
+                {/* --- SECCIÓN SERVICIOS --- */}
                 <section id="servicios" className="py-20 bg-white">
                     <div className="container mx-auto px-6">
                     <div className="text-center mb-16 max-w-3xl mx-auto">
@@ -229,12 +456,12 @@
                     </div>
                 </section>
 
-                {/* --- ABOUT / AUTHORITY SECTION --- */}
+                {/* --- SECCIÓN NOSOTROS / AUTORIDAD --- */}
                 <section id="nosotros" className="py-20 bg-gray-50">
                     <div className="container mx-auto px-6">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         
-                        {/* Image Side */}
+                        {/* Imagen lateral */}
                         <div className="relative">
                         <div className="absolute top-0 left-0 w-20 h-20 bg-orange-500 -translate-x-4 -translate-y-4 rounded-sm"></div>
                         <img 
@@ -249,7 +476,7 @@
                         </div>
                         </div>
 
-                        {/* Content Side */}
+                        {/* Contenido Texto */}
                         <div>
                         <h3 className="text-3xl font-bold text-blue-900 mb-6">Liderazgo Técnico y Experiencia Comprobada</h3>
                         <p className="text-gray-600 mb-6 leading-relaxed">
@@ -288,9 +515,9 @@
                     </div>
                 </section>
 
-                {/* --- CONTACT SECTION --- */}
+                {/* --- SECCIÓN CONTACTO --- */}
                 <section id="contacto" className="py-20 bg-blue-900 text-white relative overflow-hidden">
-                    {/* Decorative elements */}
+                    {/* Elemento decorativo */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
 
                     <div className="container mx-auto px-6 relative z-10">
@@ -303,17 +530,19 @@
                         
                         <div className="space-y-4">
                             <div className="flex items-center gap-4">
-                            <div className="bg-orange-500 p-2 rounded-full"><IconPhone size={20}/></div>
+                            <div className="bg-green-600 p-2 rounded-full"><IconWhatsApp size={20}/></div>
                             <div>
-                                <p className="text-xs text-gray-400 uppercase">Teléfono / WhatsApp</p>
-                                <p className="font-bold">+51 938 430 657</p>
+                                <p className="text-xs text-gray-400 uppercase">WhatsApp / Contacto</p>
+                                <a href="https://wa.me/51938430657" target="_blank" rel="noopener noreferrer" className="font-bold hover:text-green-400 transition-colors">
+                                    +51 938 430 657
+                                </a>
                             </div>
                             </div>
                             <div className="flex items-center gap-4">
                             <div className="bg-orange-500 p-2 rounded-full"><IconMail size={20}/></div>
                             <div>
                                 <p className="text-xs text-gray-400 uppercase">Correo Electrónico</p>
-                                <p className="font-bold">alvaro.ruiz.r.2024@gmail.com</p>
+                                <a href="mailto:contacto@innovaqsolution.com" className="font-bold hover:text-orange-300 transition-colors">contacto@innovaqsolution.com</a>
                             </div>
                             </div>
                             <div className="flex items-center gap-4">
@@ -326,26 +555,54 @@
                         </div>
                         </div>
 
-                        {/* Formulario Estilo Corporativo */}
+                        {/* Formulario */}
                         <div className="bg-white p-8 rounded-sm shadow-2xl text-gray-800">
-                        <form className="space-y-4">
+                        <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-xs font-bold text-gray-600 mb-1">NOMBRE</label>
-                                <input type="text" className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none" placeholder="Su nombre" />
+                                <input 
+                                    name="nombre"
+                                    type="text" 
+                                    value={formData.nombre}
+                                    onChange={handleInputChange}
+                                    className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none" 
+                                    placeholder="Su nombre" 
+                                    required
+                                />
                             </div>
                             <div>
                                 <label className="block text-xs font-bold text-gray-600 mb-1">EMPRESA</label>
-                                <input type="text" className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none" placeholder="Nombre empresa" />
+                                <input 
+                                    name="empresa"
+                                    type="text" 
+                                    value={formData.empresa}
+                                    onChange={handleInputChange}
+                                    className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none" 
+                                    placeholder="Nombre empresa" 
+                                />
                             </div>
                             </div>
                             <div>
                             <label className="block text-xs font-bold text-gray-600 mb-1">EMAIL CORPORATIVO</label>
-                            <input type="email" className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none" placeholder="ejemplo@empresa.com" />
+                            <input 
+                                name="email"
+                                type="email" 
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none" 
+                                placeholder="ejemplo@empresa.com" 
+                                required
+                            />
                             </div>
                             <div>
                             <label className="block text-xs font-bold text-gray-600 mb-1">SERVICIO DE INTERÉS</label>
-                            <select className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none text-gray-600">
+                            <select 
+                                name="servicio"
+                                value={formData.servicio}
+                                onChange={handleInputChange}
+                                className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none text-gray-600"
+                            >
                                 <option>Auditoría MINTRA / Ley 29783</option>
                                 <option>Capacitación / Cursos In-house</option>
                                 <option>Implementación ISO / SIG</option>
@@ -354,9 +611,15 @@
                             </div>
                             <div>
                             <label className="block text-xs font-bold text-gray-600 mb-1">MENSAJE</label>
-                            <textarea className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none h-24" placeholder="Detalles de su requerimiento..."></textarea>
+                            <textarea 
+                                name="mensaje"
+                                value={formData.mensaje}
+                                onChange={handleInputChange}
+                                className="w-full bg-gray-100 border border-gray-300 p-2 rounded-sm focus:border-orange-500 outline-none h-24" 
+                                placeholder="Detalles de su requerimiento..."
+                            ></textarea>
                             </div>
-                            <button type="button" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-sm transition-colors uppercase tracking-wider">
+                            <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-sm transition-colors uppercase tracking-wider">
                             Enviar Solicitud
                             </button>
                         </form>
@@ -402,6 +665,10 @@
                     <p>© 2024 Innovaq Solution. Todos los derechos reservados.</p>
                     </div>
                 </footer>
+                
+                {/* --- CHATBOT INTEGRATION --- */}
+                <ChatBot />
+
                 </div>
             );
         };
