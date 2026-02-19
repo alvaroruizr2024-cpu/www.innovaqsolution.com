@@ -7,8 +7,9 @@
   <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prop-types@15.8.1/prop-types.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/recharts@2.12.7/umd/Recharts.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide-react@0.263.1/dist/umd/lucide-react.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide-react@0.344.0/dist/umd/lucide-react.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: sans-serif; background: #0a0e1a; }
@@ -43,7 +44,7 @@
     const { ChevronDown, ChevronRight, ChevronUp, Settings, Bell, Search, Plus, Edit, Trash2, Save, X, Filter, Download, Upload, RefreshCw, Eye, EyeOff, Check, AlertCircle, Info, TrendingUp, TrendingDown, ArrowUp, ArrowDown, BarChart2, Activity, Layers, Target, Award, Users, Calendar, Clock, DollarSign, Briefcase, Flag, AlertTriangle, CheckCircle, XCircle, Zap, Globe, Lock, Unlock, Star, Heart, MessageSquare, Phone, Mail, MapPin, Link, ExternalLink, Home, Grid, List, Table, MoreHorizontal, MoreVertical, Menu } = _LC;
 
     
-// ─── DESIGN TOKENS ───────────────────────────────────────────────────────────
+// âââ DESIGN TOKENS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const T = {
   bg: "#0a0e1a", bgCard: "#111827", bgCardHover: "#1a2235", bgSurface: "#0d1220",
   border: "#1e293b", borderLight: "#334155",
@@ -70,26 +71,26 @@ const L = {
   rose: "#f43f5e", roseLight: "#ffe4e6",
 };
 
-// ─── MOCK DATA ───────────────────────────────────────────────────────────────
+// âââ MOCK DATA âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const PROJECTS = [
-  { id: 1, name: "ERP Financiero v3.0", method: "hybrid", phase: "Ejecución", pm: "Carlos Reyes", budget: 850000, spent: 412000, vri: 0.82, phi: 0.85, cpi: 1.04, spi: 0.92, riskExposure: 0.18, progress: 58, team: 12, complexity: "Complicado", startDate: "2025-09-01", endDate: "2026-06-30" },
-  { id: 2, name: "Migración Cloud AWS", method: "agile", phase: "Sprint 8", pm: "Ana Torres", budget: 620000, spent: 298000, vri: 0.76, phi: 0.73, cpi: 0.94, spi: 0.88, riskExposure: 0.32, progress: 45, team: 8, complexity: "Complejo", startDate: "2025-11-01", endDate: "2026-05-15" },
+  { id: 1, name: "ERP Financiero v3.0", method: "hybrid", phase: "EjecuciÃ³n", pm: "Carlos Reyes", budget: 850000, spent: 412000, vri: 0.82, phi: 0.85, cpi: 1.04, spi: 0.92, riskExposure: 0.18, progress: 58, team: 12, complexity: "Complicado", startDate: "2025-09-01", endDate: "2026-06-30" },
+  { id: 2, name: "MigraciÃ³n Cloud AWS", method: "agile", phase: "Sprint 8", pm: "Ana Torres", budget: 620000, spent: 298000, vri: 0.76, phi: 0.73, cpi: 0.94, spi: 0.88, riskExposure: 0.32, progress: 45, team: 8, complexity: "Complejo", startDate: "2025-11-01", endDate: "2026-05-15" },
   { id: 3, name: "Portal Clientes B2B", method: "agile", phase: "Sprint 12", pm: "Diego Vargas", budget: 380000, spent: 310000, vri: 0.91, phi: 0.89, cpi: 1.08, spi: 1.02, riskExposure: 0.09, progress: 82, team: 6, complexity: "Complicado", startDate: "2025-06-15", endDate: "2026-03-01" },
-  { id: 4, name: "Infraestructura DC Norte", method: "predictive", phase: "Construcción", pm: "María López", budget: 1200000, spent: 780000, vri: 0.68, phi: 0.62, cpi: 0.87, spi: 0.79, riskExposure: 0.41, progress: 65, team: 18, complexity: "Complicado", startDate: "2025-05-01", endDate: "2026-04-30" },
+  { id: 4, name: "Infraestructura DC Norte", method: "predictive", phase: "ConstrucciÃ³n", pm: "MarÃ­a LÃ³pez", budget: 1200000, spent: 780000, vri: 0.68, phi: 0.62, cpi: 0.87, spi: 0.79, riskExposure: 0.41, progress: 65, team: 18, complexity: "Complicado", startDate: "2025-05-01", endDate: "2026-04-30" },
   { id: 5, name: "App Mobile Ventas", method: "agile", phase: "Sprint 5", pm: "Luis Mendoza", budget: 280000, spent: 95000, vri: 0.88, phi: 0.91, cpi: 1.12, spi: 1.05, riskExposure: 0.07, progress: 33, team: 5, complexity: "Simple", startDate: "2025-12-01", endDate: "2026-05-30" },
-  { id: 6, name: "Integración SUNAT e-Factura", method: "hybrid", phase: "Diseño", pm: "Patricia Huamán", budget: 195000, spent: 42000, vri: 0.72, phi: 0.78, cpi: 1.01, spi: 0.95, riskExposure: 0.22, progress: 18, team: 4, complexity: "Complicado", startDate: "2026-01-10", endDate: "2026-07-30" },
+  { id: 6, name: "IntegraciÃ³n SUNAT e-Factura", method: "hybrid", phase: "DiseÃ±o", pm: "Patricia HuamÃ¡n", budget: 195000, spent: 42000, vri: 0.72, phi: 0.78, cpi: 1.01, spi: 0.95, riskExposure: 0.22, progress: 18, team: 4, complexity: "Complicado", startDate: "2026-01-10", endDate: "2026-07-30" },
 ];
 
 const OKR_DATA = [
-  { id: "okr1", name: "Transformación Digital 2026", progress: 68, benefits: [
-    { id: "b1", name: "Reducción 30% tiempo operativo", type: "Operacional", target: 1.0, actual: 0.72, projects: [1, 6] },
+  { id: "okr1", name: "TransformaciÃ³n Digital 2026", progress: 68, benefits: [
+    { id: "b1", name: "ReducciÃ³n 30% tiempo operativo", type: "Operacional", target: 1.0, actual: 0.72, projects: [1, 6] },
     { id: "b2", name: "95% disponibilidad servicios cloud", type: "Operacional", target: 1.0, actual: 0.76, projects: [2] },
   ]},
   { id: "okr2", name: "Excelencia en Experiencia Cliente", progress: 85, benefits: [
     { id: "b3", name: "NPS > 75 en canales digitales", type: "Intangible", target: 1.0, actual: 0.91, projects: [3, 5] },
   ]},
   { id: "okr3", name: "Infraestructura Resiliente", progress: 52, benefits: [
-    { id: "b4", name: "RPO < 1hr en sistemas críticos", type: "Operacional", target: 1.0, actual: 0.62, projects: [4] },
+    { id: "b4", name: "RPO < 1hr en sistemas crÃ­ticos", type: "Operacional", target: 1.0, actual: 0.62, projects: [4] },
     { id: "b5", name: "ROI infraestructura 18% anual", type: "Financiero", target: 1.0, actual: 0.48, projects: [4, 2] },
   ]},
 ];
@@ -110,17 +111,17 @@ const AGILE_FLOW = Array.from({length: 10}, (_, i) => ({
 
 const RISKS = [
   { id: "R001", name: "Retraso en licenciamiento Oracle", prob: 0.7, impact: 0.8, sei: 2.1, status: "active", category: "Proveedor", project: "ERP Financiero v3.0", cynefin: "Complicado" },
-  { id: "R002", name: "Fuga de talento equipo DevOps", prob: 0.5, impact: 0.9, sei: 1.8, status: "active", category: "Recurso", project: "Migración Cloud AWS", cynefin: "Complejo" },
-  { id: "R003", name: "Cambio regulatorio SUNAT", prob: 0.4, impact: 0.7, sei: 1.4, status: "monitoring", category: "Regulatorio", project: "Integración SUNAT e-Factura", cynefin: "Complejo" },
-  { id: "R004", name: "Incompatibilidad APIs legacy", prob: 0.6, impact: 0.6, sei: 1.2, status: "active", category: "Técnico", project: "Portal Clientes B2B", cynefin: "Complicado" },
-  { id: "R005", name: "Sobrecosto materiales importados", prob: 0.8, impact: 0.9, sei: 2.8, status: "critical", category: "Costo", project: "Infraestructura DC Norte", cynefin: "Caótico" },
-  { id: "R006", name: "Baja adopción usuarios móviles", prob: 0.3, impact: 0.5, sei: 0.6, status: "monitoring", category: "Stakeholder", project: "App Mobile Ventas", cynefin: "Complejo" },
-  { id: "R007", name: "Latencia red interregional", prob: 0.5, impact: 0.7, sei: 1.5, status: "active", category: "Técnico", project: "Migración Cloud AWS", cynefin: "Complicado" },
+  { id: "R002", name: "Fuga de talento equipo DevOps", prob: 0.5, impact: 0.9, sei: 1.8, status: "active", category: "Recurso", project: "MigraciÃ³n Cloud AWS", cynefin: "Complejo" },
+  { id: "R003", name: "Cambio regulatorio SUNAT", prob: 0.4, impact: 0.7, sei: 1.4, status: "monitoring", category: "Regulatorio", project: "IntegraciÃ³n SUNAT e-Factura", cynefin: "Complejo" },
+  { id: "R004", name: "Incompatibilidad APIs legacy", prob: 0.6, impact: 0.6, sei: 1.2, status: "active", category: "TÃ©cnico", project: "Portal Clientes B2B", cynefin: "Complicado" },
+  { id: "R005", name: "Sobrecosto materiales importados", prob: 0.8, impact: 0.9, sei: 2.8, status: "critical", category: "Costo", project: "Infraestructura DC Norte", cynefin: "CaÃ³tico" },
+  { id: "R006", name: "Baja adopciÃ³n usuarios mÃ³viles", prob: 0.3, impact: 0.5, sei: 0.6, status: "monitoring", category: "Stakeholder", project: "App Mobile Ventas", cynefin: "Complejo" },
+  { id: "R007", name: "Latencia red interregional", prob: 0.5, impact: 0.7, sei: 1.5, status: "active", category: "TÃ©cnico", project: "MigraciÃ³n Cloud AWS", cynefin: "Complicado" },
 ];
 
 const ASSUMPTIONS = [
-  { id: "A001", desc: "Presupuesto AWS aprobado sin recortes", validationDate: "2026-03-15", status: "pending", daysLeft: 29, risk: "R002", project: "Migración Cloud AWS" },
-  { id: "A002", desc: "Regulación e-Factura sin cambios hasta Q3", validationDate: "2026-06-30", status: "valid", daysLeft: 136, risk: "R003", project: "Integración SUNAT e-Factura" },
+  { id: "A001", desc: "Presupuesto AWS aprobado sin recortes", validationDate: "2026-03-15", status: "pending", daysLeft: 29, risk: "R002", project: "MigraciÃ³n Cloud AWS" },
+  { id: "A002", desc: "RegulaciÃ³n e-Factura sin cambios hasta Q3", validationDate: "2026-06-30", status: "valid", daysLeft: 136, risk: "R003", project: "IntegraciÃ³n SUNAT e-Factura" },
   { id: "A003", desc: "Equipo Oracle disponible full-time desde Marzo", validationDate: "2026-03-01", status: "at_risk", daysLeft: 15, risk: "R001", project: "ERP Financiero v3.0" },
   { id: "A004", desc: "Permisos municipales DC Norte aprobados", validationDate: "2026-02-28", status: "at_risk", daysLeft: 14, risk: "R005", project: "Infraestructura DC Norte" },
 ];
@@ -132,10 +133,10 @@ const MONTE_CARLO = Array.from({length: 50}, (_, i) => {
 });
 
 const AI_RECOMMENDATIONS = [
-  { id: 1, type: "risk", confidence: 0.89, title: "Riesgo de retraso en Fase 3 – ERP Financiero", desc: "Basado en 12 proyectos similares, la combinación de dependencia Oracle + equipo híbrido tiene 73% de probabilidad de retraso >15 días.", action: "Iniciar plan de contingencia con proveedor alternativo", status: "pending" },
-  { id: 2, type: "resource", confidence: 0.82, title: "Cuello de botella – Equipo DevOps compartido", desc: "Cloud y DC Norte compiten por los mismos 3 ingenieros DevOps en semanas 8-12. Históricamente genera 22% de degradación en velocity.", action: "Reasignar 1 recurso dedicado a DC Norte", status: "accepted" },
-  { id: 3, type: "estimation", confidence: 0.91, title: "Sprint 9 Cloud – sobreestimación detectada", desc: "El promedio histórico de tareas de migración de DBs es 2.3x el estimado actual. Rango sugerido: 13-18 SP vs 8 SP planificados.", action: "Recalibrar estimación Sprint 9", status: "pending" },
-  { id: 4, type: "lesson", confidence: 0.77, title: "Lección aplicable – Integración SUNAT", desc: "Proyecto 'Facturación Electrónica 2024' documentó que el sandbox de SUNAT tiene downtime los viernes. Planificar QA entre lunes-jueves.", action: "Ajustar calendario de pruebas", status: "accepted" },
+  { id: 1, type: "risk", confidence: 0.89, title: "Riesgo de retraso en Fase 3 â ERP Financiero", desc: "Basado en 12 proyectos similares, la combinaciÃ³n de dependencia Oracle + equipo hÃ­brido tiene 73% de probabilidad de retraso >15 dÃ­as.", action: "Iniciar plan de contingencia con proveedor alternativo", status: "pending" },
+  { id: 2, type: "resource", confidence: 0.82, title: "Cuello de botella â Equipo DevOps compartido", desc: "Cloud y DC Norte compiten por los mismos 3 ingenieros DevOps en semanas 8-12. HistÃ³ricamente genera 22% de degradaciÃ³n en velocity.", action: "Reasignar 1 recurso dedicado a DC Norte", status: "accepted" },
+  { id: 3, type: "estimation", confidence: 0.91, title: "Sprint 9 Cloud â sobreestimaciÃ³n detectada", desc: "El promedio histÃ³rico de tareas de migraciÃ³n de DBs es 2.3x el estimado actual. Rango sugerido: 13-18 SP vs 8 SP planificados.", action: "Recalibrar estimaciÃ³n Sprint 9", status: "pending" },
+  { id: 4, type: "lesson", confidence: 0.77, title: "LecciÃ³n aplicable â IntegraciÃ³n SUNAT", desc: "Proyecto 'FacturaciÃ³n ElectrÃ³nica 2024' documentÃ³ que el sandbox de SUNAT tiene downtime los viernes. Planificar QA entre lunes-jueves.", action: "Ajustar calendario de pruebas", status: "accepted" },
 ];
 
 const KANBAN_ITEMS = [
@@ -148,44 +149,44 @@ const KANBAN_ITEMS = [
 ];
 
 const GANTT_TASKS = [
-  { id: 1, name: "ERP: Análisis de Requisitos", start: 0, duration: 4, progress: 100, level: 0, deps: [] },
-  { id: 2, name: "ERP: Diseño Arquitectura", start: 3, duration: 3, progress: 100, level: 1, deps: [1] },
+  { id: 1, name: "ERP: AnÃ¡lisis de Requisitos", start: 0, duration: 4, progress: 100, level: 0, deps: [] },
+  { id: 2, name: "ERP: DiseÃ±o Arquitectura", start: 3, duration: 3, progress: 100, level: 1, deps: [1] },
   { id: 3, name: "ERP: Desarrollo Core", start: 6, duration: 8, progress: 65, level: 1, deps: [2] },
-  { id: 4, name: "ERP: Integración SUNAT", start: 10, duration: 4, progress: 20, level: 2, deps: [3] },
+  { id: 4, name: "ERP: IntegraciÃ³n SUNAT", start: 10, duration: 4, progress: 20, level: 2, deps: [3] },
   { id: 5, name: "Cloud: Assessment", start: 2, duration: 3, progress: 100, level: 0, deps: [] },
-  { id: 6, name: "Cloud: Migración DBs", start: 5, duration: 6, progress: 55, level: 1, deps: [5] },
+  { id: 6, name: "Cloud: MigraciÃ³n DBs", start: 5, duration: 6, progress: 55, level: 1, deps: [5] },
   { id: 7, name: "Cloud: Testing & QA", start: 11, duration: 3, progress: 0, level: 1, deps: [6] },
   { id: 8, name: "DC Norte: Permisos", start: 0, duration: 5, progress: 80, level: 0, deps: [] },
-  { id: 9, name: "DC Norte: Construcción", start: 5, duration: 10, progress: 40, level: 1, deps: [8] },
+  { id: 9, name: "DC Norte: ConstrucciÃ³n", start: 5, duration: 10, progress: 40, level: 1, deps: [8] },
   { id: 10, name: "DC Norte: Equipamiento", start: 12, duration: 4, progress: 0, level: 2, deps: [9] },
 ];
 
-// ─── PRICING DATA ────────────────────────────────────────────────────────────
+// âââ PRICING DATA ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const PRICING_PLANS = [
   {
     id: "starter",
     name: "Starter",
-    subtitle: "Para equipos pequeños",
+    subtitle: "Para equipos pequeÃ±os",
     price: 9,
     priceAnnual: 7,
     currency: "USD",
     color: L.accent,
     colorBg: L.accentLight,
-    icon: "🚀",
+    icon: "ð",
     maxUsers: 10,
     maxProjects: 5,
     popular: false,
     features: [
       { text: "Hasta 10 usuarios", included: true },
       { text: "5 proyectos activos", included: true },
-      { text: "Kanban & Gantt básico", included: true },
-      { text: "Gestión de tareas", included: true },
-      { text: "Reportes básicos", included: true },
+      { text: "Kanban & Gantt bÃ¡sico", included: true },
+      { text: "GestiÃ³n de tareas", included: true },
+      { text: "Reportes bÃ¡sicos", included: true },
       { text: "1 GB almacenamiento", included: true },
       { text: "Soporte por email", included: true },
-      { text: "Motor Híbrido completo", included: false },
-      { text: "EVM & métricas avanzadas", included: false },
-      { text: "Simulación Monte Carlo", included: false },
+      { text: "Motor HÃ­brido completo", included: false },
+      { text: "EVM & mÃ©tricas avanzadas", included: false },
+      { text: "SimulaciÃ³n Monte Carlo", included: false },
       { text: "Motor de IA", included: false },
       { text: "API & integraciones", included: false },
     ],
@@ -199,22 +200,22 @@ const PRICING_PLANS = [
     currency: "USD",
     color: L.violet,
     colorBg: L.violetLight,
-    icon: "⚡",
+    icon: "â¡",
     maxUsers: 50,
     maxProjects: 25,
     popular: true,
     features: [
       { text: "Hasta 50 usuarios", included: true },
       { text: "25 proyectos activos", included: true },
-      { text: "Motor Híbrido completo", included: true },
+      { text: "Motor HÃ­brido completo", included: true },
       { text: "Gantt, Kanban & Scrum", included: true },
       { text: "EVM completo + Curvas S", included: true },
-      { text: "Métricas ágiles de flujo", included: true },
-      { text: "Gestión de dependencias (UDG)", included: true },
-      { text: "Registro de riesgos dinámico", included: true },
+      { text: "MÃ©tricas Ã¡giles de flujo", included: true },
+      { text: "GestiÃ³n de dependencias (UDG)", included: true },
+      { text: "Registro de riesgos dinÃ¡mico", included: true },
       { text: "10 GB almacenamiento", included: true },
       { text: "Soporte prioritario", included: true },
-      { text: "Simulación Monte Carlo", included: false },
+      { text: "SimulaciÃ³n Monte Carlo", included: false },
       { text: "Motor de IA predictiva", included: false },
     ],
   },
@@ -227,7 +228,7 @@ const PRICING_PLANS = [
     currency: "USD",
     color: T.emerald,
     colorBg: L.emeraldLight,
-    icon: "💎",
+    icon: "ð",
     maxUsers: 200,
     maxProjects: -1,
     popular: false,
@@ -236,8 +237,8 @@ const PRICING_PLANS = [
       { text: "Proyectos ilimitados", included: true },
       { text: "Todo en Professional +", included: true },
       { text: "Alineamiento OKR-Beneficio", included: true },
-      { text: "Simulación Monte Carlo", included: true },
-      { text: "Análisis de complejidad Cynefin", included: true },
+      { text: "SimulaciÃ³n Monte Carlo", included: true },
+      { text: "AnÃ¡lisis de complejidad Cynefin", included: true },
       { text: "PHI consolidado de portafolio", included: true },
       { text: "Motor de IA predictiva", included: true },
       { text: "RAG lecciones aprendidas", included: true },
@@ -255,7 +256,7 @@ const PRICING_PLANS = [
     currency: "USD",
     color: "#f59e0b",
     colorBg: L.amberLight,
-    icon: "🏛️",
+    icon: "ðï¸",
     maxUsers: -1,
     maxProjects: -1,
     popular: false,
@@ -267,55 +268,55 @@ const PRICING_PLANS = [
       { text: "Integraciones SAP, Oracle, Jira", included: true },
       { text: "Power BI & Tableau nativo", included: true },
       { text: "Modelos IA personalizados", included: true },
-      { text: "RBAC avanzado + auditoría", included: true },
+      { text: "RBAC avanzado + auditorÃ­a", included: true },
       { text: "Almacenamiento ilimitado", included: true },
       { text: "SLA 99.9% garantizado", included: true },
       { text: "Customer Success dedicado", included: true },
-      { text: "Capacitación & onboarding", included: true },
+      { text: "CapacitaciÃ³n & onboarding", included: true },
     ],
   },
 ];
 
 const PLAN_COMPARISON = [
-  { category: "Gestión de Proyectos", features: [
+  { category: "GestiÃ³n de Proyectos", features: [
     { name: "Proyectos activos", starter: "5", pro: "25", business: "Ilimitados", enterprise: "Ilimitados" },
-    { name: "Kanban Board", starter: "✓", pro: "✓", business: "✓", enterprise: "✓" },
-    { name: "Diagrama de Gantt", starter: "Básico", pro: "Avanzado", business: "Avanzado", enterprise: "Avanzado" },
-    { name: "Scrum / Sprints", starter: "—", pro: "✓", business: "✓", enterprise: "✓" },
-    { name: "Motor Híbrido (Tailoring)", starter: "—", pro: "✓", business: "✓", enterprise: "✓" },
-    { name: "Grafo Dependencias (UDG)", starter: "—", pro: "✓", business: "✓", enterprise: "✓" },
+    { name: "Kanban Board", starter: "â", pro: "â", business: "â", enterprise: "â" },
+    { name: "Diagrama de Gantt", starter: "BÃ¡sico", pro: "Avanzado", business: "Avanzado", enterprise: "Avanzado" },
+    { name: "Scrum / Sprints", starter: "â", pro: "â", business: "â", enterprise: "â" },
+    { name: "Motor HÃ­brido (Tailoring)", starter: "â", pro: "â", business: "â", enterprise: "â" },
+    { name: "Grafo Dependencias (UDG)", starter: "â", pro: "â", business: "â", enterprise: "â" },
   ]},
-  { category: "Métricas & Análisis", features: [
-    { name: "Reportes básicos", starter: "✓", pro: "✓", business: "✓", enterprise: "✓" },
-    { name: "EVM completo", starter: "—", pro: "✓", business: "✓", enterprise: "✓" },
-    { name: "Métricas ágiles de flujo", starter: "—", pro: "✓", business: "✓", enterprise: "✓" },
-    { name: "PHI consolidado", starter: "—", pro: "—", business: "✓", enterprise: "✓" },
-    { name: "Monte Carlo", starter: "—", pro: "—", business: "✓", enterprise: "✓" },
+  { category: "MÃ©tricas & AnÃ¡lisis", features: [
+    { name: "Reportes bÃ¡sicos", starter: "â", pro: "â", business: "â", enterprise: "â" },
+    { name: "EVM completo", starter: "â", pro: "â", business: "â", enterprise: "â" },
+    { name: "MÃ©tricas Ã¡giles de flujo", starter: "â", pro: "â", business: "â", enterprise: "â" },
+    { name: "PHI consolidado", starter: "â", pro: "â", business: "â", enterprise: "â" },
+    { name: "Monte Carlo", starter: "â", pro: "â", business: "â", enterprise: "â" },
     { name: "Dashboards ejecutivos", starter: "1", pro: "5", business: "Ilimitados", enterprise: "Personalizados" },
   ]},
   { category: "Estrategia & IA", features: [
-    { name: "Alineamiento OKR", starter: "—", pro: "—", business: "✓", enterprise: "✓" },
-    { name: "VRI (Value Realization Index)", starter: "—", pro: "—", business: "✓", enterprise: "✓" },
-    { name: "Cynefin & complejidad", starter: "—", pro: "—", business: "✓", enterprise: "✓" },
-    { name: "IA predictiva riesgos", starter: "—", pro: "—", business: "✓", enterprise: "Personalizada" },
-    { name: "RAG lecciones aprendidas", starter: "—", pro: "—", business: "✓", enterprise: "✓" },
-    { name: "Modelos ML personalizados", starter: "—", pro: "—", business: "—", enterprise: "✓" },
+    { name: "Alineamiento OKR", starter: "â", pro: "â", business: "â", enterprise: "â" },
+    { name: "VRI (Value Realization Index)", starter: "â", pro: "â", business: "â", enterprise: "â" },
+    { name: "Cynefin & complejidad", starter: "â", pro: "â", business: "â", enterprise: "â" },
+    { name: "IA predictiva riesgos", starter: "â", pro: "â", business: "â", enterprise: "Personalizada" },
+    { name: "RAG lecciones aprendidas", starter: "â", pro: "â", business: "â", enterprise: "â" },
+    { name: "Modelos ML personalizados", starter: "â", pro: "â", business: "â", enterprise: "â" },
   ]},
   { category: "Plataforma", features: [
     { name: "Usuarios", starter: "10", pro: "50", business: "200", enterprise: "Ilimitados" },
     { name: "Almacenamiento", starter: "1 GB", pro: "10 GB", business: "50 GB", enterprise: "Ilimitado" },
-    { name: "API REST", starter: "—", pro: "Lectura", business: "Completa", enterprise: "Completa" },
-    { name: "SSO (Google/Microsoft)", starter: "—", pro: "—", business: "✓", enterprise: "✓ + SAML" },
-    { name: "Integraciones ERP", starter: "—", pro: "—", business: "—", enterprise: "✓" },
+    { name: "API REST", starter: "â", pro: "Lectura", business: "Completa", enterprise: "Completa" },
+    { name: "SSO (Google/Microsoft)", starter: "â", pro: "â", business: "â", enterprise: "â + SAML" },
+    { name: "Integraciones ERP", starter: "â", pro: "â", business: "â", enterprise: "â" },
     { name: "Soporte", starter: "Email", pro: "Prioritario", business: "24/7 Chat", enterprise: "Dedicado" },
   ]},
 ];
 
-// ─── UTILITY COMPONENTS ──────────────────────────────────────────────────────
+// âââ UTILITY COMPONENTS ââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const StatusBadge = ({ value, thresholds = [0.8, 0.6] }) => {
   const color = value >= thresholds[0] ? T.emerald : value >= thresholds[1] ? T.amber : T.rose;
   const bg = value >= thresholds[0] ? T.emeraldGlow : value >= thresholds[1] ? T.amberGlow : T.roseGlow;
-  const label = value >= thresholds[0] ? "Saludable" : value >= thresholds[1] ? "Atención" : "Crítico";
+  const label = value >= thresholds[0] ? "Saludable" : value >= thresholds[1] ? "AtenciÃ³n" : "CrÃ­tico";
   return <span style={{ padding: "3px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: 600, color, background: bg, border: `1px solid ${color}30`, letterSpacing: "0.3px" }}>{label}</span>;
 };
 
@@ -350,7 +351,7 @@ const ProgressBar = ({ value, color = T.accent, height = 6 }) => (
 );
 
 const MethodBadge = ({ method }) => {
-  const config = { predictive: { label: "Predictivo", color: T.violet }, agile: { label: "Ágil", color: T.emerald }, hybrid: { label: "Híbrido", color: T.amber } };
+  const config = { predictive: { label: "Predictivo", color: T.violet }, agile: { label: "Ãgil", color: T.emerald }, hybrid: { label: "HÃ­brido", color: T.amber } };
   const c = config[method];
   return <span style={{ padding: "2px 8px", borderRadius: "4px", fontSize: "10px", fontWeight: 600, color: c.color, background: `${c.color}18`, border: `1px solid ${c.color}30`, textTransform: "uppercase", letterSpacing: "0.5px" }}>{c.label}</span>;
 };
@@ -374,7 +375,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   );
 };
 
-// ─── GOOGLE SVG ICON ─────────────────────────────────────────────────────────
+// âââ GOOGLE SVG ICON âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const GoogleIcon = () => (
   <svg width="20" height="20" viewBox="0 0 48 48">
     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -384,9 +385,9 @@ const GoogleIcon = () => (
   </svg>
 );
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// ─── LOGIN SCREEN ─────────────────────────────────────────────────────────────
-// ═══════════════════════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// âââ LOGIN SCREEN âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const LoginScreen = ({ onLogin, onShowPricing }) => {
   const [isHovering, setIsHovering] = useState(false);
   const [emailMode, setEmailMode] = useState(false);
@@ -419,27 +420,27 @@ const LoginScreen = ({ onLogin, onShowPricing }) => {
       <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "60px 80px", position: "relative", zIndex: 1, opacity: animIn ? 1 : 0, transform: animIn ? "translateX(0)" : "translateX(-30px)", transition: "all 0.8s cubic-bezier(0.16,1,0.3,1)" }}>
         <div style={{ marginBottom: "48px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "32px" }}>
-            <div style={{ width: "48px", height: "48px", borderRadius: "14px", background: `linear-gradient(135deg, ${T.accent}, ${T.violet})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", fontWeight: 800, color: "#fff", fontFamily: T.fontDisplay }}>◈</div>
+            <div style={{ width: "48px", height: "48px", borderRadius: "14px", background: `linear-gradient(135deg, ${T.accent}, ${T.violet})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", fontWeight: 800, color: "#fff", fontFamily: T.fontDisplay }}>â</div>
             <div>
               <div style={{ fontSize: "24px", fontWeight: 800, color: T.accent, fontFamily: T.fontDisplay }}>PMO<span style={{ color: T.text }}>System</span></div>
-              <div style={{ fontSize: "10px", color: T.textDim, fontFamily: T.fontMono, letterSpacing: "2px", textTransform: "uppercase" }}>PMBOK® 8th Edition</div>
+              <div style={{ fontSize: "10px", color: T.textDim, fontFamily: T.fontMono, letterSpacing: "2px", textTransform: "uppercase" }}>PMBOKÂ® 8th Edition</div>
             </div>
           </div>
           <h1 style={{ fontSize: "42px", fontWeight: 800, color: T.text, lineHeight: 1.15, margin: "0 0 20px", fontFamily: T.fontDisplay, maxWidth: "500px" }}>
             Sistema de Entrega<br/>de <span style={{ background: `linear-gradient(135deg, ${T.accent}, ${T.violet})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Valor</span> PMO
           </h1>
           <p style={{ fontSize: "16px", color: T.textMuted, lineHeight: 1.7, maxWidth: "440px", margin: 0 }}>
-            Plataforma avanzada de gestión de portafolio con motor híbrido, IA predictiva y métricas de valor ganado. Diseñada para PMOs de clase mundial.
+            Plataforma avanzada de gestiÃ³n de portafolio con motor hÃ­brido, IA predictiva y mÃ©tricas de valor ganado. DiseÃ±ada para PMOs de clase mundial.
           </p>
         </div>
 
         {/* Feature highlights */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "14px", maxWidth: "480px" }}>
           {[
-            { icon: "◈", label: "Alineamiento OKR", desc: "Cadena de valor trazable" },
-            { icon: "⟐", label: "Motor Híbrido", desc: "Predictivo + Ágil + Híbrido" },
-            { icon: "◬", label: "Monte Carlo", desc: "Simulación de escenarios" },
-            { icon: "⬡", label: "IA Predictiva", desc: "RAG + Machine Learning" },
+            { icon: "â", label: "Alineamiento OKR", desc: "Cadena de valor trazable" },
+            { icon: "â", label: "Motor HÃ­brido", desc: "Predictivo + Ãgil + HÃ­brido" },
+            { icon: "â¬", label: "Monte Carlo", desc: "SimulaciÃ³n de escenarios" },
+            { icon: "â¬¡", label: "IA Predictiva", desc: "RAG + Machine Learning" },
           ].map((f, i) => (
             <div key={i} style={{ display: "flex", gap: "10px", alignItems: "flex-start", padding: "12px", borderRadius: T.radiusSm, background: "rgba(255,255,255,0.02)", border: `1px solid ${T.border}` }}>
               <span style={{ fontSize: "18px", color: T.accent, lineHeight: 1 }}>{f.icon}</span>
@@ -457,7 +458,7 @@ const LoginScreen = ({ onLogin, onShowPricing }) => {
         <div style={{ width: "400px", background: "rgba(17,24,39,0.8)", backdropFilter: "blur(20px)", border: `1px solid ${T.border}`, borderRadius: "20px", padding: "40px 36px", boxShadow: "0 25px 50px rgba(0,0,0,0.4)" }}>
           <div style={{ textAlign: "center", marginBottom: "32px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, color: T.text, margin: "0 0 8px", fontFamily: T.fontDisplay }}>Bienvenido</h2>
-            <p style={{ fontSize: "13px", color: T.textMuted, margin: 0 }}>Inicia sesión para acceder a tu portafolio</p>
+            <p style={{ fontSize: "13px", color: T.textMuted, margin: 0 }}>Inicia sesiÃ³n para acceder a tu portafolio</p>
           </div>
 
           {/* Google Sign In Button */}
@@ -489,22 +490,22 @@ const LoginScreen = ({ onLogin, onShowPricing }) => {
           {/* Email/Password Form */}
           {!emailMode ? (
             <button onClick={() => setEmailMode(true)} style={{ width: "100%", padding: "13px 20px", borderRadius: "12px", background: "transparent", border: `1px solid ${T.border}`, cursor: "pointer", fontSize: "14px", fontWeight: 500, color: T.textMuted, fontFamily: T.font, transition: "all 0.2s" }}>
-              Iniciar con correo y contraseña
+              Iniciar con correo y contraseÃ±a
             </button>
           ) : (
             <form onSubmit={handleEmailLogin} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               <div>
-                <label style={{ fontSize: "11px", color: T.textDim, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", display: "block", marginBottom: "6px" }}>Correo electrónico</label>
+                <label style={{ fontSize: "11px", color: T.textDim, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", display: "block", marginBottom: "6px" }}>Correo electrÃ³nico</label>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="tu@empresa.com"
                   style={{ width: "100%", padding: "12px 14px", borderRadius: "10px", background: T.bgSurface, border: `1px solid ${T.border}`, color: T.text, fontSize: "14px", fontFamily: T.font, outline: "none", boxSizing: "border-box" }} />
               </div>
               <div>
-                <label style={{ fontSize: "11px", color: T.textDim, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", display: "block", marginBottom: "6px" }}>Contraseña</label>
+                <label style={{ fontSize: "11px", color: T.textDim, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", display: "block", marginBottom: "6px" }}>ContraseÃ±a</label>
                 <div style={{ position: "relative" }}>
-                  <input type={showPass ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••"
+                  <input type={showPass ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} placeholder="â¢â¢â¢â¢â¢â¢â¢â¢"
                     style={{ width: "100%", padding: "12px 44px 12px 14px", borderRadius: "10px", background: T.bgSurface, border: `1px solid ${T.border}`, color: T.text, fontSize: "14px", fontFamily: T.font, outline: "none", boxSizing: "border-box" }} />
                   <button type="button" onClick={() => setShowPass(!showPass)} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: T.textDim, cursor: "pointer", fontSize: "13px" }}>
-                    {showPass ? "🙈" : "👁️"}
+                    {showPass ? "ð" : "ðï¸"}
                   </button>
                 </div>
               </div>
@@ -512,10 +513,10 @@ const LoginScreen = ({ onLogin, onShowPricing }) => {
                 <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12px", color: T.textMuted, cursor: "pointer" }}>
                   <input type="checkbox" style={{ accentColor: T.accent }} /> Recordarme
                 </label>
-                <a href="#" onClick={e => e.preventDefault()} style={{ fontSize: "12px", color: T.accent, textDecoration: "none" }}>¿Olvidaste tu contraseña?</a>
+                <a href="#" onClick={e => e.preventDefault()} style={{ fontSize: "12px", color: T.accent, textDecoration: "none" }}>Â¿Olvidaste tu contraseÃ±a?</a>
               </div>
               <button type="submit" style={{ width: "100%", padding: "13px 20px", borderRadius: "12px", background: `linear-gradient(135deg, ${T.accent}, ${T.accentDim})`, border: "none", cursor: "pointer", fontSize: "14px", fontWeight: 700, color: "#fff", fontFamily: T.font, transition: "all 0.2s" }}>
-                Iniciar Sesión
+                Iniciar SesiÃ³n
               </button>
             </form>
           )}
@@ -523,17 +524,17 @@ const LoginScreen = ({ onLogin, onShowPricing }) => {
           {/* Footer links */}
           <div style={{ marginTop: "28px", paddingTop: "20px", borderTop: `1px solid ${T.border}`, textAlign: "center" }}>
             <p style={{ fontSize: "13px", color: T.textMuted, margin: "0 0 12px" }}>
-              ¿No tienes cuenta?{" "}
-              <a href="#" onClick={e => { e.preventDefault(); handleGoogleLogin(); }} style={{ color: T.accent, textDecoration: "none", fontWeight: 600 }}>Regístrate gratis</a>
+              Â¿No tienes cuenta?{" "}
+              <a href="#" onClick={e => { e.preventDefault(); handleGoogleLogin(); }} style={{ color: T.accent, textDecoration: "none", fontWeight: 600 }}>RegÃ­strate gratis</a>
             </p>
             <button onClick={onShowPricing} style={{ background: "none", border: "none", color: T.textDim, fontSize: "12px", cursor: "pointer", fontFamily: T.font, textDecoration: "underline", textUnderlineOffset: "3px" }}>
-              Ver planes y precios →
+              Ver planes y precios â
             </button>
           </div>
 
           {/* Trust badges */}
           <div style={{ display: "flex", justifyContent: "center", gap: "20px", marginTop: "20px" }}>
-            {["🔒 SSL 256-bit", "🛡️ SOC 2", "🌐 GDPR"].map((b, i) => (
+            {["ð SSL 256-bit", "ð¡ï¸ SOC 2", "ð GDPR"].map((b, i) => (
               <span key={i} style={{ fontSize: "10px", color: T.textDim }}>{b}</span>
             ))}
           </div>
@@ -543,9 +544,9 @@ const LoginScreen = ({ onLogin, onShowPricing }) => {
   );
 };
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// ─── PRICING SCREEN ───────────────────────────────────────────────────────────
-// ═══════════════════════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// âââ PRICING SCREEN âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const PricingScreen = ({ onBack, onSelectPlan }) => {
   const [annual, setAnnual] = useState(true);
   const [showComparison, setShowComparison] = useState(false);
@@ -554,10 +555,10 @@ const PricingScreen = ({ onBack, onSelectPlan }) => {
   useEffect(() => { setTimeout(() => setAnimIn(true), 100); }, []);
 
   const faqItems = [
-    { q: "¿Puedo cambiar de plan en cualquier momento?", a: "Sí, puedes actualizar o reducir tu plan cuando quieras. Al actualizar, solo pagas la diferencia proporcional. Al reducir, el crédito se aplica al próximo ciclo." },
-    { q: "¿Ofrecen descuento para Latinoamérica?", a: "Sí, ofrecemos paridad de poder adquisitivo (PPP) para empresas registradas en Perú y otros países de LATAM. Contacta a ventas para tu cotización personalizada." },
-    { q: "¿Qué incluye la prueba gratuita?", a: "14 días con acceso completo al plan Business, sin necesidad de tarjeta de crédito. Incluye todos los módulos: Motor Híbrido, Monte Carlo, IA Predictiva y más." },
-    { q: "¿Puedo integrarlo con mi ERP actual?", a: "El plan Enterprise incluye integraciones nativas con SAP, Oracle y sistemas SUNAT. Los planes Business pueden usar nuestra API REST para integraciones personalizadas." },
+    { q: "Â¿Puedo cambiar de plan en cualquier momento?", a: "SÃ­, puedes actualizar o reducir tu plan cuando quieras. Al actualizar, solo pagas la diferencia proporcional. Al reducir, el crÃ©dito se aplica al prÃ³ximo ciclo." },
+    { q: "Â¿Ofrecen descuento para LatinoamÃ©rica?", a: "SÃ­, ofrecemos paridad de poder adquisitivo (PPP) para empresas registradas en PerÃº y otros paÃ­ses de LATAM. Contacta a ventas para tu cotizaciÃ³n personalizada." },
+    { q: "Â¿QuÃ© incluye la prueba gratuita?", a: "14 dÃ­as con acceso completo al plan Business, sin necesidad de tarjeta de crÃ©dito. Incluye todos los mÃ³dulos: Motor HÃ­brido, Monte Carlo, IA Predictiva y mÃ¡s." },
+    { q: "Â¿Puedo integrarlo con mi ERP actual?", a: "El plan Enterprise incluye integraciones nativas con SAP, Oracle y sistemas SUNAT. Los planes Business pueden usar nuestra API REST para integraciones personalizadas." },
   ];
 
   const [openFaq, setOpenFaq] = useState(null);
@@ -570,15 +571,15 @@ const PricingScreen = ({ onBack, onSelectPlan }) => {
       <div style={{ background: "#fff", borderBottom: `1px solid ${L.border}`, padding: "0 40px", position: "sticky", top: 0, zIndex: 100 }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: "64px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div style={{ width: "34px", height: "34px", borderRadius: "10px", background: `linear-gradient(135deg, ${L.accent}, ${L.violet})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", fontWeight: 800, color: "#fff" }}>◈</div>
+            <div style={{ width: "34px", height: "34px", borderRadius: "10px", background: `linear-gradient(135deg, ${L.accent}, ${L.violet})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", fontWeight: 800, color: "#fff" }}>â</div>
             <span style={{ fontSize: "18px", fontWeight: 800, color: L.accent, fontFamily: T.fontDisplay }}>PMO<span style={{ color: L.text }}>System</span></span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <button onClick={onBack} style={{ padding: "8px 20px", borderRadius: "10px", background: "transparent", border: `1px solid ${L.border}`, cursor: "pointer", fontSize: "13px", fontWeight: 600, color: L.textMuted, fontFamily: T.font }}>
-              ← Volver al login
+              â Volver al login
             </button>
             <button onClick={() => onSelectPlan("business")} style={{ padding: "8px 20px", borderRadius: "10px", background: L.accent, border: "none", cursor: "pointer", fontSize: "13px", fontWeight: 700, color: "#fff", fontFamily: T.font }}>
-              Prueba gratis 14 días
+              Prueba gratis 14 dÃ­as
             </button>
           </div>
         </div>
@@ -616,7 +617,7 @@ const PricingScreen = ({ onBack, onSelectPlan }) => {
               }}>
                 {plan.popular && (
                   <div style={{ textAlign: "center", padding: "6px 0 2px", fontSize: "11px", fontWeight: 700, color: "#fff", letterSpacing: "0.5px" }}>
-                    ⭐ MÁS POPULAR
+                    â­ MÃS POPULAR
                   </div>
                 )}
                 <div style={{
@@ -647,7 +648,7 @@ const PricingScreen = ({ onBack, onSelectPlan }) => {
                         </div>
                         {annual && plan.price > 0 && (
                           <div style={{ fontSize: "12px", color: T.emerald, marginTop: "4px", fontWeight: 600 }}>
-                            Ahorra ${(plan.price - plan.priceAnnual) * 12}/usuario al año
+                            Ahorra ${(plan.price - plan.priceAnnual) * 12}/usuario al aÃ±o
                           </div>
                         )}
                       </div>
@@ -658,7 +659,7 @@ const PricingScreen = ({ onBack, onSelectPlan }) => {
                     {plan.features.map((f, i) => (
                       <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px", padding: "5px 0", fontSize: "13px" }}>
                         <span style={{ fontSize: "14px", lineHeight: "20px", flexShrink: 0 }}>
-                          {f.included ? <span style={{ color: T.emerald }}>✓</span> : <span style={{ color: L.borderLight }}>—</span>}
+                          {f.included ? <span style={{ color: T.emerald }}>â</span> : <span style={{ color: L.borderLight }}>â</span>}
                         </span>
                         <span style={{ color: f.included ? L.text : L.textDim }}>{f.text}</span>
                       </div>
@@ -683,7 +684,7 @@ const PricingScreen = ({ onBack, onSelectPlan }) => {
         {/* Toggle Comparison */}
         <div style={{ textAlign: "center", marginBottom: "40px" }}>
           <button onClick={() => setShowComparison(!showComparison)} style={{ padding: "12px 28px", borderRadius: "12px", background: "#fff", border: `1px solid ${L.border}`, cursor: "pointer", fontSize: "14px", fontWeight: 600, color: L.text, fontFamily: T.font }}>
-            {showComparison ? "Ocultar comparación detallada ▲" : "Ver comparación detallada de planes ▼"}
+            {showComparison ? "Ocultar comparaciÃ³n detallada â²" : "Ver comparaciÃ³n detallada de planes â¼"}
           </button>
         </div>
 
@@ -711,7 +712,7 @@ const PricingScreen = ({ onBack, onSelectPlan }) => {
                       <tr key={`f-${ci}-${fi}`} style={{ borderBottom: `1px solid ${L.border}20` }}>
                         <td style={{ padding: "10px 20px", fontSize: "13px", color: L.text }}>{f.name}</td>
                         {[f.starter, f.pro, f.business, f.enterprise].map((val, vi) => (
-                          <td key={vi} style={{ padding: "10px 14px", textAlign: "center", fontSize: "13px", color: val === "—" ? L.textDim : val === "✓" ? T.emerald : L.text, fontWeight: val === "✓" ? 700 : 500, fontFamily: val === "✓" || val === "—" ? T.font : T.fontMono }}>
+                          <td key={vi} style={{ padding: "10px 14px", textAlign: "center", fontSize: "13px", color: val === "â" ? L.textDim : val === "â" ? T.emerald : L.text, fontWeight: val === "â" ? 700 : 500, fontFamily: val === "â" || val === "â" ? T.font : T.fontMono }}>
                             {val}
                           </td>
                         ))}
@@ -728,7 +729,7 @@ const PricingScreen = ({ onBack, onSelectPlan }) => {
         <div style={{ textAlign: "center", marginBottom: "60px" }}>
           <div style={{ fontSize: "13px", color: L.textDim, marginBottom: "20px", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 600 }}>Confiado por equipos PMO en</div>
           <div style={{ display: "flex", justifyContent: "center", gap: "48px", alignItems: "center", opacity: 0.5 }}>
-            {["Banco de Crédito", "Interbank", "BBVA Perú", "Telefónica", "Belcorp", "Alicorp"].map(c => (
+            {["Banco de CrÃ©dito", "Interbank", "BBVA PerÃº", "TelefÃ³nica", "Belcorp", "Alicorp"].map(c => (
               <span key={c} style={{ fontSize: "15px", fontWeight: 700, color: L.textDim, fontFamily: T.fontDisplay }}>{c}</span>
             ))}
           </div>
@@ -741,7 +742,7 @@ const PricingScreen = ({ onBack, onSelectPlan }) => {
             <div key={i} style={{ background: "#fff", border: `1px solid ${L.border}`, borderRadius: "14px", marginBottom: "12px", overflow: "hidden" }}>
               <button onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 22px", background: "none", border: "none", cursor: "pointer", fontFamily: T.font }}>
                 <span style={{ fontSize: "14px", fontWeight: 600, color: L.text, textAlign: "left" }}>{faq.q}</span>
-                <span style={{ fontSize: "18px", color: L.textDim, transform: openFaq === i ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>▾</span>
+                <span style={{ fontSize: "18px", color: L.textDim, transform: openFaq === i ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>â¾</span>
               </button>
               {openFaq === i && (
                 <div style={{ padding: "0 22px 18px", fontSize: "13px", color: L.textMuted, lineHeight: 1.7 }}>
@@ -754,9 +755,9 @@ const PricingScreen = ({ onBack, onSelectPlan }) => {
 
         {/* CTA */}
         <div style={{ textAlign: "center", background: `linear-gradient(135deg, #0f172a, #1e293b)`, borderRadius: "24px", padding: "48px 40px", marginBottom: "40px" }}>
-          <h2 style={{ fontSize: "28px", fontWeight: 800, color: "#fff", margin: "0 0 12px", fontFamily: T.fontDisplay }}>¿Listo para transformar tu PMO?</h2>
+          <h2 style={{ fontSize: "28px", fontWeight: 800, color: "#fff", margin: "0 0 12px", fontFamily: T.fontDisplay }}>Â¿Listo para transformar tu PMO?</h2>
           <p style={{ fontSize: "15px", color: "#94a3b8", margin: "0 0 28px", maxWidth: "480px", marginLeft: "auto", marginRight: "auto" }}>
-            Empieza con 14 días gratis del plan Business. Sin tarjeta de crédito. Sin compromisos.
+            Empieza con 14 dÃ­as gratis del plan Business. Sin tarjeta de crÃ©dito. Sin compromisos.
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: "14px" }}>
             <button onClick={() => onSelectPlan("business")} style={{ padding: "14px 32px", borderRadius: "12px", background: `linear-gradient(135deg, ${T.accent}, ${T.accentDim})`, border: "none", cursor: "pointer", fontSize: "15px", fontWeight: 700, color: "#fff", fontFamily: T.font }}>
@@ -772,18 +773,18 @@ const PricingScreen = ({ onBack, onSelectPlan }) => {
   );
 };
 
-// ─── NAVIGATION ──────────────────────────────────────────────────────────────
+// âââ NAVIGATION ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const NAV_ITEMS = [
-  { id: "dashboard", label: "Dashboard", icon: "◉" },
-  { id: "strategic", label: "Alineamiento", icon: "◈" },
-  { id: "engine", label: "Motor Híbrido", icon: "⟐" },
-  { id: "uncertainty", label: "Incertidumbre", icon: "◬" },
-  { id: "metrics", label: "Métricas", icon: "◫" },
-  { id: "ai", label: "IA & Conocimiento", icon: "⬡" },
-  { id: "pricing", label: "Plan & Facturación", icon: "◇" },
+  { id: "dashboard", label: "Dashboard", icon: "â" },
+  { id: "strategic", label: "Alineamiento", icon: "â" },
+  { id: "engine", label: "Motor HÃ­brido", icon: "â" },
+  { id: "uncertainty", label: "Incertidumbre", icon: "â¬" },
+  { id: "metrics", label: "MÃ©tricas", icon: "â«" },
+  { id: "ai", label: "IA & Conocimiento", icon: "â¬¡" },
+  { id: "pricing", label: "Plan & FacturaciÃ³n", icon: "â" },
 ];
 
-// ─── MAIN DASHBOARD VIEW ─────────────────────────────────────────────────────
+// âââ MAIN DASHBOARD VIEW âââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const DashboardView = () => {
   const totalBudget = PROJECTS.reduce((s, p) => s + p.budget, 0);
   const totalSpent = PROJECTS.reduce((s, p) => s + p.spent, 0);
@@ -799,13 +800,13 @@ const DashboardView = () => {
 
   return (
     <div>
-      <SectionHeader title="Portfolio Command Center" subtitle="Vista consolidada del portafolio — Datos en tiempo real" />
+      <SectionHeader title="Portfolio Command Center" subtitle="Vista consolidada del portafolio â Datos en tiempo real" />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "14px", marginBottom: "24px" }}>
-        <MetricCard label="Proyectos Activos" value={PROJECTS.length} sub="3 ágiles · 2 híbridos · 1 predictivo" color={T.accent} icon="📊" small />
-        <MetricCard label="PHI Promedio" value={avgPHI} sub={<StatusBadge value={parseFloat(avgPHI)} />} color={parseFloat(avgPHI) >= 0.8 ? T.emerald : T.amber} icon="💊" small />
-        <MetricCard label="VRI Portafolio" value={avgVRI} sub="Índice Realización de Valor" color={T.accent} icon="💎" small />
-        <MetricCard label="Presupuesto" value={`S/ ${(totalSpent/1e6).toFixed(1)}M`} sub={`de S/ ${(totalBudget/1e6).toFixed(1)}M (${Math.round(totalSpent/totalBudget*100)}%)`} color={T.amber} icon="💰" small />
-        <MetricCard label="Riesgos Críticos" value={criticalRisks} sub={`de ${RISKS.length} identificados`} color={T.rose} icon="⚠️" small />
+        <MetricCard label="Proyectos Activos" value={PROJECTS.length} sub="3 Ã¡giles Â· 2 hÃ­bridos Â· 1 predictivo" color={T.accent} icon="ð" small />
+        <MetricCard label="PHI Promedio" value={avgPHI} sub={<StatusBadge value={parseFloat(avgPHI)} />} color={parseFloat(avgPHI) >= 0.8 ? T.emerald : T.amber} icon="ð" small />
+        <MetricCard label="VRI Portafolio" value={avgVRI} sub="Ãndice RealizaciÃ³n de Valor" color={T.accent} icon="ð" small />
+        <MetricCard label="Presupuesto" value={`S/ ${(totalSpent/1e6).toFixed(1)}M`} sub={`de S/ ${(totalBudget/1e6).toFixed(1)}M (${Math.round(totalSpent/totalBudget*100)}%)`} color={T.amber} icon="ð°" small />
+        <MetricCard label="Riesgos CrÃ­ticos" value={criticalRisks} sub={`de ${RISKS.length} identificados`} color={T.rose} icon="â ï¸" small />
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "18px", marginBottom: "24px" }}>
@@ -815,7 +816,7 @@ const DashboardView = () => {
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "12px" }}>
               <thead>
                 <tr style={{ borderBottom: `1px solid ${T.border}` }}>
-                  {["Proyecto", "Método", "PHI", "VRI", "CPI", "SPI", "Riesgo", "Avance"].map(h => (
+                  {["Proyecto", "MÃ©todo", "PHI", "VRI", "CPI", "SPI", "Riesgo", "Avance"].map(h => (
                     <th key={h} style={{ padding: "8px 10px", textAlign: "left", color: T.textDim, fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.8px", fontFamily: T.fontMono }}>{h}</th>
                   ))}
                 </tr>
@@ -853,7 +854,7 @@ const DashboardView = () => {
 
         <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
           <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px", flex: 1 }}>
-            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "12px", fontFamily: T.fontDisplay }}>Distribución de Salud</div>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "12px", fontFamily: T.fontDisplay }}>DistribuciÃ³n de Salud</div>
             <ResponsiveContainer width="100%" height={150}>
               <PieChart>
                 <Pie data={healthDistribution} cx="50%" cy="50%" innerRadius={40} outerRadius={65} paddingAngle={4} dataKey="value" stroke="none">
@@ -886,16 +887,16 @@ const DashboardView = () => {
       </div>
 
       <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
-        <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "14px", fontFamily: T.fontDisplay }}>🔔 Alertas del Sistema</div>
+        <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "14px", fontFamily: T.fontDisplay }}>ð Alertas del Sistema</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
           {[
-            { level: "critical", msg: "DC Norte: CPI 0.87 bajo umbral rojo (0.90) — 2 ciclos consecutivos", time: "Hace 2h" },
-            { level: "warning", msg: "Cloud AWS: SPI 0.88 en tendencia descendente — Sprint 8 con 3 historias bloqueadas", time: "Hace 5h" },
-            { level: "info", msg: "Portal B2B: VRI alcanzó 0.91 — Supera target de beneficio en 8%", time: "Hace 1d" },
-            { level: "warning", msg: "Supuesto A003 caduca en 15 días — Equipo Oracle aún sin confirmación", time: "Hace 1d" },
+            { level: "critical", msg: "DC Norte: CPI 0.87 bajo umbral rojo (0.90) â 2 ciclos consecutivos", time: "Hace 2h" },
+            { level: "warning", msg: "Cloud AWS: SPI 0.88 en tendencia descendente â Sprint 8 con 3 historias bloqueadas", time: "Hace 5h" },
+            { level: "info", msg: "Portal B2B: VRI alcanzÃ³ 0.91 â Supera target de beneficio en 8%", time: "Hace 1d" },
+            { level: "warning", msg: "Supuesto A003 caduca en 15 dÃ­as â Equipo Oracle aÃºn sin confirmaciÃ³n", time: "Hace 1d" },
           ].map((a, i) => (
             <div key={i} style={{ display: "flex", gap: "10px", padding: "10px 14px", borderRadius: T.radiusXs, background: a.level === "critical" ? T.roseGlow : a.level === "warning" ? T.amberGlow : T.accentGlow, border: `1px solid ${a.level === "critical" ? T.rose : a.level === "warning" ? T.amber : T.accent}20` }}>
-              <span style={{ fontSize: "14px" }}>{a.level === "critical" ? "🔴" : a.level === "warning" ? "🟡" : "🟢"}</span>
+              <span style={{ fontSize: "14px" }}>{a.level === "critical" ? "ð´" : a.level === "warning" ? "ð¡" : "ð¢"}</span>
               <div>
                 <div style={{ fontSize: "12px", color: T.text, lineHeight: 1.4 }}>{a.msg}</div>
                 <div style={{ fontSize: "10px", color: T.textDim, marginTop: "4px" }}>{a.time}</div>
@@ -908,26 +909,26 @@ const DashboardView = () => {
   );
 };
 
-// ─── STRATEGIC ALIGNMENT VIEW ────────────────────────────────────────────────
+// âââ STRATEGIC ALIGNMENT VIEW ââââââââââââââââââââââââââââââââââââââââââââââââ
 const StrategicView = () => {
   const [expandedOkr, setExpandedOkr] = useState("okr1");
   return (
     <div>
-      <SectionHeader title="Alineamiento Estratégico" subtitle="Cadena de valor: OKR → Beneficio → Proyecto → Entregable" />
+      <SectionHeader title="Alineamiento EstratÃ©gico" subtitle="Cadena de valor: OKR â Beneficio â Proyecto â Entregable" />
       <div style={{ background: `linear-gradient(135deg, ${T.bgCard}, ${T.accentGlow})`, border: `1px solid ${T.accent}30`, borderRadius: T.radius, padding: "20px", marginBottom: "24px" }}>
-        <div style={{ fontSize: "11px", color: T.accent, textTransform: "uppercase", letterSpacing: "1px", marginBottom: "8px", fontFamily: T.fontMono }}>Métrica Central</div>
-        <div style={{ fontSize: "16px", color: T.text, fontFamily: T.fontMono, marginBottom: "8px" }}>VRI = Σ (Peso<sub>i</sub> × %Completado<sub>i</sub> × Factor_Calidad<sub>i</sub>) / Beneficio_Target</div>
-        <div style={{ fontSize: "12px", color: T.textMuted }}>Umbral mínimo: 0.70 — Por debajo se dispara workflow de revisión estratégica</div>
+        <div style={{ fontSize: "11px", color: T.accent, textTransform: "uppercase", letterSpacing: "1px", marginBottom: "8px", fontFamily: T.fontMono }}>MÃ©trica Central</div>
+        <div style={{ fontSize: "16px", color: T.text, fontFamily: T.fontMono, marginBottom: "8px" }}>VRI = Î£ (Peso<sub>i</sub> Ã %Completado<sub>i</sub> Ã Factor_Calidad<sub>i</sub>) / Beneficio_Target</div>
+        <div style={{ fontSize: "12px", color: T.textMuted }}>Umbral mÃ­nimo: 0.70 â Por debajo se dispara workflow de revisiÃ³n estratÃ©gica</div>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "24px" }}>
         {OKR_DATA.map(okr => (
           <div key={okr.id} style={{ background: T.bgCard, border: `1px solid ${expandedOkr === okr.id ? T.accent + "40" : T.border}`, borderRadius: T.radius, overflow: "hidden", transition: "all 0.3s" }}>
             <div onClick={() => setExpandedOkr(expandedOkr === okr.id ? null : okr.id)} style={{ padding: "18px 20px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-                <div style={{ width: "44px", height: "44px", borderRadius: "10px", background: T.accentGlow, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", border: `1px solid ${T.accent}30` }}>◈</div>
+                <div style={{ width: "44px", height: "44px", borderRadius: "10px", background: T.accentGlow, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", border: `1px solid ${T.accent}30` }}>â</div>
                 <div>
                   <div style={{ fontSize: "15px", fontWeight: 700, color: T.text, fontFamily: T.fontDisplay }}>{okr.name}</div>
-                  <div style={{ fontSize: "12px", color: T.textDim, marginTop: "2px" }}>{okr.benefits.length} beneficios vinculados · {okr.benefits.reduce((s,b) => s + b.projects.length, 0)} proyectos</div>
+                  <div style={{ fontSize: "12px", color: T.textDim, marginTop: "2px" }}>{okr.benefits.length} beneficios vinculados Â· {okr.benefits.reduce((s,b) => s + b.projects.length, 0)} proyectos</div>
                 </div>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
@@ -935,7 +936,7 @@ const StrategicView = () => {
                   <div style={{ fontSize: "22px", fontWeight: 700, color: okr.progress >= 70 ? T.emerald : T.amber, fontFamily: T.fontMono }}>{okr.progress}%</div>
                   <div style={{ width: "100px" }}><ProgressBar value={okr.progress} color={okr.progress >= 70 ? T.emerald : T.amber} /></div>
                 </div>
-                <span style={{ color: T.textDim, fontSize: "18px", transform: expandedOkr === okr.id ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>▾</span>
+                <span style={{ color: T.textDim, fontSize: "18px", transform: expandedOkr === okr.id ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>â¾</span>
               </div>
             </div>
             {expandedOkr === okr.id && (
@@ -955,7 +956,7 @@ const StrategicView = () => {
                       </div>
                       <ProgressBar value={b.actual * 100} color={b.actual >= 0.8 ? T.emerald : b.actual >= 0.6 ? T.amber : T.rose} />
                       <div style={{ marginTop: "10px", display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                        {b.projects.map(pid => { const proj = PROJECTS.find(p => p.id === pid); return proj ? (<span key={pid} style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "4px", background: T.bgCard, border: `1px solid ${T.border}`, color: T.textMuted }}>{proj.name} — VRI: <span style={{ color: T.accent, fontFamily: T.fontMono }}>{proj.vri.toFixed(2)}</span></span>) : null; })}
+                        {b.projects.map(pid => { const proj = PROJECTS.find(p => p.id === pid); return proj ? (<span key={pid} style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "4px", background: T.bgCard, border: `1px solid ${T.border}`, color: T.textMuted }}>{proj.name} â VRI: <span style={{ color: T.accent, fontFamily: T.fontMono }}>{proj.vri.toFixed(2)}</span></span>) : null; })}
                       </div>
                     </div>
                   ))}
@@ -966,7 +967,7 @@ const StrategicView = () => {
         ))}
       </div>
       <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
-        <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>📊 Portfolio Scorecard — Vista C-Suite</div>
+        <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>ð Portfolio Scorecard â Vista C-Suite</div>
         <ResponsiveContainer width="100%" height={250}>
           <RadarChart data={PROJECTS.map(p => ({ name: p.name.split(" ")[0], vri: p.vri * 100, phi: p.phi * 100, cpi: p.cpi * 100, spi: p.spi * 100, risk: (1 - p.riskExposure) * 100 }))}>
             <PolarGrid stroke={T.border} />
@@ -983,14 +984,14 @@ const StrategicView = () => {
   );
 };
 
-// ─── HYBRID ENGINE VIEW ──────────────────────────────────────────────────────
+// âââ HYBRID ENGINE VIEW ââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const EngineView = () => {
   const [engineTab, setEngineTab] = useState("gantt");
   const colors = { critical: T.rose, high: T.amber, medium: T.accent, low: T.textDim };
   const ganttColors = [T.accent, T.violet, T.emerald, T.amber, T.rose];
   return (
     <div>
-      <SectionHeader title="Motor Híbrido de Entrega" subtitle="Predictivo + Ágil + Híbrido — Patrón Strategy desacoplado" />
+      <SectionHeader title="Motor HÃ­brido de Entrega" subtitle="Predictivo + Ãgil + HÃ­brido â PatrÃ³n Strategy desacoplado" />
       <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
         {[{id:"gantt",label:"Gantt Interactivo"},{id:"kanban",label:"Tablero Kanban"},{id:"deps",label:"Grafo Dependencias"}].map(t => (
           <Pill key={t.id} active={engineTab === t.id} color={T.accent} onClick={() => setEngineTab(t.id)}>{t.label}</Pill>
@@ -998,7 +999,7 @@ const EngineView = () => {
       </div>
       {engineTab === "gantt" && (
         <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px", overflowX: "auto" }}>
-          <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Diagrama de Gantt — Vista Predictiva</div>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Diagrama de Gantt â Vista Predictiva</div>
           <div style={{ minWidth: "700px" }}>
             <div style={{ display: "flex", marginBottom: "8px", paddingLeft: "200px" }}>
               {Array.from({length: 16}, (_, i) => (<div key={i} style={{ flex: 1, fontSize: "9px", color: T.textDim, textAlign: "center", fontFamily: T.fontMono }}>S{i+1}</div>))}
@@ -1009,7 +1010,7 @@ const EngineView = () => {
               return (
                 <div key={task.id} style={{ display: "flex", alignItems: "center", marginBottom: "6px", height: "32px" }}>
                   <div style={{ width: "200px", fontSize: "11px", color: T.text, paddingLeft: `${task.level * 16}px`, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {task.level > 0 && <span style={{ color: T.textDim, marginRight: "4px" }}>└</span>}{task.name}
+                    {task.level > 0 && <span style={{ color: T.textDim, marginRight: "4px" }}>â</span>}{task.name}
                   </div>
                   <div style={{ flex: 1, position: "relative", height: "20px" }}>
                     <div style={{ position: "absolute", left: `${(task.start / 16) * 100}%`, width: `${(task.duration / 16) * 100}%`, height: "20px", background: `${barColor}30`, borderRadius: "4px", border: `1px solid ${barColor}50` }}>
@@ -1025,7 +1026,7 @@ const EngineView = () => {
       )}
       {engineTab === "kanban" && (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" }}>
-          {[{ title: "Backlog", items: KANBAN_ITEMS.filter((_, i) => i < 2) },{ title: "En Progreso", items: KANBAN_ITEMS.filter((_, i) => i >= 2 && i < 4) },{ title: "En Revisión", items: KANBAN_ITEMS.filter((_, i) => i >= 4 && i < 5) },{ title: "Completado", items: KANBAN_ITEMS.filter((_, i) => i >= 5) }].map((col, ci) => (
+          {[{ title: "Backlog", items: KANBAN_ITEMS.filter((_, i) => i < 2) },{ title: "En Progreso", items: KANBAN_ITEMS.filter((_, i) => i >= 2 && i < 4) },{ title: "En RevisiÃ³n", items: KANBAN_ITEMS.filter((_, i) => i >= 4 && i < 5) },{ title: "Completado", items: KANBAN_ITEMS.filter((_, i) => i >= 5) }].map((col, ci) => (
             <div key={ci} style={{ background: T.bgSurface, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "14px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
                 <span style={{ fontSize: "12px", fontWeight: 700, color: T.text, textTransform: "uppercase", letterSpacing: "0.5px" }}>{col.title}</span>
@@ -1052,21 +1053,21 @@ const EngineView = () => {
       {engineTab === "deps" && (
         <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
           <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "6px", fontFamily: T.fontDisplay }}>Grafo de Dependencias Unificado (UDG)</div>
-          <div style={{ fontSize: "12px", color: T.textDim, marginBottom: "20px" }}>DAG — Detección de ciclos (Kahn) · Ruta crítica híbrida · Análisis de impacto BFS</div>
+          <div style={{ fontSize: "12px", color: T.textDim, marginBottom: "20px" }}>DAG â DetecciÃ³n de ciclos (Kahn) Â· Ruta crÃ­tica hÃ­brida Â· AnÃ¡lisis de impacto BFS</div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px", marginBottom: "20px" }}>
-            {[{ type: "Hito → Incremento", example: "Infra habilita sprint integración", sync: "Evento al completarse", color: T.violet },{ type: "Incremento → Hito", example: "MVP software → Go-Live", sync: "DoD actualiza % hito", color: T.emerald },{ type: "Incremento → Incremento", example: "Feature A consume API Feature B", sync: "Contract testing", color: T.accent },{ type: "Hito → Hito", example: "Diseño precede construcción", sync: "FS clásico + propagación", color: T.amber }].map((d, i) => (
+            {[{ type: "Hito â Incremento", example: "Infra habilita sprint integraciÃ³n", sync: "Evento al completarse", color: T.violet },{ type: "Incremento â Hito", example: "MVP software â Go-Live", sync: "DoD actualiza % hito", color: T.emerald },{ type: "Incremento â Incremento", example: "Feature A consume API Feature B", sync: "Contract testing", color: T.accent },{ type: "Hito â Hito", example: "DiseÃ±o precede construcciÃ³n", sync: "FS clÃ¡sico + propagaciÃ³n", color: T.amber }].map((d, i) => (
               <div key={i} style={{ background: T.bgSurface, border: `1px solid ${d.color}25`, borderRadius: T.radiusSm, padding: "14px" }}>
                 <div style={{ fontSize: "11px", fontWeight: 700, color: d.color, marginBottom: "6px", fontFamily: T.fontMono }}>{d.type}</div>
                 <div style={{ fontSize: "11px", color: T.textMuted, marginBottom: "4px" }}>{d.example}</div>
-                <div style={{ fontSize: "10px", color: T.textDim }}>🔄 {d.sync}</div>
+                <div style={{ fontSize: "10px", color: T.textDim }}>ð {d.sync}</div>
               </div>
             ))}
           </div>
           <svg width="100%" viewBox="0 0 700 200" style={{ background: T.bgSurface, borderRadius: T.radiusSm, border: `1px solid ${T.border}` }}>
             <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill={T.textDim} /></marker></defs>
             {[[95,45,175,45],[95,105,175,105],[95,165,175,165],[265,45,345,55],[265,105,345,80],[265,165,345,135],[435,70,515,85],[435,120,515,100]].map(([x1,y1,x2,y2],i) => (<line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={T.textDim} strokeWidth="1.5" markerEnd="url(#arrow)" strokeDasharray={i > 5 ? "4,3" : "none"} />))}
-            {[{ x: 50, y: 35, label: "ERP: Análisis", c: T.accent },{ x: 50, y: 95, label: "Cloud: Assess", c: T.violet },{ x: 50, y: 155, label: "DC: Permisos", c: T.amber },{ x: 220, y: 45, label: "ERP: Diseño", c: T.accent },{ x: 220, y: 95, label: "Cloud: Migración", c: T.violet },{ x: 220, y: 145, label: "DC: Construcc.", c: T.amber },{ x: 390, y: 60, label: "ERP: Dev Core", c: T.accent },{ x: 390, y: 120, label: "Cloud: QA", c: T.violet },{ x: 560, y: 85, label: "Integración", c: T.emerald }].map((n, i) => (<g key={i}><rect x={n.x - 45} y={n.y - 12} width="90" height="24" rx="6" fill={`${n.c}18`} stroke={n.c} strokeWidth="1" /><text x={n.x} y={n.y + 4} textAnchor="middle" fontSize="9" fill={T.text} fontFamily="DM Sans">{n.label}</text></g>))}
-            <text x="350" y="195" textAnchor="middle" fontSize="10" fill={T.textDim} fontFamily="DM Sans">━ Dependencia directa  ╌╌ Dependencia cross-project</text>
+            {[{ x: 50, y: 35, label: "ERP: AnÃ¡lisis", c: T.accent },{ x: 50, y: 95, label: "Cloud: Assess", c: T.violet },{ x: 50, y: 155, label: "DC: Permisos", c: T.amber },{ x: 220, y: 45, label: "ERP: DiseÃ±o", c: T.accent },{ x: 220, y: 95, label: "Cloud: MigraciÃ³n", c: T.violet },{ x: 220, y: 145, label: "DC: Construcc.", c: T.amber },{ x: 390, y: 60, label: "ERP: Dev Core", c: T.accent },{ x: 390, y: 120, label: "Cloud: QA", c: T.violet },{ x: 560, y: 85, label: "IntegraciÃ³n", c: T.emerald }].map((n, i) => (<g key={i}><rect x={n.x - 45} y={n.y - 12} width="90" height="24" rx="6" fill={`${n.c}18`} stroke={n.c} strokeWidth="1" /><text x={n.x} y={n.y + 4} textAnchor="middle" fontSize="9" fill={T.text} fontFamily="DM Sans">{n.label}</text></g>))}
+            <text x="350" y="195" textAnchor="middle" fontSize="10" fill={T.textDim} fontFamily="DM Sans">â Dependencia directa  ââ Dependencia cross-project</text>
           </svg>
         </div>
       )}
@@ -1074,18 +1075,18 @@ const EngineView = () => {
   );
 };
 
-// ─── UNCERTAINTY VIEW ────────────────────────────────────────────────────────
+// âââ UNCERTAINTY VIEW ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const UncertaintyView = () => {
   const [simTab, setSimTab] = useState("risks");
   const cynefinData = [
-    { domain: "Simple", count: PROJECTS.filter(p => p.complexity === "Simple").length, strategy: "Automatización, checklists", approach: "Predictivo", color: T.emerald },
-    { domain: "Complicado", count: PROJECTS.filter(p => p.complexity === "Complicado").length, strategy: "Análisis experto, decision trees", approach: "Predictivo / Híbrido", color: T.accent },
-    { domain: "Complejo", count: PROJECTS.filter(p => p.complexity === "Complejo").length, strategy: "Experimentos, feedback loops", approach: "Ágil", color: T.amber },
-    { domain: "Caótico", count: RISKS.filter(r => r.cynefin === "Caótico").length, strategy: "Protocolos de crisis, war rooms", approach: "Respuesta rápida", color: T.rose },
+    { domain: "Simple", count: PROJECTS.filter(p => p.complexity === "Simple").length, strategy: "AutomatizaciÃ³n, checklists", approach: "Predictivo", color: T.emerald },
+    { domain: "Complicado", count: PROJECTS.filter(p => p.complexity === "Complicado").length, strategy: "AnÃ¡lisis experto, decision trees", approach: "Predictivo / HÃ­brido", color: T.accent },
+    { domain: "Complejo", count: PROJECTS.filter(p => p.complexity === "Complejo").length, strategy: "Experimentos, feedback loops", approach: "Ãgil", color: T.amber },
+    { domain: "CaÃ³tico", count: RISKS.filter(r => r.cynefin === "CaÃ³tico").length, strategy: "Protocolos de crisis, war rooms", approach: "Respuesta rÃ¡pida", color: T.rose },
   ];
   return (
     <div>
-      <SectionHeader title="Gestión de Incertidumbre y Complejidad" subtitle="Dominio de Desempeño PMBOK® 8 — Navegación dinámica de la complejidad" />
+      <SectionHeader title="GestiÃ³n de Incertidumbre y Complejidad" subtitle="Dominio de DesempeÃ±o PMBOKÂ® 8 â NavegaciÃ³n dinÃ¡mica de la complejidad" />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px", marginBottom: "24px" }}>
         {cynefinData.map(c => (
           <div key={c.domain} style={{ background: T.bgCard, border: `1px solid ${c.color}25`, borderRadius: T.radius, padding: "18px", position: "relative", overflow: "hidden" }}>
@@ -1103,8 +1104,8 @@ const UncertaintyView = () => {
       {simTab === "risks" && (
         <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, fontFamily: T.fontDisplay }}>Red de Impacto — Índice de Exposición Sistémica (SEI)</div>
-            <div style={{ fontSize: "10px", color: T.textDim, fontFamily: T.fontMono }}>SEI = P × Σ(Imp_j × W_j) × F_Propagación</div>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, fontFamily: T.fontDisplay }}>Red de Impacto â Ãndice de ExposiciÃ³n SistÃ©mica (SEI)</div>
+            <div style={{ fontSize: "10px", color: T.textDim, fontFamily: T.fontMono }}>SEI = P Ã Î£(Imp_j Ã W_j) Ã F_PropagaciÃ³n</div>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             {RISKS.sort((a, b) => b.sei - a.sei).map(r => (
@@ -1115,7 +1116,7 @@ const UncertaintyView = () => {
                 <div style={{ textAlign: "center" }}><div style={{ fontSize: "10px", color: T.textDim }}>Prob</div><div style={{ fontSize: "13px", fontWeight: 700, color: T.amber, fontFamily: T.fontMono }}>{(r.prob * 100).toFixed(0)}%</div></div>
                 <div style={{ textAlign: "center" }}><div style={{ fontSize: "10px", color: T.textDim }}>Impacto</div><div style={{ fontSize: "13px", fontWeight: 700, color: T.rose, fontFamily: T.fontMono }}>{(r.impact * 100).toFixed(0)}%</div></div>
                 <div style={{ textAlign: "center" }}><div style={{ fontSize: "10px", color: T.textDim }}>SEI</div><div style={{ fontSize: "16px", fontWeight: 800, color: r.sei > 2 ? T.rose : r.sei > 1 ? T.amber : T.emerald, fontFamily: T.fontMono }}>{r.sei.toFixed(1)}</div></div>
-                <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "10px", textAlign: "center", fontWeight: 600, color: r.status === "critical" ? T.rose : r.status === "active" ? T.amber : T.emerald, background: r.status === "critical" ? T.roseGlow : r.status === "active" ? T.amberGlow : T.emeraldGlow }}>{r.status === "critical" ? "CRÍTICO" : r.status === "active" ? "Activo" : "Monitoreando"}</span>
+                <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "10px", textAlign: "center", fontWeight: 600, color: r.status === "critical" ? T.rose : r.status === "active" ? T.amber : T.emerald, background: r.status === "critical" ? T.roseGlow : r.status === "active" ? T.amberGlow : T.emeraldGlow }}>{r.status === "critical" ? "CRÃTICO" : r.status === "active" ? "Activo" : "Monitoreando"}</span>
               </div>
             ))}
           </div>
@@ -1124,8 +1125,8 @@ const UncertaintyView = () => {
       {simTab === "montecarlo" && (
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "18px" }}>
           <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
-            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "4px", fontFamily: T.fontDisplay }}>Distribución de Fechas de Fin</div>
-            <div style={{ fontSize: "11px", color: T.textDim, marginBottom: "16px" }}>50 iteraciones — Portafolio consolidado</div>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "4px", fontFamily: T.fontDisplay }}>DistribuciÃ³n de Fechas de Fin</div>
+            <div style={{ fontSize: "11px", color: T.textDim, marginBottom: "16px" }}>50 iteraciones â Portafolio consolidado</div>
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={(() => { const bins = {}; MONTE_CARLO.forEach(m => { const b = Math.floor(m.days / 10) * 10; bins[b] = (bins[b] || 0) + 1; }); return Object.entries(bins).map(([k,v]) => ({ range: `${k}-${+k+9}d`, count: v, days: +k })).sort((a,b) => a.days - b.days); })()}>
                 <CartesianGrid strokeDasharray="3 3" stroke={T.border} /><XAxis dataKey="range" tick={{ fontSize: 9, fill: T.textDim }} /><YAxis tick={{ fontSize: 9, fill: T.textDim }} />
@@ -1133,14 +1134,14 @@ const UncertaintyView = () => {
               </BarChart>
             </ResponsiveContainer>
             <div style={{ display: "flex", justifyContent: "space-around", marginTop: "10px" }}>
-              {[["P50", "178 días", T.emerald], ["P80", "202 días", T.amber], ["P95", "221 días", T.rose]].map(([l,v,c]) => (<div key={l} style={{ textAlign: "center" }}><div style={{ fontSize: "10px", color: T.textDim }}>{l}</div><div style={{ fontSize: "14px", fontWeight: 700, color: c, fontFamily: T.fontMono }}>{v}</div></div>))}
+              {[["P50", "178 dÃ­as", T.emerald], ["P80", "202 dÃ­as", T.amber], ["P95", "221 dÃ­as", T.rose]].map(([l,v,c]) => (<div key={l} style={{ textAlign: "center" }}><div style={{ fontSize: "10px", color: T.textDim }}>{l}</div><div style={{ fontSize: "14px", fontWeight: 700, color: c, fontFamily: T.fontMono }}>{v}</div></div>))}
             </div>
           </div>
           <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
-            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "4px", fontFamily: T.fontDisplay }}>Dispersión Costo vs. Duración</div>
-            <div style={{ fontSize: "11px", color: T.textDim, marginBottom: "16px" }}>Cada punto = 1 simulación</div>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "4px", fontFamily: T.fontDisplay }}>DispersiÃ³n Costo vs. DuraciÃ³n</div>
+            <div style={{ fontSize: "11px", color: T.textDim, marginBottom: "16px" }}>Cada punto = 1 simulaciÃ³n</div>
             <ResponsiveContainer width="100%" height={280}>
-              <ScatterChart><CartesianGrid strokeDasharray="3 3" stroke={T.border} /><XAxis dataKey="days" name="Días" tick={{ fontSize: 9, fill: T.textDim }} label={{ value: "Días", position: "bottom", fontSize: 10, fill: T.textDim }} /><YAxis dataKey="cost" name="Costo" tick={{ fontSize: 9, fill: T.textDim }} tickFormatter={v => `${(v/1e6).toFixed(1)}M`} /><Scatter data={MONTE_CARLO} fill={T.accent} fillOpacity={0.6} r={4} /><Tooltip content={<CustomTooltip />} /></ScatterChart>
+              <ScatterChart><CartesianGrid strokeDasharray="3 3" stroke={T.border} /><XAxis dataKey="days" name="DÃ­as" tick={{ fontSize: 9, fill: T.textDim }} label={{ value: "DÃ­as", position: "bottom", fontSize: 10, fill: T.textDim }} /><YAxis dataKey="cost" name="Costo" tick={{ fontSize: 9, fill: T.textDim }} tickFormatter={v => `${(v/1e6).toFixed(1)}M`} /><Scatter data={MONTE_CARLO} fill={T.accent} fillOpacity={0.6} r={4} /><Tooltip content={<CustomTooltip />} /></ScatterChart>
             </ResponsiveContainer>
           </div>
         </div>
@@ -1152,10 +1153,10 @@ const UncertaintyView = () => {
             {ASSUMPTIONS.map(a => (
               <div key={a.id} style={{ display: "grid", gridTemplateColumns: "60px 1fr 120px 100px 90px", gap: "12px", alignItems: "center", padding: "14px 16px", borderRadius: T.radiusSm, background: a.status === "at_risk" ? T.amberGlow : T.bgSurface, border: `1px solid ${a.status === "at_risk" ? T.amber + "30" : T.border}` }}>
                 <span style={{ fontSize: "11px", fontFamily: T.fontMono, color: T.textDim }}>{a.id}</span>
-                <div><div style={{ fontSize: "12px", fontWeight: 600, color: T.text }}>{a.desc}</div><div style={{ fontSize: "10px", color: T.textDim }}>{a.project} · Riesgo vinculado: {a.risk}</div></div>
+                <div><div style={{ fontSize: "12px", fontWeight: 600, color: T.text }}>{a.desc}</div><div style={{ fontSize: "10px", color: T.textDim }}>{a.project} Â· Riesgo vinculado: {a.risk}</div></div>
                 <div style={{ textAlign: "center", fontSize: "11px", color: T.textMuted, fontFamily: T.fontMono }}>{a.validationDate}</div>
                 <div style={{ textAlign: "center" }}><span style={{ fontSize: "14px", fontWeight: 700, color: a.daysLeft <= 15 ? T.rose : a.daysLeft <= 30 ? T.amber : T.emerald, fontFamily: T.fontMono }}>{a.daysLeft}d</span><div style={{ fontSize: "9px", color: T.textDim }}>restantes</div></div>
-                <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "10px", textAlign: "center", fontWeight: 600, color: a.status === "at_risk" ? T.amber : a.status === "valid" ? T.emerald : T.textMuted, background: a.status === "at_risk" ? T.amberGlow : a.status === "valid" ? T.emeraldGlow : T.bgCard }}>{a.status === "at_risk" ? "⚠ En Riesgo" : a.status === "valid" ? "✓ Válido" : "◌ Pendiente"}</span>
+                <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "10px", textAlign: "center", fontWeight: 600, color: a.status === "at_risk" ? T.amber : a.status === "valid" ? T.emerald : T.textMuted, background: a.status === "at_risk" ? T.amberGlow : a.status === "valid" ? T.emeraldGlow : T.bgCard }}>{a.status === "at_risk" ? "â  En Riesgo" : a.status === "valid" ? "â VÃ¡lido" : "â Pendiente"}</span>
               </div>
             ))}
           </div>
@@ -1165,35 +1166,35 @@ const UncertaintyView = () => {
   );
 };
 
-// ─── METRICS VIEW ────────────────────────────────────────────────────────────
+// âââ METRICS VIEW ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const MetricsView = () => {
   const [metricTab, setMetricTab] = useState("evm");
   return (
     <div>
-      <SectionHeader title="Métricas de Desempeño" subtitle="EVM + Flujo Ágil — Framework consolidado PHI" />
+      <SectionHeader title="MÃ©tricas de DesempeÃ±o" subtitle="EVM + Flujo Ãgil â Framework consolidado PHI" />
       <div style={{ background: `linear-gradient(135deg, ${T.bgCard}, ${T.emeraldGlow})`, border: `1px solid ${T.emerald}30`, borderRadius: T.radius, padding: "18px 20px", marginBottom: "24px" }}>
         <div style={{ fontSize: "11px", color: T.emerald, textTransform: "uppercase", letterSpacing: "1px", marginBottom: "6px", fontFamily: T.fontMono }}>Project Health Index</div>
-        <div style={{ fontSize: "14px", color: T.text, fontFamily: T.fontMono }}>PHI = (w₁·CPI + w₂·SPI + w₃·FlowEff + w₄·VRI + w₅·(1−RiskExp)) / Σw</div>
-        <div style={{ display: "flex", gap: "20px", marginTop: "10px" }}>{[["≥ 0.80", "Verde", T.emerald], ["0.60–0.79", "Amarillo", T.amber], ["< 0.60", "Rojo", T.rose]].map(([r, l, c]) => (<span key={l} style={{ fontSize: "11px", color: c }}>● {l}: {r}</span>))}</div>
+        <div style={{ fontSize: "14px", color: T.text, fontFamily: T.fontMono }}>PHI = (wâÂ·CPI + wâÂ·SPI + wâÂ·FlowEff + wâÂ·VRI + wâÂ·(1âRiskExp)) / Î£w</div>
+        <div style={{ display: "flex", gap: "20px", marginTop: "10px" }}>{[["â¥ 0.80", "Verde", T.emerald], ["0.60â0.79", "Amarillo", T.amber], ["< 0.60", "Rojo", T.rose]].map(([r, l, c]) => (<span key={l} style={{ fontSize: "11px", color: c }}>â {l}: {r}</span>))}</div>
       </div>
       <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
-        {[{id:"evm",label:"Valor Ganado (EVM)"},{id:"agile",label:"Flujo Ágil"},{id:"consolidated",label:"Vista Consolidada"}].map(t => (<Pill key={t.id} active={metricTab === t.id} color={T.emerald} onClick={() => setMetricTab(t.id)}>{t.label}</Pill>))}
+        {[{id:"evm",label:"Valor Ganado (EVM)"},{id:"agile",label:"Flujo Ãgil"},{id:"consolidated",label:"Vista Consolidada"}].map(t => (<Pill key={t.id} active={metricTab === t.id} color={T.emerald} onClick={() => setMetricTab(t.id)}>{t.label}</Pill>))}
       </div>
       {metricTab === "evm" && (
         <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "18px" }}>
           <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
-            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Curvas S — Portafolio Consolidado</div>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Curvas S â Portafolio Consolidado</div>
             <ResponsiveContainer width="100%" height={300}>
               <AreaChart data={EVM_TIMELINE}><CartesianGrid strokeDasharray="3 3" stroke={T.border} /><XAxis dataKey="month" tick={{ fontSize: 10, fill: T.textDim }} /><YAxis tick={{ fontSize: 9, fill: T.textDim }} tickFormatter={v => `${(v/1e6).toFixed(1)}M`} /><Area type="monotone" dataKey="pv" name="PV (Planned)" stroke={T.textDim} fill={T.textDim} fillOpacity={0.1} strokeWidth={2} strokeDasharray="5 3" /><Area type="monotone" dataKey="ev" name="EV (Earned)" stroke={T.emerald} fill={T.emerald} fillOpacity={0.15} strokeWidth={2.5} /><Area type="monotone" dataKey="ac" name="AC (Actual)" stroke={T.rose} fill={T.rose} fillOpacity={0.1} strokeWidth={2} /><Tooltip content={<CustomTooltip />} /><Legend wrapperStyle={{ fontSize: "11px" }} /></AreaChart>
             </ResponsiveContainer>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
             <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "18px" }}>
-              <div style={{ fontSize: "12px", fontWeight: 700, color: T.text, marginBottom: "14px", fontFamily: T.fontDisplay }}>Índices de Eficiencia</div>
+              <div style={{ fontSize: "12px", fontWeight: 700, color: T.text, marginBottom: "14px", fontFamily: T.fontDisplay }}>Ãndices de Eficiencia</div>
               {PROJECTS.map(p => (<div key={p.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0", borderBottom: `1px solid ${T.border}20` }}><span style={{ fontSize: "11px", color: T.textMuted, maxWidth: "100px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.name.split(" ").slice(0,2).join(" ")}</span><div style={{ display: "flex", gap: "12px" }}><span style={{ fontSize: "12px", fontWeight: 700, color: p.cpi >= 1 ? T.emerald : p.cpi >= 0.9 ? T.amber : T.rose, fontFamily: T.fontMono }}>CPI {p.cpi.toFixed(2)}</span><span style={{ fontSize: "12px", fontWeight: 700, color: p.spi >= 1 ? T.emerald : p.spi >= 0.85 ? T.amber : T.rose, fontFamily: T.fontMono }}>SPI {p.spi.toFixed(2)}</span></div></div>))}
             </div>
             <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "18px" }}>
-              <div style={{ fontSize: "12px", fontWeight: 700, color: T.text, marginBottom: "10px", fontFamily: T.fontDisplay }}>Pronósticos</div>
+              <div style={{ fontSize: "12px", fontWeight: 700, color: T.text, marginBottom: "10px", fontFamily: T.fontDisplay }}>PronÃ³sticos</div>
               {[{ label: "EAC", value: "S/ 3.72M", desc: "BAC / CPI", color: T.accent },{ label: "ETC", value: "S/ 1.78M", desc: "EAC - AC", color: T.amber },{ label: "VAC", value: "-S/ 220K", desc: "BAC - EAC", color: T.rose },{ label: "TCPI", value: "1.14", desc: "(BAC-EV)/(BAC-AC)", color: T.violet }].map(m => (<div key={m.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "6px 0" }}><div><span style={{ fontSize: "12px", fontWeight: 700, color: m.color, fontFamily: T.fontMono }}>{m.label}</span><span style={{ fontSize: "10px", color: T.textDim, marginLeft: "6px" }}>{m.desc}</span></div><span style={{ fontSize: "14px", fontWeight: 700, color: T.text, fontFamily: T.fontMono }}>{m.value}</span></div>))}
             </div>
           </div>
@@ -1240,16 +1241,16 @@ const MetricsView = () => {
   );
 };
 
-// ─── AI & KNOWLEDGE VIEW ─────────────────────────────────────────────────────
+// âââ AI & KNOWLEDGE VIEW âââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const AIView = () => {
   const [aiFilter, setAiFilter] = useState("all");
-  const typeConfig = { risk: { icon: "⚠️", color: T.rose, label: "Predicción de Riesgo" }, resource: { icon: "👥", color: T.violet, label: "Optimización Recurso" }, estimation: { icon: "📐", color: T.amber, label: "Calibración Estimación" }, lesson: { icon: "📚", color: T.emerald, label: "Lección Aprendida" } };
+  const typeConfig = { risk: { icon: "â ï¸", color: T.rose, label: "PredicciÃ³n de Riesgo" }, resource: { icon: "ð¥", color: T.violet, label: "OptimizaciÃ³n Recurso" }, estimation: { icon: "ð", color: T.amber, label: "CalibraciÃ³n EstimaciÃ³n" }, lesson: { icon: "ð", color: T.emerald, label: "LecciÃ³n Aprendida" } };
   const filtered = aiFilter === "all" ? AI_RECOMMENDATIONS : AI_RECOMMENDATIONS.filter(r => r.type === aiFilter);
   return (
     <div>
-      <SectionHeader title="Motor de Conocimiento e IA" subtitle="RAG + ML predictivo — Aprendizaje continuo de ejecución histórica" />
+      <SectionHeader title="Motor de Conocimiento e IA" subtitle="RAG + ML predictivo â Aprendizaje continuo de ejecuciÃ³n histÃ³rica" />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px", marginBottom: "24px" }}>
-        {[{ layer: "Ingestión", desc: "ETL pipeline, event sourcing, data lake", tech: "Apache Kafka · PostgreSQL", icon: "📥", color: T.accent },{ layer: "Análisis", desc: "ML supervisado, NLP para lecciones aprendidas", tech: "XGBoost · scikit-learn · NLP", icon: "🧠", color: T.violet },{ layer: "Recomendación", desc: "LLM fine-tuned con RAG contextual", tech: "LangChain · Vector DB · RAG", icon: "💡", color: T.emerald }].map(l => (
+        {[{ layer: "IngestiÃ³n", desc: "ETL pipeline, event sourcing, data lake", tech: "Apache Kafka Â· PostgreSQL", icon: "ð¥", color: T.accent },{ layer: "AnÃ¡lisis", desc: "ML supervisado, NLP para lecciones aprendidas", tech: "XGBoost Â· scikit-learn Â· NLP", icon: "ð§ ", color: T.violet },{ layer: "RecomendaciÃ³n", desc: "LLM fine-tuned con RAG contextual", tech: "LangChain Â· Vector DB Â· RAG", icon: "ð¡", color: T.emerald }].map(l => (
           <div key={l.layer} style={{ background: T.bgCard, border: `1px solid ${l.color}25`, borderRadius: T.radius, padding: "20px" }}>
             <div style={{ fontSize: "24px", marginBottom: "10px" }}>{l.icon}</div>
             <div style={{ fontSize: "15px", fontWeight: 700, color: l.color, fontFamily: T.fontDisplay }}>{l.layer}</div>
@@ -1279,9 +1280,9 @@ const AIView = () => {
                 <div style={{ textAlign: "right", flexShrink: 0 }}><div style={{ fontSize: "10px", color: T.textDim }}>Confianza</div><div style={{ fontSize: "20px", fontWeight: 800, color: rec.confidence >= 0.85 ? T.emerald : T.amber, fontFamily: T.fontMono }}>{(rec.confidence * 100).toFixed(0)}%</div></div>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "12px", borderTop: `1px solid ${T.border}` }}>
-                <div style={{ fontSize: "12px", color: T.accent }}>💡 Acción sugerida: <span style={{ color: T.text }}>{rec.action}</span></div>
+                <div style={{ fontSize: "12px", color: T.accent }}>ð¡ AcciÃ³n sugerida: <span style={{ color: T.text }}>{rec.action}</span></div>
                 <div style={{ display: "flex", gap: "8px" }}>
-                  {rec.status === "accepted" ? (<span style={{ fontSize: "11px", padding: "4px 12px", borderRadius: "6px", background: T.emeraldGlow, color: T.emerald, fontWeight: 600 }}>✓ Aceptada</span>) : (<><button style={{ fontSize: "11px", padding: "4px 14px", borderRadius: "6px", background: T.emerald, color: T.bg, border: "none", cursor: "pointer", fontWeight: 600, fontFamily: T.font }}>Aceptar</button><button style={{ fontSize: "11px", padding: "4px 14px", borderRadius: "6px", background: "transparent", color: T.textDim, border: `1px solid ${T.border}`, cursor: "pointer", fontFamily: T.font }}>Rechazar</button></>)}
+                  {rec.status === "accepted" ? (<span style={{ fontSize: "11px", padding: "4px 12px", borderRadius: "6px", background: T.emeraldGlow, color: T.emerald, fontWeight: 600 }}>â Aceptada</span>) : (<><button style={{ fontSize: "11px", padding: "4px 14px", borderRadius: "6px", background: T.emerald, color: T.bg, border: "none", cursor: "pointer", fontWeight: 600, fontFamily: T.font }}>Aceptar</button><button style={{ fontSize: "11px", padding: "4px 14px", borderRadius: "6px", background: "transparent", color: T.textDim, border: `1px solid ${T.border}`, cursor: "pointer", fontFamily: T.font }}>Rechazar</button></>)}
                 </div>
               </div>
             </div>
@@ -1289,9 +1290,9 @@ const AIView = () => {
         })}
       </div>
       <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
-        <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>📈 Precisión del Modelo — Dashboard de Retroalimentación</div>
+        <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>ð PrecisiÃ³n del Modelo â Dashboard de RetroalimentaciÃ³n</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" }}>
-          {[{ label: "Predicción Riesgos", value: "73%", target: ">70%", desc: "Recall en 52 proyectos" },{ label: "Estimación Esfuerzo", value: "±18%", target: "<25%", desc: "Desviación promedio" },{ label: "Recomendaciones Aceptadas", value: "64%", target: ">60%", desc: "Tasa de aceptación PM" },{ label: "Lecciones Relevantes", value: "81%", target: ">75%", desc: "Relevancia reportada" }].map(m => (
+          {[{ label: "PredicciÃ³n Riesgos", value: "73%", target: ">70%", desc: "Recall en 52 proyectos" },{ label: "EstimaciÃ³n Esfuerzo", value: "Â±18%", target: "<25%", desc: "DesviaciÃ³n promedio" },{ label: "Recomendaciones Aceptadas", value: "64%", target: ">60%", desc: "Tasa de aceptaciÃ³n PM" },{ label: "Lecciones Relevantes", value: "81%", target: ">75%", desc: "Relevancia reportada" }].map(m => (
             <div key={m.label} style={{ background: T.bgSurface, borderRadius: T.radiusSm, padding: "16px", textAlign: "center" }}>
               <div style={{ fontSize: "10px", color: T.textDim, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "6px" }}>{m.label}</div>
               <div style={{ fontSize: "24px", fontWeight: 800, color: T.emerald, fontFamily: T.fontMono }}>{m.value}</div>
@@ -1305,23 +1306,23 @@ const AIView = () => {
   );
 };
 
-// ─── IN-APP BILLING VIEW ─────────────────────────────────────────────────────
+// âââ IN-APP BILLING VIEW âââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const BillingView = ({ user }) => {
   const [annual, setAnnual] = useState(true);
   const currentPlan = PRICING_PLANS.find(p => p.id === user.plan) || PRICING_PLANS[2];
   return (
     <div>
-      <SectionHeader title="Plan & Facturación" subtitle="Gestiona tu suscripción y métodos de pago" />
+      <SectionHeader title="Plan & FacturaciÃ³n" subtitle="Gestiona tu suscripciÃ³n y mÃ©todos de pago" />
       {/* Current Plan */}
       <div style={{ background: `linear-gradient(135deg, ${T.bgCard}, ${T.accentGlow})`, border: `1px solid ${T.accent}30`, borderRadius: T.radius, padding: "24px", marginBottom: "24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
           <div style={{ fontSize: "11px", color: T.accent, textTransform: "uppercase", letterSpacing: "1px", marginBottom: "6px", fontFamily: T.fontMono }}>Tu Plan Actual</div>
           <div style={{ fontSize: "28px", fontWeight: 800, color: T.text, fontFamily: T.fontDisplay }}>{currentPlan.icon} {currentPlan.name}</div>
-          <div style={{ fontSize: "13px", color: T.textMuted, marginTop: "4px" }}>{currentPlan.subtitle} · Facturación anual · Renovación: 14 Feb 2027</div>
+          <div style={{ fontSize: "13px", color: T.textMuted, marginTop: "4px" }}>{currentPlan.subtitle} Â· FacturaciÃ³n anual Â· RenovaciÃ³n: 14 Feb 2027</div>
         </div>
         <div style={{ textAlign: "right" }}>
           <div style={{ fontSize: "36px", fontWeight: 800, color: T.accent, fontFamily: T.fontDisplay }}>${currentPlan.priceAnnual}<span style={{ fontSize: "14px", color: T.textDim }}>/user/mo</span></div>
-          <div style={{ fontSize: "12px", color: T.emerald, fontWeight: 600 }}>Ahorras ${(currentPlan.price - currentPlan.priceAnnual) * 12}/user al año</div>
+          <div style={{ fontSize: "12px", color: T.emerald, fontWeight: 600 }}>Ahorras ${(currentPlan.price - currentPlan.priceAnnual) * 12}/user al aÃ±o</div>
         </div>
       </div>
 
@@ -1331,7 +1332,7 @@ const BillingView = ({ user }) => {
           <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Uso Actual</div>
           {[
             { label: "Usuarios activos", used: 47, max: currentPlan.maxUsers, unit: "" },
-            { label: "Proyectos activos", used: 6, max: currentPlan.maxProjects === -1 ? "∞" : currentPlan.maxProjects, unit: "" },
+            { label: "Proyectos activos", used: 6, max: currentPlan.maxProjects === -1 ? "â" : currentPlan.maxProjects, unit: "" },
             { label: "Almacenamiento", used: 18.4, max: 50, unit: "GB" },
             { label: "Llamadas API (mes)", used: 12450, max: 50000, unit: "" },
           ].map((u, i) => (
@@ -1346,22 +1347,22 @@ const BillingView = ({ user }) => {
         </div>
         {/* Payment Method */}
         <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
-          <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Método de Pago</div>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>MÃ©todo de Pago</div>
           <div style={{ background: T.bgSurface, borderRadius: T.radiusSm, padding: "16px", border: `1px solid ${T.border}`, marginBottom: "14px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                 <div style={{ width: "44px", height: "30px", borderRadius: "6px", background: `linear-gradient(135deg, #1a1f71, #2d4ca3)`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", color: "#fff", fontWeight: 700, fontFamily: T.fontMono }}>VISA</div>
                 <div>
-                  <div style={{ fontSize: "13px", color: T.text, fontFamily: T.fontMono }}>•••• •••• •••• 4532</div>
+                  <div style={{ fontSize: "13px", color: T.text, fontFamily: T.fontMono }}>â¢â¢â¢â¢ â¢â¢â¢â¢ â¢â¢â¢â¢ 4532</div>
                   <div style={{ fontSize: "11px", color: T.textDim }}>Vence 08/2028</div>
                 </div>
               </div>
               <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "10px", background: T.emeraldGlow, color: T.emerald, fontWeight: 600 }}>Principal</span>
             </div>
           </div>
-          <button style={{ width: "100%", padding: "10px", borderRadius: T.radiusSm, background: "transparent", border: `1px dashed ${T.border}`, cursor: "pointer", color: T.textDim, fontSize: "12px", fontFamily: T.font }}>+ Agregar método de pago</button>
+          <button style={{ width: "100%", padding: "10px", borderRadius: T.radiusSm, background: "transparent", border: `1px dashed ${T.border}`, cursor: "pointer", color: T.textDim, fontSize: "12px", fontFamily: T.font }}>+ Agregar mÃ©todo de pago</button>
           <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: `1px solid ${T.border}` }}>
-            <div style={{ fontSize: "12px", fontWeight: 700, color: T.text, marginBottom: "10px" }}>Historial de Facturación</div>
+            <div style={{ fontSize: "12px", fontWeight: 700, color: T.text, marginBottom: "10px" }}>Historial de FacturaciÃ³n</div>
             {[
               { date: "14 Ene 2026", amount: "$1,296.00", status: "Pagado" },
               { date: "14 Dic 2025", amount: "$1,296.00", status: "Pagado" },
@@ -1370,7 +1371,7 @@ const BillingView = ({ user }) => {
               <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", fontSize: "12px" }}>
                 <span style={{ color: T.textMuted }}>{inv.date}</span>
                 <span style={{ color: T.text, fontFamily: T.fontMono }}>{inv.amount}</span>
-                <span style={{ color: T.emerald, fontSize: "10px" }}>✓ {inv.status}</span>
+                <span style={{ color: T.emerald, fontSize: "10px" }}>â {inv.status}</span>
               </div>
             ))}
           </div>
@@ -1408,9 +1409,9 @@ const BillingView = ({ user }) => {
   );
 };
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// ─── MAIN APP ─────────────────────────────────────────────────────────────────
-// ═══════════════════════════════════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// âââ MAIN APP âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function PMOSystem() {
   const [screen, setScreen] = useState("login"); // login | pricing | app
   const [user, setUser] = useState(null);
@@ -1433,17 +1434,17 @@ function PMOSystem() {
     setActiveView("dashboard");
   };
 
-  // ── Login Screen
+  // ââ Login Screen
   if (screen === "login") {
     return <LoginScreen onLogin={handleLogin} onShowPricing={() => setScreen("pricing")} />;
   }
 
-  // ── Pricing Screen
+  // ââ Pricing Screen
   if (screen === "pricing") {
     return <PricingScreen onBack={() => setScreen("login")} onSelectPlan={(planId) => { handleLogin({ name: "Usuario", email: "user@demo.com", avatar: "U", plan: planId }); }} />;
   }
 
-  // ── Main App
+  // ââ Main App
   const views = { dashboard: DashboardView, strategic: StrategicView, engine: EngineView, uncertainty: UncertaintyView, metrics: MetricsView, ai: AIView, pricing: () => <BillingView user={user} /> };
   const ActiveComponent = views[activeView];
 
@@ -1454,8 +1455,8 @@ function PMOSystem() {
       {/* Sidebar */}
       <div style={{ width: "220px", background: T.bgCard, borderRight: `1px solid ${T.border}`, display: "flex", flexDirection: "column", flexShrink: 0, position: "sticky", top: 0, height: "100vh" }}>
         <div style={{ padding: "20px 18px", borderBottom: `1px solid ${T.border}` }}>
-          <div style={{ fontSize: "18px", fontWeight: 800, color: T.accent, fontFamily: T.fontDisplay, letterSpacing: "-0.5px" }}>◈ PMO<span style={{ color: T.text }}>System</span></div>
-          <div style={{ fontSize: "9px", color: T.textDim, marginTop: "4px", fontFamily: T.fontMono, textTransform: "uppercase", letterSpacing: "1px" }}>PMBOK® 8th Edition</div>
+          <div style={{ fontSize: "18px", fontWeight: 800, color: T.accent, fontFamily: T.fontDisplay, letterSpacing: "-0.5px" }}>â PMO<span style={{ color: T.text }}>System</span></div>
+          <div style={{ fontSize: "9px", color: T.textDim, marginTop: "4px", fontFamily: T.fontMono, textTransform: "uppercase", letterSpacing: "1px" }}>PMBOKÂ® 8th Edition</div>
         </div>
 
         {/* User profile mini */}
@@ -1482,11 +1483,11 @@ function PMOSystem() {
 
         <div style={{ padding: "12px 18px", borderTop: `1px solid ${T.border}` }}>
           <button onClick={handleLogout} style={{ width: "100%", padding: "8px 12px", borderRadius: T.radiusSm, background: "transparent", border: `1px solid ${T.border}`, cursor: "pointer", fontSize: "12px", color: T.textDim, fontFamily: T.font, display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
-            ↩ Cerrar Sesión
+            â© Cerrar SesiÃ³n
           </button>
           <div style={{ marginTop: "10px", fontSize: "10px", color: T.textDim, textAlign: "center" }}>
             <div style={{ fontFamily: T.fontMono }}>{time.toLocaleDateString('es-PE', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
-            <div style={{ marginTop: "2px" }}>v1.0 MVP · Confidencial</div>
+            <div style={{ marginTop: "2px" }}>v1.0 MVP Â· Confidencial</div>
           </div>
         </div>
       </div>
