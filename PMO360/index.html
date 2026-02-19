@@ -4,21 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PMO360 - Sistema de Entrega de Valor PMO | InnovaQ Solution</title>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
-  <script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/recharts@2.12.7/umd/Recharts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide-react@0.263.1/dist/umd/lucide-react.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: sans-serif; background: #0a0e1a; }
   </style>
+  <script>
+    // Setup globals after CDN loads
+    window.addEventListener('DOMContentLoaded', function() {
+      // Recharts may be under different names
+      if (typeof Recharts !== 'undefined') {
+        window._RC = Recharts;
+      }
+      // Lucide may be under lucide
+      if (typeof lucide !== 'undefined') {
+        window._LC = lucide;
+      } else if (typeof LucideReact !== 'undefined') {
+        window._LC = LucideReact;
+      }
+    });
+  </script>
 </head>
 <body>
   <div id="root"></div>
   <script type="text/babel">
     const { useState, useEffect, useRef, useMemo, useCallback } = React;
-    const { LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ScatterChart, Scatter, ComposedChart } = Recharts;
+    
+    // Recharts components
+    const _RC = window.Recharts || window._RC || {};
+    const { LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ScatterChart, Scatter, ComposedChart } = _RC;
+    
+    // Lucide React components
+    const _LC = window.lucide || window.LucideReact || window._LC || {};
+    const { ChevronDown, ChevronRight, ChevronUp, Settings, Bell, Search, Plus, Edit, Trash2, Save, X, Filter, Download, Upload, RefreshCw, Eye, EyeOff, Check, AlertCircle, Info, TrendingUp, TrendingDown, ArrowUp, ArrowDown, BarChart2, Activity, Layers, Target, Award, Users, Calendar, Clock, DollarSign, Briefcase, Flag, AlertTriangle, CheckCircle, XCircle, Zap, Globe, Lock, Unlock, Star, Heart, MessageSquare, Phone, Mail, MapPin, Link, ExternalLink, Home, Grid, List, Table, MoreHorizontal, MoreVertical, Menu } = _LC;
 
     
 // ─── DESIGN TOKENS ───────────────────────────────────────────────────────────
