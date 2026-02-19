@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PMO360 - Sistema de Entrega de Valor PMO | InnovaQ Solution</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+  <script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: sans-serif; background: #0a0e1a; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useMemo, useCallback } = React;
+    const { LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ScatterChart, Scatter, ComposedChart } = Recharts;
+
+    
+// ─── DESIGN TOKENS ───────────────────────────────────────────────────────────
+const T = {
+  bg: "#0a0e1a", bgCard: "#111827", bgCardHover: "#1a2235", bgSurface: "#0d1220",
+  border: "#1e293b", borderLight: "#334155",
+  accent: "#22d3ee", accentDim: "#0e7490", accentGlow: "rgba(34,211,238,0.15)",
+  amber: "#f59e0b", amberDim: "#92400e", amberGlow: "rgba(245,158,11,0.12)",
+  rose: "#f43f5e", roseDim: "#9f1239", roseGlow: "rgba(244,63,94,0.12)",
+  emerald: "#10b981", emeraldDim: "#065f46", emeraldGlow: "rgba(16,185,129,0.12)",
+  violet: "#a78bfa", violetDim: "#5b21b6",
+  text: "#f1f5f9", textMuted: "#94a3b8", textDim: "#64748b",
+  font: "'DM Sans', sans-serif", fontMono: "'JetBrains Mono', monospace",
+  fontDisplay: "'Sora', sans-serif",
+  radius: "12px", radiusSm: "8px", radiusXs: "6px",
+};
+
+// Light theme for login/pricing
+const L = {
+  bg: "#f8fafc", bgCard: "#ffffff", bgSurface: "#f1f5f9",
+  border: "#e2e8f0", borderLight: "#cbd5e1",
+  text: "#0f172a", textMuted: "#475569", textDim: "#94a3b8",
+  accent: "#0ea5e9", accentDark: "#0369a1", accentLight: "#e0f2fe",
+  emerald: "#10b981", emeraldLight: "#d1fae5",
+  amber: "#f59e0b", amberLight: "#fef3c7",
+  violet: "#8b5cf6", violetLight: "#ede9fe",
+  rose: "#f43f5e", roseLight: "#ffe4e6",
+};
+
+// ─── MOCK DATA ───────────────────────────────────────────────────────────────
+const PROJECTS = [
+  { id: 1, name: "ERP Financiero v3.0", method: "hybrid", phase: "Ejecución", pm: "Carlos Reyes", budget: 850000, spent: 412000, vri: 0.82, phi: 0.85, cpi: 1.04, spi: 0.92, riskExposure: 0.18, progress: 58, team: 12, complexity: "Complicado", startDate: "2025-09-01", endDate: "2026-06-30" },
+  { id: 2, name: "Migración Cloud AWS", method: "agile", phase: "Sprint 8", pm: "Ana Torres", budget: 620000, spent: 298000, vri: 0.76, phi: 0.73, cpi: 0.94, spi: 0.88, riskExposure: 0.32, progress: 45, team: 8, complexity: "Complejo", startDate: "2025-11-01", endDate: "2026-05-15" },
+  { id: 3, name: "Portal Clientes B2B", method: "agile", phase: "Sprint 12", pm: "Diego Vargas", budget: 380000, spent: 310000, vri: 0.91, phi: 0.89, cpi: 1.08, spi: 1.02, riskExposure: 0.09, progress: 82, team: 6, complexity: "Complicado", startDate: "2025-06-15", endDate: "2026-03-01" },
+  { id: 4, name: "Infraestructura DC Norte", method: "predictive", phase: "Construcción", pm: "María López", budget: 1200000, spent: 780000, vri: 0.68, phi: 0.62, cpi: 0.87, spi: 0.79, riskExposure: 0.41, progress: 65, team: 18, complexity: "Complicado", startDate: "2025-05-01", endDate: "2026-04-30" },
+  { id: 5, name: "App Mobile Ventas", method: "agile", phase: "Sprint 5", pm: "Luis Mendoza", budget: 280000, spent: 95000, vri: 0.88, phi: 0.91, cpi: 1.12, spi: 1.05, riskExposure: 0.07, progress: 33, team: 5, complexity: "Simple", startDate: "2025-12-01", endDate: "2026-05-30" },
+  { id: 6, name: "Integración SUNAT e-Factura", method: "hybrid", phase: "Diseño", pm: "Patricia Huamán", budget: 195000, spent: 42000, vri: 0.72, phi: 0.78, cpi: 1.01, spi: 0.95, riskExposure: 0.22, progress: 18, team: 4, complexity: "Complicado", startDate: "2026-01-10", endDate: "2026-07-30" },
+];
+
+const OKR_DATA = [
+  { id: "okr1", name: "Transformación Digital 2026", progress: 68, benefits: [
+    { id: "b1", name: "Reducción 30% tiempo operativo", type: "Operacional", target: 1.0, actual: 0.72, projects: [1, 6] },
+    { id: "b2", name: "95% disponibilidad servicios cloud", type: "Operacional", target: 1.0, actual: 0.76, projects: [2] },
+  ]},
+  { id: "okr2", name: "Excelencia en Experiencia Cliente", progress: 85, benefits: [
+    { id: "b3", name: "NPS > 75 en canales digitales", type: "Intangible", target: 1.0, actual: 0.91, projects: [3, 5] },
+  ]},
+  { id: "okr3", name: "Infraestructura Resiliente", progress: 52, benefits: [
+    { id: "b4", name: "RPO < 1hr en sistemas críticos", type: "Operacional", target: 1.0, actual: 0.62, projects: [4] },
+    { id: "b5", name: "ROI infraestructura 18% anual", type: "Financiero", target: 1.0, actual: 0.48, projects: [4, 2] },
+  ]},
+];
+
+const EVM_TIMELINE = Array.from({length: 12}, (_, i) => {
+  const month = i + 1;
+  const pv = Math.min(month * 290000, 3200000);
+  const ev = Math.min(month * 265000 + (Math.random()-0.5)*40000, 3100000);
+  const ac = Math.min(month * 275000 + (Math.random()-0.5)*50000, 3300000);
+  return { month: `M${month}`, pv: Math.round(pv), ev: Math.round(ev), ac: Math.round(ac) };
+});
+
+const AGILE_FLOW = Array.from({length: 10}, (_, i) => ({
+  sprint: `S${i+1}`, velocity: 28 + Math.floor(Math.random()*15), committed: 35 + Math.floor(Math.random()*8),
+  leadTime: 4.2 + Math.random()*3, cycleTime: 1.8 + Math.random()*2, throughput: 6 + Math.floor(Math.random()*6),
+  wip: 3 + Math.floor(Math.random()*5),
+}));
+
+const RISKS = [
+  { id: "R001", name: "Retraso en licenciamiento Oracle", prob: 0.7, impact: 0.8, sei: 2.1, status: "active", category: "Proveedor", project: "ERP Financiero v3.0", cynefin: "Complicado" },
+  { id: "R002", name: "Fuga de talento equipo DevOps", prob: 0.5, impact: 0.9, sei: 1.8, status: "active", category: "Recurso", project: "Migración Cloud AWS", cynefin: "Complejo" },
+  { id: "R003", name: "Cambio regulatorio SUNAT", prob: 0.4, impact: 0.7, sei: 1.4, status: "monitoring", category: "Regulatorio", project: "Integración SUNAT e-Factura", cynefin: "Complejo" },
+  { id: "R004", name: "Incompatibilidad APIs legacy", prob: 0.6, impact: 0.6, sei: 1.2, status: "active", category: "Técnico", project: "Portal Clientes B2B", cynefin: "Complicado" },
+  { id: "R005", name: "Sobrecosto materiales importados", prob: 0.8, impact: 0.9, sei: 2.8, status: "critical", category: "Costo", project: "Infraestructura DC Norte", cynefin: "Caótico" },
+  { id: "R006", name: "Baja adopción usuarios móviles", prob: 0.3, impact: 0.5, sei: 0.6, status: "monitoring", category: "Stakeholder", project: "App Mobile Ventas", cynefin: "Complejo" },
+  { id: "R007", name: "Latencia red interregional", prob: 0.5, impact: 0.7, sei: 1.5, status: "active", category: "Técnico", project: "Migración Cloud AWS", cynefin: "Complicado" },
+];
+
+const ASSUMPTIONS = [
+  { id: "A001", desc: "Presupuesto AWS aprobado sin recortes", validationDate: "2026-03-15", status: "pending", daysLeft: 29, risk: "R002", project: "Migración Cloud AWS" },
+  { id: "A002", desc: "Regulación e-Factura sin cambios hasta Q3", validationDate: "2026-06-30", status: "valid", daysLeft: 136, risk: "R003", project: "Integración SUNAT e-Factura" },
+  { id: "A003", desc: "Equipo Oracle disponible full-time desde Marzo", validationDate: "2026-03-01", status: "at_risk", daysLeft: 15, risk: "R001", project: "ERP Financiero v3.0" },
+  { id: "A004", desc: "Permisos municipales DC Norte aprobados", validationDate: "2026-02-28", status: "at_risk", daysLeft: 14, risk: "R005", project: "Infraestructura DC Norte" },
+];
+
+const MONTE_CARLO = Array.from({length: 50}, (_, i) => {
+  const date = 150 + Math.floor(Math.random() * 80);
+  const cost = 2800000 + Math.floor(Math.random() * 900000);
+  return { sim: i+1, days: date, cost, dateLabel: `+${date}d` };
+});
+
+const AI_RECOMMENDATIONS = [
+  { id: 1, type: "risk", confidence: 0.89, title: "Riesgo de retraso en Fase 3 – ERP Financiero", desc: "Basado en 12 proyectos similares, la combinación de dependencia Oracle + equipo híbrido tiene 73% de probabilidad de retraso >15 días.", action: "Iniciar plan de contingencia con proveedor alternativo", status: "pending" },
+  { id: 2, type: "resource", confidence: 0.82, title: "Cuello de botella – Equipo DevOps compartido", desc: "Cloud y DC Norte compiten por los mismos 3 ingenieros DevOps en semanas 8-12. Históricamente genera 22% de degradación en velocity.", action: "Reasignar 1 recurso dedicado a DC Norte", status: "accepted" },
+  { id: 3, type: "estimation", confidence: 0.91, title: "Sprint 9 Cloud – sobreestimación detectada", desc: "El promedio histórico de tareas de migración de DBs es 2.3x el estimado actual. Rango sugerido: 13-18 SP vs 8 SP planificados.", action: "Recalibrar estimación Sprint 9", status: "pending" },
+  { id: 4, type: "lesson", confidence: 0.77, title: "Lección aplicable – Integración SUNAT", desc: "Proyecto 'Facturación Electrónica 2024' documentó que el sandbox de SUNAT tiene downtime los viernes. Planificar QA entre lunes-jueves.", action: "Ajustar calendario de pruebas", status: "accepted" },
+];
+
+const KANBAN_ITEMS = [
+  { id: 1, title: "API Gateway Config", points: 5, assignee: "DV", project: "Portal B2B", priority: "high", days: 2 },
+  { id: 2, title: "Auth Module OAuth2", points: 8, assignee: "AT", project: "Cloud AWS", priority: "high", days: 4 },
+  { id: 3, title: "Dashboard Reportes", points: 3, assignee: "LM", project: "App Mobile", priority: "medium", days: 1 },
+  { id: 4, title: "ETL Pipeline Legacy", points: 13, assignee: "CR", project: "ERP Financiero", priority: "critical", days: 6 },
+  { id: 5, title: "CI/CD Pipeline", points: 5, assignee: "AT", project: "Cloud AWS", priority: "medium", days: 3 },
+  { id: 6, title: "UX Wireframes v2", points: 3, assignee: "PH", project: "SUNAT", priority: "low", days: 1 },
+];
+
+const GANTT_TASKS = [
+  { id: 1, name: "ERP: Análisis de Requisitos", start: 0, duration: 4, progress: 100, level: 0, deps: [] },
+  { id: 2, name: "ERP: Diseño Arquitectura", start: 3, duration: 3, progress: 100, level: 1, deps: [1] },
+  { id: 3, name: "ERP: Desarrollo Core", start: 6, duration: 8, progress: 65, level: 1, deps: [2] },
+  { id: 4, name: "ERP: Integración SUNAT", start: 10, duration: 4, progress: 20, level: 2, deps: [3] },
+  { id: 5, name: "Cloud: Assessment", start: 2, duration: 3, progress: 100, level: 0, deps: [] },
+  { id: 6, name: "Cloud: Migración DBs", start: 5, duration: 6, progress: 55, level: 1, deps: [5] },
+  { id: 7, name: "Cloud: Testing & QA", start: 11, duration: 3, progress: 0, level: 1, deps: [6] },
+  { id: 8, name: "DC Norte: Permisos", start: 0, duration: 5, progress: 80, level: 0, deps: [] },
+  { id: 9, name: "DC Norte: Construcción", start: 5, duration: 10, progress: 40, level: 1, deps: [8] },
+  { id: 10, name: "DC Norte: Equipamiento", start: 12, duration: 4, progress: 0, level: 2, deps: [9] },
+];
+
+// ─── PRICING DATA ────────────────────────────────────────────────────────────
+const PRICING_PLANS = [
+  {
+    id: "starter",
+    name: "Starter",
+    subtitle: "Para equipos pequeños",
+    price: 9,
+    priceAnnual: 7,
+    currency: "USD",
+    color: L.accent,
+    colorBg: L.accentLight,
+    icon: "🚀",
+    maxUsers: 10,
+    maxProjects: 5,
+    popular: false,
+    features: [
+      { text: "Hasta 10 usuarios", included: true },
+      { text: "5 proyectos activos", included: true },
+      { text: "Kanban & Gantt básico", included: true },
+      { text: "Gestión de tareas", included: true },
+      { text: "Reportes básicos", included: true },
+      { text: "1 GB almacenamiento", included: true },
+      { text: "Soporte por email", included: true },
+      { text: "Motor Híbrido completo", included: false },
+      { text: "EVM & métricas avanzadas", included: false },
+      { text: "Simulación Monte Carlo", included: false },
+      { text: "Motor de IA", included: false },
+      { text: "API & integraciones", included: false },
+    ],
+  },
+  {
+    id: "professional",
+    name: "Professional",
+    subtitle: "Para PMOs en crecimiento",
+    price: 19,
+    priceAnnual: 15,
+    currency: "USD",
+    color: L.violet,
+    colorBg: L.violetLight,
+    icon: "⚡",
+    maxUsers: 50,
+    maxProjects: 25,
+    popular: true,
+    features: [
+      { text: "Hasta 50 usuarios", included: true },
+      { text: "25 proyectos activos", included: true },
+      { text: "Motor Híbrido completo", included: true },
+      { text: "Gantt, Kanban & Scrum", included: true },
+      { text: "EVM completo + Curvas S", included: true },
+      { text: "Métricas ágiles de flujo", included: true },
+      { text: "Gestión de dependencias (UDG)", included: true },
+      { text: "Registro de riesgos dinámico", included: true },
+      { text: "10 GB almacenamiento", included: true },
+      { text: "Soporte prioritario", included: true },
+      { text: "Simulación Monte Carlo", included: false },
+      { text: "Motor de IA predictiva", included: false },
+    ],
+  },
+  {
+    id: "business",
+    name: "Business",
+    subtitle: "Para organizaciones maduras",
+    price: 34,
+    priceAnnual: 27,
+    currency: "USD",
+    color: T.emerald,
+    colorBg: L.emeraldLight,
+    icon: "💎",
+    maxUsers: 200,
+    maxProjects: -1,
+    popular: false,
+    features: [
+      { text: "Hasta 200 usuarios", included: true },
+      { text: "Proyectos ilimitados", included: true },
+      { text: "Todo en Professional +", included: true },
+      { text: "Alineamiento OKR-Beneficio", included: true },
+      { text: "Simulación Monte Carlo", included: true },
+      { text: "Análisis de complejidad Cynefin", included: true },
+      { text: "PHI consolidado de portafolio", included: true },
+      { text: "Motor de IA predictiva", included: true },
+      { text: "RAG lecciones aprendidas", included: true },
+      { text: "50 GB almacenamiento", included: true },
+      { text: "API REST + Webhooks", included: true },
+      { text: "SSO (Google, Microsoft)", included: true },
+    ],
+  },
+  {
+    id: "enterprise",
+    name: "Enterprise",
+    subtitle: "Despliegue corporativo a medida",
+    price: -1,
+    priceAnnual: -1,
+    currency: "USD",
+    color: "#f59e0b",
+    colorBg: L.amberLight,
+    icon: "🏛️",
+    maxUsers: -1,
+    maxProjects: -1,
+    popular: false,
+    features: [
+      { text: "Usuarios ilimitados", included: true },
+      { text: "Proyectos ilimitados", included: true },
+      { text: "Todo en Business +", included: true },
+      { text: "Despliegue on-premise / nube privada", included: true },
+      { text: "Integraciones SAP, Oracle, Jira", included: true },
+      { text: "Power BI & Tableau nativo", included: true },
+      { text: "Modelos IA personalizados", included: true },
+      { text: "RBAC avanzado + auditoría", included: true },
+      { text: "Almacenamiento ilimitado", included: true },
+      { text: "SLA 99.9% garantizado", included: true },
+      { text: "Customer Success dedicado", included: true },
+      { text: "Capacitación & onboarding", included: true },
+    ],
+  },
+];
+
+const PLAN_COMPARISON = [
+  { category: "Gestión de Proyectos", features: [
+    { name: "Proyectos activos", starter: "5", pro: "25", business: "Ilimitados", enterprise: "Ilimitados" },
+    { name: "Kanban Board", starter: "✓", pro: "✓", business: "✓", enterprise: "✓" },
+    { name: "Diagrama de Gantt", starter: "Básico", pro: "Avanzado", business: "Avanzado", enterprise: "Avanzado" },
+    { name: "Scrum / Sprints", starter: "—", pro: "✓", business: "✓", enterprise: "✓" },
+    { name: "Motor Híbrido (Tailoring)", starter: "—", pro: "✓", business: "✓", enterprise: "✓" },
+    { name: "Grafo Dependencias (UDG)", starter: "—", pro: "✓", business: "✓", enterprise: "✓" },
+  ]},
+  { category: "Métricas & Análisis", features: [
+    { name: "Reportes básicos", starter: "✓", pro: "✓", business: "✓", enterprise: "✓" },
+    { name: "EVM completo", starter: "—", pro: "✓", business: "✓", enterprise: "✓" },
+    { name: "Métricas ágiles de flujo", starter: "—", pro: "✓", business: "✓", enterprise: "✓" },
+    { name: "PHI consolidado", starter: "—", pro: "—", business: "✓", enterprise: "✓" },
+    { name: "Monte Carlo", starter: "—", pro: "—", business: "✓", enterprise: "✓" },
+    { name: "Dashboards ejecutivos", starter: "1", pro: "5", business: "Ilimitados", enterprise: "Personalizados" },
+  ]},
+  { category: "Estrategia & IA", features: [
+    { name: "Alineamiento OKR", starter: "—", pro: "—", business: "✓", enterprise: "✓" },
+    { name: "VRI (Value Realization Index)", starter: "—", pro: "—", business: "✓", enterprise: "✓" },
+    { name: "Cynefin & complejidad", starter: "—", pro: "—", business: "✓", enterprise: "✓" },
+    { name: "IA predictiva riesgos", starter: "—", pro: "—", business: "✓", enterprise: "Personalizada" },
+    { name: "RAG lecciones aprendidas", starter: "—", pro: "—", business: "✓", enterprise: "✓" },
+    { name: "Modelos ML personalizados", starter: "—", pro: "—", business: "—", enterprise: "✓" },
+  ]},
+  { category: "Plataforma", features: [
+    { name: "Usuarios", starter: "10", pro: "50", business: "200", enterprise: "Ilimitados" },
+    { name: "Almacenamiento", starter: "1 GB", pro: "10 GB", business: "50 GB", enterprise: "Ilimitado" },
+    { name: "API REST", starter: "—", pro: "Lectura", business: "Completa", enterprise: "Completa" },
+    { name: "SSO (Google/Microsoft)", starter: "—", pro: "—", business: "✓", enterprise: "✓ + SAML" },
+    { name: "Integraciones ERP", starter: "—", pro: "—", business: "—", enterprise: "✓" },
+    { name: "Soporte", starter: "Email", pro: "Prioritario", business: "24/7 Chat", enterprise: "Dedicado" },
+  ]},
+];
+
+// ─── UTILITY COMPONENTS ──────────────────────────────────────────────────────
+const StatusBadge = ({ value, thresholds = [0.8, 0.6] }) => {
+  const color = value >= thresholds[0] ? T.emerald : value >= thresholds[1] ? T.amber : T.rose;
+  const bg = value >= thresholds[0] ? T.emeraldGlow : value >= thresholds[1] ? T.amberGlow : T.roseGlow;
+  const label = value >= thresholds[0] ? "Saludable" : value >= thresholds[1] ? "Atención" : "Crítico";
+  return <span style={{ padding: "3px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: 600, color, background: bg, border: `1px solid ${color}30`, letterSpacing: "0.3px" }}>{label}</span>;
+};
+
+const MetricCard = ({ label, value, sub, color = T.accent, icon, small }) => (
+  <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radiusSm, padding: small ? "14px" : "20px", position: "relative", overflow: "hidden" }}>
+    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, ${color}, transparent)` }} />
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <div>
+        <div style={{ fontSize: "11px", color: T.textDim, textTransform: "uppercase", letterSpacing: "1px", marginBottom: "6px", fontFamily: T.fontMono }}>{label}</div>
+        <div style={{ fontSize: small ? "22px" : "28px", fontWeight: 700, color, fontFamily: T.fontDisplay }}>{value}</div>
+        {sub && <div style={{ fontSize: "12px", color: T.textMuted, marginTop: "4px" }}>{sub}</div>}
+      </div>
+      {icon && <div style={{ fontSize: "24px", opacity: 0.5 }}>{icon}</div>}
+    </div>
+  </div>
+);
+
+const SectionHeader = ({ title, subtitle, action }) => (
+  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "20px" }}>
+    <div>
+      <h2 style={{ fontSize: "20px", fontWeight: 700, color: T.text, margin: 0, fontFamily: T.fontDisplay }}>{title}</h2>
+      {subtitle && <p style={{ fontSize: "13px", color: T.textDim, margin: "4px 0 0" }}>{subtitle}</p>}
+    </div>
+    {action}
+  </div>
+);
+
+const ProgressBar = ({ value, color = T.accent, height = 6 }) => (
+  <div style={{ background: `${T.border}`, borderRadius: "3px", height, overflow: "hidden", width: "100%" }}>
+    <div style={{ width: `${Math.min(value, 100)}%`, height: "100%", background: `linear-gradient(90deg, ${color}, ${color}aa)`, borderRadius: "3px", transition: "width 0.6s ease" }} />
+  </div>
+);
+
+const MethodBadge = ({ method }) => {
+  const config = { predictive: { label: "Predictivo", color: T.violet }, agile: { label: "Ágil", color: T.emerald }, hybrid: { label: "Híbrido", color: T.amber } };
+  const c = config[method];
+  return <span style={{ padding: "2px 8px", borderRadius: "4px", fontSize: "10px", fontWeight: 600, color: c.color, background: `${c.color}18`, border: `1px solid ${c.color}30`, textTransform: "uppercase", letterSpacing: "0.5px" }}>{c.label}</span>;
+};
+
+const Pill = ({ children, color = T.accent, active, onClick }) => (
+  <button onClick={onClick} style={{ padding: "6px 16px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, color: active ? T.bg : color, background: active ? color : "transparent", border: `1px solid ${color}50`, cursor: "pointer", transition: "all 0.2s", fontFamily: T.font }}>{children}</button>
+);
+
+const CustomTooltip = ({ active, payload, label }) => {
+  if (!active || !payload) return null;
+  return (
+    <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radiusXs, padding: "10px 14px", boxShadow: "0 8px 24px rgba(0,0,0,0.4)" }}>
+      <div style={{ fontSize: "11px", color: T.textDim, marginBottom: "6px", fontFamily: T.fontMono }}>{label}</div>
+      {payload.map((p, i) => (
+        <div key={i} style={{ fontSize: "12px", color: p.color, display: "flex", gap: "8px", alignItems: "center" }}>
+          <span style={{ width: 8, height: 8, borderRadius: "50%", background: p.color, display: "inline-block" }} />
+          {p.name}: <strong>{typeof p.value === "number" ? p.value.toLocaleString() : p.value}</strong>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// ─── GOOGLE SVG ICON ─────────────────────────────────────────────────────────
+const GoogleIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 48 48">
+    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+  </svg>
+);
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ─── LOGIN SCREEN ─────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+const LoginScreen = ({ onLogin, onShowPricing }) => {
+  const [isHovering, setIsHovering] = useState(false);
+  const [emailMode, setEmailMode] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [animIn, setAnimIn] = useState(false);
+
+  useEffect(() => { setTimeout(() => setAnimIn(true), 100); }, []);
+
+  const handleGoogleLogin = () => {
+    onLogin({ name: "Alvaro", email: "alvaro@empresa.com", avatar: "A", plan: "business" });
+  };
+
+  const handleEmailLogin = (e) => {
+    e.preventDefault();
+    if (email && password) onLogin({ name: email.split("@")[0], email, avatar: email[0].toUpperCase(), plan: "professional" });
+  };
+
+  return (
+    <div style={{ minHeight: "100vh", background: `linear-gradient(145deg, #0a0e1a 0%, #0c1929 40%, #0f172a 100%)`, display: "flex", fontFamily: T.font, position: "relative", overflow: "hidden" }}>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+      {/* Background decorative grid */}
+      <div style={{ position: "absolute", inset: 0, backgroundImage: `radial-gradient(circle at 1px 1px, rgba(34,211,238,0.04) 1px, transparent 0)`, backgroundSize: "40px 40px" }} />
+      <div style={{ position: "absolute", top: "-20%", right: "-10%", width: "600px", height: "600px", borderRadius: "50%", background: "radial-gradient(circle, rgba(34,211,238,0.06) 0%, transparent 70%)", filter: "blur(60px)" }} />
+      <div style={{ position: "absolute", bottom: "-15%", left: "-5%", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle, rgba(139,92,246,0.05) 0%, transparent 70%)", filter: "blur(50px)" }} />
+
+      {/* Left side - branding */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "60px 80px", position: "relative", zIndex: 1, opacity: animIn ? 1 : 0, transform: animIn ? "translateX(0)" : "translateX(-30px)", transition: "all 0.8s cubic-bezier(0.16,1,0.3,1)" }}>
+        <div style={{ marginBottom: "48px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "32px" }}>
+            <div style={{ width: "48px", height: "48px", borderRadius: "14px", background: `linear-gradient(135deg, ${T.accent}, ${T.violet})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", fontWeight: 800, color: "#fff", fontFamily: T.fontDisplay }}>◈</div>
+            <div>
+              <div style={{ fontSize: "24px", fontWeight: 800, color: T.accent, fontFamily: T.fontDisplay }}>PMO<span style={{ color: T.text }}>System</span></div>
+              <div style={{ fontSize: "10px", color: T.textDim, fontFamily: T.fontMono, letterSpacing: "2px", textTransform: "uppercase" }}>PMBOK® 8th Edition</div>
+            </div>
+          </div>
+          <h1 style={{ fontSize: "42px", fontWeight: 800, color: T.text, lineHeight: 1.15, margin: "0 0 20px", fontFamily: T.fontDisplay, maxWidth: "500px" }}>
+            Sistema de Entrega<br/>de <span style={{ background: `linear-gradient(135deg, ${T.accent}, ${T.violet})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Valor</span> PMO
+          </h1>
+          <p style={{ fontSize: "16px", color: T.textMuted, lineHeight: 1.7, maxWidth: "440px", margin: 0 }}>
+            Plataforma avanzada de gestión de portafolio con motor híbrido, IA predictiva y métricas de valor ganado. Diseñada para PMOs de clase mundial.
+          </p>
+        </div>
+
+        {/* Feature highlights */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "14px", maxWidth: "480px" }}>
+          {[
+            { icon: "◈", label: "Alineamiento OKR", desc: "Cadena de valor trazable" },
+            { icon: "⟐", label: "Motor Híbrido", desc: "Predictivo + Ágil + Híbrido" },
+            { icon: "◬", label: "Monte Carlo", desc: "Simulación de escenarios" },
+            { icon: "⬡", label: "IA Predictiva", desc: "RAG + Machine Learning" },
+          ].map((f, i) => (
+            <div key={i} style={{ display: "flex", gap: "10px", alignItems: "flex-start", padding: "12px", borderRadius: T.radiusSm, background: "rgba(255,255,255,0.02)", border: `1px solid ${T.border}` }}>
+              <span style={{ fontSize: "18px", color: T.accent, lineHeight: 1 }}>{f.icon}</span>
+              <div>
+                <div style={{ fontSize: "12px", fontWeight: 700, color: T.text }}>{f.label}</div>
+                <div style={{ fontSize: "11px", color: T.textDim }}>{f.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Right side - login card */}
+      <div style={{ flex: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 80px", position: "relative", zIndex: 1, opacity: animIn ? 1 : 0, transform: animIn ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s 0.2s cubic-bezier(0.16,1,0.3,1)" }}>
+        <div style={{ width: "400px", background: "rgba(17,24,39,0.8)", backdropFilter: "blur(20px)", border: `1px solid ${T.border}`, borderRadius: "20px", padding: "40px 36px", boxShadow: "0 25px 50px rgba(0,0,0,0.4)" }}>
+          <div style={{ textAlign: "center", marginBottom: "32px" }}>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, color: T.text, margin: "0 0 8px", fontFamily: T.fontDisplay }}>Bienvenido</h2>
+            <p style={{ fontSize: "13px", color: T.textMuted, margin: 0 }}>Inicia sesión para acceder a tu portafolio</p>
+          </div>
+
+          {/* Google Sign In Button */}
+          <button
+            onClick={handleGoogleLogin}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+            style={{
+              width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px",
+              padding: "14px 20px", borderRadius: "12px",
+              background: isHovering ? "#f8fafc" : "#ffffff",
+              border: "1px solid #e2e8f0",
+              cursor: "pointer", fontSize: "15px", fontWeight: 600, color: "#1f2937",
+              fontFamily: T.font, transition: "all 0.2s",
+              boxShadow: isHovering ? "0 4px 12px rgba(0,0,0,0.15)" : "0 1px 3px rgba(0,0,0,0.1)",
+              transform: isHovering ? "translateY(-1px)" : "none",
+            }}>
+            <GoogleIcon />
+            Continuar con Google
+          </button>
+
+          {/* Divider */}
+          <div style={{ display: "flex", alignItems: "center", gap: "14px", margin: "24px 0" }}>
+            <div style={{ flex: 1, height: "1px", background: T.border }} />
+            <span style={{ fontSize: "11px", color: T.textDim, textTransform: "uppercase", letterSpacing: "1px" }}>o</span>
+            <div style={{ flex: 1, height: "1px", background: T.border }} />
+          </div>
+
+          {/* Email/Password Form */}
+          {!emailMode ? (
+            <button onClick={() => setEmailMode(true)} style={{ width: "100%", padding: "13px 20px", borderRadius: "12px", background: "transparent", border: `1px solid ${T.border}`, cursor: "pointer", fontSize: "14px", fontWeight: 500, color: T.textMuted, fontFamily: T.font, transition: "all 0.2s" }}>
+              Iniciar con correo y contraseña
+            </button>
+          ) : (
+            <form onSubmit={handleEmailLogin} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div>
+                <label style={{ fontSize: "11px", color: T.textDim, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", display: "block", marginBottom: "6px" }}>Correo electrónico</label>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="tu@empresa.com"
+                  style={{ width: "100%", padding: "12px 14px", borderRadius: "10px", background: T.bgSurface, border: `1px solid ${T.border}`, color: T.text, fontSize: "14px", fontFamily: T.font, outline: "none", boxSizing: "border-box" }} />
+              </div>
+              <div>
+                <label style={{ fontSize: "11px", color: T.textDim, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", display: "block", marginBottom: "6px" }}>Contraseña</label>
+                <div style={{ position: "relative" }}>
+                  <input type={showPass ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••"
+                    style={{ width: "100%", padding: "12px 44px 12px 14px", borderRadius: "10px", background: T.bgSurface, border: `1px solid ${T.border}`, color: T.text, fontSize: "14px", fontFamily: T.font, outline: "none", boxSizing: "border-box" }} />
+                  <button type="button" onClick={() => setShowPass(!showPass)} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: T.textDim, cursor: "pointer", fontSize: "13px" }}>
+                    {showPass ? "🙈" : "👁️"}
+                  </button>
+                </div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12px", color: T.textMuted, cursor: "pointer" }}>
+                  <input type="checkbox" style={{ accentColor: T.accent }} /> Recordarme
+                </label>
+                <a href="#" onClick={e => e.preventDefault()} style={{ fontSize: "12px", color: T.accent, textDecoration: "none" }}>¿Olvidaste tu contraseña?</a>
+              </div>
+              <button type="submit" style={{ width: "100%", padding: "13px 20px", borderRadius: "12px", background: `linear-gradient(135deg, ${T.accent}, ${T.accentDim})`, border: "none", cursor: "pointer", fontSize: "14px", fontWeight: 700, color: "#fff", fontFamily: T.font, transition: "all 0.2s" }}>
+                Iniciar Sesión
+              </button>
+            </form>
+          )}
+
+          {/* Footer links */}
+          <div style={{ marginTop: "28px", paddingTop: "20px", borderTop: `1px solid ${T.border}`, textAlign: "center" }}>
+            <p style={{ fontSize: "13px", color: T.textMuted, margin: "0 0 12px" }}>
+              ¿No tienes cuenta?{" "}
+              <a href="#" onClick={e => { e.preventDefault(); handleGoogleLogin(); }} style={{ color: T.accent, textDecoration: "none", fontWeight: 600 }}>Regístrate gratis</a>
+            </p>
+            <button onClick={onShowPricing} style={{ background: "none", border: "none", color: T.textDim, fontSize: "12px", cursor: "pointer", fontFamily: T.font, textDecoration: "underline", textUnderlineOffset: "3px" }}>
+              Ver planes y precios →
+            </button>
+          </div>
+
+          {/* Trust badges */}
+          <div style={{ display: "flex", justifyContent: "center", gap: "20px", marginTop: "20px" }}>
+            {["🔒 SSL 256-bit", "🛡️ SOC 2", "🌐 GDPR"].map((b, i) => (
+              <span key={i} style={{ fontSize: "10px", color: T.textDim }}>{b}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ─── PRICING SCREEN ───────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+const PricingScreen = ({ onBack, onSelectPlan }) => {
+  const [annual, setAnnual] = useState(true);
+  const [showComparison, setShowComparison] = useState(false);
+  const [animIn, setAnimIn] = useState(false);
+
+  useEffect(() => { setTimeout(() => setAnimIn(true), 100); }, []);
+
+  const faqItems = [
+    { q: "¿Puedo cambiar de plan en cualquier momento?", a: "Sí, puedes actualizar o reducir tu plan cuando quieras. Al actualizar, solo pagas la diferencia proporcional. Al reducir, el crédito se aplica al próximo ciclo." },
+    { q: "¿Ofrecen descuento para Latinoamérica?", a: "Sí, ofrecemos paridad de poder adquisitivo (PPP) para empresas registradas en Perú y otros países de LATAM. Contacta a ventas para tu cotización personalizada." },
+    { q: "¿Qué incluye la prueba gratuita?", a: "14 días con acceso completo al plan Business, sin necesidad de tarjeta de crédito. Incluye todos los módulos: Motor Híbrido, Monte Carlo, IA Predictiva y más." },
+    { q: "¿Puedo integrarlo con mi ERP actual?", a: "El plan Enterprise incluye integraciones nativas con SAP, Oracle y sistemas SUNAT. Los planes Business pueden usar nuestra API REST para integraciones personalizadas." },
+  ];
+
+  const [openFaq, setOpenFaq] = useState(null);
+
+  return (
+    <div style={{ minHeight: "100vh", background: "#fafbfc", fontFamily: T.font }}>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+      {/* Top Nav */}
+      <div style={{ background: "#fff", borderBottom: `1px solid ${L.border}`, padding: "0 40px", position: "sticky", top: 0, zIndex: 100 }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", height: "64px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ width: "34px", height: "34px", borderRadius: "10px", background: `linear-gradient(135deg, ${L.accent}, ${L.violet})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", fontWeight: 800, color: "#fff" }}>◈</div>
+            <span style={{ fontSize: "18px", fontWeight: 800, color: L.accent, fontFamily: T.fontDisplay }}>PMO<span style={{ color: L.text }}>System</span></span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+            <button onClick={onBack} style={{ padding: "8px 20px", borderRadius: "10px", background: "transparent", border: `1px solid ${L.border}`, cursor: "pointer", fontSize: "13px", fontWeight: 600, color: L.textMuted, fontFamily: T.font }}>
+              ← Volver al login
+            </button>
+            <button onClick={() => onSelectPlan("business")} style={{ padding: "8px 20px", borderRadius: "10px", background: L.accent, border: "none", cursor: "pointer", fontSize: "13px", fontWeight: 700, color: "#fff", fontFamily: T.font }}>
+              Prueba gratis 14 días
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "60px 40px", opacity: animIn ? 1 : 0, transform: animIn ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s cubic-bezier(0.16,1,0.3,1)" }}>
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: "48px" }}>
+          <div style={{ display: "inline-block", padding: "4px 14px", borderRadius: "20px", background: L.violetLight, color: L.violet, fontSize: "12px", fontWeight: 700, marginBottom: "16px" }}>PRECIOS TRANSPARENTES</div>
+          <h1 style={{ fontSize: "40px", fontWeight: 800, color: L.text, margin: "0 0 12px", fontFamily: T.fontDisplay, lineHeight: 1.2 }}>
+            Un plan para cada etapa de<br/>madurez de tu PMO
+          </h1>
+          <p style={{ fontSize: "16px", color: L.textMuted, maxWidth: "560px", margin: "0 auto 28px" }}>
+            Sin costos ocultos. Migra tu data en cualquier momento. Cancela cuando quieras.
+          </p>
+
+          {/* Billing Toggle */}
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", background: "#fff", padding: "5px", borderRadius: "12px", border: `1px solid ${L.border}` }}>
+            <button onClick={() => setAnnual(false)} style={{ padding: "8px 20px", borderRadius: "9px", background: !annual ? L.text : "transparent", color: !annual ? "#fff" : L.textMuted, border: "none", cursor: "pointer", fontSize: "13px", fontWeight: 600, fontFamily: T.font, transition: "all 0.2s" }}>Mensual</button>
+            <button onClick={() => setAnnual(true)} style={{ padding: "8px 20px", borderRadius: "9px", background: annual ? L.text : "transparent", color: annual ? "#fff" : L.textMuted, border: "none", cursor: "pointer", fontSize: "13px", fontWeight: 600, fontFamily: T.font, transition: "all 0.2s" }}>
+              Anual <span style={{ fontSize: "10px", padding: "2px 6px", borderRadius: "6px", background: annual ? T.emerald : L.emeraldLight, color: annual ? "#fff" : T.emerald, fontWeight: 700, marginLeft: "4px" }}>-20%</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Pricing Cards */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px", marginBottom: "60px" }}>
+          {PRICING_PLANS.map(plan => {
+            const price = annual ? plan.priceAnnual : plan.price;
+            return (
+              <div key={plan.id} style={{
+                background: "#fff", borderRadius: "18px", padding: plan.popular ? "4px" : "0",
+                background: plan.popular ? `linear-gradient(135deg, ${L.violet}, ${L.accent})` : "transparent",
+                position: "relative",
+              }}>
+                {plan.popular && (
+                  <div style={{ textAlign: "center", padding: "6px 0 2px", fontSize: "11px", fontWeight: 700, color: "#fff", letterSpacing: "0.5px" }}>
+                    ⭐ MÁS POPULAR
+                  </div>
+                )}
+                <div style={{
+                  background: "#fff", borderRadius: plan.popular ? "15px" : "18px",
+                  padding: "32px 28px", border: plan.popular ? "none" : `1px solid ${L.border}`,
+                  height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column",
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
+                    <span style={{ fontSize: "24px" }}>{plan.icon}</span>
+                    <div>
+                      <div style={{ fontSize: "18px", fontWeight: 800, color: L.text, fontFamily: T.fontDisplay }}>{plan.name}</div>
+                      <div style={{ fontSize: "12px", color: L.textMuted }}>{plan.subtitle}</div>
+                    </div>
+                  </div>
+
+                  <div style={{ margin: "20px 0", paddingBottom: "20px", borderBottom: `1px solid ${L.border}` }}>
+                    {price === -1 ? (
+                      <div>
+                        <div style={{ fontSize: "28px", fontWeight: 800, color: L.text, fontFamily: T.fontDisplay }}>Personalizado</div>
+                        <div style={{ fontSize: "13px", color: L.textMuted }}>Contacta a ventas</div>
+                      </div>
+                    ) : (
+                      <div>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
+                          <span style={{ fontSize: "14px", fontWeight: 600, color: L.textMuted }}>$</span>
+                          <span style={{ fontSize: "42px", fontWeight: 800, color: L.text, fontFamily: T.fontDisplay, lineHeight: 1 }}>{price}</span>
+                          <span style={{ fontSize: "14px", color: L.textMuted }}>/usuario/mes</span>
+                        </div>
+                        {annual && plan.price > 0 && (
+                          <div style={{ fontSize: "12px", color: T.emerald, marginTop: "4px", fontWeight: 600 }}>
+                            Ahorra ${(plan.price - plan.priceAnnual) * 12}/usuario al año
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  <div style={{ flex: 1, marginBottom: "24px" }}>
+                    {plan.features.map((f, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px", padding: "5px 0", fontSize: "13px" }}>
+                        <span style={{ fontSize: "14px", lineHeight: "20px", flexShrink: 0 }}>
+                          {f.included ? <span style={{ color: T.emerald }}>✓</span> : <span style={{ color: L.borderLight }}>—</span>}
+                        </span>
+                        <span style={{ color: f.included ? L.text : L.textDim }}>{f.text}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button onClick={() => onSelectPlan(plan.id)} style={{
+                    width: "100%", padding: "13px", borderRadius: "12px",
+                    background: plan.popular ? `linear-gradient(135deg, ${L.violet}, ${L.accent})` : plan.id === "enterprise" ? L.text : "transparent",
+                    color: plan.popular || plan.id === "enterprise" ? "#fff" : L.text,
+                    border: plan.popular || plan.id === "enterprise" ? "none" : `2px solid ${L.border}`,
+                    cursor: "pointer", fontSize: "14px", fontWeight: 700, fontFamily: T.font, transition: "all 0.2s",
+                  }}>
+                    {plan.id === "enterprise" ? "Contactar Ventas" : plan.id === "starter" ? "Comenzar Gratis" : "Iniciar Prueba Gratuita"}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Toggle Comparison */}
+        <div style={{ textAlign: "center", marginBottom: "40px" }}>
+          <button onClick={() => setShowComparison(!showComparison)} style={{ padding: "12px 28px", borderRadius: "12px", background: "#fff", border: `1px solid ${L.border}`, cursor: "pointer", fontSize: "14px", fontWeight: 600, color: L.text, fontFamily: T.font }}>
+            {showComparison ? "Ocultar comparación detallada ▲" : "Ver comparación detallada de planes ▼"}
+          </button>
+        </div>
+
+        {/* Detailed Comparison Table */}
+        {showComparison && (
+          <div style={{ background: "#fff", borderRadius: "18px", border: `1px solid ${L.border}`, overflow: "hidden", marginBottom: "60px" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <thead>
+                <tr style={{ background: "#f8fafc" }}>
+                  <th style={{ padding: "16px 20px", textAlign: "left", fontSize: "14px", fontWeight: 700, color: L.text, width: "28%", fontFamily: T.fontDisplay }}>Funcionalidad</th>
+                  {["Starter", "Professional", "Business", "Enterprise"].map(p => (
+                    <th key={p} style={{ padding: "16px 14px", textAlign: "center", fontSize: "13px", fontWeight: 700, color: L.text }}>{p}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {PLAN_COMPARISON.map((cat, ci) => (
+                  <>
+                    <tr key={`cat-${ci}`}>
+                      <td colSpan={5} style={{ padding: "12px 20px", background: "#f1f5f9", fontSize: "12px", fontWeight: 700, color: L.violet, textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                        {cat.category}
+                      </td>
+                    </tr>
+                    {cat.features.map((f, fi) => (
+                      <tr key={`f-${ci}-${fi}`} style={{ borderBottom: `1px solid ${L.border}20` }}>
+                        <td style={{ padding: "10px 20px", fontSize: "13px", color: L.text }}>{f.name}</td>
+                        {[f.starter, f.pro, f.business, f.enterprise].map((val, vi) => (
+                          <td key={vi} style={{ padding: "10px 14px", textAlign: "center", fontSize: "13px", color: val === "—" ? L.textDim : val === "✓" ? T.emerald : L.text, fontWeight: val === "✓" ? 700 : 500, fontFamily: val === "✓" || val === "—" ? T.font : T.fontMono }}>
+                            {val}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {/* Trust & Social Proof */}
+        <div style={{ textAlign: "center", marginBottom: "60px" }}>
+          <div style={{ fontSize: "13px", color: L.textDim, marginBottom: "20px", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 600 }}>Confiado por equipos PMO en</div>
+          <div style={{ display: "flex", justifyContent: "center", gap: "48px", alignItems: "center", opacity: 0.5 }}>
+            {["Banco de Crédito", "Interbank", "BBVA Perú", "Telefónica", "Belcorp", "Alicorp"].map(c => (
+              <span key={c} style={{ fontSize: "15px", fontWeight: 700, color: L.textDim, fontFamily: T.fontDisplay }}>{c}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* FAQ */}
+        <div style={{ maxWidth: "700px", margin: "0 auto 60px" }}>
+          <h2 style={{ fontSize: "28px", fontWeight: 800, color: L.text, textAlign: "center", marginBottom: "32px", fontFamily: T.fontDisplay }}>Preguntas Frecuentes</h2>
+          {faqItems.map((faq, i) => (
+            <div key={i} style={{ background: "#fff", border: `1px solid ${L.border}`, borderRadius: "14px", marginBottom: "12px", overflow: "hidden" }}>
+              <button onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 22px", background: "none", border: "none", cursor: "pointer", fontFamily: T.font }}>
+                <span style={{ fontSize: "14px", fontWeight: 600, color: L.text, textAlign: "left" }}>{faq.q}</span>
+                <span style={{ fontSize: "18px", color: L.textDim, transform: openFaq === i ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>▾</span>
+              </button>
+              {openFaq === i && (
+                <div style={{ padding: "0 22px 18px", fontSize: "13px", color: L.textMuted, lineHeight: 1.7 }}>
+                  {faq.a}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div style={{ textAlign: "center", background: `linear-gradient(135deg, #0f172a, #1e293b)`, borderRadius: "24px", padding: "48px 40px", marginBottom: "40px" }}>
+          <h2 style={{ fontSize: "28px", fontWeight: 800, color: "#fff", margin: "0 0 12px", fontFamily: T.fontDisplay }}>¿Listo para transformar tu PMO?</h2>
+          <p style={{ fontSize: "15px", color: "#94a3b8", margin: "0 0 28px", maxWidth: "480px", marginLeft: "auto", marginRight: "auto" }}>
+            Empieza con 14 días gratis del plan Business. Sin tarjeta de crédito. Sin compromisos.
+          </p>
+          <div style={{ display: "flex", justifyContent: "center", gap: "14px" }}>
+            <button onClick={() => onSelectPlan("business")} style={{ padding: "14px 32px", borderRadius: "12px", background: `linear-gradient(135deg, ${T.accent}, ${T.accentDim})`, border: "none", cursor: "pointer", fontSize: "15px", fontWeight: 700, color: "#fff", fontFamily: T.font }}>
+              Comenzar Prueba Gratuita
+            </button>
+            <button onClick={() => onSelectPlan("enterprise")} style={{ padding: "14px 32px", borderRadius: "12px", background: "transparent", border: "1px solid #475569", cursor: "pointer", fontSize: "15px", fontWeight: 600, color: "#e2e8f0", fontFamily: T.font }}>
+              Hablar con Ventas
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── NAVIGATION ──────────────────────────────────────────────────────────────
+const NAV_ITEMS = [
+  { id: "dashboard", label: "Dashboard", icon: "◉" },
+  { id: "strategic", label: "Alineamiento", icon: "◈" },
+  { id: "engine", label: "Motor Híbrido", icon: "⟐" },
+  { id: "uncertainty", label: "Incertidumbre", icon: "◬" },
+  { id: "metrics", label: "Métricas", icon: "◫" },
+  { id: "ai", label: "IA & Conocimiento", icon: "⬡" },
+  { id: "pricing", label: "Plan & Facturación", icon: "◇" },
+];
+
+// ─── MAIN DASHBOARD VIEW ─────────────────────────────────────────────────────
+const DashboardView = () => {
+  const totalBudget = PROJECTS.reduce((s, p) => s + p.budget, 0);
+  const totalSpent = PROJECTS.reduce((s, p) => s + p.spent, 0);
+  const avgPHI = (PROJECTS.reduce((s, p) => s + p.phi, 0) / PROJECTS.length).toFixed(2);
+  const avgVRI = (PROJECTS.reduce((s, p) => s + p.vri, 0) / PROJECTS.length).toFixed(2);
+  const criticalRisks = RISKS.filter(r => r.sei > 1.5).length;
+
+  const healthDistribution = [
+    { name: "Verde", value: PROJECTS.filter(p => p.phi >= 0.8).length, color: T.emerald },
+    { name: "Amarillo", value: PROJECTS.filter(p => p.phi >= 0.6 && p.phi < 0.8).length, color: T.amber },
+    { name: "Rojo", value: PROJECTS.filter(p => p.phi < 0.6).length, color: T.rose },
+  ];
+
+  return (
+    <div>
+      <SectionHeader title="Portfolio Command Center" subtitle="Vista consolidada del portafolio — Datos en tiempo real" />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "14px", marginBottom: "24px" }}>
+        <MetricCard label="Proyectos Activos" value={PROJECTS.length} sub="3 ágiles · 2 híbridos · 1 predictivo" color={T.accent} icon="📊" small />
+        <MetricCard label="PHI Promedio" value={avgPHI} sub={<StatusBadge value={parseFloat(avgPHI)} />} color={parseFloat(avgPHI) >= 0.8 ? T.emerald : T.amber} icon="💊" small />
+        <MetricCard label="VRI Portafolio" value={avgVRI} sub="Índice Realización de Valor" color={T.accent} icon="💎" small />
+        <MetricCard label="Presupuesto" value={`S/ ${(totalSpent/1e6).toFixed(1)}M`} sub={`de S/ ${(totalBudget/1e6).toFixed(1)}M (${Math.round(totalSpent/totalBudget*100)}%)`} color={T.amber} icon="💰" small />
+        <MetricCard label="Riesgos Críticos" value={criticalRisks} sub={`de ${RISKS.length} identificados`} color={T.rose} icon="⚠️" small />
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "18px", marginBottom: "24px" }}>
+        <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px", overflow: "hidden" }}>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Salud del Portafolio</div>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "12px" }}>
+              <thead>
+                <tr style={{ borderBottom: `1px solid ${T.border}` }}>
+                  {["Proyecto", "Método", "PHI", "VRI", "CPI", "SPI", "Riesgo", "Avance"].map(h => (
+                    <th key={h} style={{ padding: "8px 10px", textAlign: "left", color: T.textDim, fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.8px", fontFamily: T.fontMono }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {PROJECTS.map(p => (
+                  <tr key={p.id} style={{ borderBottom: `1px solid ${T.border}20` }}>
+                    <td style={{ padding: "10px", color: T.text, fontWeight: 500 }}>
+                      <div>{p.name}</div>
+                      <div style={{ fontSize: "10px", color: T.textDim }}>{p.pm}</div>
+                    </td>
+                    <td style={{ padding: "10px" }}><MethodBadge method={p.method} /></td>
+                    <td style={{ padding: "10px" }}><span style={{ color: p.phi >= 0.8 ? T.emerald : p.phi >= 0.6 ? T.amber : T.rose, fontWeight: 700, fontFamily: T.fontMono }}>{p.phi.toFixed(2)}</span></td>
+                    <td style={{ padding: "10px", fontFamily: T.fontMono, color: T.accent }}>{p.vri.toFixed(2)}</td>
+                    <td style={{ padding: "10px", fontFamily: T.fontMono, color: p.cpi >= 1 ? T.emerald : p.cpi >= 0.9 ? T.amber : T.rose }}>{p.cpi.toFixed(2)}</td>
+                    <td style={{ padding: "10px", fontFamily: T.fontMono, color: p.spi >= 1 ? T.emerald : p.spi >= 0.85 ? T.amber : T.rose }}>{p.spi.toFixed(2)}</td>
+                    <td style={{ padding: "10px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                        <div style={{ width: "40px" }}><ProgressBar value={p.riskExposure * 100} color={p.riskExposure > 0.3 ? T.rose : p.riskExposure > 0.15 ? T.amber : T.emerald} height={4} /></div>
+                        <span style={{ fontSize: "10px", color: T.textDim, fontFamily: T.fontMono }}>{(p.riskExposure * 100).toFixed(0)}%</span>
+                      </div>
+                    </td>
+                    <td style={{ padding: "10px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                        <div style={{ width: "50px" }}><ProgressBar value={p.progress} color={T.accent} height={4} /></div>
+                        <span style={{ fontSize: "10px", color: T.textMuted, fontFamily: T.fontMono }}>{p.progress}%</span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+          <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px", flex: 1 }}>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "12px", fontFamily: T.fontDisplay }}>Distribución de Salud</div>
+            <ResponsiveContainer width="100%" height={150}>
+              <PieChart>
+                <Pie data={healthDistribution} cx="50%" cy="50%" innerRadius={40} outerRadius={65} paddingAngle={4} dataKey="value" stroke="none">
+                  {healthDistribution.map((d, i) => <Cell key={i} fill={d.color} />)}
+                </Pie>
+                <Tooltip content={<CustomTooltip />} />
+              </PieChart>
+            </ResponsiveContainer>
+            <div style={{ display: "flex", justifyContent: "center", gap: "16px", marginTop: "4px" }}>
+              {healthDistribution.map(d => (
+                <div key={d.name} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "11px", color: T.textMuted }}>
+                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: d.color }} /> {d.name}: {d.value}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "14px", fontFamily: T.fontDisplay }}>Burn Rate Presupuestal</div>
+            <ResponsiveContainer width="100%" height={120}>
+              <BarChart data={PROJECTS.map(p => ({ name: p.name.split(" ")[0], spent: p.spent/1000, remaining: (p.budget-p.spent)/1000 }))} layout="vertical">
+                <XAxis type="number" tick={{ fontSize: 10, fill: T.textDim }} tickFormatter={v => `${v}K`} />
+                <YAxis type="category" dataKey="name" tick={{ fontSize: 10, fill: T.textMuted }} width={55} />
+                <Bar dataKey="spent" stackId="a" fill={T.accent} radius={[0,0,0,0]} />
+                <Bar dataKey="remaining" stackId="a" fill={T.border} radius={[0,4,4,0]} />
+                <Tooltip content={<CustomTooltip />} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+        <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "14px", fontFamily: T.fontDisplay }}>🔔 Alertas del Sistema</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
+          {[
+            { level: "critical", msg: "DC Norte: CPI 0.87 bajo umbral rojo (0.90) — 2 ciclos consecutivos", time: "Hace 2h" },
+            { level: "warning", msg: "Cloud AWS: SPI 0.88 en tendencia descendente — Sprint 8 con 3 historias bloqueadas", time: "Hace 5h" },
+            { level: "info", msg: "Portal B2B: VRI alcanzó 0.91 — Supera target de beneficio en 8%", time: "Hace 1d" },
+            { level: "warning", msg: "Supuesto A003 caduca en 15 días — Equipo Oracle aún sin confirmación", time: "Hace 1d" },
+          ].map((a, i) => (
+            <div key={i} style={{ display: "flex", gap: "10px", padding: "10px 14px", borderRadius: T.radiusXs, background: a.level === "critical" ? T.roseGlow : a.level === "warning" ? T.amberGlow : T.accentGlow, border: `1px solid ${a.level === "critical" ? T.rose : a.level === "warning" ? T.amber : T.accent}20` }}>
+              <span style={{ fontSize: "14px" }}>{a.level === "critical" ? "🔴" : a.level === "warning" ? "🟡" : "🟢"}</span>
+              <div>
+                <div style={{ fontSize: "12px", color: T.text, lineHeight: 1.4 }}>{a.msg}</div>
+                <div style={{ fontSize: "10px", color: T.textDim, marginTop: "4px" }}>{a.time}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── STRATEGIC ALIGNMENT VIEW ────────────────────────────────────────────────
+const StrategicView = () => {
+  const [expandedOkr, setExpandedOkr] = useState("okr1");
+  return (
+    <div>
+      <SectionHeader title="Alineamiento Estratégico" subtitle="Cadena de valor: OKR → Beneficio → Proyecto → Entregable" />
+      <div style={{ background: `linear-gradient(135deg, ${T.bgCard}, ${T.accentGlow})`, border: `1px solid ${T.accent}30`, borderRadius: T.radius, padding: "20px", marginBottom: "24px" }}>
+        <div style={{ fontSize: "11px", color: T.accent, textTransform: "uppercase", letterSpacing: "1px", marginBottom: "8px", fontFamily: T.fontMono }}>Métrica Central</div>
+        <div style={{ fontSize: "16px", color: T.text, fontFamily: T.fontMono, marginBottom: "8px" }}>VRI = Σ (Peso<sub>i</sub> × %Completado<sub>i</sub> × Factor_Calidad<sub>i</sub>) / Beneficio_Target</div>
+        <div style={{ fontSize: "12px", color: T.textMuted }}>Umbral mínimo: 0.70 — Por debajo se dispara workflow de revisión estratégica</div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "24px" }}>
+        {OKR_DATA.map(okr => (
+          <div key={okr.id} style={{ background: T.bgCard, border: `1px solid ${expandedOkr === okr.id ? T.accent + "40" : T.border}`, borderRadius: T.radius, overflow: "hidden", transition: "all 0.3s" }}>
+            <div onClick={() => setExpandedOkr(expandedOkr === okr.id ? null : okr.id)} style={{ padding: "18px 20px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                <div style={{ width: "44px", height: "44px", borderRadius: "10px", background: T.accentGlow, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", border: `1px solid ${T.accent}30` }}>◈</div>
+                <div>
+                  <div style={{ fontSize: "15px", fontWeight: 700, color: T.text, fontFamily: T.fontDisplay }}>{okr.name}</div>
+                  <div style={{ fontSize: "12px", color: T.textDim, marginTop: "2px" }}>{okr.benefits.length} beneficios vinculados · {okr.benefits.reduce((s,b) => s + b.projects.length, 0)} proyectos</div>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: "22px", fontWeight: 700, color: okr.progress >= 70 ? T.emerald : T.amber, fontFamily: T.fontMono }}>{okr.progress}%</div>
+                  <div style={{ width: "100px" }}><ProgressBar value={okr.progress} color={okr.progress >= 70 ? T.emerald : T.amber} /></div>
+                </div>
+                <span style={{ color: T.textDim, fontSize: "18px", transform: expandedOkr === okr.id ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>▾</span>
+              </div>
+            </div>
+            {expandedOkr === okr.id && (
+              <div style={{ padding: "0 20px 20px", borderTop: `1px solid ${T.border}` }}>
+                <div style={{ paddingTop: "16px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                  {okr.benefits.map(b => (
+                    <div key={b.id} style={{ background: T.bgSurface, borderRadius: T.radiusSm, padding: "16px", border: `1px solid ${T.border}` }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
+                        <div>
+                          <div style={{ fontSize: "13px", fontWeight: 600, color: T.text }}>{b.name}</div>
+                          <span style={{ fontSize: "10px", padding: "2px 8px", borderRadius: "4px", background: T.violetDim + "30", color: T.violet, fontWeight: 600 }}>{b.type}</span>
+                        </div>
+                        <div style={{ textAlign: "right" }}>
+                          <div style={{ fontSize: "18px", fontWeight: 700, color: T.accent, fontFamily: T.fontMono }}>{(b.actual * 100).toFixed(0)}%</div>
+                          <div style={{ fontSize: "10px", color: T.textDim }}>Target: {(b.target * 100).toFixed(0)}%</div>
+                        </div>
+                      </div>
+                      <ProgressBar value={b.actual * 100} color={b.actual >= 0.8 ? T.emerald : b.actual >= 0.6 ? T.amber : T.rose} />
+                      <div style={{ marginTop: "10px", display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                        {b.projects.map(pid => { const proj = PROJECTS.find(p => p.id === pid); return proj ? (<span key={pid} style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "4px", background: T.bgCard, border: `1px solid ${T.border}`, color: T.textMuted }}>{proj.name} — VRI: <span style={{ color: T.accent, fontFamily: T.fontMono }}>{proj.vri.toFixed(2)}</span></span>) : null; })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+        <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>📊 Portfolio Scorecard — Vista C-Suite</div>
+        <ResponsiveContainer width="100%" height={250}>
+          <RadarChart data={PROJECTS.map(p => ({ name: p.name.split(" ")[0], vri: p.vri * 100, phi: p.phi * 100, cpi: p.cpi * 100, spi: p.spi * 100, risk: (1 - p.riskExposure) * 100 }))}>
+            <PolarGrid stroke={T.border} />
+            <PolarAngleAxis dataKey="name" tick={{ fontSize: 10, fill: T.textMuted }} />
+            <PolarRadiusAxis angle={90} tick={{ fontSize: 9, fill: T.textDim }} domain={[0, 120]} />
+            <Radar name="VRI" dataKey="vri" stroke={T.accent} fill={T.accent} fillOpacity={0.15} strokeWidth={2} />
+            <Radar name="PHI" dataKey="phi" stroke={T.emerald} fill={T.emerald} fillOpacity={0.1} strokeWidth={2} />
+            <Legend wrapperStyle={{ fontSize: "11px", color: T.textMuted }} />
+            <Tooltip content={<CustomTooltip />} />
+          </RadarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+};
+
+// ─── HYBRID ENGINE VIEW ──────────────────────────────────────────────────────
+const EngineView = () => {
+  const [engineTab, setEngineTab] = useState("gantt");
+  const colors = { critical: T.rose, high: T.amber, medium: T.accent, low: T.textDim };
+  const ganttColors = [T.accent, T.violet, T.emerald, T.amber, T.rose];
+  return (
+    <div>
+      <SectionHeader title="Motor Híbrido de Entrega" subtitle="Predictivo + Ágil + Híbrido — Patrón Strategy desacoplado" />
+      <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
+        {[{id:"gantt",label:"Gantt Interactivo"},{id:"kanban",label:"Tablero Kanban"},{id:"deps",label:"Grafo Dependencias"}].map(t => (
+          <Pill key={t.id} active={engineTab === t.id} color={T.accent} onClick={() => setEngineTab(t.id)}>{t.label}</Pill>
+        ))}
+      </div>
+      {engineTab === "gantt" && (
+        <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px", overflowX: "auto" }}>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Diagrama de Gantt — Vista Predictiva</div>
+          <div style={{ minWidth: "700px" }}>
+            <div style={{ display: "flex", marginBottom: "8px", paddingLeft: "200px" }}>
+              {Array.from({length: 16}, (_, i) => (<div key={i} style={{ flex: 1, fontSize: "9px", color: T.textDim, textAlign: "center", fontFamily: T.fontMono }}>S{i+1}</div>))}
+            </div>
+            {GANTT_TASKS.map((task) => {
+              const groupIdx = task.name.startsWith("ERP") ? 0 : task.name.startsWith("Cloud") ? 1 : 2;
+              const barColor = ganttColors[groupIdx];
+              return (
+                <div key={task.id} style={{ display: "flex", alignItems: "center", marginBottom: "6px", height: "32px" }}>
+                  <div style={{ width: "200px", fontSize: "11px", color: T.text, paddingLeft: `${task.level * 16}px`, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {task.level > 0 && <span style={{ color: T.textDim, marginRight: "4px" }}>└</span>}{task.name}
+                  </div>
+                  <div style={{ flex: 1, position: "relative", height: "20px" }}>
+                    <div style={{ position: "absolute", left: `${(task.start / 16) * 100}%`, width: `${(task.duration / 16) * 100}%`, height: "20px", background: `${barColor}30`, borderRadius: "4px", border: `1px solid ${barColor}50` }}>
+                      <div style={{ height: "100%", width: `${task.progress}%`, background: `linear-gradient(90deg, ${barColor}, ${barColor}aa)`, borderRadius: "3px", transition: "width 0.5s" }} />
+                      <span style={{ position: "absolute", right: "6px", top: "2px", fontSize: "9px", color: T.text, fontFamily: T.fontMono }}>{task.progress}%</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+      {engineTab === "kanban" && (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" }}>
+          {[{ title: "Backlog", items: KANBAN_ITEMS.filter((_, i) => i < 2) },{ title: "En Progreso", items: KANBAN_ITEMS.filter((_, i) => i >= 2 && i < 4) },{ title: "En Revisión", items: KANBAN_ITEMS.filter((_, i) => i >= 4 && i < 5) },{ title: "Completado", items: KANBAN_ITEMS.filter((_, i) => i >= 5) }].map((col, ci) => (
+            <div key={ci} style={{ background: T.bgSurface, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "14px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+                <span style={{ fontSize: "12px", fontWeight: 700, color: T.text, textTransform: "uppercase", letterSpacing: "0.5px" }}>{col.title}</span>
+                <span style={{ fontSize: "11px", color: T.textDim, background: T.bgCard, padding: "2px 8px", borderRadius: "10px" }}>{col.items.length}</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                {col.items.map(item => (
+                  <div key={item.id} style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radiusSm, padding: "12px", borderLeft: `3px solid ${colors[item.priority]}` }}>
+                    <div style={{ fontSize: "12px", fontWeight: 600, color: T.text, marginBottom: "6px" }}>{item.title}</div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                        <span style={{ fontSize: "10px", padding: "1px 6px", borderRadius: "3px", background: T.accentGlow, color: T.accent, fontFamily: T.fontMono }}>{item.points} SP</span>
+                        <span style={{ fontSize: "10px", color: T.textDim }}>{item.project}</span>
+                      </div>
+                      <div style={{ width: "24px", height: "24px", borderRadius: "50%", background: T.accentDim + "40", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", color: T.accent, fontWeight: 700 }}>{item.assignee}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      {engineTab === "deps" && (
+        <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "6px", fontFamily: T.fontDisplay }}>Grafo de Dependencias Unificado (UDG)</div>
+          <div style={{ fontSize: "12px", color: T.textDim, marginBottom: "20px" }}>DAG — Detección de ciclos (Kahn) · Ruta crítica híbrida · Análisis de impacto BFS</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px", marginBottom: "20px" }}>
+            {[{ type: "Hito → Incremento", example: "Infra habilita sprint integración", sync: "Evento al completarse", color: T.violet },{ type: "Incremento → Hito", example: "MVP software → Go-Live", sync: "DoD actualiza % hito", color: T.emerald },{ type: "Incremento → Incremento", example: "Feature A consume API Feature B", sync: "Contract testing", color: T.accent },{ type: "Hito → Hito", example: "Diseño precede construcción", sync: "FS clásico + propagación", color: T.amber }].map((d, i) => (
+              <div key={i} style={{ background: T.bgSurface, border: `1px solid ${d.color}25`, borderRadius: T.radiusSm, padding: "14px" }}>
+                <div style={{ fontSize: "11px", fontWeight: 700, color: d.color, marginBottom: "6px", fontFamily: T.fontMono }}>{d.type}</div>
+                <div style={{ fontSize: "11px", color: T.textMuted, marginBottom: "4px" }}>{d.example}</div>
+                <div style={{ fontSize: "10px", color: T.textDim }}>🔄 {d.sync}</div>
+              </div>
+            ))}
+          </div>
+          <svg width="100%" viewBox="0 0 700 200" style={{ background: T.bgSurface, borderRadius: T.radiusSm, border: `1px solid ${T.border}` }}>
+            <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill={T.textDim} /></marker></defs>
+            {[[95,45,175,45],[95,105,175,105],[95,165,175,165],[265,45,345,55],[265,105,345,80],[265,165,345,135],[435,70,515,85],[435,120,515,100]].map(([x1,y1,x2,y2],i) => (<line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={T.textDim} strokeWidth="1.5" markerEnd="url(#arrow)" strokeDasharray={i > 5 ? "4,3" : "none"} />))}
+            {[{ x: 50, y: 35, label: "ERP: Análisis", c: T.accent },{ x: 50, y: 95, label: "Cloud: Assess", c: T.violet },{ x: 50, y: 155, label: "DC: Permisos", c: T.amber },{ x: 220, y: 45, label: "ERP: Diseño", c: T.accent },{ x: 220, y: 95, label: "Cloud: Migración", c: T.violet },{ x: 220, y: 145, label: "DC: Construcc.", c: T.amber },{ x: 390, y: 60, label: "ERP: Dev Core", c: T.accent },{ x: 390, y: 120, label: "Cloud: QA", c: T.violet },{ x: 560, y: 85, label: "Integración", c: T.emerald }].map((n, i) => (<g key={i}><rect x={n.x - 45} y={n.y - 12} width="90" height="24" rx="6" fill={`${n.c}18`} stroke={n.c} strokeWidth="1" /><text x={n.x} y={n.y + 4} textAnchor="middle" fontSize="9" fill={T.text} fontFamily="DM Sans">{n.label}</text></g>))}
+            <text x="350" y="195" textAnchor="middle" fontSize="10" fill={T.textDim} fontFamily="DM Sans">━ Dependencia directa  ╌╌ Dependencia cross-project</text>
+          </svg>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── UNCERTAINTY VIEW ────────────────────────────────────────────────────────
+const UncertaintyView = () => {
+  const [simTab, setSimTab] = useState("risks");
+  const cynefinData = [
+    { domain: "Simple", count: PROJECTS.filter(p => p.complexity === "Simple").length, strategy: "Automatización, checklists", approach: "Predictivo", color: T.emerald },
+    { domain: "Complicado", count: PROJECTS.filter(p => p.complexity === "Complicado").length, strategy: "Análisis experto, decision trees", approach: "Predictivo / Híbrido", color: T.accent },
+    { domain: "Complejo", count: PROJECTS.filter(p => p.complexity === "Complejo").length, strategy: "Experimentos, feedback loops", approach: "Ágil", color: T.amber },
+    { domain: "Caótico", count: RISKS.filter(r => r.cynefin === "Caótico").length, strategy: "Protocolos de crisis, war rooms", approach: "Respuesta rápida", color: T.rose },
+  ];
+  return (
+    <div>
+      <SectionHeader title="Gestión de Incertidumbre y Complejidad" subtitle="Dominio de Desempeño PMBOK® 8 — Navegación dinámica de la complejidad" />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px", marginBottom: "24px" }}>
+        {cynefinData.map(c => (
+          <div key={c.domain} style={{ background: T.bgCard, border: `1px solid ${c.color}25`, borderRadius: T.radius, padding: "18px", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: c.color }} />
+            <div style={{ fontSize: "18px", fontWeight: 800, color: c.color, fontFamily: T.fontDisplay }}>{c.domain}</div>
+            <div style={{ fontSize: "28px", fontWeight: 700, color: T.text, fontFamily: T.fontMono, margin: "6px 0" }}>{c.count}</div>
+            <div style={{ fontSize: "11px", color: T.textMuted, marginBottom: "4px" }}>{c.strategy}</div>
+            <span style={{ fontSize: "10px", padding: "2px 8px", borderRadius: "4px", background: `${c.color}15`, color: c.color, fontWeight: 600 }}>{c.approach}</span>
+          </div>
+        ))}
+      </div>
+      <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
+        {[{id:"risks",label:"Registro de Riesgos"},{id:"montecarlo",label:"Monte Carlo"},{id:"assumptions",label:"Supuestos"}].map(t => (<Pill key={t.id} active={simTab === t.id} color={T.amber} onClick={() => setSimTab(t.id)}>{t.label}</Pill>))}
+      </div>
+      {simTab === "risks" && (
+        <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, fontFamily: T.fontDisplay }}>Red de Impacto — Índice de Exposición Sistémica (SEI)</div>
+            <div style={{ fontSize: "10px", color: T.textDim, fontFamily: T.fontMono }}>SEI = P × Σ(Imp_j × W_j) × F_Propagación</div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            {RISKS.sort((a, b) => b.sei - a.sei).map(r => (
+              <div key={r.id} style={{ display: "grid", gridTemplateColumns: "60px 1fr 100px 70px 70px 80px 80px", gap: "10px", alignItems: "center", padding: "12px 14px", borderRadius: T.radiusSm, background: r.status === "critical" ? T.roseGlow : T.bgSurface, border: `1px solid ${r.status === "critical" ? T.rose + "30" : T.border}` }}>
+                <span style={{ fontSize: "11px", fontFamily: T.fontMono, color: T.textDim }}>{r.id}</span>
+                <div><div style={{ fontSize: "12px", fontWeight: 600, color: T.text }}>{r.name}</div><div style={{ fontSize: "10px", color: T.textDim }}>{r.project}</div></div>
+                <span style={{ fontSize: "10px", padding: "2px 8px", borderRadius: "4px", background: T.bgCard, color: T.textMuted, textAlign: "center" }}>{r.category}</span>
+                <div style={{ textAlign: "center" }}><div style={{ fontSize: "10px", color: T.textDim }}>Prob</div><div style={{ fontSize: "13px", fontWeight: 700, color: T.amber, fontFamily: T.fontMono }}>{(r.prob * 100).toFixed(0)}%</div></div>
+                <div style={{ textAlign: "center" }}><div style={{ fontSize: "10px", color: T.textDim }}>Impacto</div><div style={{ fontSize: "13px", fontWeight: 700, color: T.rose, fontFamily: T.fontMono }}>{(r.impact * 100).toFixed(0)}%</div></div>
+                <div style={{ textAlign: "center" }}><div style={{ fontSize: "10px", color: T.textDim }}>SEI</div><div style={{ fontSize: "16px", fontWeight: 800, color: r.sei > 2 ? T.rose : r.sei > 1 ? T.amber : T.emerald, fontFamily: T.fontMono }}>{r.sei.toFixed(1)}</div></div>
+                <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "10px", textAlign: "center", fontWeight: 600, color: r.status === "critical" ? T.rose : r.status === "active" ? T.amber : T.emerald, background: r.status === "critical" ? T.roseGlow : r.status === "active" ? T.amberGlow : T.emeraldGlow }}>{r.status === "critical" ? "CRÍTICO" : r.status === "active" ? "Activo" : "Monitoreando"}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {simTab === "montecarlo" && (
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "18px" }}>
+          <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "4px", fontFamily: T.fontDisplay }}>Distribución de Fechas de Fin</div>
+            <div style={{ fontSize: "11px", color: T.textDim, marginBottom: "16px" }}>50 iteraciones — Portafolio consolidado</div>
+            <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={(() => { const bins = {}; MONTE_CARLO.forEach(m => { const b = Math.floor(m.days / 10) * 10; bins[b] = (bins[b] || 0) + 1; }); return Object.entries(bins).map(([k,v]) => ({ range: `${k}-${+k+9}d`, count: v, days: +k })).sort((a,b) => a.days - b.days); })()}>
+                <CartesianGrid strokeDasharray="3 3" stroke={T.border} /><XAxis dataKey="range" tick={{ fontSize: 9, fill: T.textDim }} /><YAxis tick={{ fontSize: 9, fill: T.textDim }} />
+                <Bar dataKey="count" fill={T.accent} radius={[4,4,0,0]} /><Tooltip content={<CustomTooltip />} />
+              </BarChart>
+            </ResponsiveContainer>
+            <div style={{ display: "flex", justifyContent: "space-around", marginTop: "10px" }}>
+              {[["P50", "178 días", T.emerald], ["P80", "202 días", T.amber], ["P95", "221 días", T.rose]].map(([l,v,c]) => (<div key={l} style={{ textAlign: "center" }}><div style={{ fontSize: "10px", color: T.textDim }}>{l}</div><div style={{ fontSize: "14px", fontWeight: 700, color: c, fontFamily: T.fontMono }}>{v}</div></div>))}
+            </div>
+          </div>
+          <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "4px", fontFamily: T.fontDisplay }}>Dispersión Costo vs. Duración</div>
+            <div style={{ fontSize: "11px", color: T.textDim, marginBottom: "16px" }}>Cada punto = 1 simulación</div>
+            <ResponsiveContainer width="100%" height={280}>
+              <ScatterChart><CartesianGrid strokeDasharray="3 3" stroke={T.border} /><XAxis dataKey="days" name="Días" tick={{ fontSize: 9, fill: T.textDim }} label={{ value: "Días", position: "bottom", fontSize: 10, fill: T.textDim }} /><YAxis dataKey="cost" name="Costo" tick={{ fontSize: 9, fill: T.textDim }} tickFormatter={v => `${(v/1e6).toFixed(1)}M`} /><Scatter data={MONTE_CARLO} fill={T.accent} fillOpacity={0.6} r={4} /><Tooltip content={<CustomTooltip />} /></ScatterChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      )}
+      {simTab === "assumptions" && (
+        <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Registro de Supuestos con Alertas de Caducidad</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {ASSUMPTIONS.map(a => (
+              <div key={a.id} style={{ display: "grid", gridTemplateColumns: "60px 1fr 120px 100px 90px", gap: "12px", alignItems: "center", padding: "14px 16px", borderRadius: T.radiusSm, background: a.status === "at_risk" ? T.amberGlow : T.bgSurface, border: `1px solid ${a.status === "at_risk" ? T.amber + "30" : T.border}` }}>
+                <span style={{ fontSize: "11px", fontFamily: T.fontMono, color: T.textDim }}>{a.id}</span>
+                <div><div style={{ fontSize: "12px", fontWeight: 600, color: T.text }}>{a.desc}</div><div style={{ fontSize: "10px", color: T.textDim }}>{a.project} · Riesgo vinculado: {a.risk}</div></div>
+                <div style={{ textAlign: "center", fontSize: "11px", color: T.textMuted, fontFamily: T.fontMono }}>{a.validationDate}</div>
+                <div style={{ textAlign: "center" }}><span style={{ fontSize: "14px", fontWeight: 700, color: a.daysLeft <= 15 ? T.rose : a.daysLeft <= 30 ? T.amber : T.emerald, fontFamily: T.fontMono }}>{a.daysLeft}d</span><div style={{ fontSize: "9px", color: T.textDim }}>restantes</div></div>
+                <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "10px", textAlign: "center", fontWeight: 600, color: a.status === "at_risk" ? T.amber : a.status === "valid" ? T.emerald : T.textMuted, background: a.status === "at_risk" ? T.amberGlow : a.status === "valid" ? T.emeraldGlow : T.bgCard }}>{a.status === "at_risk" ? "⚠ En Riesgo" : a.status === "valid" ? "✓ Válido" : "◌ Pendiente"}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── METRICS VIEW ────────────────────────────────────────────────────────────
+const MetricsView = () => {
+  const [metricTab, setMetricTab] = useState("evm");
+  return (
+    <div>
+      <SectionHeader title="Métricas de Desempeño" subtitle="EVM + Flujo Ágil — Framework consolidado PHI" />
+      <div style={{ background: `linear-gradient(135deg, ${T.bgCard}, ${T.emeraldGlow})`, border: `1px solid ${T.emerald}30`, borderRadius: T.radius, padding: "18px 20px", marginBottom: "24px" }}>
+        <div style={{ fontSize: "11px", color: T.emerald, textTransform: "uppercase", letterSpacing: "1px", marginBottom: "6px", fontFamily: T.fontMono }}>Project Health Index</div>
+        <div style={{ fontSize: "14px", color: T.text, fontFamily: T.fontMono }}>PHI = (w₁·CPI + w₂·SPI + w₃·FlowEff + w₄·VRI + w₅·(1−RiskExp)) / Σw</div>
+        <div style={{ display: "flex", gap: "20px", marginTop: "10px" }}>{[["≥ 0.80", "Verde", T.emerald], ["0.60–0.79", "Amarillo", T.amber], ["< 0.60", "Rojo", T.rose]].map(([r, l, c]) => (<span key={l} style={{ fontSize: "11px", color: c }}>● {l}: {r}</span>))}</div>
+      </div>
+      <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
+        {[{id:"evm",label:"Valor Ganado (EVM)"},{id:"agile",label:"Flujo Ágil"},{id:"consolidated",label:"Vista Consolidada"}].map(t => (<Pill key={t.id} active={metricTab === t.id} color={T.emerald} onClick={() => setMetricTab(t.id)}>{t.label}</Pill>))}
+      </div>
+      {metricTab === "evm" && (
+        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "18px" }}>
+          <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Curvas S — Portafolio Consolidado</div>
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart data={EVM_TIMELINE}><CartesianGrid strokeDasharray="3 3" stroke={T.border} /><XAxis dataKey="month" tick={{ fontSize: 10, fill: T.textDim }} /><YAxis tick={{ fontSize: 9, fill: T.textDim }} tickFormatter={v => `${(v/1e6).toFixed(1)}M`} /><Area type="monotone" dataKey="pv" name="PV (Planned)" stroke={T.textDim} fill={T.textDim} fillOpacity={0.1} strokeWidth={2} strokeDasharray="5 3" /><Area type="monotone" dataKey="ev" name="EV (Earned)" stroke={T.emerald} fill={T.emerald} fillOpacity={0.15} strokeWidth={2.5} /><Area type="monotone" dataKey="ac" name="AC (Actual)" stroke={T.rose} fill={T.rose} fillOpacity={0.1} strokeWidth={2} /><Tooltip content={<CustomTooltip />} /><Legend wrapperStyle={{ fontSize: "11px" }} /></AreaChart>
+            </ResponsiveContainer>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+            <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "18px" }}>
+              <div style={{ fontSize: "12px", fontWeight: 700, color: T.text, marginBottom: "14px", fontFamily: T.fontDisplay }}>Índices de Eficiencia</div>
+              {PROJECTS.map(p => (<div key={p.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0", borderBottom: `1px solid ${T.border}20` }}><span style={{ fontSize: "11px", color: T.textMuted, maxWidth: "100px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.name.split(" ").slice(0,2).join(" ")}</span><div style={{ display: "flex", gap: "12px" }}><span style={{ fontSize: "12px", fontWeight: 700, color: p.cpi >= 1 ? T.emerald : p.cpi >= 0.9 ? T.amber : T.rose, fontFamily: T.fontMono }}>CPI {p.cpi.toFixed(2)}</span><span style={{ fontSize: "12px", fontWeight: 700, color: p.spi >= 1 ? T.emerald : p.spi >= 0.85 ? T.amber : T.rose, fontFamily: T.fontMono }}>SPI {p.spi.toFixed(2)}</span></div></div>))}
+            </div>
+            <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "18px" }}>
+              <div style={{ fontSize: "12px", fontWeight: 700, color: T.text, marginBottom: "10px", fontFamily: T.fontDisplay }}>Pronósticos</div>
+              {[{ label: "EAC", value: "S/ 3.72M", desc: "BAC / CPI", color: T.accent },{ label: "ETC", value: "S/ 1.78M", desc: "EAC - AC", color: T.amber },{ label: "VAC", value: "-S/ 220K", desc: "BAC - EAC", color: T.rose },{ label: "TCPI", value: "1.14", desc: "(BAC-EV)/(BAC-AC)", color: T.violet }].map(m => (<div key={m.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "6px 0" }}><div><span style={{ fontSize: "12px", fontWeight: 700, color: m.color, fontFamily: T.fontMono }}>{m.label}</span><span style={{ fontSize: "10px", color: T.textDim, marginLeft: "6px" }}>{m.desc}</span></div><span style={{ fontSize: "14px", fontWeight: 700, color: T.text, fontFamily: T.fontMono }}>{m.value}</span></div>))}
+            </div>
+          </div>
+        </div>
+      )}
+      {metricTab === "agile" && (
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "18px" }}>
+          <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Velocity & Throughput</div>
+            <ResponsiveContainer width="100%" height={250}><ComposedChart data={AGILE_FLOW}><CartesianGrid strokeDasharray="3 3" stroke={T.border} /><XAxis dataKey="sprint" tick={{ fontSize: 10, fill: T.textDim }} /><YAxis yAxisId="left" tick={{ fontSize: 9, fill: T.textDim }} /><YAxis yAxisId="right" orientation="right" tick={{ fontSize: 9, fill: T.textDim }} /><Bar yAxisId="left" dataKey="velocity" name="Velocity (SP)" fill={T.accent} radius={[4,4,0,0]} /><Line yAxisId="right" type="monotone" dataKey="throughput" name="Throughput" stroke={T.emerald} strokeWidth={2} dot={{ r: 3 }} /><Tooltip content={<CustomTooltip />} /><Legend wrapperStyle={{ fontSize: "11px" }} /></ComposedChart></ResponsiveContainer>
+          </div>
+          <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Cycle Time & Lead Time</div>
+            <ResponsiveContainer width="100%" height={250}><AreaChart data={AGILE_FLOW}><CartesianGrid strokeDasharray="3 3" stroke={T.border} /><XAxis dataKey="sprint" tick={{ fontSize: 10, fill: T.textDim }} /><YAxis tick={{ fontSize: 9, fill: T.textDim }} unit="d" /><Area type="monotone" dataKey="leadTime" name="Lead Time" stroke={T.amber} fill={T.amber} fillOpacity={0.15} strokeWidth={2} /><Area type="monotone" dataKey="cycleTime" name="Cycle Time" stroke={T.violet} fill={T.violet} fillOpacity={0.15} strokeWidth={2} /><Tooltip content={<CustomTooltip />} /><Legend wrapperStyle={{ fontSize: "11px" }} /></AreaChart></ResponsiveContainer>
+          </div>
+          <div style={{ gridColumn: "1 / -1", background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>WIP vs Flow Efficiency</div>
+            <ResponsiveContainer width="100%" height={200}><ComposedChart data={AGILE_FLOW}><CartesianGrid strokeDasharray="3 3" stroke={T.border} /><XAxis dataKey="sprint" tick={{ fontSize: 10, fill: T.textDim }} /><YAxis yAxisId="left" tick={{ fontSize: 9, fill: T.textDim }} /><YAxis yAxisId="right" orientation="right" tick={{ fontSize: 9, fill: T.textDim }} /><Bar yAxisId="left" dataKey="wip" name="WIP" fill={T.rose} fillOpacity={0.5} radius={[4,4,0,0]} /><Line yAxisId="right" type="monotone" dataKey="cycleTime" name="Flow Efficiency proxy" stroke={T.accent} strokeWidth={2} dot={{ r: 3 }} /><Tooltip content={<CustomTooltip />} /><Legend wrapperStyle={{ fontSize: "11px" }} /></ComposedChart></ResponsiveContainer>
+          </div>
+        </div>
+      )}
+      {metricTab === "consolidated" && (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px" }}>
+          {PROJECTS.map(p => {
+            const phiColor = p.phi >= 0.8 ? T.emerald : p.phi >= 0.6 ? T.amber : T.rose;
+            return (
+              <div key={p.id} style={{ background: T.bgCard, border: `1px solid ${phiColor}25`, borderRadius: T.radius, padding: "20px", position: "relative", overflow: "hidden" }}>
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: phiColor }} />
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
+                  <div><div style={{ fontSize: "13px", fontWeight: 700, color: T.text }}>{p.name}</div><MethodBadge method={p.method} /></div>
+                  <div style={{ textAlign: "right" }}><div style={{ fontSize: "28px", fontWeight: 800, color: phiColor, fontFamily: T.fontMono }}>{p.phi.toFixed(2)}</div><div style={{ fontSize: "10px", color: T.textDim }}>PHI</div></div>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "12px" }}>
+                  {[["CPI", p.cpi, p.cpi >= 1 ? T.emerald : T.amber],["SPI", p.spi, p.spi >= 1 ? T.emerald : T.amber],["VRI", p.vri, T.accent],["Risk", (1 - p.riskExposure).toFixed(2), p.riskExposure < 0.2 ? T.emerald : T.amber]].map(([l, v, c]) => (<div key={l} style={{ background: T.bgSurface, borderRadius: T.radiusXs, padding: "8px", textAlign: "center" }}><div style={{ fontSize: "9px", color: T.textDim, textTransform: "uppercase" }}>{l}</div><div style={{ fontSize: "15px", fontWeight: 700, color: c, fontFamily: T.fontMono }}>{typeof v === "number" ? v.toFixed(2) : v}</div></div>))}
+                </div>
+                <ProgressBar value={p.progress} color={phiColor} />
+                <div style={{ fontSize: "10px", color: T.textDim, textAlign: "right", marginTop: "4px" }}>{p.progress}% completado</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── AI & KNOWLEDGE VIEW ─────────────────────────────────────────────────────
+const AIView = () => {
+  const [aiFilter, setAiFilter] = useState("all");
+  const typeConfig = { risk: { icon: "⚠️", color: T.rose, label: "Predicción de Riesgo" }, resource: { icon: "👥", color: T.violet, label: "Optimización Recurso" }, estimation: { icon: "📐", color: T.amber, label: "Calibración Estimación" }, lesson: { icon: "📚", color: T.emerald, label: "Lección Aprendida" } };
+  const filtered = aiFilter === "all" ? AI_RECOMMENDATIONS : AI_RECOMMENDATIONS.filter(r => r.type === aiFilter);
+  return (
+    <div>
+      <SectionHeader title="Motor de Conocimiento e IA" subtitle="RAG + ML predictivo — Aprendizaje continuo de ejecución histórica" />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px", marginBottom: "24px" }}>
+        {[{ layer: "Ingestión", desc: "ETL pipeline, event sourcing, data lake", tech: "Apache Kafka · PostgreSQL", icon: "📥", color: T.accent },{ layer: "Análisis", desc: "ML supervisado, NLP para lecciones aprendidas", tech: "XGBoost · scikit-learn · NLP", icon: "🧠", color: T.violet },{ layer: "Recomendación", desc: "LLM fine-tuned con RAG contextual", tech: "LangChain · Vector DB · RAG", icon: "💡", color: T.emerald }].map(l => (
+          <div key={l.layer} style={{ background: T.bgCard, border: `1px solid ${l.color}25`, borderRadius: T.radius, padding: "20px" }}>
+            <div style={{ fontSize: "24px", marginBottom: "10px" }}>{l.icon}</div>
+            <div style={{ fontSize: "15px", fontWeight: 700, color: l.color, fontFamily: T.fontDisplay }}>{l.layer}</div>
+            <div style={{ fontSize: "12px", color: T.textMuted, margin: "6px 0" }}>{l.desc}</div>
+            <div style={{ fontSize: "10px", color: T.textDim, fontFamily: T.fontMono }}>{l.tech}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
+        <Pill active={aiFilter === "all"} color={T.accent} onClick={() => setAiFilter("all")}>Todas</Pill>
+        {Object.entries(typeConfig).map(([k, v]) => (<Pill key={k} active={aiFilter === k} color={v.color} onClick={() => setAiFilter(k)}>{v.label}</Pill>))}
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "24px" }}>
+        {filtered.map(rec => {
+          const tc = typeConfig[rec.type];
+          return (
+            <div key={rec.id} style={{ background: T.bgCard, border: `1px solid ${tc.color}25`, borderRadius: T.radius, padding: "20px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
+                <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
+                  <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: `${tc.color}15`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", border: `1px solid ${tc.color}30`, flexShrink: 0 }}>{tc.icon}</div>
+                  <div>
+                    <span style={{ fontSize: "10px", padding: "2px 8px", borderRadius: "4px", background: `${tc.color}15`, color: tc.color, fontWeight: 600, marginRight: "8px" }}>{tc.label}</span>
+                    <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginTop: "6px", fontFamily: T.fontDisplay }}>{rec.title}</div>
+                    <div style={{ fontSize: "12px", color: T.textMuted, marginTop: "6px", lineHeight: 1.5 }}>{rec.desc}</div>
+                  </div>
+                </div>
+                <div style={{ textAlign: "right", flexShrink: 0 }}><div style={{ fontSize: "10px", color: T.textDim }}>Confianza</div><div style={{ fontSize: "20px", fontWeight: 800, color: rec.confidence >= 0.85 ? T.emerald : T.amber, fontFamily: T.fontMono }}>{(rec.confidence * 100).toFixed(0)}%</div></div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "12px", borderTop: `1px solid ${T.border}` }}>
+                <div style={{ fontSize: "12px", color: T.accent }}>💡 Acción sugerida: <span style={{ color: T.text }}>{rec.action}</span></div>
+                <div style={{ display: "flex", gap: "8px" }}>
+                  {rec.status === "accepted" ? (<span style={{ fontSize: "11px", padding: "4px 12px", borderRadius: "6px", background: T.emeraldGlow, color: T.emerald, fontWeight: 600 }}>✓ Aceptada</span>) : (<><button style={{ fontSize: "11px", padding: "4px 14px", borderRadius: "6px", background: T.emerald, color: T.bg, border: "none", cursor: "pointer", fontWeight: 600, fontFamily: T.font }}>Aceptar</button><button style={{ fontSize: "11px", padding: "4px 14px", borderRadius: "6px", background: "transparent", color: T.textDim, border: `1px solid ${T.border}`, cursor: "pointer", fontFamily: T.font }}>Rechazar</button></>)}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+        <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>📈 Precisión del Modelo — Dashboard de Retroalimentación</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" }}>
+          {[{ label: "Predicción Riesgos", value: "73%", target: ">70%", desc: "Recall en 52 proyectos" },{ label: "Estimación Esfuerzo", value: "±18%", target: "<25%", desc: "Desviación promedio" },{ label: "Recomendaciones Aceptadas", value: "64%", target: ">60%", desc: "Tasa de aceptación PM" },{ label: "Lecciones Relevantes", value: "81%", target: ">75%", desc: "Relevancia reportada" }].map(m => (
+            <div key={m.label} style={{ background: T.bgSurface, borderRadius: T.radiusSm, padding: "16px", textAlign: "center" }}>
+              <div style={{ fontSize: "10px", color: T.textDim, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "6px" }}>{m.label}</div>
+              <div style={{ fontSize: "24px", fontWeight: 800, color: T.emerald, fontFamily: T.fontMono }}>{m.value}</div>
+              <div style={{ fontSize: "10px", color: T.textDim, marginTop: "4px" }}>Target: {m.target}</div>
+              <div style={{ fontSize: "10px", color: T.textMuted, marginTop: "2px" }}>{m.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── IN-APP BILLING VIEW ─────────────────────────────────────────────────────
+const BillingView = ({ user }) => {
+  const [annual, setAnnual] = useState(true);
+  const currentPlan = PRICING_PLANS.find(p => p.id === user.plan) || PRICING_PLANS[2];
+  return (
+    <div>
+      <SectionHeader title="Plan & Facturación" subtitle="Gestiona tu suscripción y métodos de pago" />
+      {/* Current Plan */}
+      <div style={{ background: `linear-gradient(135deg, ${T.bgCard}, ${T.accentGlow})`, border: `1px solid ${T.accent}30`, borderRadius: T.radius, padding: "24px", marginBottom: "24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div>
+          <div style={{ fontSize: "11px", color: T.accent, textTransform: "uppercase", letterSpacing: "1px", marginBottom: "6px", fontFamily: T.fontMono }}>Tu Plan Actual</div>
+          <div style={{ fontSize: "28px", fontWeight: 800, color: T.text, fontFamily: T.fontDisplay }}>{currentPlan.icon} {currentPlan.name}</div>
+          <div style={{ fontSize: "13px", color: T.textMuted, marginTop: "4px" }}>{currentPlan.subtitle} · Facturación anual · Renovación: 14 Feb 2027</div>
+        </div>
+        <div style={{ textAlign: "right" }}>
+          <div style={{ fontSize: "36px", fontWeight: 800, color: T.accent, fontFamily: T.fontDisplay }}>${currentPlan.priceAnnual}<span style={{ fontSize: "14px", color: T.textDim }}>/user/mo</span></div>
+          <div style={{ fontSize: "12px", color: T.emerald, fontWeight: 600 }}>Ahorras ${(currentPlan.price - currentPlan.priceAnnual) * 12}/user al año</div>
+        </div>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "18px", marginBottom: "24px" }}>
+        {/* Usage */}
+        <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Uso Actual</div>
+          {[
+            { label: "Usuarios activos", used: 47, max: currentPlan.maxUsers, unit: "" },
+            { label: "Proyectos activos", used: 6, max: currentPlan.maxProjects === -1 ? "∞" : currentPlan.maxProjects, unit: "" },
+            { label: "Almacenamiento", used: 18.4, max: 50, unit: "GB" },
+            { label: "Llamadas API (mes)", used: 12450, max: 50000, unit: "" },
+          ].map((u, i) => (
+            <div key={i} style={{ marginBottom: "14px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "6px" }}>
+                <span style={{ color: T.textMuted }}>{u.label}</span>
+                <span style={{ color: T.text, fontFamily: T.fontMono }}>{u.used.toLocaleString()}{u.unit} / {typeof u.max === "number" ? u.max.toLocaleString() : u.max}{u.unit}</span>
+              </div>
+              {typeof u.max === "number" && <ProgressBar value={(u.used / u.max) * 100} color={u.used / u.max > 0.85 ? T.amber : T.accent} height={5} />}
+            </div>
+          ))}
+        </div>
+        {/* Payment Method */}
+        <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Método de Pago</div>
+          <div style={{ background: T.bgSurface, borderRadius: T.radiusSm, padding: "16px", border: `1px solid ${T.border}`, marginBottom: "14px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ width: "44px", height: "30px", borderRadius: "6px", background: `linear-gradient(135deg, #1a1f71, #2d4ca3)`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", color: "#fff", fontWeight: 700, fontFamily: T.fontMono }}>VISA</div>
+                <div>
+                  <div style={{ fontSize: "13px", color: T.text, fontFamily: T.fontMono }}>•••• •••• •••• 4532</div>
+                  <div style={{ fontSize: "11px", color: T.textDim }}>Vence 08/2028</div>
+                </div>
+              </div>
+              <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "10px", background: T.emeraldGlow, color: T.emerald, fontWeight: 600 }}>Principal</span>
+            </div>
+          </div>
+          <button style={{ width: "100%", padding: "10px", borderRadius: T.radiusSm, background: "transparent", border: `1px dashed ${T.border}`, cursor: "pointer", color: T.textDim, fontSize: "12px", fontFamily: T.font }}>+ Agregar método de pago</button>
+          <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: `1px solid ${T.border}` }}>
+            <div style={{ fontSize: "12px", fontWeight: 700, color: T.text, marginBottom: "10px" }}>Historial de Facturación</div>
+            {[
+              { date: "14 Ene 2026", amount: "$1,296.00", status: "Pagado" },
+              { date: "14 Dic 2025", amount: "$1,296.00", status: "Pagado" },
+              { date: "14 Nov 2025", amount: "$1,134.00", status: "Pagado" },
+            ].map((inv, i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", fontSize: "12px" }}>
+                <span style={{ color: T.textMuted }}>{inv.date}</span>
+                <span style={{ color: T.text, fontFamily: T.fontMono }}>{inv.amount}</span>
+                <span style={{ color: T.emerald, fontSize: "10px" }}>✓ {inv.status}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Upgrade options */}
+      <div style={{ background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: T.radius, padding: "20px" }}>
+        <div style={{ fontSize: "14px", fontWeight: 700, color: T.text, marginBottom: "16px", fontFamily: T.fontDisplay }}>Comparar Planes</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" }}>
+          {PRICING_PLANS.map(plan => {
+            const isCurrent = plan.id === currentPlan.id;
+            const price = plan.priceAnnual;
+            return (
+              <div key={plan.id} style={{ background: isCurrent ? T.accentGlow : T.bgSurface, border: `1px solid ${isCurrent ? T.accent + "40" : T.border}`, borderRadius: T.radiusSm, padding: "18px", textAlign: "center" }}>
+                <div style={{ fontSize: "20px", marginBottom: "6px" }}>{plan.icon}</div>
+                <div style={{ fontSize: "15px", fontWeight: 700, color: T.text, fontFamily: T.fontDisplay }}>{plan.name}</div>
+                <div style={{ fontSize: "22px", fontWeight: 800, color: T.accent, fontFamily: T.fontMono, margin: "8px 0" }}>
+                  {price === -1 ? "Custom" : `$${price}`}
+                  {price !== -1 && <span style={{ fontSize: "11px", color: T.textDim }}>/u/mo</span>}
+                </div>
+                {isCurrent ? (
+                  <span style={{ fontSize: "11px", padding: "4px 12px", borderRadius: "6px", background: T.accentGlow, color: T.accent, fontWeight: 600 }}>Plan Actual</span>
+                ) : (
+                  <button style={{ fontSize: "11px", padding: "6px 16px", borderRadius: "6px", background: plan.id === "enterprise" ? T.amber : "transparent", color: plan.id === "enterprise" ? T.bg : T.textMuted, border: plan.id === "enterprise" ? "none" : `1px solid ${T.border}`, cursor: "pointer", fontWeight: 600, fontFamily: T.font }}>
+                    {plan.id === "enterprise" ? "Contactar" : price > currentPlan.priceAnnual ? "Upgrade" : "Downgrade"}
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ─── MAIN APP ─────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+function PMOSystem() {
+  const [screen, setScreen] = useState("login"); // login | pricing | app
+  const [user, setUser] = useState(null);
+  const [activeView, setActiveView] = useState("dashboard");
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 60000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+    setScreen("app");
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setScreen("login");
+    setActiveView("dashboard");
+  };
+
+  // ── Login Screen
+  if (screen === "login") {
+    return <LoginScreen onLogin={handleLogin} onShowPricing={() => setScreen("pricing")} />;
+  }
+
+  // ── Pricing Screen
+  if (screen === "pricing") {
+    return <PricingScreen onBack={() => setScreen("login")} onSelectPlan={(planId) => { handleLogin({ name: "Usuario", email: "user@demo.com", avatar: "U", plan: planId }); }} />;
+  }
+
+  // ── Main App
+  const views = { dashboard: DashboardView, strategic: StrategicView, engine: EngineView, uncertainty: UncertaintyView, metrics: MetricsView, ai: AIView, pricing: () => <BillingView user={user} /> };
+  const ActiveComponent = views[activeView];
+
+  return (
+    <div style={{ fontFamily: T.font, background: T.bg, color: T.text, minHeight: "100vh", display: "flex" }}>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+      {/* Sidebar */}
+      <div style={{ width: "220px", background: T.bgCard, borderRight: `1px solid ${T.border}`, display: "flex", flexDirection: "column", flexShrink: 0, position: "sticky", top: 0, height: "100vh" }}>
+        <div style={{ padding: "20px 18px", borderBottom: `1px solid ${T.border}` }}>
+          <div style={{ fontSize: "18px", fontWeight: 800, color: T.accent, fontFamily: T.fontDisplay, letterSpacing: "-0.5px" }}>◈ PMO<span style={{ color: T.text }}>System</span></div>
+          <div style={{ fontSize: "9px", color: T.textDim, marginTop: "4px", fontFamily: T.fontMono, textTransform: "uppercase", letterSpacing: "1px" }}>PMBOK® 8th Edition</div>
+        </div>
+
+        {/* User profile mini */}
+        {user && (
+          <div style={{ padding: "14px 18px", borderBottom: `1px solid ${T.border}`, display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: `linear-gradient(135deg, ${T.accent}, ${T.violet})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: 700, color: "#fff" }}>
+              {user.avatar}
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: "12px", fontWeight: 600, color: T.text, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{user.name}</div>
+              <div style={{ fontSize: "10px", color: T.textDim, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{user.email}</div>
+            </div>
+          </div>
+        )}
+
+        <nav style={{ flex: 1, padding: "12px 10px", overflowY: "auto" }}>
+          {NAV_ITEMS.map(item => (
+            <button key={item.id} onClick={() => setActiveView(item.id)} style={{ width: "100%", display: "flex", alignItems: "center", gap: "10px", padding: "10px 12px", marginBottom: "4px", borderRadius: T.radiusSm, border: "none", cursor: "pointer", background: activeView === item.id ? T.accentGlow : "transparent", color: activeView === item.id ? T.accent : T.textMuted, fontSize: "13px", fontWeight: activeView === item.id ? 700 : 500, fontFamily: T.font, transition: "all 0.2s", textAlign: "left" }}>
+              <span style={{ fontSize: "16px", width: "22px", textAlign: "center" }}>{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+        </nav>
+
+        <div style={{ padding: "12px 18px", borderTop: `1px solid ${T.border}` }}>
+          <button onClick={handleLogout} style={{ width: "100%", padding: "8px 12px", borderRadius: T.radiusSm, background: "transparent", border: `1px solid ${T.border}`, cursor: "pointer", fontSize: "12px", color: T.textDim, fontFamily: T.font, display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+            ↩ Cerrar Sesión
+          </button>
+          <div style={{ marginTop: "10px", fontSize: "10px", color: T.textDim, textAlign: "center" }}>
+            <div style={{ fontFamily: T.fontMono }}>{time.toLocaleDateString('es-PE', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
+            <div style={{ marginTop: "2px" }}>v1.0 MVP · Confidencial</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div style={{ flex: 1, padding: "28px 32px", overflowY: "auto", maxHeight: "100vh" }}>
+        <ActiveComponent />
+      </div>
+    </div>
+  );
+}
+
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(React.createElement(PMOSystem));
+  </script>
+</body>
+</html>
