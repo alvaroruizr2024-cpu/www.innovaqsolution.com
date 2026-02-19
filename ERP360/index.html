@@ -4431,6 +4431,410 @@ function TradeView() {
     </CXToastProvider>
   );
 }
+/* ===== COSTOS DE PRODUCCIÓN MODULE ===== */
+const generateCostTimeSeries = (days = 30) => {
+  const data = []; const base = Date.now() - days * 86400000;
+  let actual = 850000, std = 820000;
+  for (let i = 0; i < days; i++) {
+    const variance = (Math.random() - 0.4) * 15000;
+    actual += variance; std += (Math.random() - 0.5) * 3000;
+    data.push({ date: new Date(base + i * 86400000).toLocaleDateString("es-PE", { day: "2-digit", month: "short" }), actual: Math.round(actual), standard: Math.round(std), variance: Math.round(actual - std), variancePct: +((actual - std) / std * 100).toFixed(2) });
+  }
+  return data;
+};
+const WATERFALL_DATA = [
+  { name: "Costo Estandar", value: 820000, type: "base" },
+  { name: "Var.Precio Mat.", value: 12500, type: "increase" },
+  { name: "Var.Uso Mat.", value: -3200, type: "decrease" },
+  { name: "Var.Tasa M.O.", value: 8700, type: "increase" },
+  { name: "Var.Efic. M.O.", value: -1800, type: "decrease" },
+  { name: "Var.Vol. CIF", value: 5400, type: "increase" },
+  { name: "Var.Gasto CIF", value: 3100, type: "increase" },
+  { name: "Costo Real", value: 844700, type: "total" },
+];
+const PARETO_DATA = [
+  { defect: "Soldadura Porosa", cost: 45000, cumPct: 32 },
+  { defect: "Dim.Fuera Toler.", cost: 32000, cumPct: 55 },
+  { defect: "Acabado Superf.", cost: 22000, cumPct: 71 },
+  { defect: "Contaminacion Mat.", cost: 15000, cumPct: 81 },
+  { defect: "Rotura en Prensa", cost: 12000, cumPct: 90 },
+  { defect: "Falla Funcional", cost: 8000, cumPct: 95 },
+  { defect: "Otros", cost: 7000, cumPct: 100 },
+];
+const PLANT_HEAT = [
+  { id: "PL-TRU", name: "Planta Trujillo", cvi: 103.2, orders: 45, alerts: 2 },
+  { id: "PL-LIM", name: "Planta Lima", cvi: 108.7, orders: 62, alerts: 5 },
+  { id: "PL-AQP", name: "Planta Arequipa", cvi: 96.4, orders: 28, alerts: 0 },
+  { id: "PL-CJM", name: "Planta Cajamarca", cvi: 112.3, orders: 31, alerts: 8 },
+  { id: "PL-ICA", name: "Planta Ica", cvi: 101.1, orders: 19, alerts: 1 },
+  { id: "PL-PUN", name: "Planta Puno", cvi: 99.8, orders: 15, alerts: 0 },
+];
+const COST_ALERTS = [
+  { id: 1, time: "14:32", level: "BLOCK", order: "OP-2026-0847", msg: "Desviacion 18.3% en MP-COBRE-001 excede umbral de bloqueo 15%", plant: "Cajamarca" },
+  { id: 2, time: "14:28", level: "CRITICAL", order: "OP-2026-0832", msg: "Costo M.O. directa 12.1% sobre estandar en CW-SOLD-02", plant: "Lima" },
+  { id: 3, time: "14:15", level: "WARNING", order: "OP-2026-0851", msg: "Consumo material excesivo 7.2% en linea de ensamble", plant: "Trujillo" },
+  { id: 4, time: "14:02", level: "RESOLVED", order: "OP-2026-0819", msg: "Desbloqueo autorizado por Gerente de Planta", plant: "Lima" },
+  { id: 5, time: "13:45", level: "WARNING", order: "OP-2026-0844", msg: "Tasa CIF real 6.8% sobre presupuesto mensual", plant: "Cajamarca" },
+  { id: 6, time: "13:30", level: "CRITICAL", order: "OP-2026-0839", msg: "Costo No-Calidad acumulado supera 2.5% del costo total", plant: "Lima" },
+];
+const PROD_ORDERS = [
+  { id: "OP-2026-0847", product: "Valvula HD-300", plant: "Cajamarca", status: "BLOCKED", progress: 68, stdCost: 125000, actualCost: 147875, variance: 18.3 },
+  { id: "OP-2026-0832", product: "Brida ANSI 150", plant: "Lima", status: "IN_PROGRESS", progress: 82, stdCost: 89000, actualCost: 99769, variance: 12.1 },
+  { id: "OP-2026-0851", product: "Eje Principal X90", plant: "Trujillo", status: "IN_PROGRESS", progress: 45, stdCost: 210000, actualCost: 225120, variance: 7.2 },
+  { id: "OP-2026-0819", product: "Carcasa Motor M5", plant: "Lima", status: "COMPLETED", progress: 100, stdCost: 67000, actualCost: 69350, variance: 3.5 },
+  { id: "OP-2026-0844", product: "Rotor Turbina T4", plant: "Cajamarca", status: "IN_PROGRESS", progress: 55, stdCost: 340000, actualCost: 363120, variance: 6.8 },
+  { id: "OP-2026-0860", product: "Impulsor Bomba B2", plant: "Arequipa", status: "RELEASED", progress: 12, stdCost: 45000, actualCost: 5490, variance: 1.2 },
+];
+const NQ_SUMMARY = [
+  { category: "SCRAP", label: "Desperdicio", cost: 78500, pct: 1.2, incidents: 23, trend: "up", color: P.red, icon: <I.Tr /> },
+  { category: "REWORK", label: "Retrabajo", cost: 45200, pct: 0.7, incidents: 15, trend: "down", color: P.org, icon: <I.Hm /> },
+  { category: "DOWNTIME", label: "Tiempo Muerto", cost: 32100, pct: 0.5, incidents: 8, trend: "stable", color: P.pur, icon: <I.Cr /> },
+  { category: "WARRANTY", label: "Garantia", cost: 12800, pct: 0.2, incidents: 4, trend: "down", color: P.s2, icon: <I.Cp /> },
+];
+const COST_TREND = generateCostTimeSeries(30);
+const STD_VERSIONS = [
+  { code: "STD-2026-Q1", status: "Activo", from: "2026-01-01", to: null, approvedBy: "Ing. A. Torres", products: 148 },
+  { code: "STD-2025-Q4", status: "Cerrada", from: "2025-10-01", to: "2025-12-31", approvedBy: "Ing. A. Torres", products: 142 },
+  { code: "STD-2026-Q2", status: "Borrador", from: "2026-04-01", to: null, approvedBy: null, products: 45 },
+];
+const COST_BREAKDOWN = [
+  { element: "MP-COBRE-001", name: "Cobre Electrolitico", category: "MAT", stdQty: 12.5, stdRate: 28.45, stdTotal: 355.63 },
+  { element: "MP-ACERO-003", name: "Acero Inox 316L", category: "MAT", stdQty: 8.2, stdRate: 15.80, stdTotal: 129.56 },
+  { element: "MO-DIR-001", name: "M.O. Directa - Soldadura", category: "MO", stdQty: 4.5, stdRate: 45.50, stdTotal: 204.75 },
+  { element: "MO-DIR-002", name: "M.O. Directa - CNC", category: "MO", stdQty: 3.0, stdRate: 52.00, stdTotal: 156.00 },
+  { element: "CIF-MAQ-001", name: "CIF - Horas Maquina", category: "CIF", stdQty: 7.5, stdRate: 166.67, stdTotal: 1250.03 },
+  { element: "CIF-IND-001", name: "CIF - Servicios Planta", category: "CIF", stdQty: 1.0, stdRate: 85.00, stdTotal: 85.00 },
+];
+const INSP_POINTS = [
+  { point: "IP-WELD-03", name: "Soldadura - Estacion 3", failures: 18, cost: 32000, rate: 4.2 },
+  { point: "IP-CNC-01", name: "CNC - Tolerancia Dim.", failures: 12, cost: 22000, rate: 2.8 },
+  { point: "IP-SURF-02", name: "Acabado Superficial", failures: 9, cost: 15000, rate: 3.1 },
+  { point: "IP-ASSY-01", name: "Ensamble Final", failures: 6, cost: 8500, rate: 1.5 },
+  { point: "IP-RAW-01", name: "Recepcion Materiales", failures: 4, cost: 5200, rate: 0.8 },
+];
+
+const costBadgeC = { BLOCK: P.red, CRITICAL: P.org, WARNING: P.yel, RESOLVED: P.grn, BLOCKED: P.red, IN_PROGRESS: P.blue, COMPLETED: P.grn, RELEASED: P.pur };
+
+function CostView() {
+  const [costTab, setCostTab] = useState("dashboard");
+  const notify = (m) => {};
+
+  /* === Dashboard === */
+  const CostDash = () => {
+    const cw = useMemo(() => { let r = 0; return WATERFALL_DATA.map(d => { if (d.type === "base") { r = d.value; return { ...d, end: d.value }; } if (d.type === "total") return { ...d, end: d.value }; const s = r; r += d.value; return { ...d, end: Math.max(s, r) }; }); }, []);
+    return (<div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <G c={3}><K l="Costo Produccion MTD" v="S/ 6.42M" icon={<I.Dl />} color={P.blue} sub="+3.2% vs presupuesto" glow /><K l="Indice Var. Costos (CVI)" v="103.0%" icon={<I.Tg />} color={P.org} sub="Objetivo: 95-105%" /><K l="Costo No-Calidad" v="2.6%" icon={<I.Wn />} color={P.red} sub="Objetivo: <2.0%" /></G>
+      <G c={3}><K l="Costo Unitario OEE-Adj" v="S/ 142.30/und" icon={<I.Ge />} color={P.grn} sub="-2.1% vs mes anterior" /><K l="Margen Bruto" v="24.8%" icon={<I.St />} color={P.pur} sub="-1.2pp vs presupuesto" /><K l="Alertas Activas" v="15" icon={<I.Wn />} color={P.red} sub="3 BLOCK requieren accion" /></G>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        {/* Waterfall */}
+        <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 9, padding: 14 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 2 }}>Puente Costo Estandar → Real</div>
+          <div style={{ fontSize: 9, color: P.s2, marginBottom: 10 }}>Descomposicion de varianzas del periodo</div>
+          <ResponsiveContainer width="100%" height={240}>
+            <ComposedChart data={cw} barCategoryGap="20%">
+              <CartesianGrid strokeDasharray="3 3" stroke={P.bd} vertical={false} />
+              <XAxis dataKey="name" tick={{ fontSize: 8, fill: P.s2 }} angle={-30} textAnchor="end" height={55} />
+              <YAxis tick={{ fontSize: 9, fill: P.s2 }} tickFormatter={v => `${(v/1000).toFixed(0)}k`} />
+              <Tooltip contentStyle={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 8, fontSize: 10 }} />
+              <Bar dataKey="end" radius={[4, 4, 0, 0]}>
+                {cw.map((e, i) => <Cell key={i} fill={e.type === "base" ? P.blue : e.type === "total" ? P.cyan : e.value > 0 ? P.red : P.grn} fillOpacity={0.8} />)}
+              </Bar>
+            </ComposedChart>
+          </ResponsiveContainer>
+        </div>
+        {/* Pareto */}
+        <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 9, padding: 14 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 2 }}>Pareto: Costo de No-Calidad</div>
+          <div style={{ fontSize: 9, color: P.s2, marginBottom: 10 }}>Defectos por impacto financiero</div>
+          <ResponsiveContainer width="100%" height={240}>
+            <ComposedChart data={PARETO_DATA} barCategoryGap="25%">
+              <CartesianGrid strokeDasharray="3 3" stroke={P.bd} vertical={false} />
+              <XAxis dataKey="defect" tick={{ fontSize: 7, fill: P.s2 }} angle={-25} textAnchor="end" height={55} />
+              <YAxis yAxisId="left" tick={{ fontSize: 9, fill: P.s2 }} tickFormatter={v => `${(v/1000).toFixed(0)}k`} />
+              <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 9, fill: P.s2 }} tickFormatter={v => `${v}%`} domain={[0, 100]} />
+              <Tooltip contentStyle={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 8, fontSize: 10 }} />
+              <Bar yAxisId="left" dataKey="cost" name="Costo S/" fill={P.red} fillOpacity={0.75} radius={[4, 4, 0, 0]} />
+              <Line yAxisId="right" type="monotone" dataKey="cumPct" name="% Acumulado" stroke={P.org} strokeWidth={2.5} dot={{ fill: P.org, r: 3 }} />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        {/* Plant Heatmap */}
+        <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 9, padding: 14 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 2 }}>Mapa de Plantas: Indice de Variacion</div>
+          <div style={{ fontSize: 9, color: P.s2, marginBottom: 10 }}>CVI por planta — Objetivo: 95-105%</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
+            {PLANT_HEAT.map(p => {
+              const cc = p.cvi > 110 ? P.red : p.cvi > 105 ? P.org : P.grn;
+              return (<div key={p.id} style={{ background: cc + "08", border: `1px solid ${cc}25`, borderRadius: 8, padding: "10px 10px", position: "relative" }}>
+                {p.cvi > 110 && <div style={{ position: "absolute", top: 6, right: 6, width: 7, height: 7, borderRadius: "50%", background: P.red, animation: "spin 2s linear infinite" }} />}
+                <div style={{ fontSize: 8, color: P.s2, fontWeight: 600, letterSpacing: .5 }}>{p.id}</div>
+                <div style={{ fontSize: 10, fontWeight: 700, marginTop: 2 }}>{p.name}</div>
+                <div style={{ fontSize: 20, fontWeight: 800, color: cc, marginTop: 4 }}>{p.cvi}<span style={{ fontSize: 10, color: P.s2 }}>%</span></div>
+                <div style={{ display: "flex", gap: 8, marginTop: 4, fontSize: 8, color: P.s2 }}><span>{p.orders} ordenes</span><span style={{ color: p.alerts > 0 ? P.org : P.s2, fontWeight: p.alerts > 0 ? 700 : 400 }}>{p.alerts} alertas</span></div>
+              </div>);
+            })}
+          </div>
+        </div>
+        {/* Alert Timeline */}
+        <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 9, padding: 14 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+            <div><div style={{ fontSize: 12, fontWeight: 700 }}>Alertas en Tiempo Real</div><div style={{ fontSize: 9, color: P.s2 }}>Ultimos eventos del flujo de trabajo</div></div>
+            <div style={{ display: "flex", alignItems: "center", gap: 4 }}><div style={{ width: 6, height: 6, borderRadius: "50%", background: P.grn }} /><span style={{ fontSize: 9, color: P.grn, fontWeight: 600 }}>EN VIVO</span></div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6, maxHeight: 260, overflowY: "auto", scrollbarWidth: "thin" }}>
+            {COST_ALERTS.map(a => (<div key={a.id} style={{ display: "flex", gap: 8, padding: "8px 10px", background: P.c2, borderRadius: 7, border: `1px solid ${P.bd}` }}>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: 42 }}>
+                <span style={{ fontSize: 11, fontWeight: 700, fontFamily: "monospace" }}>{a.time}</span>
+                <span style={{ fontSize: 7, color: P.s2 }}>{a.plant}</span>
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: "flex", gap: 6, alignItems: "center", marginBottom: 2 }}>
+                  <Badge s={a.level} c={costBadgeC[a.level]} />
+                  <span style={{ fontSize: 10, fontWeight: 600, color: P.blue, fontFamily: "monospace" }}>{a.order}</span>
+                </div>
+                <div style={{ fontSize: 9, color: P.s1, lineHeight: 1.3 }}>{a.msg}</div>
+              </div>
+            </div>))}
+          </div>
+        </div>
+      </div>
+    </div>);
+  };
+
+  /* === Ordenes de Produccion === */
+  const CostOrders = () => {
+    const [filter, setFilter] = useState("ALL");
+    const filtered = filter === "ALL" ? PROD_ORDERS : PROD_ORDERS.filter(o => o.status === filter);
+    const cH = { padding: "6px 8px", fontSize: 8, fontWeight: 700, color: P.s2, textTransform: "uppercase", letterSpacing: .3, borderBottom: `1px solid ${P.bd}`, textAlign: "left" };
+    const cS = { padding: "7px 8px", fontSize: 10, borderBottom: `1px solid ${P.bd}10` };
+    return (<div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <div style={{ display: "flex", gap: 4 }}>
+        {["ALL", "BLOCKED", "IN_PROGRESS", "COMPLETED", "RELEASED"].map(f => {
+          const lbl = { ALL: "Todas", BLOCKED: "Bloqueadas", IN_PROGRESS: "En Proceso", COMPLETED: "Completadas", RELEASED: "Liberadas" };
+          const cnt = f === "ALL" ? PROD_ORDERS.length : PROD_ORDERS.filter(o => o.status === f).length;
+          return <Btn key={f} s={filter !== f} p={filter === f} onClick={() => setFilter(f)}>{lbl[f]} ({cnt})</Btn>;
+        })}
+      </div>
+      <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 8, overflow: "hidden" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead><tr>{["Orden", "Producto", "Planta", "Estado", "Progreso", "Costo Estandar", "Costo Real", "Varianza"].map(h => <th key={h} style={cH}>{h}</th>)}</tr></thead>
+          <tbody>{filtered.map(o => {
+            const vc = Math.abs(o.variance) > 15 ? P.red : Math.abs(o.variance) > 8 ? P.org : P.grn;
+            return (<tr key={o.id} onMouseEnter={e => e.currentTarget.style.background = P.hv} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+              <td style={{ ...cS, fontFamily: "monospace", color: P.blue, fontWeight: 700 }}>{o.id}</td>
+              <td style={{ ...cS, fontWeight: 600 }}>{o.product}</td>
+              <td style={{ ...cS, color: P.s1 }}>{o.plant}</td>
+              <td style={cS}><Badge s={o.status === "IN_PROGRESS" ? "En Proceso" : o.status === "BLOCKED" ? "Bloqueada" : o.status === "COMPLETED" ? "Completado" : "Liberada"} c={costBadgeC[o.status]} /></td>
+              <td style={{ ...cS, width: 100 }}><ProgressBar value={o.progress} max={100} color={o.status === "BLOCKED" ? P.red : P.blue} /></td>
+              <td style={{ ...cS, fontFamily: "monospace", textAlign: "right" }}>{$(o.stdCost)}</td>
+              <td style={{ ...cS, fontFamily: "monospace", fontWeight: 700, textAlign: "right" }}>{$(o.actualCost)}</td>
+              <td style={{ ...cS, fontFamily: "monospace", fontWeight: 800, color: vc, textAlign: "right" }}>{o.variance > 0 ? "+" : ""}{o.variance}%</td>
+            </tr>);
+          })}</tbody>
+        </table>
+      </div>
+      <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 9, padding: 14 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 2 }}>Tendencia: Costo Real vs Estandar (30 dias)</div>
+        <div style={{ fontSize: 9, color: P.s2, marginBottom: 10 }}>Seguimiento diario acumulado de costos de produccion</div>
+        <ResponsiveContainer width="100%" height={250}>
+          <ComposedChart data={COST_TREND}>
+            <defs><linearGradient id="gradCostActual" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={P.blue} stopOpacity={0.15} /><stop offset="95%" stopColor={P.blue} stopOpacity={0} /></linearGradient></defs>
+            <CartesianGrid strokeDasharray="3 3" stroke={P.bd} vertical={false} />
+            <XAxis dataKey="date" tick={{ fontSize: 9, fill: P.s2 }} interval={4} />
+            <YAxis tick={{ fontSize: 9, fill: P.s2 }} tickFormatter={v => `${(v/1000).toFixed(0)}k`} />
+            <Tooltip contentStyle={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 8, fontSize: 10 }} />
+            <Legend wrapperStyle={{ fontSize: 10 }} />
+            <Area type="monotone" dataKey="actual" name="Costo Real" stroke={P.blue} fill="url(#gradCostActual)" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="standard" name="Costo Estandar" stroke={P.grn} strokeWidth={2} strokeDasharray="6 3" dot={false} />
+          </ComposedChart>
+        </ResponsiveContainer>
+      </div>
+    </div>);
+  };
+
+  /* === No-Calidad === */
+  const CostNoCalidad = () => {
+    const nqM = useMemo(() => ["Sep","Oct","Nov","Dic","Ene","Feb"].map(m => ({ month: m, scrap: 65000 + Math.random() * 20000, rework: 35000 + Math.random() * 15000, downtime: 25000 + Math.random() * 12000, warranty: 8000 + Math.random() * 8000 })), []);
+    return (<div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <G c={4}>{NQ_SUMMARY.map(nq => <K key={nq.category} l={nq.label} v={`S/ ${(nq.cost/1000).toFixed(1)}k`} icon={nq.icon} color={nq.color} sub={`${nq.pct}% · ${nq.incidents} incidentes · ${nq.trend === "up" ? "↑" : nq.trend === "down" ? "↓" : "→"}`} />)}</G>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 9, padding: 14 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 2 }}>Evolucion Mensual CoNQ</div>
+          <div style={{ fontSize: 9, color: P.s2, marginBottom: 10 }}>Costo de No-Calidad por categoria</div>
+          <ResponsiveContainer width="100%" height={240}>
+            <BarChart data={nqM} barCategoryGap="25%">
+              <CartesianGrid strokeDasharray="3 3" stroke={P.bd} vertical={false} />
+              <XAxis dataKey="month" tick={{ fontSize: 10, fill: P.s2 }} />
+              <YAxis tick={{ fontSize: 9, fill: P.s2 }} tickFormatter={v => `${(v/1000).toFixed(0)}k`} />
+              <Tooltip contentStyle={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 8, fontSize: 10 }} />
+              <Legend wrapperStyle={{ fontSize: 9 }} />
+              <Bar dataKey="scrap" name="Desperdicio" stackId="a" fill={P.red} fillOpacity={0.8} />
+              <Bar dataKey="rework" name="Retrabajo" stackId="a" fill={P.org} fillOpacity={0.8} />
+              <Bar dataKey="downtime" name="Tiempo Muerto" stackId="a" fill={P.pur} fillOpacity={0.8} />
+              <Bar dataKey="warranty" name="Garantia" stackId="a" fill={P.s2} fillOpacity={0.6} radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 9, padding: 14 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 2 }}>Top Puntos de Inspeccion por Costo</div>
+          <div style={{ fontSize: 9, color: P.s2, marginBottom: 10 }}>Mayor impacto financiero en No-Calidad</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {INSP_POINTS.map((ip, i) => (<div key={ip.point} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 22, height: 22, borderRadius: 5, background: i === 0 ? P.red + "20" : i < 3 ? P.org + "15" : P.c2, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: i === 0 ? P.red : i < 3 ? P.org : P.s2 }}>{i + 1}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 3 }}>
+                  <div><span style={{ fontSize: 9, fontFamily: "monospace", color: P.blue }}>{ip.point}</span><span style={{ fontSize: 10, color: P.s1, marginLeft: 6 }}>{ip.name}</span></div>
+                  <span style={{ fontSize: 11, fontWeight: 700, fontFamily: "monospace" }}>S/ {(ip.cost/1000).toFixed(1)}k</span>
+                </div>
+                <ProgressBar value={ip.cost} max={35000} color={i === 0 ? P.red : i < 3 ? P.org : P.blue} />
+                <div style={{ display: "flex", gap: 12, marginTop: 2, fontSize: 8, color: P.s2 }}><span>{ip.failures} fallas</span><span>Tasa: {ip.rate}%</span></div>
+              </div>
+            </div>))}
+          </div>
+        </div>
+      </div>
+    </div>);
+  };
+
+  /* === Simulador What-If === */
+  const CostSimulator = () => {
+    const [vars, setVars] = useState({ materialPrice: 0, laborRate: 0, exchangeRate: 0, yieldPct: 0, overheadRate: 0 });
+    const [running, setRunning] = useState(false);
+    const [results, setResults] = useState(null);
+    const sliders = [
+      { key: "materialPrice", label: "Precio Material", icon: "🪨", unit: "%", min: -20, max: 20, current: "S/ 28.45/kg" },
+      { key: "laborRate", label: "Tasa M.O. Directa", icon: "👷", unit: "%", min: -15, max: 15, current: "S/ 45.50/hr" },
+      { key: "exchangeRate", label: "Tipo de Cambio", icon: "💱", unit: "%", min: -10, max: 10, current: "3.72 PEN/USD" },
+      { key: "yieldPct", label: "Rendimiento (Yield)", icon: "📐", unit: "pp", min: -10, max: 5, current: "94.2%" },
+      { key: "overheadRate", label: "Tasa CIF", icon: "🏭", unit: "%", min: -15, max: 15, current: "S/ 166.67/hr" },
+    ];
+    const runSim = useCallback(() => {
+      setRunning(true);
+      setTimeout(() => {
+        const base = [{ name: "Valvula HD-300", baseCost: 1250, baseMargin: 28.5 }, { name: "Brida ANSI 150", baseCost: 890, baseMargin: 22.3 }, { name: "Eje Principal X90", baseCost: 2100, baseMargin: 31.2 }, { name: "Carcasa Motor M5", baseCost: 670, baseMargin: 19.8 }, { name: "Rotor Turbina T4", baseCost: 3400, baseMargin: 35.1 }];
+        const sim = base.map(p => {
+          const t = p.baseCost * 0.55 * (vars.materialPrice / 100) + p.baseCost * 0.25 * (vars.laborRate / 100) + p.baseCost * 0.30 * (vars.exchangeRate / 100) + (vars.yieldPct !== 0 ? p.baseCost * (-vars.yieldPct / 100) * 0.8 : 0) + p.baseCost * 0.20 * (vars.overheadRate / 100);
+          return { ...p, newCost: +(p.baseCost + t).toFixed(2), costDelta: +t.toFixed(2), costDeltaPct: +((t / p.baseCost) * 100).toFixed(2), newMargin: +(p.baseMargin - (t / p.baseCost) * 100).toFixed(2), marginDelta: +(-(t / p.baseCost) * 100).toFixed(2) };
+        });
+        setResults(sim); setRunning(false);
+      }, 600);
+    }, [vars]);
+    const cH = { padding: "6px 8px", fontSize: 8, fontWeight: 700, color: P.s2, textTransform: "uppercase", letterSpacing: .3, borderBottom: `1px solid ${P.bd}`, textAlign: "left" };
+    const cS = { padding: "7px 8px", fontSize: 10, borderBottom: `1px solid ${P.bd}10` };
+    return (<div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "280px 1fr", gap: 10 }}>
+        <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 9, padding: 14 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, marginBottom: 12 }}>🎛️ Constructor de Escenarios</div>
+          {sliders.map(s => (<div key={s.key} style={{ marginBottom: 12 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+              <span style={{ fontSize: 10, color: P.s1 }}>{s.icon} {s.label}</span>
+              <span style={{ fontSize: 11, fontWeight: 700, fontFamily: "monospace", color: vars[s.key] === 0 ? P.s2 : vars[s.key] > 0 ? P.red : P.grn }}>{vars[s.key] > 0 ? "+" : ""}{vars[s.key]}{s.unit}</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+              <span style={{ fontSize: 8, color: P.s2 }}>{s.min}</span>
+              <input type="range" min={s.min} max={s.max} step={0.5} value={vars[s.key]} onChange={e => setVars(p => ({ ...p, [s.key]: +e.target.value }))} style={{ flex: 1, accentColor: P.blue, height: 4, cursor: "pointer" }} />
+              <span style={{ fontSize: 8, color: P.s2 }}>{s.max}</span>
+            </div>
+            <div style={{ fontSize: 8, color: P.s2, marginTop: 1 }}>Actual: {s.current}</div>
+          </div>))}
+          <Btn p full onClick={runSim} dis={running}>{running ? "⏳ Calculando..." : "▶ Ejecutar Simulacion"}</Btn>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {results ? (<>
+            <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 8, overflow: "hidden" }}>
+              <div style={{ padding: "8px 12px", borderBottom: `1px solid ${P.bd}`, fontSize: 11, fontWeight: 700 }}>📊 Impacto por Producto</div>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead><tr>{["Producto", "Costo Base", "Costo Sim.", "Δ Costo", "Δ %", "Margen Sim.", "Δ Margen"].map(h => <th key={h} style={cH}>{h}</th>)}</tr></thead>
+                <tbody>{results.map((r, i) => {
+                  const dc = r.costDelta > 0 ? P.red : r.costDelta < 0 ? P.grn : P.s2;
+                  const mc = r.marginDelta < 0 ? P.red : r.marginDelta > 0 ? P.grn : P.s2;
+                  return (<tr key={i} onMouseEnter={e => e.currentTarget.style.background = P.hv} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                    <td style={{ ...cS, fontWeight: 600 }}>{r.name}</td>
+                    <td style={{ ...cS, fontFamily: "monospace", color: P.s1 }}>S/ {r.baseCost.toLocaleString()}</td>
+                    <td style={{ ...cS, fontFamily: "monospace", fontWeight: 700 }}>S/ {r.newCost.toLocaleString()}</td>
+                    <td style={{ ...cS, fontFamily: "monospace", fontWeight: 700, color: dc }}>{r.costDelta > 0 ? "+" : ""}{r.costDelta.toLocaleString()}</td>
+                    <td style={cS}><Badge s={`${r.costDeltaPct > 0 ? "+" : ""}${r.costDeltaPct}%`} c={dc} /></td>
+                    <td style={{ ...cS, fontFamily: "monospace" }}>{r.newMargin.toFixed(1)}%</td>
+                    <td style={{ ...cS, fontFamily: "monospace", fontWeight: 700, color: mc }}>{r.marginDelta > 0 ? "+" : ""}{r.marginDelta.toFixed(1)}pp</td>
+                  </tr>);
+                })}</tbody>
+              </table>
+            </div>
+          </>) : (
+            <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 9, padding: 40, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: 350 }}>
+              <div style={{ fontSize: 36, marginBottom: 10, opacity: .3 }}>🧮</div>
+              <div style={{ fontSize: 13, color: P.s2, textAlign: "center" }}>Ajusta los parametros y ejecuta la simulacion</div>
+              <div style={{ fontSize: 10, color: P.s2, marginTop: 4, textAlign: "center" }}>Modela el impacto de cambios en costos de materiales, mano de obra, TC y mas</div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>);
+  };
+
+  /* === Costos Estandar === */
+  const CostStandards = () => {
+    const catC = { MAT: P.blue, MO: P.grn, CIF: P.pur };
+    const catL = { MAT: "Material Directo", MO: "M.O. Directa", CIF: "CIF" };
+    const cH = { padding: "6px 8px", fontSize: 8, fontWeight: 700, color: P.s2, textTransform: "uppercase", letterSpacing: .3, borderBottom: `1px solid ${P.bd}`, textAlign: "left" };
+    const cS = { padding: "7px 8px", fontSize: 10, borderBottom: `1px solid ${P.bd}10` };
+    return (<div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <G c={3}>{STD_VERSIONS.map(v => (<div key={v.code} style={{ background: P.c1, border: `1px solid ${v.status === "Activo" ? P.grn + "40" : P.bd}`, borderRadius: 9, padding: 14, boxShadow: v.status === "Activo" ? `0 0 15px ${P.grn}10` : "none" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+          <span style={{ fontSize: 12, fontWeight: 700, fontFamily: "monospace" }}>{v.code}</span>
+          <Badge s={v.status} />
+        </div>
+        <div style={{ fontSize: 9, color: P.s1, lineHeight: 1.6 }}>
+          <div>Vigencia: {v.from} → {v.to || "Actual"}</div>
+          <div>Productos: {v.products}</div>
+          <div>Aprobado: {v.approvedBy || "Pendiente"}</div>
+        </div>
+      </div>))}</G>
+      <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 8, padding: 14 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 2 }}>Detalle Costo Estandar: Valvula HD-300 (STD-2026-Q1)</div>
+        <div style={{ fontSize: 9, color: P.s2, marginBottom: 10 }}>Desglose por elemento de costo</div>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead><tr>{["Codigo", "Elemento", "Categoria", "Cant.Std", "Tasa Std", "Total Std"].map(h => <th key={h} style={cH}>{h}</th>)}</tr></thead>
+          <tbody>
+            {COST_BREAKDOWN.map(c => (<tr key={c.element} onMouseEnter={e => e.currentTarget.style.background = P.hv} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+              <td style={{ ...cS, fontFamily: "monospace", color: P.blue }}>{c.element}</td>
+              <td style={{ ...cS, fontWeight: 600 }}>{c.name}</td>
+              <td style={cS}><Badge s={catL[c.category]} c={catC[c.category]} /></td>
+              <td style={{ ...cS, fontFamily: "monospace", textAlign: "right" }}>{c.stdQty.toFixed(2)}</td>
+              <td style={{ ...cS, fontFamily: "monospace", textAlign: "right" }}>S/ {c.stdRate.toFixed(2)}</td>
+              <td style={{ ...cS, fontFamily: "monospace", fontWeight: 700, textAlign: "right" }}>S/ {c.stdTotal.toFixed(2)}</td>
+            </tr>))}
+            <tr style={{ background: P.c2 }}>
+              <td colSpan={5} style={{ ...cS, fontWeight: 700, textAlign: "right", fontSize: 11 }}>COSTO ESTANDAR TOTAL</td>
+              <td style={{ ...cS, fontFamily: "monospace", fontWeight: 800, fontSize: 13, color: P.grn, textAlign: "right" }}>S/ {COST_BREAKDOWN.reduce((s, c) => s + c.stdTotal, 0).toFixed(2)}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>);
+  };
+
+  const costTabs = [
+    { id: "dashboard", l: "Dashboard C-Level", icon: <I.Da /> },
+    { id: "orders", l: "Ordenes Produccion", icon: <I.Iv /> },
+    { id: "nonquality", l: "No-Calidad (CoNQ)", icon: <I.Wn /> },
+    { id: "simulator", l: "Simulador What-If", icon: <I.Cl /> },
+    { id: "standards", l: "Costos Estandar", icon: <I.Gd /> },
+  ];
+  const costContent = () => { switch (costTab) { case "dashboard": return <CostDash />; case "orders": return <CostOrders />; case "nonquality": return <CostNoCalidad />; case "simulator": return <CostSimulator />; case "standards": return <CostStandards />; default: return <CostDash />; } };
+
+  return (<div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div><div style={{ fontSize: 14, fontWeight: 800 }}>Costos de Produccion</div><div style={{ fontSize: 9, color: P.s2 }}>ERP360 · Modulo de Control de Costos Industriales</div></div>
+      <div style={{ display: "flex", alignItems: "center", gap: 6 }}><div style={{ width: 6, height: 6, borderRadius: "50%", background: P.grn }} /><span style={{ fontSize: 9, color: P.grn, fontWeight: 600 }}>LIVE</span></div>
+    </div>
+    <Tabs tabs={costTabs} active={costTab} onChange={setCostTab} />
+    {costContent()}
+  </div>);
+}
+
 /* ===== MAIN APP ===== */
 function SumaERP() {
   const [user, setUser] = useState(null);
@@ -4586,7 +4990,7 @@ IMPORTANTE: Los campos numericos deben ser numeros puros (ej: 1500.00), NO strin
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "x-api-key": (window._anthropicApiKey || localStorage.getItem("anthropic_api_key") || ""), "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model: "claude-sonnet-4-20250514",
         max_tokens: 2000,
@@ -5663,7 +6067,7 @@ IMPORTANTE: Los campos numericos deben ser numeros puros (ej: 1500.00), NO strin
         try {
           const response = await fetch("https://api.anthropic.com/v1/messages", {
             method: "POST",
-            headers: { "Content-Type": "application/json", "x-api-key": (window._anthropicApiKey || localStorage.getItem("anthropic_api_key") || ""), "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               model: "claude-sonnet-4-20250514", max_tokens: 2000,
               system: "Eres un auditor tributario peruano senior con 30 años de experiencia en SUNAT. Analiza registros de ventas y compras para hallazgos de auditoria.",
@@ -6694,6 +7098,7 @@ IMPORTANTE: Los campos numericos deben ser numeros puros (ej: 1500.00), NO strin
       case "acct": return <ACCTView />;
       case "fin": return <FinView />;
       case "trade": return <TradeView />;
+      case "costs": return <CostView />;
       default: {
         const modMap = {};
         const m = modMap[mod]; if (!m) return <VDash />;
@@ -6707,7 +7112,7 @@ IMPORTANTE: Los campos numericos deben ser numeros puros (ej: 1500.00), NO strin
   const rc = { cliente: P.grn, contador: P.blue, admin: P.pur };
   const NAV = user?.role === "cliente"
     ? [{ id: "dash", l: "Dashboard", ic: <I.Da /> }, null, { id: "sales", l: "Mis Ventas", ic: <I.Sa /> }, { id: "compras", l: "Mis Compras", ic: <I.Bx /> }, { id: "acct", l: "Contabilidad", ic: <I.Bo /> }, null, { id: "plans", l: "Planes", ic: <I.St />, dot: 1 }]
-    : [{ id: "dash", l: "Dashboard", ic: <I.Da /> }, null, { id: "sales", l: "Ventas SIRE", ic: <I.Sa /> }, { id: "compras", l: "Compras SIRE", ic: <I.Bx /> }, { id: "inv", l: "Almacen MRPII", ic: <I.Iv /> }, null, { id: "trade", l: "Comercio Ext.", ic: <I.Gl /> }, { id: "fin", l: "Finanzas", ic: <I.Bk /> }, { id: "acct", l: "Contabilidad", ic: <I.Bo /> }, null, { id: "hr", l: "RRHH", ic: <I.Pp /> }, null, { id: "plans", l: "Planes", ic: <I.St />, dot: 1 }, ...(canDB ? [{ id: "database", l: "Base Datos", ic: <I.Db /> }] : [])];
+    : [{ id: "dash", l: "Dashboard", ic: <I.Da /> }, null, { id: "sales", l: "Ventas SIRE", ic: <I.Sa /> }, { id: "compras", l: "Compras SIRE", ic: <I.Bx /> }, { id: "inv", l: "Almacen MRPII", ic: <I.Iv /> }, null, { id: "trade", l: "Comercio Ext.", ic: <I.Gl /> }, { id: "costs", l: "Costos Prod.", ic: <I.Cl /> }, { id: "fin", l: "Finanzas", ic: <I.Bk /> }, { id: "acct", l: "Contabilidad", ic: <I.Bo /> }, null, { id: "hr", l: "RRHH", ic: <I.Pp /> }, null, { id: "plans", l: "Planes", ic: <I.St />, dot: 1 }, ...(canDB ? [{ id: "database", l: "Base Datos", ic: <I.Db /> }] : [])];
   const titles = Object.fromEntries(NAV.filter(Boolean).map(n => [n.id, n.l]));
 
   return (
