@@ -1,5 +1,3 @@
-// SIG CONSTRUCCION 360 v7.0 Enterprise — INNOVAQ SOLUTIONS SAC
-// CDN: React 18 + ReactDOM + Recharts (loaded in index.html)
 var useState = React.useState, useEffect = React.useEffect, useCallback = React.useCallback, useMemo = React.useMemo, useRef = React.useRef;
 var LineChart = Recharts.LineChart, Line = Recharts.Line, AreaChart = Recharts.AreaChart, Area = Recharts.Area;
 var BarChart = Recharts.BarChart, Bar = Recharts.Bar, PieChart = Recharts.PieChart, Pie = Recharts.Pie, Cell = Recharts.Cell;
@@ -2367,13 +2365,14 @@ function SIGConstruccion360() {
   }, [aiConfig, aiFiles, aiFileContents, auditReports.length]);
 
   function AIAuditorView() {
+    var h = React.createElement;
     function _ABadge(props) {
       var st = { display: "inline-flex", alignItems: "center", padding: "2px 8px", borderRadius: 20, fontSize: 9, fontWeight: 700, letterSpacing: 0.3, background: (props.color || C.tm) + "18", color: props.color || C.tm, textTransform: "uppercase", whiteSpace: "nowrap" };
-      return <span style={st}>{props.text}</span>;
+      return h("span", { style: st }, props.text);
     }
     function _ANormBadge(props) {
       var cc = { "9001": C.i9, "14001": C.i14, "45001": C.i45, "37001": C.i37 };
-      return <_ABadge text={"ISO " + props.norm} color={cc[props.norm] || C.pr} />;
+      return h(_ABadge, { text: "ISO " + props.norm, color: cc[props.norm] || C.pr });
     }
 
     var stepNames = ["Tipo de Auditor\u00eda", "Sistema y Alcance", "Documentos", "An\u00e1lisis IA", "Informe ISO 19011"];
@@ -2387,173 +2386,167 @@ function SIGConstruccion360() {
     })();
 
     function StepBar() {
-      return (
-        <div style={{ display: "flex", alignItems: "center", marginBottom: 20, gap: 4 }}>
-          {stepNames.map(function(s, i) {
-            return (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 4, flex: i < stepNames.length - 1 ? 1 : "none" }}>
-                <div onClick={function() { if (i < aiStep) setAiStep(i); }} style={{ width: 28, height: 28, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, cursor: i < aiStep ? "pointer" : "default", background: i < aiStep ? C.ac : i === aiStep ? "linear-gradient(135deg,#8c6bfa,#d946ef)" : C.sa, color: i <= aiStep ? "#fff" : C.td, border: "2px solid " + (i <= aiStep ? i === aiStep ? "#ff6b9d" : C.ac : C.bd) }}>{i < aiStep ? "\u2713" : i + 1}</div>
-                <span style={{ fontSize: 9, fontWeight: i === aiStep ? 700 : 400, color: i === aiStep ? "#ff6b9d" : i < aiStep ? C.ac : C.td, whiteSpace: "nowrap" }}>{s}</span>
-                {i < stepNames.length - 1 && <div style={{ flex: 1, height: 2, background: i < aiStep ? C.ac : C.bd, minWidth: 20 }} />}
-              </div>
-            );
-          })}
-        </div>
+      return h("div", { style: { display: "flex", alignItems: "center", marginBottom: 20, gap: 4 } },
+        stepNames.map(function(s, i) {
+          return h("div", { key: i, style: { display: "flex", alignItems: "center", gap: 4, flex: i < stepNames.length - 1 ? 1 : "none" } },
+            h("div", { onClick: function() { if (i < aiStep) setAiStep(i); }, style: { width: 28, height: 28, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, cursor: i < aiStep ? "pointer" : "default", background: i < aiStep ? C.ac : i === aiStep ? "linear-gradient(135deg,#8c6bfa,#d946ef)" : C.sa, color: i <= aiStep ? "#fff" : C.td, border: "2px solid " + (i <= aiStep ? i === aiStep ? "#ff6b9d" : C.ac : C.bd) } }, i < aiStep ? "\u2713" : i + 1),
+            h("span", { style: { fontSize: 9, fontWeight: i === aiStep ? 700 : 400, color: i === aiStep ? "#ff6b9d" : i < aiStep ? C.ac : C.td, whiteSpace: "nowrap" } }, s),
+            i < stepNames.length - 1 && h("div", { style: { flex: 1, height: 2, background: i < aiStep ? C.ac : C.bd, minWidth: 20 } })
+          );
+        })
       );
     }
 
-    // Step 0
     function Step0() {
-      return (
-        <div>
-          <div style={{ textAlign: "center", marginBottom: 20 }}>
-            <div style={{ fontSize: 36, marginBottom: 6 }}>{"\uD83E\uDD16"}</div>
-            <h2 style={{ fontSize: 16, fontWeight: 800, color: C.tx, margin: 0 }}>Auditor Inteligente IA</h2>
-            <p style={{ fontSize: 11, color: C.tm, marginTop: 4 }}>Auditor L\u00edder Senior {"\u00b7"} +25 a\u00f1os de experiencia {"\u00b7"} ISO 19011:2018</p>
-            <p style={{ fontSize: 9, color: C.td, marginTop: 2 }}>Experto en auditor\u00edas internas, MINTRA/SUNAFIL, homologaci\u00f3n y certificaci\u00f3n</p>
-          </div>
-          <h3 style={{ fontSize: 12, fontWeight: 700, color: C.tx, marginBottom: 12 }}>{"\u00bfQu\u00e9 tipo de auditor\u00eda desea realizar?"}</h3>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: 10 }}>
-            {AUDIT_TYPES.map(function(type) {
-              return (
-                <div key={type.id} onClick={function() { setAiConfig(function(p) { return Object.assign({}, p, { tipo: type.id }); }); setAiStep(1); }} style={{ background: C.card, borderRadius: 10, padding: 16, border: "2px solid " + (aiConfig.tipo === type.id ? type.color : C.bd), cursor: "pointer", transition: "all .2s" }}>
-                  <div style={{ fontSize: 28, marginBottom: 6 }}>{type.icon}</div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: type.color }}>{type.label}</div>
-                  <div style={{ fontSize: 9, color: C.tm, marginTop: 4, lineHeight: 1.4 }}>{type.desc}</div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+      return h("div", null,
+        h("div", { style: { textAlign: "center", marginBottom: 20 } },
+          h("div", { style: { fontSize: 36, marginBottom: 6 } }, "\uD83E\uDD16"),
+          h("h2", { style: { fontSize: 16, fontWeight: 800, color: C.tx, margin: 0 } }, "Auditor Inteligente IA"),
+          h("p", { style: { fontSize: 11, color: C.tm, marginTop: 4 } }, "Auditor L\u00edder Senior \u00b7 +25 a\u00f1os de experiencia \u00b7 ISO 19011:2018"),
+          h("p", { style: { fontSize: 9, color: C.td, marginTop: 2 } }, "Experto en auditor\u00edas internas, MINTRA/SUNAFIL, homologaci\u00f3n y certificaci\u00f3n")
+        ),
+        h("h3", { style: { fontSize: 12, fontWeight: 700, color: C.tx, marginBottom: 12 } }, "\u00bfQu\u00e9 tipo de auditor\u00eda desea realizar?"),
+        h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: 10 } },
+          AUDIT_TYPES.map(function(type) {
+            return h("div", { key: type.id, onClick: function() { setAiConfig(function(p) { return Object.assign({}, p, { tipo: type.id }); }); setAiStep(1); }, style: { background: C.card, borderRadius: 10, padding: 16, border: "2px solid " + (aiConfig.tipo === type.id ? type.color : C.bd), cursor: "pointer", transition: "all .2s" } },
+              h("div", { style: { fontSize: 28, marginBottom: 6 } }, type.icon),
+              h("div", { style: { fontSize: 12, fontWeight: 700, color: type.color } }, type.label),
+              h("div", { style: { fontSize: 9, color: C.tm, marginTop: 4, lineHeight: 1.4 } }, type.desc)
+            );
+          })
+        )
       );
     }
 
-    // Step 1
     function Step1() {
-      return (
-        <div>
-          <h3 style={{ fontSize: 12, fontWeight: 700, color: C.tx, marginBottom: 12 }}>Seleccione sistema(s) a auditar</h3>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 10, marginBottom: 16 }}>
-            {AUDIT_SYSTEMS.map(function(sys) {
-              var sel = aiConfig.sistemas.indexOf(sys.id) >= 0;
-              return (
-                <div key={sys.id} onClick={function() {
-                  if (sys.id === "integrado") { setAiConfig(function(p) { return Object.assign({}, p, { sistemas: sel ? [] : ["integrado"] }); }); }
-                  else { setAiConfig(function(p) { return Object.assign({}, p, { sistemas: sel ? p.sistemas.filter(function(x) { return x !== sys.id && x !== "integrado"; }) : p.sistemas.filter(function(x) { return x !== "integrado"; }).concat([sys.id]) }); }); }
-                }} style={{ background: sel ? sys.color + "12" : C.card, borderRadius: 10, padding: 14, border: "2px solid " + (sel ? sys.color : C.bd), cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-                  <div style={{ fontSize: 22 }}>{sys.icon}</div>
-                  <div style={{ flex: 1, fontSize: 11, fontWeight: 700, color: sel ? sys.color : C.tx }}>{sys.label}</div>
-                  <div style={{ width: 20, height: 20, borderRadius: 4, border: "2px solid " + (sel ? sys.color : C.bd), background: sel ? sys.color : "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>{sel && <span style={{ color: "#fff", fontSize: 12, fontWeight: 800 }}>{"\u2713"}</span>}</div>
-                </div>
-              );
-            })}
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 12 }}>
-            <div><label style={{ fontSize: 9, color: C.td, fontWeight: 700, display: "block", marginBottom: 3 }}>\u00c1REA A AUDITAR *</label><select value={aiConfig.area} onChange={function(e) { var v=e.target.value; setAiConfig(function(p) { return Object.assign({}, p, { area: v }); }); }} style={_aSelectS}><option value="">Seleccione...</option>{["Toda la organizaci\u00f3n", "Operaciones", "SST", "Medio Ambiente", "Calidad", "Cumplimiento", "RRHH", "Log\u00edstica"].map(function(a) { return <option key={a}>{a}</option>; })}</select></div>
-            <div><label style={{ fontSize: 9, color: C.td, fontWeight: 700, display: "block", marginBottom: 3 }}>FECHA</label><input type="date" value={aiConfig.fecha} onChange={function(e) { var v=e.target.value; setAiConfig(function(p) { return Object.assign({}, p, { fecha: v }); }); }} style={_aInputS} /></div>
-          </div>
-          <div style={{ marginBottom: 10 }}><label style={{ fontSize: 9, color: C.td, fontWeight: 700, display: "block", marginBottom: 3 }}>ALCANCE *</label><textarea value={aiConfig.alcance} onChange={function(e) { var v=e.target.value; setAiConfig(function(p) { return Object.assign({}, p, { alcance: v }); }); }} style={Object.assign({}, _aInputS, { minHeight: 60 })} placeholder="Ej: Verificaci\u00f3n del cumplimiento de requisitos ISO en procesos operativos..." /></div>
-          <div style={{ marginBottom: 10 }}><label style={{ fontSize: 9, color: C.td, fontWeight: 700, display: "block", marginBottom: 3 }}>OBJETIVO *</label><textarea value={aiConfig.objetivo} onChange={function(e) { var v=e.target.value; setAiConfig(function(p) { return Object.assign({}, p, { objetivo: v }); }); }} style={Object.assign({}, _aInputS, { minHeight: 50 })} placeholder="Ej: Evaluar la eficacia del sistema de gesti\u00f3n..." /></div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-            <div><label style={{ fontSize: 9, color: C.td, fontWeight: 700, display: "block", marginBottom: 3 }}>AUDITOR L\u00cdDER</label><input value={aiConfig.auditor_lider} onChange={function(e) { var v=e.target.value; setAiConfig(function(p) { return Object.assign({}, p, { auditor_lider: v }); }); }} style={_aInputS} /></div>
-            <div><label style={{ fontSize: 9, color: C.td, fontWeight: 700, display: "block", marginBottom: 3 }}>EQUIPO AUDITOR</label><input value={aiConfig.equipo} onChange={function(e) { var v=e.target.value; setAiConfig(function(p) { return Object.assign({}, p, { equipo: v }); }); }} style={_aInputS} /></div>
-          </div>
-          <div style={{ marginTop: 16, display: "flex", gap: 8, justifyContent: "space-between" }}>
-            <button onClick={function() { setAiStep(0); }} style={_aBtnS(C.sa, C.tm)}>{"\u2190"} Anterior</button>
-            <button onClick={function() { setAiStep(2); }} disabled={!aiConfig.sistemas.length || !aiConfig.alcance || !aiConfig.area} style={Object.assign({}, _aBtnS(aiConfig.sistemas.length && aiConfig.alcance && aiConfig.area ? "#ff6b9d" : C.bd), { opacity: aiConfig.sistemas.length && aiConfig.alcance && aiConfig.area ? 1 : 0.5 })}>Siguiente {"\u2192"}</button>
-          </div>
-        </div>
+      return h("div", null,
+        h("h3", { style: { fontSize: 12, fontWeight: 700, color: C.tx, marginBottom: 12 } }, "Seleccione sistema(s) a auditar"),
+        h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 10, marginBottom: 16 } },
+          AUDIT_SYSTEMS.map(function(sys) {
+            var sel = aiConfig.sistemas.indexOf(sys.id) >= 0;
+            return h("div", { key: sys.id, onClick: function() {
+              if (sys.id === "integrado") { setAiConfig(function(p) { return Object.assign({}, p, { sistemas: sel ? [] : ["integrado"] }); }); }
+              else { setAiConfig(function(p) { return Object.assign({}, p, { sistemas: sel ? p.sistemas.filter(function(x) { return x !== sys.id && x !== "integrado"; }) : p.sistemas.filter(function(x) { return x !== "integrado"; }).concat([sys.id]) }); }); }
+            }, style: { background: sel ? sys.color + "12" : C.card, borderRadius: 10, padding: 14, border: "2px solid " + (sel ? sys.color : C.bd), cursor: "pointer", display: "flex", alignItems: "center", gap: 10 } },
+              h("div", { style: { fontSize: 22 } }, sys.icon),
+              h("div", { style: { flex: 1, fontSize: 11, fontWeight: 700, color: sel ? sys.color : C.tx } }, sys.label),
+              h("div", { style: { width: 20, height: 20, borderRadius: 4, border: "2px solid " + (sel ? sys.color : C.bd), background: sel ? sys.color : "transparent", display: "flex", alignItems: "center", justifyContent: "center" } }, sel && h("span", { style: { color: "#fff", fontSize: 12, fontWeight: 800 } }, "\u2713"))
+            );
+          })
+        ),
+        h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 12 } },
+          h("div", null,
+            h("label", { style: { fontSize: 9, color: C.td, fontWeight: 700, display: "block", marginBottom: 3 } }, "\u00c1REA A AUDITAR *"),
+            h("select", { value: aiConfig.area, onChange: function(e) { var v = e.target.value; setAiConfig(function(p) { return Object.assign({}, p, { area: v }); }); }, style: _aSelectS },
+              h("option", { value: "" }, "Seleccione..."),
+              ["Toda la organizaci\u00f3n", "Operaciones", "SST", "Medio Ambiente", "Calidad", "Cumplimiento", "RRHH", "Log\u00edstica"].map(function(a) { return h("option", { key: a }, a); })
+            )
+          ),
+          h("div", null,
+            h("label", { style: { fontSize: 9, color: C.td, fontWeight: 700, display: "block", marginBottom: 3 } }, "FECHA"),
+            h("input", { type: "date", value: aiConfig.fecha, onChange: function(e) { var v = e.target.value; setAiConfig(function(p) { return Object.assign({}, p, { fecha: v }); }); }, style: _aInputS })
+          )
+        ),
+        h("div", { style: { marginBottom: 10 } },
+          h("label", { style: { fontSize: 9, color: C.td, fontWeight: 700, display: "block", marginBottom: 3 } }, "ALCANCE *"),
+          h("textarea", { value: aiConfig.alcance, onChange: function(e) { var v = e.target.value; setAiConfig(function(p) { return Object.assign({}, p, { alcance: v }); }); }, style: Object.assign({}, _aInputS, { minHeight: 60 }), placeholder: "Ej: Verificaci\u00f3n del cumplimiento de requisitos ISO en procesos operativos..." })
+        ),
+        h("div", { style: { marginBottom: 10 } },
+          h("label", { style: { fontSize: 9, color: C.td, fontWeight: 700, display: "block", marginBottom: 3 } }, "OBJETIVO *"),
+          h("textarea", { value: aiConfig.objetivo, onChange: function(e) { var v = e.target.value; setAiConfig(function(p) { return Object.assign({}, p, { objetivo: v }); }); }, style: Object.assign({}, _aInputS, { minHeight: 50 }), placeholder: "Ej: Evaluar la eficacia del sistema de gesti\u00f3n..." })
+        ),
+        h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 } },
+          h("div", null,
+            h("label", { style: { fontSize: 9, color: C.td, fontWeight: 700, display: "block", marginBottom: 3 } }, "AUDITOR L\u00cdDER"),
+            h("input", { value: aiConfig.auditor_lider, onChange: function(e) { var v = e.target.value; setAiConfig(function(p) { return Object.assign({}, p, { auditor_lider: v }); }); }, style: _aInputS })
+          ),
+          h("div", null,
+            h("label", { style: { fontSize: 9, color: C.td, fontWeight: 700, display: "block", marginBottom: 3 } }, "EQUIPO AUDITOR"),
+            h("input", { value: aiConfig.equipo, onChange: function(e) { var v = e.target.value; setAiConfig(function(p) { return Object.assign({}, p, { equipo: v }); }); }, style: _aInputS })
+          )
+        ),
+        h("div", { style: { marginTop: 16, display: "flex", gap: 8, justifyContent: "space-between" } },
+          h("button", { onClick: function() { setAiStep(0); }, style: _aBtnS(C.sa, C.tm) }, "\u2190 Anterior"),
+          h("button", { onClick: function() { setAiStep(2); }, disabled: !aiConfig.sistemas.length || !aiConfig.alcance || !aiConfig.area, style: Object.assign({}, _aBtnS(aiConfig.sistemas.length && aiConfig.alcance && aiConfig.area ? "#ff6b9d" : C.bd), { opacity: aiConfig.sistemas.length && aiConfig.alcance && aiConfig.area ? 1 : 0.5 }) }, "Siguiente \u2192")
+        )
       );
     }
 
-    // Step 2
     function Step2() {
       var dragOver = dragOverUp, setDragOver = setDragOverUp;
-      return (
-        <div>
-          <h3 style={{ fontSize: 12, fontWeight: 700, color: C.tx, marginBottom: 12 }}>Documentos para Auditor\u00eda</h3>
-          <div style={{ background: C.card, borderRadius: 10, border: "1px solid " + C.bd, marginBottom: 14, maxHeight: 250, overflow: "auto" }}>
-            <div style={{ padding: "10px 14px", borderBottom: "1px solid " + C.bd, position: "sticky", top: 0, background: C.card, zIndex: 1 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: "#ff6b9d" }}>{"\uD83D\uDCCB"} Check List de Verificaci\u00f3n</div>
-              <div style={{ fontSize: 8, color: C.td }}>Seg\u00fan {aiConfig.sistemas.map(function(s) { return "ISO " + s; }).join(", ")}</div>
-            </div>
-            <div style={{ padding: 10 }}>
-              {reqChecklist.map(function(item, i) {
-                return (
-                  <div key={i} style={{ padding: "5px 0", borderBottom: "1px dashed " + C.bd + "20", display: "flex", gap: 8, alignItems: "flex-start" }}>
-                    <_ANormBadge norm={item.norma} />
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 9, fontWeight: 700, color: C.tx }}>Cl. {item.clausula}: {item.req}</div>
-                      <div style={{ fontSize: 8, color: C.td, marginTop: 2 }}>{"\uD83D\uDCCE"} {item.docs.join(" \u00b7 ")}</div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div onDrop={function(e) { e.preventDefault(); setDragOver(false); handleFileUpload(e.dataTransfer.files); }} onDragOver={function(e) { e.preventDefault(); setDragOver(true); }} onDragLeave={function() { setDragOver(false); }} onClick={function() { if (fileInputRef.current) fileInputRef.current.click(); }} style={{ border: "2px dashed " + (dragOver ? "#ff6b9d" : C.bd), borderRadius: 12, background: dragOver ? "#ff6b9d08" : C.sa, padding: 24, textAlign: "center", cursor: "pointer", marginBottom: 14 }}>
-            <input ref={fileInputRef} type="file" multiple style={{ display: "none" }} onChange={function(e) { handleFileUpload(e.target.files); }} accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.html,.csv,.json,.xml" />
-            <div style={{ fontSize: 28, marginBottom: 6 }}>{"\uD83D\uDCE5"}</div>
-            <div style={{ fontSize: 12, fontWeight: 700, color: C.tx }}>Arrastra documentos o haz clic para seleccionar</div>
-            <div style={{ fontSize: 9, color: C.td, marginTop: 4 }}>PDF, Word, Excel, TXT, HTML, CSV, JSON, XML</div>
-          </div>
-          {aiFiles.length > 0 && (
-            <div style={{ marginBottom: 14 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: C.ac, marginBottom: 6 }}>{aiFiles.length} documento(s) cargado(s)</div>
-              {aiFiles.map(function(f, i) {
-                return (
-                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 8px", background: C.card, borderRadius: 6, marginBottom: 4, border: "1px solid " + C.bd }}>
-                    <span style={{ fontSize: 12 }}>{"\uD83D\uDCC4"}</span>
-                    <span style={{ fontSize: 10, color: C.tx, flex: 1 }}>{f.name}</span>
-                    <span style={{ fontSize: 8, color: C.td }}>{(f.size / 1024).toFixed(1)} KB</span>
-                    <span style={{ fontSize: 8, color: aiFileContents[f.name] ? C.ac : C.wn }}>{aiFileContents[f.name] ? "\u2705" : "\u23F3"}</span>
-                    <button onClick={function() { setAiFiles(function(p) { return p.filter(function(_, j) { return j !== i; }); }); }} style={{ background: "none", border: "none", color: C.dn, cursor: "pointer", padding: 2 }}><Icons.X /></button>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-          <div style={{ background: C.wn + "10", borderRadius: 8, padding: 10, border: "1px solid " + C.wn + "30", marginBottom: 14 }}>
-            <div style={{ fontSize: 10, fontWeight: 700, color: C.wn }}>{"\uD83D\uDCA1"} Nota importante</div>
-            <div style={{ fontSize: 9, color: C.tm, marginTop: 2 }}>Puede continuar sin documentos. El Auditor IA generar\u00e1 hallazgos basados en el checklist normativo. Con documentos, el an\u00e1lisis ser\u00e1 m\u00e1s preciso.</div>
-          </div>
-          <div style={{ display: "flex", gap: 8, justifyContent: "space-between" }}>
-            <button onClick={function() { setAiStep(1); }} style={_aBtnS(C.sa, C.tm)}>{"\u2190"} Anterior</button>
-            <button onClick={function() { setAiStep(3); setTimeout(runAIAudit, 500); }} style={_aBtnS("#ff6b9d")}>{"\uD83E\uDD16"} Iniciar Auditor\u00eda {"\u2192"}</button>
-          </div>
-        </div>
+      return h("div", null,
+        h("h3", { style: { fontSize: 12, fontWeight: 700, color: C.tx, marginBottom: 12 } }, "Documentos para Auditor\u00eda"),
+        h("div", { style: { background: C.card, borderRadius: 10, border: "1px solid " + C.bd, marginBottom: 14, maxHeight: 250, overflow: "auto" } },
+          h("div", { style: { padding: "10px 14px", borderBottom: "1px solid " + C.bd, position: "sticky", top: 0, background: C.card, zIndex: 1 } },
+            h("div", { style: { fontSize: 10, fontWeight: 700, color: "#ff6b9d" } }, "\uD83D\uDCCB Check List de Verificaci\u00f3n"),
+            h("div", { style: { fontSize: 8, color: C.td } }, "Seg\u00fan " + aiConfig.sistemas.map(function(s) { return "ISO " + s; }).join(", "))
+          ),
+          h("div", { style: { padding: 10 } },
+            reqChecklist.map(function(item, i) {
+              return h("div", { key: i, style: { padding: "5px 0", borderBottom: "1px dashed " + C.bd + "20", display: "flex", gap: 8, alignItems: "flex-start" } },
+                h(_ANormBadge, { norm: item.norma }),
+                h("div", { style: { flex: 1 } },
+                  h("div", { style: { fontSize: 9, fontWeight: 700, color: C.tx } }, "Cl. " + item.clausula + ": " + item.req),
+                  h("div", { style: { fontSize: 8, color: C.td, marginTop: 2 } }, "\uD83D\uDCCE " + item.docs.join(" \u00b7 "))
+                )
+              );
+            })
+          )
+        ),
+        h("div", { onDrop: function(e) { e.preventDefault(); setDragOver(false); handleFileUpload(e.dataTransfer.files); }, onDragOver: function(e) { e.preventDefault(); setDragOver(true); }, onDragLeave: function() { setDragOver(false); }, onClick: function() { if (fileInputRef.current) fileInputRef.current.click(); }, style: { border: "2px dashed " + (dragOver ? "#ff6b9d" : C.bd), borderRadius: 12, background: dragOver ? "#ff6b9d08" : C.sa, padding: 24, textAlign: "center", cursor: "pointer", marginBottom: 14 } },
+          h("input", { ref: fileInputRef, type: "file", multiple: true, style: { display: "none" }, onChange: function(e) { handleFileUpload(e.target.files); }, accept: ".pdf,.doc,.docx,.xls,.xlsx,.txt,.html,.csv,.json,.xml" }),
+          h("div", { style: { fontSize: 28, marginBottom: 6 } }, "\uD83D\uDCE5"),
+          h("div", { style: { fontSize: 12, fontWeight: 700, color: C.tx } }, "Arrastra documentos o haz clic para seleccionar"),
+          h("div", { style: { fontSize: 9, color: C.td, marginTop: 4 } }, "PDF, Word, Excel, TXT, HTML, CSV, JSON, XML")
+        ),
+        aiFiles.length > 0 && h("div", { style: { marginBottom: 14 } },
+          h("div", { style: { fontSize: 10, fontWeight: 700, color: C.ac, marginBottom: 6 } }, aiFiles.length + " documento(s) cargado(s)"),
+          aiFiles.map(function(f, i) {
+            return h("div", { key: i, style: { display: "flex", alignItems: "center", gap: 8, padding: "4px 8px", background: C.card, borderRadius: 6, marginBottom: 4, border: "1px solid " + C.bd } },
+              h("span", { style: { fontSize: 12 } }, "\uD83D\uDCC4"),
+              h("span", { style: { fontSize: 10, color: C.tx, flex: 1 } }, f.name),
+              h("span", { style: { fontSize: 8, color: C.td } }, (f.size / 1024).toFixed(1) + " KB"),
+              h("span", { style: { fontSize: 8, color: aiFileContents[f.name] ? C.ac : C.wn } }, aiFileContents[f.name] ? "\u2705" : "\u23F3"),
+              h("button", { onClick: function() { setAiFiles(function(p) { return p.filter(function(_, j) { return j !== i; }); }); }, style: { background: "none", border: "none", color: C.dn, cursor: "pointer", padding: 2 } }, h(Icons.X))
+            );
+          })
+        ),
+        h("div", { style: { background: C.wn + "10", borderRadius: 8, padding: 10, border: "1px solid " + C.wn + "30", marginBottom: 14 } },
+          h("div", { style: { fontSize: 10, fontWeight: 700, color: C.wn } }, "\uD83D\uDCA1 Nota importante"),
+          h("div", { style: { fontSize: 9, color: C.tm, marginTop: 2 } }, "Puede continuar sin documentos. El Auditor IA generar\u00e1 hallazgos basados en el checklist normativo. Con documentos, el an\u00e1lisis ser\u00e1 m\u00e1s preciso.")
+        ),
+        h("div", { style: { display: "flex", gap: 8, justifyContent: "space-between" } },
+          h("button", { onClick: function() { setAiStep(1); }, style: _aBtnS(C.sa, C.tm) }, "\u2190 Anterior"),
+          h("button", { onClick: function() { setAiStep(3); setTimeout(runAIAudit, 500); }, style: _aBtnS("#ff6b9d") }, "\uD83E\uDD16 Iniciar Auditor\u00eda \u2192")
+        )
       );
     }
 
-    // Step 3
     function Step3() {
-      return (
-        <div style={{ textAlign: "center", padding: "30px 20px" }}>
-          <style>{["@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}", "@keyframes spin{to{transform:rotate(360deg)}}"].join("")}</style>
-          <div style={{ fontSize: 50, marginBottom: 12, animation: "pulse 2s infinite" }}>{"\uD83E\uDD16"}</div>
-          <h2 style={{ fontSize: 16, fontWeight: 800, color: "#ff6b9d", margin: "0 0 8px" }}>Auditor Inteligente en Proceso</h2>
-          <p style={{ fontSize: 11, color: C.tm, marginBottom: 16 }}>Analizando documentaci\u00f3n contra requisitos normativos...</p>
-          <div style={{ width: "100%", maxWidth: 400, margin: "0 auto 20px", background: C.sa, borderRadius: 10, height: 8, overflow: "hidden" }}>
-            <div style={{ height: "100%", background: "linear-gradient(90deg,#ff6b9d,#8c6bfa)", borderRadius: 10, width: aiProgress + "%", transition: "width 0.5s" }} />
-          </div>
-          <div style={{ fontSize: 12, fontWeight: 700, color: "#ff6b9d", marginBottom: 16 }}>{aiProgress}%</div>
-          <div style={{ maxWidth: 500, margin: "0 auto", textAlign: "left", background: C.card, borderRadius: 10, padding: 14, border: "1px solid " + C.bd, maxHeight: 200, overflow: "auto" }}>
-            {aiMessages.map(function(msg, i) {
-              var icon = msg.role === "error" ? "\u274C" : msg.role === "success" ? "\u2705" : "\u26A1";
-              var color = msg.role === "error" ? C.dn : msg.role === "success" ? C.ac : C.tm;
-              return <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 6, padding: "4px 0", borderBottom: "1px dashed " + C.bd + "20" }}><span style={{ fontSize: 10 }}>{icon}</span><span style={{ fontSize: 9, color: color }}>{msg.text}</span></div>;
-            })}
-            {aiAnalyzing && <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "4px 0" }}><div style={{ width: 10, height: 10, border: "2px solid #ff6b9d", borderTop: "2px solid transparent", borderRadius: "50%", animation: "spin .8s linear infinite" }} /><span style={{ fontSize: 9, color: "#ff6b9d" }}>Procesando...</span></div>}
-          </div>
-        </div>
+      return h("div", { style: { textAlign: "center", padding: "30px 20px" } },
+        h("style", null, "@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}@keyframes spin{to{transform:rotate(360deg)}}"),
+        h("div", { style: { fontSize: 50, marginBottom: 12, animation: "pulse 2s infinite" } }, "\uD83E\uDD16"),
+        h("h2", { style: { fontSize: 16, fontWeight: 800, color: "#ff6b9d", margin: "0 0 8px" } }, "Auditor Inteligente en Proceso"),
+        h("p", { style: { fontSize: 11, color: C.tm, marginBottom: 16 } }, "Analizando documentaci\u00f3n contra requisitos normativos..."),
+        h("div", { style: { width: "100%", maxWidth: 400, margin: "0 auto 20px", background: C.sa, borderRadius: 10, height: 8, overflow: "hidden" } },
+          h("div", { style: { height: "100%", background: "linear-gradient(90deg,#ff6b9d,#8c6bfa)", borderRadius: 10, width: aiProgress + "%", transition: "width 0.5s" } })
+        ),
+        h("div", { style: { fontSize: 12, fontWeight: 700, color: "#ff6b9d", marginBottom: 16 } }, aiProgress + "%"),
+        h("div", { style: { maxWidth: 500, margin: "0 auto", textAlign: "left", background: C.card, borderRadius: 10, padding: 14, border: "1px solid " + C.bd, maxHeight: 200, overflow: "auto" } },
+          aiMessages.map(function(msg, i) {
+            var icon = msg.role === "error" ? "\u274C" : msg.role === "success" ? "\u2705" : "\u26A1";
+            var color = msg.role === "error" ? C.dn : msg.role === "success" ? C.ac : C.tm;
+            return h("div", { key: i, style: { display: "flex", alignItems: "flex-start", gap: 6, padding: "4px 0", borderBottom: "1px dashed " + C.bd + "20" } }, h("span", { style: { fontSize: 10 } }, icon), h("span", { style: { fontSize: 9, color: color } }, msg.text));
+          }),
+          aiAnalyzing && h("div", { style: { display: "flex", alignItems: "center", gap: 6, padding: "4px 0" } }, h("div", { style: { width: 10, height: 10, border: "2px solid #ff6b9d", borderTop: "2px solid transparent", borderRadius: "50%", animation: "spin .8s linear infinite" } }), h("span", { style: { fontSize: 9, color: "#ff6b9d" } }, "Procesando..."))
+        )
       );
     }
 
-    // Step 4
     function Step4() {
-      if (!aiReport) return <div style={{ textAlign: "center", padding: 40, color: C.td }}>No hay informe</div>;
+      if (!aiReport) return h("div", { style: { textAlign: "center", padding: 40, color: C.td } }, "No hay informe");
       var r = aiReport;
-      var h = r.hallazgos || [];
+      var hh = r.hallazgos || [];
       var rs = r.resumen_hallazgos || {};
       var hcMap = {
         nc_mayor: { bg: C.dn + "15", color: C.dn, label: "NC MAYOR" },
@@ -2565,96 +2558,87 @@ function SIGConstruccion360() {
       var summaryItems = [["NC Mayores", rs.nc_mayores || 0, C.dn], ["NC Menores", rs.nc_menores || 0, C.wn], ["Observaciones", rs.observaciones || 0, C.pr], ["Oport. Mejora", rs.oportunidades_mejora || 0, C.pp], ["Fortalezas", rs.fortalezas || 0, C.ac]];
       var metaItems = [["Tipo", r.tipo_auditoria, C.pr], ["\u00c1rea", r.area_auditada, C.ac], ["Auditor", r.auditor_lider, C.pp], ["M\u00e9todo", r.metodo, C.cy]];
 
-      return (
-        <div>
-          <div style={{ background: "linear-gradient(135deg,#1a0a2e,#0c1220)", borderRadius: 12, padding: 20, border: "1px solid " + C.bd, marginBottom: 16, textAlign: "center" }}>
-            <div style={{ fontSize: 9, color: "#ff6b9d", fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>ISO 19011:2018</div>
-            <h2 style={{ fontSize: 16, fontWeight: 800, color: C.tx, margin: "8px 0 4px" }}>{r.titulo}</h2>
-            <div style={{ fontSize: 11, color: C.tm }}>{r.normas_referencia} {"\u00b7"} {_aFmtDate(r.fecha)}</div>
-            <div style={{ fontSize: 10, color: C.pp, marginTop: 4 }}>N\u00b0 {r.numero}</div>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 8, marginBottom: 16 }}>
-            {metaItems.map(function(m) { return <div key={m[0]} style={{ background: C.card, borderRadius: 8, padding: 10, border: "1px solid " + C.bd }}><div style={{ fontSize: 8, color: C.td, fontWeight: 700, textTransform: "uppercase" }}>{m[0]}</div><div style={{ fontSize: 10, color: m[2], fontWeight: 600, marginTop: 2 }}>{m[1]}</div></div>; })}
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 8, marginBottom: 16 }}>
-            {summaryItems.map(function(s) { return <div key={s[0]} style={{ background: s[2] + "10", borderRadius: 8, padding: 10, border: "1px solid " + s[2] + "30", textAlign: "center" }}><div style={{ fontSize: 24, fontWeight: 800, color: s[2] }}>{s[1]}</div><div style={{ fontSize: 8, color: C.tm, fontWeight: 600 }}>{s[0]}</div></div>; })}
-          </div>
-          <div style={{ background: C.card, borderRadius: 10, padding: 14, border: "1px solid " + C.bd, marginBottom: 14 }}>
-            <h4 style={{ margin: "0 0 6px", fontSize: 11, fontWeight: 700, color: C.pl }}>{"\uD83D\uDCCA"} Resumen Ejecutivo</h4>
-            <p style={{ fontSize: 10, color: C.tm, lineHeight: 1.6, margin: 0 }}>{r.resumen_ejecutivo}</p>
-          </div>
-          <div style={{ background: C.card, borderRadius: 10, border: "1px solid " + C.bd, marginBottom: 14, overflow: "hidden" }}>
-            <div style={{ padding: "10px 14px", borderBottom: "1px solid " + C.bd, background: C.pp + "08" }}>
-              <h4 style={{ margin: 0, fontSize: 12, fontWeight: 700, color: C.pp }}>{"\uD83D\uDD0E"} Hallazgos ({h.length})</h4>
-            </div>
-            <div style={{ maxHeight: 400, overflow: "auto" }}>
-              {h.map(function(hx, i) {
-                var hc = hcMap[hx.tipo] || hcMap.observacion;
-                return (
-                  <div key={i} style={{ padding: 12, borderBottom: "1px solid " + C.bd + "20", background: i % 2 === 0 ? "transparent" : C.sa + "50" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
-                      <span style={{ fontSize: 11, fontWeight: 800, color: C.tx }}>{hx.numero}</span>
-                      <_ABadge text={hc.label} color={hc.color} />
-                      <_ABadge text={"Cl. " + hx.clausula} color={C.cy} />
-                      <_ABadge text={hx.norma} color={C.pl} />
-                      {hx.riesgo && <_ABadge text={"Riesgo: " + hx.riesgo} color={hx.riesgo === "alto" ? C.dn : hx.riesgo === "medio" ? C.wn : C.ac} />}
-                    </div>
-                    <div style={{ fontSize: 10, color: C.tx, fontWeight: 600, marginBottom: 4 }}>{hx.descripcion}</div>
-                    {hx.evidencia && <div style={{ fontSize: 9, color: C.tm, marginBottom: 3 }}>{"\uD83D\uDCCE"} <strong>Evidencia:</strong> {hx.evidencia}</div>}
-                    {hx.requisito_incumplido && <div style={{ fontSize: 9, color: C.wn, marginBottom: 3 }}>{"\u26A0\uFE0F"} <strong>Requisito:</strong> {hx.requisito_incumplido}</div>}
-                    {hx.recomendacion && <div style={{ fontSize: 9, color: C.ac }}>{"\uD83D\uDCA1"} <strong>Recomendaci\u00f3n:</strong> {hx.recomendacion}</div>}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div style={{ background: C.card, borderRadius: 10, padding: 14, border: "1px solid " + C.bd, marginBottom: 14 }}>
-            <h4 style={{ margin: "0 0 6px", fontSize: 11, fontWeight: 700, color: "#ff6b9d" }}>{"\uD83D\uDCDD"} Conclusiones</h4>
-            <p style={{ fontSize: 10, color: C.tm, lineHeight: 1.6, margin: 0 }}>{r.conclusion}</p>
-          </div>
-          {(r.recomendaciones_generales || []).length > 0 && (
-            <div style={{ background: C.card, borderRadius: 10, padding: 14, border: "1px solid " + C.bd, marginBottom: 14 }}>
-              <h4 style={{ margin: "0 0 8px", fontSize: 11, fontWeight: 700, color: C.pr }}>{"\uD83D\uDCCC"} Recomendaciones</h4>
-              {r.recomendaciones_generales.map(function(rec, i) { return <div key={i} style={{ display: "flex", gap: 6, padding: "3px 0" }}><span style={{ color: C.pr, fontSize: 10, fontWeight: 700 }}>{i + 1}.</span><span style={{ fontSize: 10, color: C.tm }}>{rec}</span></div>; })}
-            </div>
-          )}
-          {(r.plan_accion_sugerido || []).length > 0 && (
-            <div style={{ background: C.card, borderRadius: 10, border: "1px solid " + C.bd, marginBottom: 14, overflow: "hidden" }}>
-              <div style={{ padding: "10px 14px", borderBottom: "1px solid " + C.bd, background: C.wn + "08" }}>
-                <h4 style={{ margin: 0, fontSize: 11, fontWeight: 700, color: C.wn }}>{"\uD83D\uDCCB"} Plan de Acci\u00f3n</h4>
-              </div>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 9 }}>
-                <thead><tr style={{ background: C.sa }}>
-                  {["Hallazgo", "Acci\u00f3n", "Responsable", "Plazo"].map(function(hh) { return <th key={hh} style={{ padding: "6px 10px", textAlign: "left", fontSize: 8, fontWeight: 700, color: C.td, borderBottom: "1px solid " + C.bd }}>{hh}</th>; })}
-                </tr></thead>
-                <tbody>
-                  {r.plan_accion_sugerido.map(function(pa, i) { return <tr key={i} style={{ borderBottom: "1px solid " + C.bd + "15" }}><td style={{ padding: "5px 10px", fontWeight: 700, color: C.wn }}>{pa.hallazgo}</td><td style={{ padding: "5px 10px", color: C.tx }}>{pa.accion}</td><td style={{ padding: "5px 10px", color: C.tm }}>{pa.responsable}</td><td style={{ padding: "5px 10px", color: C.ac, fontWeight: 600 }}>{pa.plazo}</td></tr>; })}
-                </tbody>
-              </table>
-            </div>
-          )}
-          <div style={{ display: "flex", gap: 8, justifyContent: "space-between", flexWrap: "wrap" }}>
-            <button onClick={function() { setAiStep(0); setAiReport(null); setAiFiles([]); setAiFileContents({}); setAiMessages([]); setAiConfig({ tipo: "", sistemas: [], alcance: "", area: "", objetivo: "", auditor_lider: "", equipo: "", fecha: _aToday() }); }} style={_aBtnS(C.sa, C.tm)}>{"\uD83D\uDD04"} Nueva Auditor\u00eda</button>
-            <div style={{ display: "flex", gap: 8 }}>
-              <button onClick={function() { downloadHTML((r.numero || "Informe") + ".html", buildReportHTML(r)); }} style={_aBtnS(C.ac, "#000")}><Icons.Download /> Descargar HTML</button>
-              <button onClick={function() { if (navigator.clipboard) navigator.clipboard.writeText(JSON.stringify(r, null, 2)); }} style={_aBtnS(C.pp)}><Icons.Doc /> Copiar JSON</button>
-            </div>
-          </div>
-        </div>
+      return h("div", null,
+        h("div", { style: { background: "linear-gradient(135deg,#1a0a2e,#0c1220)", borderRadius: 12, padding: 20, border: "1px solid " + C.bd, marginBottom: 16, textAlign: "center" } },
+          h("div", { style: { fontSize: 9, color: "#ff6b9d", fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" } }, "ISO 19011:2018"),
+          h("h2", { style: { fontSize: 16, fontWeight: 800, color: C.tx, margin: "8px 0 4px" } }, r.titulo),
+          h("div", { style: { fontSize: 11, color: C.tm } }, r.normas_referencia + " \u00b7 " + _aFmtDate(r.fecha)),
+          h("div", { style: { fontSize: 10, color: C.pp, marginTop: 4 } }, "N\u00b0 " + r.numero)
+        ),
+        h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 8, marginBottom: 16 } },
+          metaItems.map(function(m) { return h("div", { key: m[0], style: { background: C.card, borderRadius: 8, padding: 10, border: "1px solid " + C.bd } }, h("div", { style: { fontSize: 8, color: C.td, fontWeight: 700, textTransform: "uppercase" } }, m[0]), h("div", { style: { fontSize: 10, color: m[2], fontWeight: 600, marginTop: 2 } }, m[1])); })
+        ),
+        h("div", { style: { display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 8, marginBottom: 16 } },
+          summaryItems.map(function(s) { return h("div", { key: s[0], style: { background: s[2] + "10", borderRadius: 8, padding: 10, border: "1px solid " + s[2] + "30", textAlign: "center" } }, h("div", { style: { fontSize: 24, fontWeight: 800, color: s[2] } }, s[1]), h("div", { style: { fontSize: 8, color: C.tm, fontWeight: 600 } }, s[0])); })
+        ),
+        h("div", { style: { background: C.card, borderRadius: 10, padding: 14, border: "1px solid " + C.bd, marginBottom: 14 } },
+          h("h4", { style: { margin: "0 0 6px", fontSize: 11, fontWeight: 700, color: C.pl } }, "\uD83D\uDCCA Resumen Ejecutivo"),
+          h("p", { style: { fontSize: 10, color: C.tm, lineHeight: 1.6, margin: 0 } }, r.resumen_ejecutivo)
+        ),
+        h("div", { style: { background: C.card, borderRadius: 10, border: "1px solid " + C.bd, marginBottom: 14, overflow: "hidden" } },
+          h("div", { style: { padding: "10px 14px", borderBottom: "1px solid " + C.bd, background: C.pp + "08" } },
+            h("h4", { style: { margin: 0, fontSize: 12, fontWeight: 700, color: C.pp } }, "\uD83D\uDD0E Hallazgos (" + hh.length + ")")
+          ),
+          h("div", { style: { maxHeight: 400, overflow: "auto" } },
+            hh.map(function(hx, i) {
+              var hc = hcMap[hx.tipo] || hcMap.observacion;
+              return h("div", { key: i, style: { padding: 12, borderBottom: "1px solid " + C.bd + "20", background: i % 2 === 0 ? "transparent" : C.sa + "50" } },
+                h("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" } },
+                  h("span", { style: { fontSize: 11, fontWeight: 800, color: C.tx } }, hx.numero),
+                  h(_ABadge, { text: hc.label, color: hc.color }),
+                  h(_ABadge, { text: "Cl. " + hx.clausula, color: C.cy }),
+                  h(_ABadge, { text: hx.norma, color: C.pl }),
+                  hx.riesgo && h(_ABadge, { text: "Riesgo: " + hx.riesgo, color: hx.riesgo === "alto" ? C.dn : hx.riesgo === "medio" ? C.wn : C.ac })
+                ),
+                h("div", { style: { fontSize: 10, color: C.tx, fontWeight: 600, marginBottom: 4 } }, hx.descripcion),
+                hx.evidencia && h("div", { style: { fontSize: 9, color: C.tm, marginBottom: 3 } }, "\uD83D\uDCCE ", h("strong", null, "Evidencia:"), " " + hx.evidencia),
+                hx.requisito_incumplido && h("div", { style: { fontSize: 9, color: C.wn, marginBottom: 3 } }, "\u26A0\uFE0F ", h("strong", null, "Requisito:"), " " + hx.requisito_incumplido),
+                hx.recomendacion && h("div", { style: { fontSize: 9, color: C.ac } }, "\uD83D\uDCA1 ", h("strong", null, "Recomendaci\u00f3n:"), " " + hx.recomendacion)
+              );
+            })
+          )
+        ),
+        h("div", { style: { background: C.card, borderRadius: 10, padding: 14, border: "1px solid " + C.bd, marginBottom: 14 } },
+          h("h4", { style: { margin: "0 0 6px", fontSize: 11, fontWeight: 700, color: "#ff6b9d" } }, "\uD83D\uDCDD Conclusiones"),
+          h("p", { style: { fontSize: 10, color: C.tm, lineHeight: 1.6, margin: 0 } }, r.conclusion)
+        ),
+        (r.recomendaciones_generales || []).length > 0 && h("div", { style: { background: C.card, borderRadius: 10, padding: 14, border: "1px solid " + C.bd, marginBottom: 14 } },
+          h("h4", { style: { margin: "0 0 8px", fontSize: 11, fontWeight: 700, color: C.pr } }, "\uD83D\uDCCC Recomendaciones"),
+          r.recomendaciones_generales.map(function(rec, i) { return h("div", { key: i, style: { display: "flex", gap: 6, padding: "3px 0" } }, h("span", { style: { color: C.pr, fontSize: 10, fontWeight: 700 } }, (i + 1) + "."), h("span", { style: { fontSize: 10, color: C.tm } }, rec)); })
+        ),
+        (r.plan_accion_sugerido || []).length > 0 && h("div", { style: { background: C.card, borderRadius: 10, border: "1px solid " + C.bd, marginBottom: 14, overflow: "hidden" } },
+          h("div", { style: { padding: "10px 14px", borderBottom: "1px solid " + C.bd, background: C.wn + "08" } },
+            h("h4", { style: { margin: 0, fontSize: 11, fontWeight: 700, color: C.wn } }, "\uD83D\uDCCB Plan de Acci\u00f3n")
+          ),
+          h("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: 9 } },
+            h("thead", null, h("tr", { style: { background: C.sa } },
+              ["Hallazgo", "Acci\u00f3n", "Responsable", "Plazo"].map(function(th) { return h("th", { key: th, style: { padding: "6px 10px", textAlign: "left", fontSize: 8, fontWeight: 700, color: C.td, borderBottom: "1px solid " + C.bd } }, th); })
+            )),
+            h("tbody", null,
+              r.plan_accion_sugerido.map(function(pa, i) { return h("tr", { key: i, style: { borderBottom: "1px solid " + C.bd + "15" } }, h("td", { style: { padding: "5px 10px", fontWeight: 700, color: C.wn } }, pa.hallazgo), h("td", { style: { padding: "5px 10px", color: C.tx } }, pa.accion), h("td", { style: { padding: "5px 10px", color: C.tm } }, pa.responsable), h("td", { style: { padding: "5px 10px", color: C.ac, fontWeight: 600 } }, pa.plazo)); })
+            )
+          )
+        ),
+        h("div", { style: { display: "flex", gap: 8, justifyContent: "space-between", flexWrap: "wrap" } },
+          h("button", { onClick: function() { setAiStep(0); setAiReport(null); setAiFiles([]); setAiFileContents({}); setAiMessages([]); setAiConfig({ tipo: "", sistemas: [], alcance: "", area: "", objetivo: "", auditor_lider: "", equipo: "", fecha: _aToday() }); }, style: _aBtnS(C.sa, C.tm) }, "\uD83D\uDD04 Nueva Auditor\u00eda"),
+          h("div", { style: { display: "flex", gap: 8 } },
+            h("button", { onClick: function() { downloadHTML((r.numero || "Informe") + ".html", buildReportHTML(r)); }, style: _aBtnS(C.ac, "#000") }, h(Icons.Download), " Descargar HTML"),
+            h("button", { onClick: function() { if (navigator.clipboard) navigator.clipboard.writeText(JSON.stringify(r, null, 2)); }, style: _aBtnS(C.pp) }, h(Icons.Doc), " Copiar JSON")
+          )
+        )
       );
     }
 
-    return (
-      <div>
-        {StepBar()}
-        {aiStep === 0 && Step0()}
-        {aiStep === 1 && Step1()}
-        {aiStep === 2 && Step2()}
-        {aiStep === 3 && Step3()}
-        {aiStep === 4 && Step4()}
-      </div>
+    return h("div", null,
+      StepBar(),
+      aiStep === 0 && Step0(),
+      aiStep === 1 && Step1(),
+      aiStep === 2 && Step2(),
+      aiStep === 3 && Step3(),
+      aiStep === 4 && Step4()
     );
   }
+
 
 
   // ═══════════════════════════════════════════════════════════════════════
@@ -5412,6 +5396,3 @@ function SIGConstruccion360() {
     )
   );
 }
-
-// Mount
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(SIGConstruccion360));
