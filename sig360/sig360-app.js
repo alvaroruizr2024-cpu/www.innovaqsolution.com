@@ -1,5 +1,5 @@
 // SIG CONSTRUCCION 360 v7.0 Enterprise — INNOVAQ SOLUTIONS SAC
-// CDN Globals: React, ReactDOM, Recharts
+// CDN: React 18 + ReactDOM + Recharts (loaded in index.html)
 var useState = React.useState, useEffect = React.useEffect, useCallback = React.useCallback, useMemo = React.useMemo, useRef = React.useRef;
 var LineChart = Recharts.LineChart, Line = Recharts.Line, AreaChart = Recharts.AreaChart, Area = Recharts.Area;
 var BarChart = Recharts.BarChart, Bar = Recharts.Bar, PieChart = Recharts.PieChart, Pie = Recharts.Pie, Cell = Recharts.Cell;
@@ -5413,5 +5413,5 @@ function SIGConstruccion360() {
   );
 }
 
-// ═══ MOUNT ═══
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(SIG360));
+// Mount
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(SIGConstruccion360));
