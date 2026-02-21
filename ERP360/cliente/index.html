@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SumaERP · Portal Cliente</title>
+    <meta name="description" content="SumaERP - Portal de acceso para clientes · Compras y Ventas">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>Σ</text></svg>">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body, #root { width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+const { useState, useEffect, useCallback, useMemo, useRef } = React;
+const { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, LineChart, Line, CartesianGrid, Legend } = Recharts;
+
+/* ===== PALETTE ===== */
+const P = { bg: "#05070c", c1: "#0a0e17", c2: "#0f1520", c3: "#141c2c", bd: "#1a2540", hv: "#111b30", tx: "#d6e0f0", s1: "#8095b3", s2: "#4a6080", blue: "#0A84FF", grn: "#32D74B", org: "#FF9F0A", red: "#FF453A", pur: "#BF5AF2", cyan: "#64D2FF", yel: "#FFD60A", tl: "#2AC7B8", pk: "#FF375F", lime: "#A8E06C" };
+const nn = v => (typeof v === "number" ? v : parseFloat(v) || 0);
+const $ = (v, c = "PEN") => { const p = c === "USD" ? "US$ " : c === "EUR" ? "€ " : "S/ "; return p + Math.abs(nn(v)).toLocaleString("es-PE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const today = () => new Date().toISOString().slice(0, 10);
+
+/* ===== ICONS ===== */
+const _ic = (paths) => ({ style, ...props } = {}) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: "inline-block", verticalAlign: "middle", ...style }} {...props}>{paths}</svg>
+);
+const sv = ch => () => (<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{ch}</svg>);
+const I = {
+  Sa: sv(<g><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></g>),
+  Bx: sv(<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>),
+  Ck: sv(<polyline points="20 6 9 17 4 12"/>),
+  Wn: sv(<g><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></g>),
+  Sc: sv(<g><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></g>),
+  Dw: sv(<g><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></g>),
+  Pl: sv(<g><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></g>),
+  Tr: sv(<g><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></g>),
+  Ed: sv(<g><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></g>),
+  Lo: sv(<g><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></g>),
+  Cd: sv(<g><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></g>),
+};
+
+/* ===== EMPRESAS ===== */
+const EMPRESAS_CLIENTES = [
+  { ruc: "20612044326", razon: "SERVICIOS W&G SAC", tipo: "SAC", sector: "Servicios", estado: "Activo", plan: "PRO", color: "#0A84FF" },
+  { ruc: "20604890471", razon: "TRANSPORTES YURIKO SAC", tipo: "SAC", sector: "Transporte", estado: "Activo", plan: "BASICO", color: "#32D74B" },
+  { ruc: "20604557829", razon: "IVAO CONSTRUCTORA SAC", tipo: "SAC", sector: "Construccion", estado: "Activo", plan: "PRO", color: "#FF9F0A" },
+  { ruc: "20606826436", razon: "E&J RAMOS CONSTRUCTORA SAC", tipo: "SAC", sector: "Construccion", estado: "Activo", plan: "BASICO", color: "#BF5AF2" },
+  { ruc: "20605878483", razon: "GRUPO EDUCATIVO SAN GABRIEL", tipo: "Asociacion", sector: "Educacion", estado: "Activo", plan: "PRO", color: "#64D2FF" },
+  { ruc: "20602317596", razon: "INVERSIONES TURISTICAS SC 77", tipo: "SAC", sector: "Turismo", estado: "Activo", plan: "BASICO", color: "#FFD60A" },
+  { ruc: "20603968981", razon: "COOPAC DANPER", tipo: "Cooperativa", sector: "Financiero", estado: "Activo", plan: "EMPRESA", color: "#2AC7B8" },
+  { ruc: "10712856241", razon: "ASMAD RODRIGUEZ VERONICA", tipo: "Persona Natural", sector: "Independiente", estado: "Activo", plan: "BASICO", color: "#FF375F" },
+  { ruc: "20607184705", razon: "INVERSIONES AGRONORTE JPLASENCIA EIRL", tipo: "EIRL", sector: "Agroindustria", estado: "Activo", plan: "PRO", color: "#A8E06C" },
+  { ruc: "20540013129", razon: "BLACK STAR SAC", tipo: "SAC", sector: "Comercio", estado: "Activo", plan: "BASICO", color: "#0A84FF" },
+  { ruc: "20605768564", razon: "TRACKING LOGISTIC EIRL", tipo: "EIRL", sector: "Logistica", estado: "Activo", plan: "PRO", color: "#BF5AF2" },
+];
+
+/* ===== SHARED COMPONENTS ===== */
+const Btn = ({ children, p, s, d, full, dis, onClick, style: st, ...props }) => {
+  const base = { display: "inline-flex", alignItems: "center", gap: 4, padding: s ? "3px 7px" : "6px 12px", fontSize: s ? 9 : 11, fontWeight: 600, borderRadius: 6, cursor: dis ? "not-allowed" : "pointer", border: `1px solid ${P.bd}`, background: p ? P.blue : d ? P.red + "20" : P.c2, color: p ? "#fff" : d ? P.red : P.tx, opacity: dis ? 0.4 : 1, width: full ? "100%" : undefined, justifyContent: full ? "center" : undefined, fontFamily: "inherit", transition: "all .15s", ...st };
+  return <button style={base} onClick={dis ? undefined : onClick} disabled={dis} {...props}>{children}</button>;
+};
+const Inp = ({ l, v, onChange, ph, type = "text" }) => (
+  <div style={{ marginBottom: 8 }}>
+    {l && <label style={{ display: "block", fontSize: 9, fontWeight: 600, color: P.s2, marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>{l}</label>}
+    <input type={type} value={v} onChange={e => onChange(e.target.value)} placeholder={ph} style={{ width: "100%", background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 6, padding: "8px 10px", color: P.tx, fontSize: 11, outline: "none", fontFamily: "inherit" }} />
+  </div>
+);
+const Badge = ({ s, c }) => { const cm = { Emitida: P.blue, Pagada: P.grn, Pendiente: P.org, Pagado: P.grn, Anulada: P.red, "En Proceso": P.cyan, Procesado: P.grn, "Aprobado IA": P.grn, "Revision Manual": P.org }; const cc = c || cm[s] || P.s2; return <span style={{ fontSize: 8, padding: "1px 6px", borderRadius: 4, background: cc + "15", color: cc, fontWeight: 600, border: `1px solid ${cc}20` }}>{s}</span>; };
+const Toast = ({ msg, type, onDone }) => { useEffect(() => { const t = setTimeout(onDone, 3000); return () => clearTimeout(t); }, []); const c = type === "err" ? P.red : type === "warn" ? P.org : P.grn; return <div style={{ position: "fixed", bottom: 20, right: 20, background: P.c1, border: `1px solid ${c}40`, borderRadius: 10, padding: "10px 16px", fontSize: 11, color: P.tx, zIndex: 99999, boxShadow: `0 8px 32px ${c}20`, display: "flex", alignItems: "center", gap: 8, maxWidth: 360 }}><span style={{ width: 6, height: 6, borderRadius: 3, background: c }} />{msg}</div>; };
+const Modal = ({ open, onClose, title, children, wide }) => { if (!open) return null; return <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 9999 }}><div onClick={e => e.stopPropagation()} style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 12, padding: 20, width: wide ? 640 : 440, maxWidth: "92vw", maxHeight: "85vh", overflow: "auto", scrollbarWidth: "thin" }}>{title && <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 12, display: "flex", justifyContent: "space-between" }}><span>{title}</span><button onClick={onClose} style={{ background: "none", border: "none", color: P.s2, cursor: "pointer", fontSize: 16 }}>×</button></div>}{children}</div></div>; };
+
+/* ===== PORTAL CLIENTE ===== */
+function ClientePortal() {
+  const [user, setUser] = useState(null);
+  const [rucInput, setRucInput] = useState("");
+  const [rucError, setRucError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [tab, setTab] = useState("ventas");
+  const [toast, setToast] = useState(null);
+  const [scanModal, setScanModal] = useState(null);
+  const notify = (msg, type) => setToast({ msg, type });
+
+  /* Shared data via localStorage */
+  const loadData = () => {
+    try {
+      const saved = localStorage.getItem('erp360_data');
+      return saved ? JSON.parse(saved) : { facturas: [], compras: [] };
+    } catch(e) { return { facturas: [], compras: [] }; }
+  };
+  const saveData = (d) => {
+    try { localStorage.setItem('erp360_data', JSON.stringify(d)); } catch(e) {}
+  };
+  const loadScannedDocs = () => {
+    try {
+      const saved = localStorage.getItem('erp360_scannedDocs');
+      return saved ? JSON.parse(saved) : [];
+    } catch(e) { return []; }
+  };
+  const saveScannedDocs = (docs) => {
+    try { localStorage.setItem('erp360_scannedDocs', JSON.stringify(docs)); } catch(e) {}
+  };
+
+  const [D, setD] = useState(loadData);
+  const [scannedDocs, setScannedDocs] = useState(loadScannedDocs);
+
+  /* Sync to localStorage on change */
+  useEffect(() => { saveData(D); }, [D]);
+  useEffect(() => { saveScannedDocs(scannedDocs); }, [scannedDocs]);
+
+  /* Listen for changes from other tabs (contador) */
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.key === 'erp360_data' && e.newValue) {
+        try { setD(JSON.parse(e.newValue)); } catch(ex) {}
+      }
+      if (e.key === 'erp360_scannedDocs' && e.newValue) {
+        try { setScannedDocs(JSON.parse(e.newValue)); } catch(ex) {}
+      }
+    };
+    window.addEventListener('storage', handler);
+    return () => window.removeEventListener('storage', handler);
+  }, []);
+
+  /* Filter data for this client's empresa */
+  const myFacturas = useMemo(() => D.facturas?.filter(f => !user?.empresaRuc || f.ruc === user.empresaRuc || f._empresaRuc === user.empresaRuc) || [], [D.facturas, user]);
+  const myCompras = useMemo(() => D.compras?.filter(c => !user?.empresaRuc || c.ruc === user.empresaRuc || c._empresaRuc === user.empresaRuc) || [], [D.compras, user]);
+  const myScanned = useMemo(() => scannedDocs.filter(d => d.empresaRuc === user?.empresaRuc) || [], [scannedDocs, user]);
+
+  /* AI Scanner */
+  const scanDocumentAI = async (file, contextType) => {
+    const toBase64 = (f) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result.split(",")[1]); r.onerror = rej; r.readAsDataURL(f); });
+    const base64Data = await toBase64(file);
+    const isPDF = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+    const contentBlock = isPDF
+      ? { type: "document", source: { type: "base64", media_type: "application/pdf", data: base64Data } }
+      : { type: "image", source: { type: "base64", media_type: file.type || "image/png", data: base64Data } };
+
+    const response = await fetch("https://erp360-proxy.alvaro-ruiz-r-2024.workers.dev", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 2000,
+        system: "Eres un contador publico colegiado peruano. Analiza comprobantes de pago y extrae datos exactos.",
+        messages: [{ role: "user", content: [contentBlock, { type: "text", text: `Analiza este comprobante peruano del modulo "${contextType}". Responde SOLO con JSON valido sin backticks:\n{"tipo_cdp":"Factura/Boleta","serie":"","numero":"","fecha_emision":"YYYY-MM-DD","emisor_ruc":"","emisor_razon_social":"","receptor_ruc":"","receptor_razon_social":"","moneda":"PEN/USD","op_gravadas":0,"igv":0,"total":0,"cuenta_pcge":"","descripcion_items":""}` }] }]
+      })
+    });
+    const result = await response.json();
+    const text = result.content?.map(c => c.text || "").join("") || "";
+    return JSON.parse(text.replace(/```json|```/g, "").trim());
+  };
+
+  const handleScan = (modulo) => {
+    const fi = document.createElement("input"); fi.type = "file"; fi.accept = "image/*,.pdf";
+    fi.onchange = async (e) => { const f = e.target.files?.[0]; if (!f) return;
+      setScanModal({ type: modulo, file: f.name, processing: true });
+      try {
+        const parsed = await scanDocumentAI(f, modulo);
+        const sub = Number(parsed.op_gravadas) || 0;
+        const igvVal = Number(parsed.igv) || +(sub * 0.18).toFixed(2);
+        const totalVal = Number(parsed.total) || +(sub + igvVal).toFixed(2);
+        const isVenta = modulo === "ventas";
+        const newDoc = {
+          id: uid(),
+          empresaRuc: user.empresaRuc,
+          empresaRazon: user.empresaRazon,
+          serie: parsed.serie || (isVenta ? "FE01" : "E001"),
+          numero: parsed.numero || "000000",
+          fecha: parsed.fecha_emision || today(),
+          tipo: parsed.tipo_cdp || "Factura",
+          [isVenta ? "cliente" : "proveedor"]: isVenta ? (parsed.receptor_razon_social || "") : (parsed.emisor_razon_social || ""),
+          ruc: isVenta ? (parsed.receptor_ruc || "") : (parsed.emisor_ruc || ""),
+          _empresaRuc: user.empresaRuc,
+          moneda: parsed.moneda || "PEN",
+          subtotal: sub, igv: igvVal, total: totalVal,
+          estado: "Pendiente",
+          scanDate: today(), scanIA: "Aprobado IA", confianzaIA: 92,
+          cuentaContable: parsed.cuenta_pcge || (isVenta ? "7011" : "6011"),
+          modulo, archivo: f.name,
+        };
+        /* Save to scannedDocs (visible to contador) */
+        setScannedDocs(prev => [newDoc, ...prev]);
+        /* Also save to main data */
+        if (isVenta) {
+          setD(prev => ({ ...prev, facturas: [{ id: uid(), serie: newDoc.serie, numero: newDoc.numero, fecha: newDoc.fecha, tipo: newDoc.tipo, cliente: newDoc.cliente, ruc: newDoc.ruc, _empresaRuc: user.empresaRuc, moneda: newDoc.moneda, subtotal: sub, igv: igvVal, total: totalVal, estado: "Emitida", tc: "1.000" }, ...prev.facturas] }));
+        } else {
+          setD(prev => ({ ...prev, compras: [{ id: uid(), serie: newDoc.serie, numero: newDoc.numero, fecha: newDoc.fecha, tipo: newDoc.tipo, proveedor: newDoc.proveedor, ruc: newDoc.ruc, _empresaRuc: user.empresaRuc, moneda: newDoc.moneda, subtotal: sub, igv: igvVal, total: totalVal, estado: "Pendiente", dua: "", tc: "1.000" }, ...prev.compras] }));
+        }
+        setScanModal(null);
+        notify(`Documento escaneado y registrado · ${newDoc.serie}-${newDoc.numero}`);
+      } catch (err) {
+        console.error("Scan error:", err);
+        notify("Error procesando documento: " + (err.message || "intenta otra imagen"), "err");
+        setScanModal(null);
+      }
+    }; fi.click();
+  };
+
+  /* KPIs */
+  const totalVentas = myFacturas.reduce((a, f) => a + nn(f.total), 0);
+  const totalCompras = myCompras.reduce((a, c) => a + nn(c.total), 0);
+  const igvDebito = myFacturas.reduce((a, f) => a + nn(f.igv), 0);
+  const igvCredito = myCompras.reduce((a, c) => a + nn(c.igv), 0);
+
+  /* ===== LOGIN SCREEN ===== */
+  if (!user) return (
+    <div style={{ minHeight: "100vh", background: `radial-gradient(ellipse at 30% 20%,#0a1628,${P.bg} 70%)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'DM Sans',-apple-system,sans-serif", color: P.tx }}>
+      <div style={{ width: 420 }}>
+        <div style={{ textAlign: "center", marginBottom: 28 }}>
+          <div style={{ width: 52, height: 52, borderRadius: 13, background: "linear-gradient(135deg,#32D74B,#0A84FF)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 26, fontWeight: 800, color: "#fff", marginBottom: 10, boxShadow: "0 8px 32px rgba(50,215,75,.3)" }}>Σ</div>
+          <div style={{ fontSize: 20, fontWeight: 800 }}>SumaERP</div>
+          <div style={{ fontSize: 10, color: P.s2, marginTop: 3 }}>Portal Cliente · Compras y Ventas</div>
+        </div>
+        <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 14, padding: 24, boxShadow: "0 20px 60px rgba(0,0,0,.4)" }}>
+          <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 4 }}>Acceso Empresa</div>
+          <div style={{ fontSize: 10, color: P.s2, marginBottom: 14 }}>Ingresa el RUC de tu empresa para acceder</div>
+          <Inp l="RUC de la Empresa" v={rucInput} onChange={v => { setRucInput(v.replace(/\D/g, "").slice(0, 11)); setRucError(""); }} ph="Ej: 20612044326" />
+          {rucError && <div style={{ fontSize: 9, color: P.red, marginTop: -4, marginBottom: 8, display: "flex", alignItems: "center", gap: 3 }}><I.Wn /> {rucError}</div>}
+          {rucInput.length === 11 && EMPRESAS_CLIENTES.find(e => e.ruc === rucInput) && (
+            <div style={{ marginBottom: 10, background: P.grn + "10", border: `1px solid ${P.grn}30`, borderRadius: 7, padding: "8px 10px", display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 28, height: 28, borderRadius: 6, background: P.grn + "20", display: "flex", alignItems: "center", justifyContent: "center", color: P.grn, fontSize: 11, fontWeight: 800 }}><I.Ck /></div>
+              <div><div style={{ fontSize: 11, fontWeight: 700, color: P.grn }}>{EMPRESAS_CLIENTES.find(e => e.ruc === rucInput)?.razon}</div><div style={{ fontSize: 8, color: P.s2 }}>RUC verificado</div></div>
+            </div>
+          )}
+          <Btn p full onClick={() => {
+            const found = EMPRESAS_CLIENTES.find(e => e.ruc === rucInput.trim());
+            if (found) { setLoading(true); setTimeout(() => { setUser({ role: "cliente", empresa: found, empresaRuc: found.ruc, empresaRazon: found.razon }); setLoading(false); }, 600); }
+            else { setRucError("RUC no registrado. Contacte al administrador."); }
+          }} dis={rucInput.length !== 11 || loading} style={{ padding: "10px", fontSize: 12, borderRadius: 7, marginTop: 4 }}>{loading ? "Ingresando..." : "Ingresar"}</Btn>
+          <div style={{ marginTop: 12, background: P.c2, borderRadius: 7, padding: 8, maxHeight: 200, overflowY: "auto", scrollbarWidth: "thin" }}>
+            <div style={{ fontSize: 8, color: P.s2, fontWeight: 600, textTransform: "uppercase", letterSpacing: .5, marginBottom: 5 }}>Empresas Registradas</div>
+            {EMPRESAS_CLIENTES.map(e => (
+              <div key={e.ruc} onClick={() => setRucInput(e.ruc)} style={{ display: "flex", alignItems: "center", gap: 6, padding: "4px 6px", borderRadius: 4, cursor: "pointer", fontSize: 9, marginBottom: 2, background: rucInput === e.ruc ? P.blue + "10" : "transparent" }}
+                onMouseEnter={ev => ev.currentTarget.style.background = P.hv} onMouseLeave={ev => ev.currentTarget.style.background = rucInput === e.ruc ? P.blue + "10" : "transparent"}>
+                <span style={{ fontFamily: "monospace", color: P.cyan, fontWeight: 600, minWidth: 80 }}>{e.ruc}</span>
+                <span style={{ flex: 1, color: P.tx }}>{e.razon}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  /* ===== MAIN APP ===== */
+  const cH = { padding: "5px 7px", color: P.s2, fontSize: 8, fontWeight: 700, borderBottom: `1px solid ${P.bd}`, textAlign: "left", textTransform: "uppercase", whiteSpace: "nowrap" };
+  const cS = { padding: "4px 7px", fontSize: 10, borderBottom: `1px solid ${P.bd}08` };
+
+  const renderTable = (data, cols, emptyMsg) => (
+    <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 8, overflow: "hidden" }}>
+      <div style={{ overflowX: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead><tr>{cols.map(c => <th key={c.k} style={{ ...cH, textAlign: c.r ? "right" : "left" }}>{c.l}</th>)}</tr></thead>
+          <tbody>
+            {data.length === 0 ? <tr><td colSpan={cols.length} style={{ padding: 24, textAlign: "center", color: P.s2, fontSize: 11 }}>{emptyMsg}</td></tr>
+            : data.map((row, i) => (
+              <tr key={row.id || i} style={{ borderBottom: `1px solid ${P.bd}08` }}>
+                {cols.map(c => <td key={c.k} style={{ ...cS, textAlign: c.r ? "right" : "left", fontFamily: c.mono ? "monospace" : "inherit", color: c.color || P.tx, fontWeight: c.b ? 700 : 400 }}>{c.fmt ? c.fmt(row[c.k]) : c.render ? c.render(row) : row[c.k]}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{ display: "flex", height: "100vh", background: P.bg, fontFamily: "'DM Sans',-apple-system,sans-serif", color: P.tx, overflow: "hidden", fontSize: 13 }}>
+      {/* Sidebar */}
+      <aside style={{ width: 180, background: "linear-gradient(180deg,#080c15,#050710)", borderRight: `1px solid ${P.bd}`, display: "flex", flexDirection: "column", flexShrink: 0 }}>
+        <div style={{ padding: "10px 9px", borderBottom: `1px solid ${P.bd}`, display: "flex", alignItems: "center", gap: 6 }}>
+          <div style={{ width: 26, height: 26, borderRadius: 6, background: "linear-gradient(135deg,#32D74B,#0A84FF)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "#fff" }}>Σ</div>
+          <div><div style={{ fontSize: 11, fontWeight: 700 }}>SumaERP</div><div style={{ fontSize: 7, color: P.s2, fontWeight: 600 }}>Portal Cliente</div></div>
+        </div>
+        <div style={{ flex: 1, padding: "8px 6px", display: "flex", flexDirection: "column", gap: 2 }}>
+          {[{ id: "ventas", l: "Mis Ventas", ic: <I.Sa /> }, { id: "compras", l: "Mis Compras", ic: <I.Bx /> }].map(n => (
+            <div key={n.id} onClick={() => setTab(n.id)} style={{ display: "flex", alignItems: "center", gap: 7, padding: "7px 8px", borderRadius: 6, cursor: "pointer", fontSize: 11, fontWeight: tab === n.id ? 600 : 400, background: tab === n.id ? P.blue + "12" : "transparent", color: tab === n.id ? P.blue : P.s1, borderLeft: tab === n.id ? `2px solid ${P.blue}` : "2px solid transparent" }}>
+              <span style={{ opacity: tab === n.id ? 1 : 0.5 }}>{n.ic}</span>{n.l}
+            </div>
+          ))}
+        </div>
+        <div style={{ padding: "8px 6px", borderTop: `1px solid ${P.bd}` }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <div style={{ width: 20, height: 20, borderRadius: 4, background: `linear-gradient(135deg,${user.empresa?.color || P.grn},${P.blue})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 8, fontWeight: 700, color: "#fff" }}>{user.empresaRazon?.[0]}</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: 8, fontWeight: 600, color: "#a0acc0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{user.empresaRazon}</div>
+              <div style={{ fontSize: 7, color: P.grn, fontWeight: 700 }}>Cliente · {user.empresaRuc}</div>
+            </div>
+            <button onClick={() => setUser(null)} style={{ background: "none", border: "none", color: P.s2, cursor: "pointer", padding: 1 }}><I.Lo /></button>
+          </div>
+        </div>
+      </aside>
+
+      {/* Main content */}
+      <main style={{ flex: 1, overflow: "auto", padding: 16, scrollbarWidth: "thin" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+          <div>
+            <div style={{ fontSize: 16, fontWeight: 800 }}>{tab === "ventas" ? "Mis Ventas" : "Mis Compras"} · {user.empresaRazon}</div>
+            <div style={{ fontSize: 10, color: P.s2 }}>RUC: {user.empresaRuc} · Documentos integrados con tu contador</div>
+          </div>
+          <div style={{ display: "flex", gap: 6 }}>
+            <Btn s onClick={() => handleScan(tab)} style={{ background: `${P.tl}15`, color: P.tl, border: `1px solid ${P.tl}30` }}><I.Sc /> Escanear Documento</Btn>
+          </div>
+        </div>
+
+        {/* KPIs */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8, marginBottom: 14 }}>
+          {[
+            { l: "Total " + (tab === "ventas" ? "Ventas" : "Compras"), v: $(tab === "ventas" ? totalVentas : totalCompras), c: tab === "ventas" ? P.grn : P.org },
+            { l: tab === "ventas" ? "Pagadas" : "Pagados", v: (tab === "ventas" ? myFacturas : myCompras).filter(r => r.estado === "Pagada" || r.estado === "Pagado").length, c: P.grn },
+            { l: "Pendientes", v: (tab === "ventas" ? myFacturas : myCompras).filter(r => r.estado === "Pendiente" || r.estado === "Emitida").length, c: P.org },
+            { l: tab === "ventas" ? "IGV Débito" : "IGV Crédito", v: $(tab === "ventas" ? igvDebito : igvCredito), c: tab === "ventas" ? P.red : P.blue },
+          ].map((k, i) => (
+            <div key={i} style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 8, padding: 12 }}>
+              <div style={{ fontSize: 9, color: P.s2, marginBottom: 3 }}>{k.l}</div>
+              <div style={{ fontSize: 18, fontWeight: 800, color: k.c }}>{k.v}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Table */}
+        {tab === "ventas" ? renderTable(myFacturas, [
+          { k: "serie", l: "Serie", mono: 1, color: "#5B9CF6", b: 1 },
+          { k: "numero", l: "Num", mono: 1 },
+          { k: "fecha", l: "Fecha" },
+          { k: "tipo", l: "Tipo" },
+          { k: "cliente", l: "Cliente" },
+          { k: "ruc", l: "RUC", mono: 1 },
+          { k: "moneda", l: "Mon", color: P.yel },
+          { k: "subtotal", l: "Base", r: 1, fmt: v => $(v) },
+          { k: "igv", l: "IGV", r: 1, fmt: v => $(v) },
+          { k: "total", l: "Total", r: 1, b: 1, fmt: v => $(v) },
+          { k: "estado", l: "Estado", render: r => <Badge s={r.estado} /> },
+        ], "Sin ventas registradas. Usa 'Escanear Documento' para agregar.") :
+        renderTable(myCompras, [
+          { k: "serie", l: "Serie", mono: 1, color: "#5B9CF6", b: 1 },
+          { k: "numero", l: "Num", mono: 1 },
+          { k: "fecha", l: "Fecha" },
+          { k: "tipo", l: "Tipo" },
+          { k: "proveedor", l: "Proveedor" },
+          { k: "ruc", l: "RUC", mono: 1 },
+          { k: "moneda", l: "Mon", color: P.yel },
+          { k: "subtotal", l: "Base", r: 1, fmt: v => $(v) },
+          { k: "igv", l: "IGV", r: 1, fmt: v => $(v) },
+          { k: "total", l: "Total", r: 1, b: 1, fmt: v => $(v) },
+          { k: "estado", l: "Estado", render: r => <Badge s={r.estado} /> },
+        ], "Sin compras registradas. Usa 'Escanear Documento' para agregar.")}
+
+        {/* Scanned docs for this empresa */}
+        {myScanned.length > 0 && (
+          <div style={{ marginTop: 16 }}>
+            <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 8 }}>Documentos Escaneados ({myScanned.length})</div>
+            {renderTable(myScanned, [
+              { k: "serie", l: "Serie", mono: 1 },
+              { k: "numero", l: "Num", mono: 1 },
+              { k: "fecha", l: "Fecha" },
+              { k: "tipo", l: "Tipo" },
+              { k: "archivo", l: "Archivo" },
+              { k: "total", l: "Total", r: 1, fmt: v => $(v) },
+              { k: "scanIA", l: "IA", render: r => <Badge s={r.scanIA} /> },
+              { k: "scanDate", l: "Escaneado" },
+            ], "")}
+          </div>
+        )}
+      </main>
+
+      {/* Scan Modal */}
+      <Modal open={!!scanModal} onClose={() => setScanModal(null)} title="Escaneando Documento — Claude IA">
+        {scanModal?.processing && (
+          <div style={{ textAlign: "center", padding: 36 }}>
+            <div style={{ width: 32, height: 32, border: `3px solid ${P.bd}`, borderTopColor: P.blue, borderRadius: "50%", animation: "spin .8s linear infinite", margin: "0 auto 12px" }} />
+            <div style={{ fontSize: 12, fontWeight: 600 }}>Analizando {scanModal.file}...</div>
+            <div style={{ fontSize: 9, color: P.s2, marginTop: 4 }}>Extrayendo datos con IA · Identificando tipo de documento</div>
+          </div>
+        )}
+      </Modal>
+
+      {toast && <Toast msg={toast.msg} type={toast.type} onDone={() => setToast(null)} />}
+      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(ClientePortal));
+    </script>
+</body>
+</html>

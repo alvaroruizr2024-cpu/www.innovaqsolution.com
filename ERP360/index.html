@@ -621,14 +621,22 @@ const APP_VERSION = '2.0';
 // CUSTOM HOOKS
 // ========================================
 
-// Hook para persistencia en localStorage
+// Hook para persistencia REAL en localStorage
 const useLocalStorage = (key, initialValue) => {
-  const [storedValue, setStoredValue] = useState(initialValue);
+  const [storedValue, setStoredValue] = useState(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (e) { return initialValue; }
+  });
 
   const setValue = useCallback((value) => {
-    const valueToStore = value instanceof Function ? value(storedValue) : value;
-    setStoredValue(valueToStore);
-  }, [storedValue]);
+    setStoredValue(prev => {
+      const valueToStore = value instanceof Function ? value(prev) : value;
+      try { window.localStorage.setItem(key, JSON.stringify(valueToStore)); } catch (e) {}
+      return valueToStore;
+    });
+  }, [key]);
 
   return [storedValue, setValue];
 };
@@ -4839,7 +4847,14 @@ function CostView() {
 /* ===== MAIN APP ===== */
 function SumaERP() {
   const [user, setUser] = useState(null);
-  const [D, setD] = useState(initData);
+  const [D, setD] = useState(() => {
+    try {
+      const saved = window.localStorage.getItem('erp360_data');
+      if (saved) { const parsed = JSON.parse(saved); return { ...initData(), ...parsed }; }
+    } catch(e) {}
+    return initData();
+  });
+  useEffect(() => { try { window.localStorage.setItem('erp360_data', JSON.stringify(D)); } catch(e) {} }, [D]);
   const [mod, setMod] = useState("dash");
   const [ml, setMl] = useState(null);
   const [fd, setFd] = useState({});
@@ -4858,7 +4873,14 @@ function SumaERP() {
   const [hrTab, setHrTab] = useState("dashboard");
   const [invTab, setInvTab] = useState("dashboard");
   const [acctTab, setAcctTab] = useState("dashboard");
-  const [scannedDocs, setScannedDocs] = useState(initScannedDocs);
+  const [scannedDocs, setScannedDocs] = useState(() => {
+    try {
+      const saved = window.localStorage.getItem('erp360_scannedDocs');
+      if (saved) return JSON.parse(saved);
+    } catch(e) {}
+    return initScannedDocs();
+  });
+  useEffect(() => { try { window.localStorage.setItem('erp360_scannedDocs', JSON.stringify(scannedDocs)); } catch(e) {} }, [scannedDocs]);
   const [docFilterEmpresa, setDocFilterEmpresa] = useState("all");
   const [docFilterTipo, setDocFilterTipo] = useState("all");
   const [docFilterFechaDesde, setDocFilterFechaDesde] = useState("");
