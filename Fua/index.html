@@ -2,6 +2,46 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Auditoría FUA v2.2 | INNOVAQ SOLUTIONS</title>
+  <meta name="description" content="Sistema de Auditoría FUA - Escaneo Dual MINSA - INNOVAQ SOLUTIONS">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231a5276'/><text x='16' y='22' font-size='14' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>F</text></svg>">
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.8.1/prop-types.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4f8; overflow-x: hidden; }
+    #root { width: 100vw; min-height: 100vh; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+    @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #e2e8f0; }
+    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+    input, select, textarea { font-family: inherit; }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px;background:#f0f4f8">
+      <div style="font-size:48px">📋</div>
+      <div style="font-size:14px;color:#64748b">Cargando Auditoría FUA v2.2...</div>
+      <div style="width:200px;height:3px;background:#cbd5e1;border-radius:2px;overflow:hidden">
+        <div style="width:60%;height:100%;background:linear-gradient(90deg,#1a5276,#0284c7);animation:loading 1.5s ease-in-out infinite"></div>
+      </div>
+    </div>
+  </div>
+  <script type="text/babel" src="fua-app.jsx"></script>
+  <script type="text/babel">
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Auditoría FUA - MINSA | Innovaq Solutions</title>
   <meta name="description" content="Sistema de Auditoría FUA - Escaneo Dual MINSA - Innovaq Solutions">
