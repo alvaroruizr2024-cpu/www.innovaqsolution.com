@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTP360 — Mantenimiento Productivo Total | INNOVAQ SOLUTIONS</title>
+    <meta name="description" content="MTP360 - Sistema de Mantenimiento Productivo Total (TPM) para gestión de flota y maquinaria. INNOVAQ SOLUTIONS SAC.">
+    <meta name="keywords" content="TPM, mantenimiento productivo total, OEE, 5S, gestión flota, INNOVAQ">
+    <meta name="author" content="INNOVAQ SOLUTIONS SAC">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙</text></svg>">
+    <!-- React 18 CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/prop-types@15/prop-types.min.js"></script>
+    <!-- Babel for JSX transpilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Recharts -->
+    <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+    <script src="https://unpkg.com/d3@7/dist/d3.min.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body, #root { width: 100%; height: 100%; }
+        body { background: #0B0F1A; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #111827; }
+        ::-webkit-scrollbar-thumb { background: #2A3A52; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #374868; }
+        ::selection { background: #3B82F640; color: #F1F5F9; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel" data-type="module">
+// ═══════════════════════════════════════════════════════════════
+// MTP360 — MANTENIMIENTO PRODUCTIVO TOTAL
+// Standalone deployment for www.innovaqsolution.com/TPM360
+// ═══════════════════════════════════════════════════════════════
+
+const { useState, useEffect, useCallback, useRef, useMemo } = React;
+const {
+  BarChart, Bar, LineChart, Line, AreaChart, Area, PieChart, Pie, Cell,
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  ComposedChart,
+} = Recharts;
+
+
+// ═══════════════════════════════════════════════════════════════
+// MTP360 — MANTENIMIENTO PRODUCTIVO TOTAL v3.0 (Fase 6)
+// INNOVAQ SOLUTIONS SAC · www.innovaqsolution.com/MTP360
+// CRUD Completo + Modales + Validación + WebSocket
+// ═══════════════════════════════════════════════════════════════
+
+const T = {
+  bg: "#0B0F1A", surface: "#111827", surfaceAlt: "#1A2235",
+  card: "#161E2E", cardHover: "#1C2640", border: "#2A3A52", borderLight: "#374868",
+  primary: "#3B82F6", primaryDark: "#2563EB", primaryLight: "#60A5FA",
+  accent: "#06D6A0", accentDark: "#05B386", warning: "#F59E0B", warningDark: "#D97706",
+  danger: "#EF4444", dangerDark: "#DC2626", info: "#8B5CF6", infoLight: "#A78BFA",
+  cyan: "#22D3EE", text: "#F1F5F9", textSecondary: "#94A3B8", textMuted: "#64748B",
+  textDim: "#5A6A80", white: "#FFFFFF", success: "#10B981",
+};
+const Fn = {
+  body: "'DM Sans', -apple-system, sans-serif",
+  mono: "'JetBrains Mono', 'Fira Code', monospace",
+};
+
+// Icons
+function IconDash() { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>); }
+function IconTruck() { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>); }
+function IconWrench() { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>); }
+function IconCalendar() { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>); }
+function IconUsers() { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg>); }
+function IconBell() { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>); }
+function IconMenu() { return (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 12h18M3 6h18M3 18h18"/></svg>); }
+function IconPlus() { return (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12h14"/></svg>); }
+function IconX() { return (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>); }
+function IconSave() { return (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg>); }
+function IconTrash() { return (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>); }
+function IconWifi() { return (<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>); }
+function IconPlay() { return (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 3l14 9-14 9V3z"/></svg>); }
+
+// ═══════════════════════════════════════════════════
+// API + HOOKS
+// ═══════════════════════════════════════════════════
+
+const API = "/api/v1/mantenimiento";
+
+async function apiFetch(path, opts) {
+  const o = opts || {};
+  try {
+    const r = await fetch(API + path, {
+      headers: { "Content-Type": "application/json" },
+      ...o,
+      body: o.body ? JSON.stringify(o.body) : undefined,
+    });
+    if (!r.ok) {
+      const e = await r.json().catch(() => ({}));
+      throw new Error(e.detail || "Error " + r.status);
+    }
+    return r.status === 204 ? null : r.json();
+  } catch (e) {
+    if (e.message.includes("Failed to fetch")) {
+      throw new Error("API offline");
+    }
+    throw e;
+  }
+}
+
+// Demo fallback data
+const DEMO_DASHBOARD = {
+  flota: { total_activos: 8, operativos: 6, en_taller: 1, fuera_servicio: 1, disponibilidad_pct: 75 },
+  ordenes_trabajo: { backlog: 6, costo_mes_actual: 87550 },
+  personal: { total: 5, disponibles: 3, ocupados: 2 },
+};
+
+const DEMO_KPIS = {
+  mtbf: { valor: 342, delta: 18, tendencia: "up" },
+  mttr: { valor: 11.2, delta: -1.8, tendencia: "down" },
+  disponibilidad: { valor: 87.5, clasificacion: "Bueno" },
+  backlog: {
+    total: 6, sla_vencidos: 1, sla_en_riesgo: 2,
+    items: [
+      { numero_ot: "OT-2025-000151", sla_status: "VENCIDO" },
+      { numero_ot: "OT-2025-000149", sla_status: "EN_RIESGO" },
+      { numero_ot: "OT-2025-000152", sla_status: "EN_TIEMPO" },
+    ],
+  },
+  cumplimiento_preventivo: { valor: 88.5, programadas: 26, cerradas: 23 },
+  tendencias: {
+    series: [
+      { periodo: "2024-09", preventivo_costo: 18500, correctivo_costo: 32000, total_costo: 55500 },
+      { periodo: "2024-10", preventivo_costo: 22000, correctivo_costo: 28000, total_costo: 54500 },
+      { periodo: "2024-11", preventivo_costo: 24000, correctivo_costo: 15000, total_costo: 45000 },
+      { periodo: "2024-12", preventivo_costo: 20000, correctivo_costo: 38000, total_costo: 65500 },
+      { periodo: "2025-01", preventivo_costo: 26000, correctivo_costo: 12000, total_costo: 46000 },
+      { periodo: "2025-02", preventivo_costo: 28000, correctivo_costo: 22000, total_costo: 59500 },
+    ],
+  },
+  pareto_fallas: {
+    por_sistema: [
+      { sistema: "Motor", fallas: 12 }, { sistema: "Hidráulico", fallas: 8 },
+      { sistema: "Transmisión", fallas: 6 }, { sistema: "Eléctrico", fallas: 5 },
+      { sistema: "Neumáticos", fallas: 5 },
+    ],
+  },
+};
+
+const DEMO_ACTIVOS = {
+  items: [
+    { id: 1, codigo_interno: "FLT-VP-001", placa: "ABC-123", tipo_activo_id: 1, marca_id: 1, estado: "Operativo", horometro_actual: 0, odometro_actual: 185420, unidad_medida: "km", numero_serie: "YV2RT40A5MA123456", anio_fabricacion: 2021, valor_adquisicion: 485000 },
+    { id: 2, codigo_interno: "FLT-VP-002", placa: "DEF-456", tipo_activo_id: 1, marca_id: 2, estado: "En Taller", horometro_actual: 0, odometro_actual: 220150, unidad_medida: "km", numero_serie: "XLER4X20005678", anio_fabricacion: 2020, valor_adquisicion: 520000 },
+    { id: 3, codigo_interno: "FLT-MA-001", placa: null, tipo_activo_id: 3, marca_id: 3, estado: "Operativo", horometro_actual: 4250, odometro_actual: 0, unidad_medida: "horas", numero_serie: "CAT0320GCMLA12345", anio_fabricacion: 2022, valor_adquisicion: 890000 },
+    { id: 4, codigo_interno: "FLT-MA-002", placa: null, tipo_activo_id: 3, marca_id: 4, estado: "Fuera de Servicio", horometro_actual: 8920, odometro_actual: 0, unidad_medida: "horas", numero_serie: "KMTPC200JLA567", anio_fabricacion: 2019, valor_adquisicion: 750000 },
+  ],
+  total: 4, pages: 1,
+};
+
+const DEMO_OTS = {
+  items: [
+    { id: 1, numero_ot: "OT-2025-000147", activo_id: 2, tipo_mantenimiento_id: 2, prioridad_id: 1, estado: "EN_PROGRESO", origen: "CORRECTIVO_CAMPO", descripcion_falla: "Fuga aceite turbo", costo_total: 0, horas_paro_equipo: 18.5, fecha_solicitud: "2025-02-18T08:30:00Z" },
+    { id: 2, numero_ot: "OT-2025-000148", activo_id: 3, tipo_mantenimiento_id: 1, prioridad_id: 3, estado: "ABIERTA", origen: "PLAN_PREVENTIVO", descripcion_falla: "Service 250h", costo_total: 0, horas_paro_equipo: 0, fecha_solicitud: "2025-02-19T10:00:00Z" },
+    { id: 3, numero_ot: "OT-2025-000146", activo_id: 1, tipo_mantenimiento_id: 1, prioridad_id: 3, estado: "CERRADA", origen: "PLAN_PREVENTIVO", descripcion_falla: "Cambio aceite 10k km", costo_total: 3850, horas_paro_equipo: 4.5, fecha_solicitud: "2025-02-15T07:00:00Z" },
+    { id: 4, numero_ot: "OT-2025-000149", activo_id: 4, tipo_mantenimiento_id: 2, prioridad_id: 2, estado: "PAUSADA", origen: "CORRECTIVO_CAMPO", descripcion_falla: "Falla bomba hidráulica", costo_total: 12500, horas_paro_equipo: 48, fecha_solicitud: "2025-02-10T14:00:00Z" },
+  ],
+  total: 4, pages: 1,
+};
+
+const DEMO_MECANICOS = {
+  items: [
+    { id: 1, codigo_empleado: "MEC-001", nombres: "Carlos", apellidos: "Quispe Rojas", dni: "45678912", estado: "Disponible", especialidad_principal_id: 1 },
+    { id: 2, codigo_empleado: "MEC-002", nombres: "Luis", apellidos: "Mendoza Torres", dni: "45123678", estado: "Ocupado", especialidad_principal_id: 2 },
+    { id: 3, codigo_empleado: "MEC-003", nombres: "Miguel", apellidos: "Sánchez Pérez", dni: "41234567", estado: "Disponible", especialidad_principal_id: 3 },
+  ],
+  total: 3, pages: 1,
+};
+
+const DEMO_CATS = {
+  "tipos-activo": [{ id: 1, nombre: "Vehículo Pesado" }, { id: 2, nombre: "Vehículo Liviano" }, { id: 3, nombre: "Maq. Amarilla" }],
+  marcas: [{ id: 1, nombre: "Volvo" }, { id: 2, nombre: "Scania" }, { id: 3, nombre: "Caterpillar" }, { id: 4, nombre: "Komatsu" }],
+  sistemas: [{ id: 1, nombre: "Motor" }, { id: 2, nombre: "Transmisión" }, { id: 3, nombre: "Hidráulico" }, { id: 4, nombre: "Eléctrico" }],
+  "tipos-mantenimiento": [{ id: 1, nombre: "Preventivo" }, { id: 2, nombre: "Correctivo" }, { id: 3, nombre: "Predictivo" }, { id: 4, nombre: "Mejora" }],
+  prioridades: [{ id: 1, nombre: "Crítica" }, { id: 2, nombre: "Alta" }, { id: 3, nombre: "Media" }, { id: 4, nombre: "Baja" }],
+  especialidades: [{ id: 1, nombre: "Mecánico Diesel" }, { id: 2, nombre: "Electricista" }, { id: 3, nombre: "Soldador" }],
+};
+
+function useAPI(fn, deps, opts) {
+  const options = opts || {};
+  const [data, setData] = useState(options.init || null);
+  const [ld, setLd] = useState(true);
+  const [err, setErr] = useState(null);
+  const m = useRef(true);
+  const fnRef = useRef(fn);
+  fnRef.current = fn;
+  const depsKey = JSON.stringify(deps || []);
+
+  const go = useCallback(async () => {
+    try {
+      setLd(true);
+      setErr(null);
+      const d = await fnRef.current();
+      if (m.current) setData(d);
+    } catch (e) {
+      if (m.current) setErr(e.message);
+    } finally {
+      if (m.current) setLd(false);
+    }
+  }, [depsKey]);
+
+  useEffect(() => {
+    m.current = true;
+    go();
+    return () => { m.current = false; };
+  }, [go]);
+
+  useEffect(() => {
+    if (!options.iv) return;
+    const id = setInterval(go, options.iv);
+    return () => clearInterval(id);
+  }, [go, options.iv]);
+
+  return { data, ld, err, go, setData };
+}
+
+function useWS(onEv) {
+  const [ok, setOk] = useState(false);
+  const r = useRef(onEv);
+  r.current = onEv;
+  useEffect(() => {
+    let w = null;
+    let timer = null;
+    const connect = () => {
+      try {
+        const proto = location.protocol === "https:" ? "wss:" : "ws:";
+        w = new WebSocket(proto + "//" + location.host + API + "/kpis/ws");
+        w.onopen = () => setOk(true);
+        w.onmessage = (e) => {
+          try { r.current(JSON.parse(e.data)); } catch (ex) { /* ignore */ }
+        };
+        w.onclose = () => { setOk(false); timer = setTimeout(connect, 3000); };
+        w.onerror = () => w.close();
+      } catch (ex) {
+        timer = setTimeout(connect, 5000);
+      }
+    };
+    connect();
+    return () => { clearTimeout(timer); if (w) w.close(); };
+  }, []);
+  return ok;
+}
+
+// ═══════════════════════════════════════════════════
+// SHARED UI
+// ═══════════════════════════════════════════════════
+
+const EC = {
+  Operativo: T.accent, "En Taller": T.warning, "Fuera de Servicio": T.danger, Baja: T.textMuted,
+  BORRADOR: T.textMuted, ABIERTA: T.primary, EN_PROGRESO: T.warning, PAUSADA: T.info,
+  COMPLETADA: T.accent, CERRADA: T.textDim, CANCELADA: T.danger, Disponible: T.accent, Ocupado: T.warning,
+};
+const TL = { 1: "PREV", 2: "CORR", 3: "PRED", 4: "MEJ" };
+const PL = { 1: "Crítica", 2: "Alta", 3: "Media", 4: "Baja" };
+const PC = { 1: T.danger, 2: T.warning, 3: T.primary, 4: T.textMuted };
+const TC = { 1: T.accent, 2: T.danger, 3: T.info, 4: T.cyan };
+const STATE_TRANS = {
+  BORRADOR: ["ABIERTA", "CANCELADA"], ABIERTA: ["EN_PROGRESO", "CANCELADA"],
+  EN_PROGRESO: ["PAUSADA", "COMPLETADA"], PAUSADA: ["EN_PROGRESO", "CANCELADA"],
+  COMPLETADA: ["CERRADA"],
+};
+
+function Badge({ l, c, s }) {
+  const color = c || T.primary;
+  return (
+    <span style={{
+      display: "inline-flex", padding: s ? "1px 6px" : "2px 10px", borderRadius: 6,
+      fontSize: s ? 10 : 11, fontWeight: 600, fontFamily: Fn.mono,
+      background: color + "18", color: color, border: "1px solid " + color + "33", whiteSpace: "nowrap",
+    }}>{l}</span>
+  );
+}
+
+function Card({ children, style, glow, onClick }) {
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        background: T.card, border: "1px solid " + T.border, borderRadius: 12, padding: 20,
+        transition: "all 0.2s", cursor: onClick ? "pointer" : "default",
+        boxShadow: glow ? "0 0 20px " + glow + "15" : undefined, ...style,
+      }}
+      onMouseEnter={(e) => { if (onClick) e.currentTarget.style.background = T.cardHover; }}
+      onMouseLeave={(e) => { if (onClick) e.currentTarget.style.background = T.card; }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function KPICard({ label, value, unit, delta, dl, color, ld: loading }) {
+  const c = color || T.primary;
+  return (
+    <Card glow={c}>
+      <div style={{ fontSize: 11, color: T.textMuted, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>{label}</div>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+        {loading
+          ? <div style={{ width: 60, height: 28, background: T.border, borderRadius: 6 }} />
+          : <span style={{ fontSize: 28, fontWeight: 700, fontFamily: Fn.mono, color: c }}>{typeof value === "number" ? value.toLocaleString() : value}</span>
+        }
+        {unit && <span style={{ fontSize: 12, color: T.textMuted }}>{unit}</span>}
+      </div>
+      {delta !== undefined && (
+        <div style={{ marginTop: 4, fontSize: 11, fontFamily: Fn.mono, color: delta >= 0 ? T.accent : T.danger }}>
+          {delta >= 0 ? "▲" : "▼"} {Math.abs(delta)} {dl || ""}
+        </div>
+      )}
+    </Card>
+  );
+}
+
+function Btn({ children, c, onClick, sm, danger, outline, disabled }) {
+  const color = danger ? T.danger : (c || T.primary);
+  return (
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      style={{
+        display: "inline-flex", alignItems: "center", gap: 6,
+        padding: sm ? "4px 10px" : "7px 16px",
+        background: outline ? "transparent" : color,
+        color: outline ? color : T.white,
+        border: "1px solid " + (outline ? color + "55" : "transparent"),
+        borderRadius: 8, fontSize: sm ? 11 : 12, fontWeight: 600,
+        cursor: disabled ? "not-allowed" : "pointer", fontFamily: Fn.body,
+        opacity: disabled ? 0.5 : 1,
+      }}
+    >
+      {children}
+    </button>
+  );
+}
+
+function DataTable({ cols, data, onRow, ld: loading }) {
+  return (
+    <div style={{ overflowX: "auto", border: "1px solid " + T.border, borderRadius: 10 }}>
+      <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: Fn.body, fontSize: 13 }}>
+        <thead>
+          <tr>
+            {cols.map((c, i) => (
+              <th key={i} style={{ padding: "10px 14px", textAlign: "left", fontSize: 11, fontWeight: 600, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.06em", background: T.surfaceAlt, borderBottom: "1px solid " + T.border }}>{c.label}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {loading ? (
+            [0, 1, 2, 3].map((i) => (
+              <tr key={i}><td colSpan={cols.length} style={{ padding: 14 }}><div style={{ width: "60%", height: 14, background: T.border, borderRadius: 4 }} /></td></tr>
+            ))
+          ) : data.length === 0 ? (
+            <tr><td colSpan={cols.length} style={{ padding: 30, textAlign: "center", color: T.textMuted }}>Sin registros</td></tr>
+          ) : (
+            data.map((r, ri) => (
+              <tr key={ri} onClick={() => onRow && onRow(r)} style={{ cursor: onRow ? "pointer" : "default", background: ri % 2 === 0 ? T.card + "50" : "transparent" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = T.cardHover; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = ri % 2 === 0 ? T.card + "50" : "transparent"; }}>
+                {cols.map((c, ci) => (
+                  <td key={ci} style={{ padding: "10px 14px", color: T.text, borderBottom: "1px solid " + T.border + "22" }}>
+                    {c.render ? c.render(r) : r[c.key]}
+                  </td>
+                ))}
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function Pager({ pg, pgs, set }) {
+  if (pgs <= 1) return null;
+  return (
+    <div style={{ display: "flex", justifyContent: "center", gap: 6, marginTop: 16 }}>
+      <Btn sm outline onClick={() => set(pg - 1)} disabled={pg <= 1}>{"← Ant"}</Btn>
+      <span style={{ padding: "4px 12px", fontSize: 12, color: T.textSecondary, fontFamily: Fn.mono }}>{pg}/{pgs}</span>
+      <Btn sm outline onClick={() => set(pg + 1)} disabled={pg >= pgs}>{"Sig →"}</Btn>
+    </div>
+  );
+}
+
+function Chips({ opts, val, onChange }) {
+  return (
+    <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+      {opts.map((o) => (
+        <button key={o.v} onClick={() => onChange(o.v)} style={{
+          padding: "4px 12px", borderRadius: 20,
+          border: "1px solid " + (val === o.v ? T.primary : T.border),
+          background: val === o.v ? T.primary + "20" : "transparent",
+          color: val === o.v ? T.primary : T.textSecondary,
+          fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: Fn.body,
+        }}>{o.l}</button>
+      ))}
+    </div>
+  );
+}
+
+function Toasts({ items, rm }) {
+  const sevColors = { info: T.primary, success: T.accent, warning: T.warning, danger: T.danger };
+  return (
+    <div style={{ position: "fixed", top: 16, right: 16, zIndex: 9999, display: "flex", flexDirection: "column", gap: 8, maxWidth: 360 }}>
+      {items.map((t) => {
+        const sc = sevColors[t.sv] || T.primary;
+        return (
+          <div key={t.id} onClick={() => rm(t.id)} style={{
+            padding: "10px 14px", background: T.card,
+            border: "1px solid " + sc + "44", borderLeft: "3px solid " + sc,
+            borderRadius: 8, color: T.text, fontSize: 13, fontFamily: Fn.body,
+            cursor: "pointer", boxShadow: "0 4px 20px " + T.bg + "cc",
+          }}>
+            <div style={{ fontWeight: 600, marginBottom: 2 }}>{t.ic || "📋"} {t.ti}</div>
+            <div style={{ color: T.textSecondary, fontSize: 11 }}>{t.ms}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════
+// MODAL + FORM COMPONENTS
+// ═══════════════════════════════════════════════════
+
+const inputStyle = {
+  width: "100%", padding: "8px 12px", background: T.card, border: "1px solid " + T.border,
+  borderRadius: 8, color: T.text, fontSize: 13, fontFamily: Fn.body, outline: "none", boxSizing: "border-box",
+};
+const labelStyle = {
+  fontSize: 11, fontWeight: 600, color: T.textSecondary, marginBottom: 4, display: "block",
+  textTransform: "uppercase", letterSpacing: "0.05em",
+};
+
+function Modal({ title, children, onClose, wide }) {
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", background: "#00000088" }} onClick={onClose}>
+      <div onClick={(e) => e.stopPropagation()} style={{
+        background: T.surface, border: "1px solid " + T.border, borderRadius: 16, padding: 24,
+        width: wide ? 720 : 520, maxHeight: "85vh", overflowY: "auto", boxShadow: "0 20px 60px " + T.bg + "cc",
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+          <h3 style={{ fontSize: 16, fontWeight: 700, color: T.text, margin: 0 }}>{title}</h3>
+          <button onClick={onClose} style={{ background: "none", border: "none", color: T.textMuted, cursor: "pointer", padding: 4 }}><IconX /></button>
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function FormField({ label, children, span }) {
+  return (
+    <div style={{ gridColumn: span ? "span " + span : undefined }}>
+      <label style={labelStyle}>{label}</label>
+      {children}
+    </div>
+  );
+}
+
+function FormInput({ label, span, ...props }) {
+  return (
+    <FormField label={label} span={span}>
+      <input style={inputStyle} {...props} />
+    </FormField>
+  );
+}
+
+function FormSelect({ label, options, span, ...props }) {
+  return (
+    <FormField label={label} span={span}>
+      <select style={inputStyle} {...props}>
+        <option value="">— Seleccionar —</option>
+        {options.map((o) => (
+          <option key={o.id || o.value} value={o.id || o.value}>{o.nombre || o.label}</option>
+        ))}
+      </select>
+    </FormField>
+  );
+}
+
+function FormTextarea({ label, span, ...props }) {
+  return (
+    <FormField label={label} span={span}>
+      <textarea style={{ ...inputStyle, minHeight: 70, resize: "vertical" }} {...props} />
+    </FormField>
+  );
+}
+
+function FormActions({ onSave, onCancel, saving, label }) {
+  return (
+    <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 20, paddingTop: 16, borderTop: "1px solid " + T.border }}>
+      <Btn outline onClick={onCancel}>Cancelar</Btn>
+      <Btn onClick={onSave} disabled={saving}><IconSave /> {saving ? "Guardando..." : (label || "Guardar")}</Btn>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════
+// DASHBOARD VIEW
+// ═══════════════════════════════════════════════════
+
+function DashboardView({ ws }) {
+  const { data: dash, ld: l1 } = useAPI(() => apiFetch("/dashboard").catch(() => DEMO_DASHBOARD), [], { iv: 60000 });
+  const { data: kpis, ld: l2 } = useAPI(() => apiFetch("/kpis/dashboard-completo?meses=6").catch(() => DEMO_KPIS), [], { iv: 60000 });
+
+  const fl = (dash && dash.flota) || {};
+  const ot = (dash && dash.ordenes_trabajo) || {};
+  const pe = (dash && dash.personal) || {};
+  const k = kpis || {};
+  const tend = (k.tendencias && k.tendencias.series) || [];
+  const par = (k.pareto_fallas && k.pareto_fallas.por_sistema) || [];
+  const bl = k.backlog || {};
+  const cump = k.cumplimiento_preventivo || {};
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+        <h2 style={{ fontSize: 18, fontWeight: 700, color: T.text, margin: 0 }}>MTP360 — Dashboard</h2>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <IconWifi />
+          <span style={{ fontSize: 10, fontFamily: Fn.mono, color: ws ? T.accent : T.danger }}>{ws ? "● LIVE" : "○ OFFLINE"}</span>
+        </div>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12, marginBottom: 20 }}>
+        <KPICard label="Disponibilidad" value={(k.disponibilidad && k.disponibilidad.valor) || fl.disponibilidad_pct || "—"} unit="%" delta={2.3} dl="vs 6m" color={T.accent} ld={l1} />
+        <KPICard label="MTBF" value={(k.mtbf && k.mtbf.valor) || "—"} unit="h" delta={k.mtbf && k.mtbf.delta} color={T.primary} ld={l2} />
+        <KPICard label="MTTR" value={(k.mttr && k.mttr.valor) || "—"} unit="h" delta={k.mttr && k.mttr.delta} color={T.warning} ld={l2} />
+        <KPICard label="Backlog" value={bl.total || ot.backlog || "—"} delta={bl.sla_vencidos ? -bl.sla_vencidos : undefined} dl="SLA venc." color={T.danger} ld={l1} />
+        <KPICard label="Costo Mes" value={"S/" + ((ot.costo_mes_actual || 0) / 1000).toFixed(0) + "k"} color={T.info} ld={l1} />
+        <KPICard label="Cumpl. Prev." value={(cump.valor || "—") + "%"} color={T.cyan} ld={l2} />
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "5fr 3fr", gap: 14, marginBottom: 20 }}>
+        <Card>
+          <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 12 }}>Costos Mensuales</div>
+          <ResponsiveContainer width="100%" height={220}>
+            <ComposedChart data={tend}>
+              <CartesianGrid strokeDasharray="3 3" stroke={T.border} />
+              <XAxis dataKey="periodo" tick={{ fill: T.textMuted, fontSize: 10 }} tickFormatter={(v) => v ? v.slice(5) : ""} />
+              <YAxis tick={{ fill: T.textMuted, fontSize: 10 }} tickFormatter={(v) => (v / 1000).toFixed(0) + "k"} />
+              <Tooltip contentStyle={{ background: T.card, border: "1px solid " + T.border, borderRadius: 8, fontSize: 12 }} />
+              <Bar dataKey="preventivo_costo" name="Prev" fill={T.accent} radius={[3, 3, 0, 0]} />
+              <Bar dataKey="correctivo_costo" name="Corr" fill={T.danger} radius={[3, 3, 0, 0]} />
+              <Line dataKey="total_costo" name="Total" stroke={T.white} strokeWidth={2} dot={false} />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </Card>
+        <Card>
+          <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 12 }}>Pareto Fallas</div>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={par} layout="vertical">
+              <CartesianGrid strokeDasharray="3 3" stroke={T.border} />
+              <XAxis type="number" tick={{ fill: T.textMuted, fontSize: 10 }} />
+              <YAxis dataKey="sistema" type="category" width={75} tick={{ fill: T.textSecondary, fontSize: 10 }} />
+              <Tooltip contentStyle={{ background: T.card, border: "1px solid " + T.border, borderRadius: 8, fontSize: 12 }} />
+              <Bar dataKey="fallas" fill={T.primary} radius={[0, 4, 4, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </Card>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
+        <Card>
+          <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 10 }}>SLA Backlog</div>
+          {(bl.items || []).slice(0, 5).map((it, i) => (
+            <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "5px 0", borderBottom: "1px solid " + T.border + "22" }}>
+              <span style={{ fontFamily: Fn.mono, fontSize: 11, color: T.text }}>{it.numero_ot}</span>
+              <Badge l={it.sla_status} c={it.sla_status === "VENCIDO" ? T.danger : it.sla_status === "EN_RIESGO" ? T.warning : T.accent} s />
+            </div>
+          ))}
+        </Card>
+        <Card>
+          <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 10 }}>Personal</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, textAlign: "center" }}>
+            <div><div style={{ fontSize: 24, fontWeight: 700, fontFamily: Fn.mono, color: T.accent }}>{pe.disponibles || 0}</div><div style={{ fontSize: 10, color: T.textMuted }}>Disponibles</div></div>
+            <div><div style={{ fontSize: 24, fontWeight: 700, fontFamily: Fn.mono, color: T.warning }}>{pe.ocupados || 0}</div><div style={{ fontSize: 10, color: T.textMuted }}>Ocupados</div></div>
+          </div>
+        </Card>
+        <Card>
+          <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 10 }}>Flota</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, textAlign: "center" }}>
+            <div><div style={{ fontSize: 24, fontWeight: 700, fontFamily: Fn.mono, color: T.accent }}>{fl.operativos || 0}</div><div style={{ fontSize: 10, color: T.textMuted }}>Operativos</div></div>
+            <div><div style={{ fontSize: 24, fontWeight: 700, fontFamily: Fn.mono, color: T.warning }}>{fl.en_taller || 0}</div><div style={{ fontSize: 10, color: T.textMuted }}>En Taller</div></div>
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════
+// ACTIVOS VIEW + CREATE MODAL
+// ═══════════════════════════════════════════════════
+
+function ActivoCreateModal({ onClose, onSaved, toast }) {
+  const [f, setF] = useState({ codigo_interno: "", placa: "", tipo_activo_id: "", marca_id: "", numero_serie: "", anio_fabricacion: new Date().getFullYear(), valor_adquisicion: "", unidad_medida: "km" });
+  const [saving, setSaving] = useState(false);
+  const { data: tipos } = useAPI(() => apiFetch("/catalogos/tipos-activo").catch(() => DEMO_CATS["tipos-activo"]), []);
+  const { data: marcas } = useAPI(() => apiFetch("/catalogos/marcas").catch(() => DEMO_CATS.marcas), []);
+  const upd = (k, v) => setF((p) => ({ ...p, [k]: v }));
+
+  const save = async () => {
+    if (!f.codigo_interno || !f.numero_serie || !f.tipo_activo_id || !f.marca_id) {
+      toast({ ti: "Error", ms: "Complete los campos obligatorios", sv: "danger", ic: "❌" });
+      return;
+    }
+    setSaving(true);
+    try {
+      await apiFetch("/activos", { method: "POST", body: { ...f, tipo_activo_id: +f.tipo_activo_id, marca_id: +f.marca_id, modelo_id: 1, anio_fabricacion: +f.anio_fabricacion, valor_adquisicion: +f.valor_adquisicion || 0, horometro_actual: 0, odometro_actual: 0, estado: "Operativo" } });
+      toast({ ti: "Activo creado", ms: f.codigo_interno, sv: "success", ic: "✅" });
+      onSaved();
+    } catch (e) {
+      toast({ ti: "Error", ms: e.message, sv: "danger", ic: "❌" });
+    } finally { setSaving(false); }
+  };
+
+  return (
+    <Modal title="Nuevo Activo" onClose={onClose} wide>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+        <FormInput label="Código Interno *" value={f.codigo_interno} onChange={(e) => upd("codigo_interno", e.target.value)} placeholder="FLT-VP-001" />
+        <FormInput label="Placa" value={f.placa} onChange={(e) => upd("placa", e.target.value)} placeholder="ABC-123" />
+        <FormSelect label="Tipo Activo *" value={f.tipo_activo_id} onChange={(e) => upd("tipo_activo_id", e.target.value)} options={tipos || []} />
+        <FormSelect label="Marca *" value={f.marca_id} onChange={(e) => upd("marca_id", e.target.value)} options={marcas || []} />
+        <FormInput label="Nº Serie *" value={f.numero_serie} onChange={(e) => upd("numero_serie", e.target.value)} />
+        <FormInput label="Año" type="number" value={f.anio_fabricacion} onChange={(e) => upd("anio_fabricacion", e.target.value)} />
+        <FormInput label="Valor (S/)" type="number" value={f.valor_adquisicion} onChange={(e) => upd("valor_adquisicion", e.target.value)} />
+        <FormSelect label="Unidad Medida" value={f.unidad_medida} onChange={(e) => upd("unidad_medida", e.target.value)} options={[{ id: "km", nombre: "Kilómetros" }, { id: "horas", nombre: "Horas" }]} />
+      </div>
+      <FormActions onSave={save} onCancel={onClose} saving={saving} label="Crear Activo" />
+    </Modal>
+  );
+}
+
+function ActivosView({ toast }) {
+  const [pg, setPg] = useState(1);
+  const [fe, setFe] = useState("");
+  const [q, setQ] = useState("");
+  const [modal, setModal] = useState(false);
+  const [sel, setSel] = useState(null);
+
+  const params = { page: pg, size: 25 };
+  if (fe) params.estado = fe;
+  if (q) params.search = q;
+
+  const { data, ld, go } = useAPI(() => apiFetch("/activos?" + new URLSearchParams(params)).catch(() => DEMO_ACTIVOS), [pg, fe, q]);
+  const items = (data && data.items) || [];
+  const pages = (data && data.pages) || 1;
+
+  const cols = [
+    { label: "Código", render: (r) => (<span style={{ fontFamily: Fn.mono, fontWeight: 600, color: T.primary }}>{r.codigo_interno}</span>) },
+    { label: "Placa", render: (r) => r.placa || (<span style={{ color: T.textDim }}>N/A</span>) },
+    { label: "Medidor", render: (r) => (<span style={{ fontFamily: Fn.mono, fontSize: 12 }}>{r.unidad_medida === "horas" ? (r.horometro_actual || 0).toLocaleString() + " h" : (r.odometro_actual || 0).toLocaleString() + " km"}</span>) },
+    { label: "Estado", render: (r) => (<Badge l={r.estado} c={EC[r.estado]} />) },
+    { label: "Valor", render: (r) => (<span style={{ fontFamily: Fn.mono, fontSize: 12, color: T.warning }}>S/ {(r.valor_adquisicion || 0).toLocaleString()}</span>) },
+  ];
+
+  if (sel) {
+    return (
+      <div>
+        <Btn sm outline onClick={() => setSel(null)}>{"← Volver"}</Btn>
+        <div style={{ marginTop: 12 }}>
+          <Card>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
+              <div><span style={{ fontFamily: Fn.mono, fontSize: 16, fontWeight: 700, color: T.primary }}>{sel.codigo_interno}</span>{" "}<Badge l={sel.estado} c={EC[sel.estado]} /></div>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, fontSize: 13, color: T.textSecondary }}>
+              <div>Placa: <span style={{ color: T.text, fontFamily: Fn.mono }}>{sel.placa || "N/A"}</span></div>
+              <div>Serie: <span style={{ color: T.text, fontFamily: Fn.mono }}>{sel.numero_serie}</span></div>
+              <div>Horómetro: <span style={{ fontFamily: Fn.mono, color: T.accent }}>{(sel.horometro_actual || 0).toLocaleString()} h</span></div>
+              <div>Odómetro: <span style={{ fontFamily: Fn.mono, color: T.primary }}>{(sel.odometro_actual || 0).toLocaleString()} km</span></div>
+              <div>Valor: <span style={{ fontFamily: Fn.mono, color: T.warning }}>S/ {(sel.valor_adquisicion || 0).toLocaleString()}</span></div>
+              <div>Año: {sel.anio_fabricacion}</div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+        <h2 style={{ fontSize: 18, fontWeight: 700, color: T.text, margin: 0 }}>Gestión de Activos</h2>
+        <Btn onClick={() => setModal(true)}><IconPlus /> Nuevo Activo</Btn>
+      </div>
+      <div style={{ display: "flex", gap: 10, marginBottom: 16, flexWrap: "wrap" }}>
+        <input placeholder="🔍 Buscar..." value={q} onChange={(e) => { setQ(e.target.value); setPg(1); }} style={{ flex: 1, minWidth: 200, ...inputStyle }} />
+        <Chips opts={[{ v: "", l: "Todos" }, { v: "Operativo", l: "Operativo" }, { v: "En Taller", l: "En Taller" }, { v: "Fuera de Servicio", l: "F. Servicio" }]} val={fe} onChange={(v) => { setFe(v); setPg(1); }} />
+      </div>
+      <DataTable cols={cols} data={items} ld={ld} onRow={setSel} />
+      <Pager pg={pg} pgs={pages} set={setPg} />
+      {modal && <ActivoCreateModal onClose={() => setModal(false)} onSaved={() => { setModal(false); go(); }} toast={toast} />}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════
+// OTs VIEW + CREATE + ESTADO + REPUESTO + MECANICO
+// ═══════════════════════════════════════════════════
+
+function OTCreateModal({ onClose, onSaved, toast }) {
+  const [f, setF] = useState({ activo_id: "", tipo_mantenimiento_id: "", prioridad_id: "", origen: "CORRECTIVO_CAMPO", descripcion_falla: "", sistema_id: "", fecha_solicitud: new Date().toISOString().slice(0, 16) });
+  const [saving, setSaving] = useState(false);
+  const { data: activos } = useAPI(() => apiFetch("/activos?size=100").catch(() => DEMO_ACTIVOS), []);
+  const { data: tipos } = useAPI(() => apiFetch("/catalogos/tipos-mantenimiento").catch(() => DEMO_CATS["tipos-mantenimiento"]), []);
+  const { data: prios } = useAPI(() => apiFetch("/catalogos/prioridades").catch(() => DEMO_CATS.prioridades), []);
+  const { data: sist } = useAPI(() => apiFetch("/catalogos/sistemas").catch(() => DEMO_CATS.sistemas), []);
+  const upd = (k, v) => setF((p) => ({ ...p, [k]: v }));
+
+  const save = async () => {
+    if (!f.activo_id || !f.tipo_mantenimiento_id || !f.prioridad_id) { toast({ ti: "Error", ms: "Complete campos obligatorios", sv: "danger", ic: "❌" }); return; }
+    setSaving(true);
+    try {
+      await apiFetch("/ots", { method: "POST", body: { ...f, activo_id: +f.activo_id, tipo_mantenimiento_id: +f.tipo_mantenimiento_id, prioridad_id: +f.prioridad_id, sistema_id: f.sistema_id ? +f.sistema_id : null, fecha_solicitud: new Date(f.fecha_solicitud).toISOString() } });
+      toast({ ti: "OT Creada", ms: "Orden registrada", sv: "success", ic: "✅" });
+      onSaved();
+    } catch (e) { toast({ ti: "Error", ms: e.message, sv: "danger", ic: "❌" }); } finally { setSaving(false); }
+  };
+
+  return (
+    <Modal title="Nueva Orden de Trabajo" onClose={onClose} wide>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+        <FormSelect label="Activo *" value={f.activo_id} onChange={(e) => upd("activo_id", e.target.value)} options={((activos && activos.items) || []).map((a) => ({ id: a.id, nombre: a.codigo_interno + " " + (a.placa || "") }))} />
+        <FormSelect label="Tipo Mant. *" value={f.tipo_mantenimiento_id} onChange={(e) => upd("tipo_mantenimiento_id", e.target.value)} options={tipos || []} />
+        <FormSelect label="Prioridad *" value={f.prioridad_id} onChange={(e) => upd("prioridad_id", e.target.value)} options={prios || []} />
+        <FormSelect label="Origen" value={f.origen} onChange={(e) => upd("origen", e.target.value)} options={[{ id: "CORRECTIVO_CAMPO", nombre: "Correctivo Campo" }, { id: "SOLICITUD_OPERADOR", nombre: "Solicitud Operador" }, { id: "PREDICTIVO_IOT", nombre: "Predictivo IoT" }]} />
+        <FormSelect label="Sistema" value={f.sistema_id} onChange={(e) => upd("sistema_id", e.target.value)} options={sist || []} />
+        <FormInput label="Fecha" type="datetime-local" value={f.fecha_solicitud} onChange={(e) => upd("fecha_solicitud", e.target.value)} />
+        <FormTextarea label="Descripción de Falla" value={f.descripcion_falla} onChange={(e) => upd("descripcion_falla", e.target.value)} span={2} />
+      </div>
+      <FormActions onSave={save} onCancel={onClose} saving={saving} label="Crear OT" />
+    </Modal>
+  );
+}
+
+function OTsView({ toast }) {
+  const [pg, setPg] = useState(1);
+  const [fe, setFe] = useState("");
+  const [modal, setModal] = useState(false);
+  const [sel, setSel] = useState(null);
+  const [transitioning, setTrans] = useState(false);
+
+  const params = { page: pg, size: 25 };
+  if (fe) params.estado = fe;
+  const { data, ld, go } = useAPI(() => apiFetch("/ots?" + new URLSearchParams(params)).catch(() => DEMO_OTS), [pg, fe]);
+  const items = (data && data.items) || [];
+  const pages = (data && data.pages) || 1;
+
+  const cols = [
+    { label: "Nº OT", render: (r) => (<span style={{ fontFamily: Fn.mono, fontWeight: 600, color: T.primary }}>{r.numero_ot}</span>) },
+    { label: "Tipo", render: (r) => (<Badge l={TL[r.tipo_mantenimiento_id] || "?"} c={TC[r.tipo_mantenimiento_id]} s />) },
+    { label: "Prioridad", render: (r) => (<Badge l={PL[r.prioridad_id] || "?"} c={PC[r.prioridad_id]} s />) },
+    { label: "Estado", render: (r) => (<Badge l={r.estado} c={EC[r.estado]} />) },
+    { label: "Costo", render: (r) => (<span style={{ fontFamily: Fn.mono, fontSize: 12, color: T.warning }}>S/ {(r.costo_total || 0).toLocaleString()}</span>) },
+    { label: "H.Paro", render: (r) => (<span style={{ fontFamily: Fn.mono, fontSize: 12 }}>{r.horas_paro_equipo || 0}h</span>) },
+    { label: "Fecha", render: (r) => (<span style={{ fontSize: 11, color: T.textMuted }}>{r.fecha_solicitud ? new Date(r.fecha_solicitud).toLocaleDateString() : "—"}</span>) },
+  ];
+
+  const cambiarEstado = async (nuevoEstado) => {
+    let motivo = "";
+    if (nuevoEstado === "CANCELADA") {
+      motivo = prompt("Motivo de cancelación:");
+      if (!motivo) return;
+    }
+    setTrans(true);
+    try {
+      await apiFetch("/ots/" + sel.id + "/estado", { method: "POST", body: { nuevo_estado: nuevoEstado, motivo: motivo || "Transición a " + nuevoEstado, cambiado_por: 1 } });
+      toast({ ti: "Estado actualizado", ms: sel.numero_ot + " → " + nuevoEstado, sv: "success", ic: "🔄" });
+      setSel({ ...sel, estado: nuevoEstado });
+      go();
+    } catch (e) { toast({ ti: "Error", ms: e.message, sv: "danger", ic: "❌" }); } finally { setTrans(false); }
+  };
+
+  if (sel) {
+    const avail = STATE_TRANS[sel.estado] || [];
+    return (
+      <div>
+        <Btn sm outline onClick={() => { setSel(null); go(); }}>{"← Volver"}</Btn>
+        <div style={{ marginTop: 12 }}>
+          <Card>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+              <div><span style={{ fontFamily: Fn.mono, fontSize: 16, fontWeight: 700, color: T.primary }}>{sel.numero_ot}</span>{" "}<Badge l={sel.estado} c={EC[sel.estado]} /></div>
+              <div style={{ display: "flex", gap: 6 }}>
+                {avail.map((e) => (
+                  <Btn key={e} sm outline={e !== "CANCELADA"} danger={e === "CANCELADA"} onClick={() => cambiarEstado(e)} disabled={transitioning}>
+                    {e === "CANCELADA" ? (<><IconX /> Cancelar</>) : (<><IconPlay /> {e}</>)}
+                  </Btn>
+                ))}
+              </div>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, fontSize: 13, color: T.textSecondary }}>
+              <div>Tipo: <Badge l={TL[sel.tipo_mantenimiento_id]} c={TC[sel.tipo_mantenimiento_id]} s /></div>
+              <div>Prioridad: <Badge l={PL[sel.prioridad_id]} c={PC[sel.prioridad_id]} s /></div>
+              <div>Origen: <span style={{ color: T.text, fontSize: 11 }}>{sel.origen}</span></div>
+              <div>Costo: <span style={{ fontFamily: Fn.mono, color: T.warning }}>S/ {(sel.costo_total || 0).toLocaleString()}</span></div>
+              <div>H. Paro: <span style={{ fontFamily: Fn.mono, color: T.danger }}>{sel.horas_paro_equipo || 0}h</span></div>
+              <div>Fecha: <span style={{ fontSize: 11 }}>{sel.fecha_solicitud ? new Date(sel.fecha_solicitud).toLocaleDateString() : "—"}</span></div>
+            </div>
+            {sel.descripcion_falla && (
+              <div style={{ marginTop: 12, padding: 12, background: T.surfaceAlt, borderRadius: 8, fontSize: 12, color: T.textSecondary, borderLeft: "3px solid " + T.warning }}>
+                <strong style={{ color: T.text }}>Falla:</strong> {sel.descripcion_falla}
+              </div>
+            )}
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+        <h2 style={{ fontSize: 18, fontWeight: 700, color: T.text, margin: 0 }}>Órdenes de Trabajo</h2>
+        <Btn onClick={() => setModal(true)}><IconPlus /> Nueva OT</Btn>
+      </div>
+      <div style={{ marginBottom: 16 }}>
+        <Chips opts={[{ v: "", l: "Todos" }, { v: "ABIERTA", l: "Abierta" }, { v: "EN_PROGRESO", l: "En Progreso" }, { v: "PAUSADA", l: "Pausada" }, { v: "COMPLETADA", l: "Completada" }, { v: "CERRADA", l: "Cerrada" }]} val={fe} onChange={(v) => { setFe(v); setPg(1); }} />
+      </div>
+      <DataTable cols={cols} data={items} ld={ld} onRow={setSel} />
+      <Pager pg={pg} pgs={pages} set={setPg} />
+      {modal && <OTCreateModal onClose={() => setModal(false)} onSaved={() => { setModal(false); go(); }} toast={toast} />}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════
+// MECANICOS + PLANES + ALERTAS
+// ═══════════════════════════════════════════════════
+
+function MecanicoCreateModal({ onClose, onSaved, toast }) {
+  const [f, setF] = useState({
+    codigo_empleado: "", nombres: "", apellidos: "", dni: "",
+    especialidad_principal_id: "", telefono: "", email: "",
+  });
+  const [saving, setSaving] = useState(false);
+  const { data: esp } = useAPI(
+    () => apiFetch("/catalogos/especialidades").catch(() => DEMO_CATS.especialidades), []
+  );
+  const upd = (k, v) => setF((p) => ({ ...p, [k]: v }));
+
+  const save = async () => {
+    if (!f.codigo_empleado || !f.nombres || !f.apellidos || !f.dni || !f.especialidad_principal_id) {
+      toast({ ti: "Error", ms: "Complete todos los campos obligatorios (*)", sv: "danger", ic: "❌" });
+      return;
+    }
+    if (f.dni.length < 8) {
+      toast({ ti: "Error", ms: "DNI debe tener al menos 8 dígitos", sv: "danger", ic: "❌" });
+      return;
+    }
+    setSaving(true);
+    try {
+      await apiFetch("/mecanicos", {
+        method: "POST",
+        body: {
+          ...f,
+          especialidad_principal_id: +f.especialidad_principal_id,
+        },
+      });
+      toast({ ti: "Mecánico creado", ms: f.nombres + " " + f.apellidos, sv: "success", ic: "✅" });
+      onSaved();
+    } catch (e) {
+      toast({ ti: "Error al crear", ms: e.message, sv: "danger", ic: "❌" });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Modal title="Nuevo Mecánico" onClose={onClose}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+        <FormInput label="Código Empleado *" value={f.codigo_empleado} onChange={(e) => upd("codigo_empleado", e.target.value)} placeholder="MEC-004" />
+        <FormInput label="DNI *" value={f.dni} onChange={(e) => upd("dni", e.target.value)} placeholder="12345678" maxLength={8} />
+        <FormInput label="Nombres *" value={f.nombres} onChange={(e) => upd("nombres", e.target.value)} placeholder="Juan Carlos" />
+        <FormInput label="Apellidos *" value={f.apellidos} onChange={(e) => upd("apellidos", e.target.value)} placeholder="Pérez García" />
+        <FormSelect label="Especialidad *" value={f.especialidad_principal_id} onChange={(e) => upd("especialidad_principal_id", e.target.value)} options={esp || []} />
+        <FormInput label="Teléfono" value={f.telefono} onChange={(e) => upd("telefono", e.target.value)} placeholder="987654321" />
+        <FormInput label="Email" value={f.email} onChange={(e) => upd("email", e.target.value)} placeholder="mecanico@empresa.com" span={2} />
+      </div>
+      <FormActions onSave={save} onCancel={onClose} saving={saving} label="Crear Mecánico" />
+    </Modal>
+  );
+}
+
+function MecanicosView({ toast }) {
+  const [pg, setPg] = useState(1);
+  const [fe, setFe] = useState("");
+  const [modal, setModal] = useState(false);
+  const params = { page: pg, size: 25 };
+  if (fe) params.estado = fe;
+  const { data, ld, go } = useAPI(() => apiFetch("/mecanicos?" + new URLSearchParams(params)).catch(() => DEMO_MECANICOS), [pg, fe]);
+  const items = (data && data.items) || [];
+  const pages = (data && data.pages) || 1;
+
+  const cols = [
+    { label: "Código", render: (r) => (<span style={{ fontFamily: Fn.mono, fontWeight: 600, color: T.primary }}>{r.codigo_empleado}</span>) },
+    { label: "Nombre", render: (r) => r.nombres + " " + r.apellidos },
+    { label: "DNI", render: (r) => (<span style={{ fontFamily: Fn.mono, fontSize: 12 }}>{r.dni}</span>) },
+    { label: "Estado", render: (r) => (<Badge l={r.estado} c={EC[r.estado]} />) },
+  ];
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+        <h2 style={{ fontSize: 18, fontWeight: 700, color: T.text, margin: 0 }}>Personal de Mantenimiento</h2>
+        <Btn onClick={() => setModal(true)}><IconPlus /> Nuevo Mecánico</Btn>
+      </div>
+      <div style={{ marginBottom: 16 }}>
+        <Chips opts={[{ v: "", l: "Todos" }, { v: "Disponible", l: "Disponible" }, { v: "Ocupado", l: "Ocupado" }]} val={fe} onChange={(v) => { setFe(v); setPg(1); }} />
+      </div>
+      <DataTable cols={cols} data={items} ld={ld} />
+      <Pager pg={pg} pgs={pages} set={setPg} />
+      {modal && (
+        <MecanicoCreateModal
+          onClose={() => setModal(false)}
+          onSaved={() => { setModal(false); go(); }}
+          toast={toast}
+        />
+      )}
+    </div>
+  );
+}
+
+function IconUpload() { return (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>); }
+function IconDownload() { return (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>); }
+
+const DEMO_PLANES = {
+  items: [
+    { id: 1, codigo: "PM-PREV-001", nombre: "Service 250h Excavadoras", tipo_mantenimiento_id: 1, sistema_id: 1, tipo_disparo: "POR_USO", intervalo_dias: null, intervalo_uso: 250, dias_anticipacion_alerta: 7, duracion_estimada_horas: 4, costo_estimado: 3500, activo: true },
+    { id: 2, codigo: "PM-PREV-002", nombre: "Cambio Aceite 10,000km Pesados", tipo_mantenimiento_id: 1, sistema_id: 1, tipo_disparo: "POR_USO", intervalo_dias: null, intervalo_uso: 10000, dias_anticipacion_alerta: 5, duracion_estimada_horas: 3, costo_estimado: 2800, activo: true },
+    { id: 3, codigo: "PM-PREV-003", nombre: "Inspección Hidráulica Trimestral", tipo_mantenimiento_id: 1, sistema_id: 3, tipo_disparo: "POR_TIEMPO", intervalo_dias: 90, intervalo_uso: null, dias_anticipacion_alerta: 10, duracion_estimada_horas: 6, costo_estimado: 4200, activo: true },
+    { id: 4, codigo: "PM-PREV-004", nombre: "Revisión Eléctrica Semestral", tipo_mantenimiento_id: 1, sistema_id: 4, tipo_disparo: "AMBOS", intervalo_dias: 180, intervalo_uso: 1000, dias_anticipacion_alerta: 14, duracion_estimada_horas: 8, costo_estimado: 5500, activo: true },
+  ],
+  total: 4, pages: 1,
+};
+
+const DEMO_VENCIMIENTOS = [
+  { plan_codigo: "PM-PREV-001", activo_codigo: "FLT-MA-001", tipo_disparo: "POR_USO", severidad: "ADVERTENCIA", dias_restantes: null, uso_restante: 38, unidad_medida: "horas" },
+  { plan_codigo: "PM-PREV-002", activo_codigo: "FLT-VP-002", tipo_disparo: "POR_USO", severidad: "CRITICO", dias_restantes: null, uso_restante: -150, unidad_medida: "km" },
+  { plan_codigo: "PM-PREV-003", activo_codigo: "FLT-MA-002", tipo_disparo: "POR_TIEMPO", severidad: "ADVERTENCIA", dias_restantes: 5, uso_restante: null, unidad_medida: null },
+];
+
+function PlanCreateModal({ onClose, onSaved, toast }) {
+  const [f, setF] = useState({
+    codigo: "", nombre: "", tipo_mantenimiento_id: "1", sistema_id: "",
+    tipo_disparo: "POR_USO", intervalo_dias: "", intervalo_uso: "",
+    dias_anticipacion_alerta: "7", duracion_estimada_horas: "", costo_estimado: "",
+    descripcion_trabajos: "",
+  });
+  const [saving, setSaving] = useState(false);
+  const { data: sist } = useAPI(
+    () => apiFetch("/catalogos/sistemas").catch(() => DEMO_CATS.sistemas), []
+  );
+  const upd = (k, v) => setF((p) => ({ ...p, [k]: v }));
+
+  const save = async () => {
+    if (!f.codigo || !f.nombre || !f.sistema_id) {
+      toast({ ti: "Error", ms: "Complete código, nombre y sistema", sv: "danger", ic: "❌" });
+      return;
+    }
+    if (f.tipo_disparo !== "POR_TIEMPO" && !f.intervalo_uso) {
+      toast({ ti: "Error", ms: "Defina intervalo de uso para este tipo de disparo", sv: "danger", ic: "❌" });
+      return;
+    }
+    if (f.tipo_disparo !== "POR_USO" && !f.intervalo_dias) {
+      toast({ ti: "Error", ms: "Defina intervalo de días para este tipo de disparo", sv: "danger", ic: "❌" });
+      return;
+    }
+    setSaving(true);
+    try {
+      await apiFetch("/planes", {
+        method: "POST",
+        body: {
+          ...f,
+          tipo_mantenimiento_id: +f.tipo_mantenimiento_id,
+          sistema_id: +f.sistema_id,
+          intervalo_dias: f.intervalo_dias ? +f.intervalo_dias : null,
+          intervalo_uso: f.intervalo_uso ? +f.intervalo_uso : null,
+          dias_anticipacion_alerta: +f.dias_anticipacion_alerta,
+          duracion_estimada_horas: f.duracion_estimada_horas ? +f.duracion_estimada_horas : null,
+          costo_estimado: f.costo_estimado ? +f.costo_estimado : null,
+        },
+      });
+      toast({ ti: "Plan creado", ms: f.codigo + " — " + f.nombre, sv: "success", ic: "✅" });
+      onSaved();
+    } catch (e) {
+      toast({ ti: "Error", ms: e.message, sv: "danger", ic: "❌" });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Modal title="Nuevo Plan de Mantenimiento" onClose={onClose} wide>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+        <FormInput label="Código *" value={f.codigo} onChange={(e) => upd("codigo", e.target.value)} placeholder="PM-PREV-005" />
+        <FormSelect label="Sistema *" value={f.sistema_id} onChange={(e) => upd("sistema_id", e.target.value)} options={sist || []} />
+        <FormInput label="Nombre del Plan *" value={f.nombre} onChange={(e) => upd("nombre", e.target.value)} placeholder="Cambio filtros 500h" span={2} />
+        <FormSelect label="Tipo Disparo" value={f.tipo_disparo} onChange={(e) => upd("tipo_disparo", e.target.value)} options={[{ id: "POR_USO", nombre: "Por Uso (horas/km)" }, { id: "POR_TIEMPO", nombre: "Por Tiempo (días)" }, { id: "AMBOS", nombre: "Ambos" }]} />
+        <FormSelect label="Tipo Mantenimiento" value={f.tipo_mantenimiento_id} onChange={(e) => upd("tipo_mantenimiento_id", e.target.value)} options={[{ id: "1", nombre: "Preventivo" }, { id: "3", nombre: "Predictivo" }]} />
+        <FormInput label="Intervalo Uso (h o km)" type="number" value={f.intervalo_uso} onChange={(e) => upd("intervalo_uso", e.target.value)} placeholder="250" />
+        <FormInput label="Intervalo Días" type="number" value={f.intervalo_dias} onChange={(e) => upd("intervalo_dias", e.target.value)} placeholder="90" />
+        <FormInput label="Días Anticipación Alerta" type="number" value={f.dias_anticipacion_alerta} onChange={(e) => upd("dias_anticipacion_alerta", e.target.value)} />
+        <FormInput label="Duración Estimada (h)" type="number" value={f.duracion_estimada_horas} onChange={(e) => upd("duracion_estimada_horas", e.target.value)} />
+        <FormInput label="Costo Estimado (S/)" type="number" value={f.costo_estimado} onChange={(e) => upd("costo_estimado", e.target.value)} />
+        <FormTextarea label="Descripción Trabajos" value={f.descripcion_trabajos} onChange={(e) => upd("descripcion_trabajos", e.target.value)} span={2} />
+      </div>
+      <FormActions onSave={save} onCancel={onClose} saving={saving} label="Crear Plan" />
+    </Modal>
+  );
+}
+
+function PlanImportModal({ onClose, onSaved, toast }) {
+  const [rows, setRows] = useState([]);
+  const [importing, setImporting] = useState(false);
+  const [preview, setPreview] = useState(false);
+  const fileRef = useRef(null);
+
+  const TEMPLATE_HEADER = "codigo,nombre,sistema_id,tipo_disparo,intervalo_dias,intervalo_uso,dias_anticipacion_alerta,duracion_estimada_horas,costo_estimado";
+  const TEMPLATE_EXAMPLE = "PM-PREV-005,Cambio filtros 500h,1,POR_USO,,500,7,4,3500\nPM-PREV-006,Inspección frenos mensual,2,POR_TIEMPO,30,,5,2,1200";
+
+  const downloadTemplate = () => {
+    const csv = TEMPLATE_HEADER + "\n" + TEMPLATE_EXAMPLE + "\n";
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "plantilla_planes_mantenimiento.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const parseCSV = (text) => {
+    const lines = text.trim().split("\n");
+    if (lines.length < 2) return [];
+    const headers = lines[0].split(",").map((h) => h.trim().toLowerCase());
+    const result = [];
+    for (let i = 1; i < lines.length; i++) {
+      const vals = lines[i].split(",");
+      if (vals.length < 3) continue;
+      const obj = {};
+      headers.forEach((h, idx) => {
+        const v = (vals[idx] || "").trim();
+        obj[h] = v;
+      });
+      if (obj.codigo && obj.nombre) {
+        result.push({
+          codigo: obj.codigo,
+          nombre: obj.nombre,
+          tipo_mantenimiento_id: 1,
+          sistema_id: parseInt(obj.sistema_id) || 1,
+          tipo_disparo: obj.tipo_disparo || "POR_USO",
+          intervalo_dias: obj.intervalo_dias ? parseInt(obj.intervalo_dias) : null,
+          intervalo_uso: obj.intervalo_uso ? parseFloat(obj.intervalo_uso) : null,
+          dias_anticipacion_alerta: parseInt(obj.dias_anticipacion_alerta) || 7,
+          duracion_estimada_horas: obj.duracion_estimada_horas ? parseFloat(obj.duracion_estimada_horas) : null,
+          costo_estimado: obj.costo_estimado ? parseFloat(obj.costo_estimado) : null,
+        });
+      }
+    }
+    return result;
+  };
+
+  const handleFile = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const parsed = parseCSV(ev.target.result);
+      if (parsed.length === 0) {
+        toast({ ti: "Error", ms: "No se encontraron registros válidos en el archivo", sv: "danger", ic: "❌" });
+        return;
+      }
+      setRows(parsed);
+      setPreview(true);
+    };
+    reader.readAsText(file);
+  };
+
+  const doImport = async () => {
+    setImporting(true);
+    let ok = 0;
+    let fail = 0;
+    for (const row of rows) {
+      try {
+        await apiFetch("/planes", { method: "POST", body: row });
+        ok++;
+      } catch (e) {
+        fail++;
+      }
+    }
+    toast({
+      ti: "Importación completada",
+      ms: ok + " planes creados" + (fail > 0 ? ", " + fail + " errores" : ""),
+      sv: fail > 0 ? "warning" : "success",
+      ic: fail > 0 ? "⚠️" : "✅",
+    });
+    setImporting(false);
+    if (ok > 0) onSaved();
+  };
+
+  return (
+    <Modal title="Importar Planes de Mantenimiento" onClose={onClose} wide>
+      {!preview ? (
+        <div>
+          <div style={{ padding: 20, border: "2px dashed " + T.border, borderRadius: 12, textAlign: "center", marginBottom: 16 }}>
+            <div style={{ fontSize: 32, marginBottom: 8 }}>📁</div>
+            <div style={{ color: T.text, fontSize: 14, fontWeight: 600, marginBottom: 4 }}>Seleccionar archivo CSV</div>
+            <div style={{ color: T.textMuted, fontSize: 12, marginBottom: 12 }}>Formato: codigo, nombre, sistema_id, tipo_disparo, intervalo_dias, intervalo_uso, ...</div>
+            <input ref={fileRef} type="file" accept=".csv,.txt" onChange={handleFile} style={{ display: "none" }} />
+            <Btn onClick={() => fileRef.current && fileRef.current.click()}><IconUpload /> Seleccionar CSV</Btn>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Btn sm outline onClick={downloadTemplate}><IconDownload /> Descargar Plantilla CSV</Btn>
+            <Btn outline onClick={onClose}>Cancelar</Btn>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <div style={{ fontSize: 13, color: T.accent, fontWeight: 600, marginBottom: 12 }}>
+            ✓ {rows.length} planes detectados — Previsualización:
+          </div>
+          <div style={{ maxHeight: 300, overflowY: "auto", marginBottom: 16 }}>
+            <DataTable
+              cols={[
+                { label: "Código", render: (r) => (<span style={{ fontFamily: Fn.mono, fontWeight: 600, color: T.primary }}>{r.codigo}</span>) },
+                { label: "Nombre", key: "nombre" },
+                { label: "Disparo", render: (r) => (<Badge l={r.tipo_disparo} c={T.info} s />) },
+                { label: "Int. Uso", render: (r) => r.intervalo_uso ? r.intervalo_uso : (<span style={{ color: T.textDim }}>—</span>) },
+                { label: "Int. Días", render: (r) => r.intervalo_dias ? r.intervalo_dias + "d" : (<span style={{ color: T.textDim }}>—</span>) },
+                { label: "Costo Est.", render: (r) => r.costo_estimado ? (<span style={{ fontFamily: Fn.mono, color: T.warning }}>S/ {r.costo_estimado.toLocaleString()}</span>) : (<span style={{ color: T.textDim }}>—</span>) },
+              ]}
+              data={rows}
+            />
+          </div>
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
+            <Btn outline onClick={() => { setPreview(false); setRows([]); }}>← Volver</Btn>
+            <Btn onClick={doImport} disabled={importing}>
+              <IconSave /> {importing ? "Importando..." : "Importar " + rows.length + " Planes"}
+            </Btn>
+          </div>
+        </div>
+      )}
+    </Modal>
+  );
+}
+
+function PlanesView({ toast }) {
+  const [tab, setTab] = useState("planes");
+  const [createModal, setCreateModal] = useState(false);
+  const [importModal, setImportModal] = useState(false);
+
+  const { data: planes, ld: ldPlanes, go: refreshPlanes } = useAPI(
+    () => apiFetch("/planes?size=50").catch(() => DEMO_PLANES), []
+  );
+  const { data: alertas, ld: ldAlerts } = useAPI(
+    () => apiFetch("/planes/engine/vencimientos").catch(() => DEMO_VENCIMIENTOS), []
+  );
+
+  const planesList = (planes && planes.items) || [];
+  const alertasList = alertas || [];
+  const criticos = alertasList.filter((a) => a.severidad === "CRITICO").length;
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+        <h2 style={{ fontSize: 18, fontWeight: 700, color: T.text, margin: 0 }}>Planes de Mantenimiento</h2>
+        <div style={{ display: "flex", gap: 8 }}>
+          <Btn sm outline onClick={() => setImportModal(true)}><IconUpload /> Importar CSV</Btn>
+          <Btn onClick={() => setCreateModal(true)}><IconPlus /> Nuevo Plan</Btn>
+        </div>
+      </div>
+
+      {/* KPI row */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12, marginBottom: 20 }}>
+        <KPICard label="Planes Activos" value={planesList.length} color={T.primary} />
+        <KPICard label="Alertas Activas" value={alertasList.length} color={T.warning} />
+        <KPICard label="Alertas Críticas" value={criticos} color={T.danger} />
+        <KPICard label="Costo Est. Mensual" value={"S/" + Math.round(planesList.reduce((s, p) => s + (p.costo_estimado || 0), 0) / 1000) + "k"} color={T.info} />
+      </div>
+
+      {/* Tab Switcher */}
+      <div style={{ marginBottom: 16 }}>
+        <Chips
+          opts={[{ v: "planes", l: "📋 Planes (" + planesList.length + ")" }, { v: "alertas", l: "⚠️ Vencimientos (" + alertasList.length + ")" }]}
+          val={tab}
+          onChange={setTab}
+        />
+      </div>
+
+      {tab === "planes" ? (
+        <DataTable
+          cols={[
+            { label: "Código", render: (r) => (<span style={{ fontFamily: Fn.mono, fontWeight: 600, color: T.primary }}>{r.codigo}</span>) },
+            { label: "Nombre", key: "nombre" },
+            { label: "Disparo", render: (r) => (<Badge l={r.tipo_disparo} c={T.info} s />) },
+            { label: "Int. Uso", render: (r) => r.intervalo_uso ? (<span style={{ fontFamily: Fn.mono }}>{r.intervalo_uso.toLocaleString()}</span>) : (<span style={{ color: T.textDim }}>—</span>) },
+            { label: "Int. Días", render: (r) => r.intervalo_dias ? (<span style={{ fontFamily: Fn.mono }}>{r.intervalo_dias}d</span>) : (<span style={{ color: T.textDim }}>—</span>) },
+            { label: "Duración", render: (r) => r.duracion_estimada_horas ? r.duracion_estimada_horas + "h" : "—" },
+            { label: "Costo Est.", render: (r) => r.costo_estimado ? (<span style={{ fontFamily: Fn.mono, color: T.warning }}>S/ {r.costo_estimado.toLocaleString()}</span>) : "—" },
+          ]}
+          data={planesList}
+          ld={ldPlanes}
+        />
+      ) : (
+        <div>
+          {alertasList.length === 0 ? (
+            <Card><div style={{ textAlign: "center", padding: 20, color: T.textMuted }}>Sin vencimientos pendientes — Motor preventivo al día ✓</div></Card>
+          ) : (
+            <DataTable
+              cols={[
+                { label: "Plan", render: (r) => (<span style={{ fontFamily: Fn.mono, fontWeight: 600, color: T.primary }}>{r.plan_codigo}</span>) },
+                { label: "Activo", render: (r) => (<span style={{ fontFamily: Fn.mono }}>{r.activo_codigo}</span>) },
+                { label: "Tipo", render: (r) => (<Badge l={r.tipo_disparo} c={T.info} s />) },
+                { label: "Severidad", render: (r) => (<Badge l={r.severidad} c={r.severidad === "CRITICO" ? T.danger : T.warning} />) },
+                { label: "Días Rest.", render: (r) => r.dias_restantes != null ? (<span style={{ fontFamily: Fn.mono, color: r.dias_restantes <= 0 ? T.danger : T.warning }}>{r.dias_restantes}d</span>) : (<span style={{ color: T.textDim }}>N/A</span>) },
+                { label: "Uso Rest.", render: (r) => r.uso_restante != null ? (<span style={{ fontFamily: Fn.mono, color: r.uso_restante <= 0 ? T.danger : T.warning }}>{r.uso_restante} {r.unidad_medida || ""}</span>) : (<span style={{ color: T.textDim }}>N/A</span>) },
+              ]}
+              data={alertasList}
+              ld={ldAlerts}
+            />
+          )}
+        </div>
+      )}
+
+      {createModal && (
+        <PlanCreateModal
+          onClose={() => setCreateModal(false)}
+          onSaved={() => { setCreateModal(false); refreshPlanes(); }}
+          toast={toast}
+        />
+      )}
+      {importModal && (
+        <PlanImportModal
+          onClose={() => setImportModal(false)}
+          onSaved={() => { setImportModal(false); refreshPlanes(); }}
+          toast={toast}
+        />
+      )}
+    </div>
+  );
+}
+
+function AlertasView() {
+  const { data: alertas } = useAPI(() => apiFetch("/planes/engine/vencimientos").catch(() => []), []);
+  const { data: backlog } = useAPI(() => apiFetch("/kpis/backlog").catch(() => DEMO_KPIS.backlog), []);
+  const all = [
+    ...((backlog && backlog.items) || []).filter((i) => i.sla_status !== "EN_TIEMPO").map((i) => ({ ic: "⏰", ms: i.numero_ot + " — SLA " + i.sla_status, sv: i.sla_status === "VENCIDO" ? "danger" : "warning" })),
+    ...(alertas || []).map((a) => ({ ic: a.severidad === "CRITICO" ? "🔴" : "⚠️", ms: a.plan_codigo + " → " + a.activo_codigo, sv: a.severidad === "CRITICO" ? "danger" : "warning" })),
+  ];
+  return (
+    <div>
+      <h2 style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 16 }}>Centro de Alertas</h2>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {all.length === 0 && (<Card><div style={{ textAlign: "center", padding: 20, color: T.textMuted }}>Sin alertas activas</div></Card>)}
+        {all.map((a, i) => (
+          <Card key={i} style={{ borderLeft: "3px solid " + (a.sv === "danger" ? T.danger : T.warning) }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ fontSize: 16 }}>{a.ic}</span>
+              <span style={{ fontSize: 13, color: T.text }}>{a.ms}</span>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════
+// TPM PILAR 1: OEE — EFICIENCIA GLOBAL DE EQUIPOS
+// ═══════════════════════════════════════════════════
+
+const DEMO_OEE = [
+  { activo: "FLT-VP-001", nombre: "Volvo FH 2021", disponibilidad: 92.3, rendimiento: 87.5, calidad: 98.1, oee: 79.2 },
+  { activo: "FLT-VP-002", nombre: "Scania R450", disponibilidad: 68.4, rendimiento: 82.0, calidad: 95.5, oee: 53.6 },
+  { activo: "FLT-MA-001", nombre: "CAT 320GC", disponibilidad: 95.1, rendimiento: 91.2, calidad: 99.0, oee: 85.8 },
+  { activo: "FLT-MA-002", nombre: "Komatsu PC200", disponibilidad: 42.0, rendimiento: 70.0, calidad: 88.0, oee: 25.9 },
+];
+
+const DEMO_OEE_TREND = [
+  { mes: "Sep", oee: 72.5, disponibilidad: 85.2, rendimiento: 88.1, calidad: 96.7 },
+  { mes: "Oct", oee: 74.1, disponibilidad: 86.0, rendimiento: 88.9, calidad: 97.0 },
+  { mes: "Nov", oee: 78.3, disponibilidad: 89.5, rendimiento: 90.2, calidad: 97.1 },
+  { mes: "Dic", oee: 65.8, disponibilidad: 78.4, rendimiento: 86.5, calidad: 97.2 },
+  { mes: "Ene", oee: 80.2, disponibilidad: 90.1, rendimiento: 91.0, calidad: 97.8 },
+  { mes: "Feb", oee: 76.4, disponibilidad: 87.5, rendimiento: 89.5, calidad: 97.5 },
+];
+
+function OEEView() {
+  const { data: oeeData } = useAPI(() => apiFetch("/kpis/oee").catch(() => DEMO_OEE), []);
+  const items = oeeData || DEMO_OEE;
+  const avgOEE = items.length > 0 ? (items.reduce((s, i) => s + i.oee, 0) / items.length).toFixed(1) : 0;
+  const avgDisp = items.length > 0 ? (items.reduce((s, i) => s + i.disponibilidad, 0) / items.length).toFixed(1) : 0;
+  const avgRend = items.length > 0 ? (items.reduce((s, i) => s + i.rendimiento, 0) / items.length).toFixed(1) : 0;
+  const avgCal = items.length > 0 ? (items.reduce((s, i) => s + i.calidad, 0) / items.length).toFixed(1) : 0;
+  const oeeColor = (v) => v >= 85 ? T.accent : v >= 65 ? T.warning : T.danger;
+
+  return (
+    <div>
+      <h2 style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 16 }}>OEE — Eficiencia Global de Equipos</h2>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 20 }}>
+        <KPICard label="OEE Promedio" value={avgOEE} unit="%" color={oeeColor(+avgOEE)} />
+        <KPICard label="Disponibilidad" value={avgDisp} unit="%" color={T.primary} />
+        <KPICard label="Rendimiento" value={avgRend} unit="%" color={T.warning} />
+        <KPICard label="Calidad" value={avgCal} unit="%" color={T.accent} />
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 20 }}>
+        <Card>
+          <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 12 }}>Tendencia OEE (6 meses)</div>
+          <ResponsiveContainer width="100%" height={200}>
+            <LineChart data={DEMO_OEE_TREND}>
+              <CartesianGrid strokeDasharray="3 3" stroke={T.border} />
+              <XAxis dataKey="mes" tick={{ fill: T.textMuted, fontSize: 10 }} />
+              <YAxis domain={[40, 100]} tick={{ fill: T.textMuted, fontSize: 10 }} />
+              <Tooltip contentStyle={{ background: T.card, border: "1px solid " + T.border, borderRadius: 8, fontSize: 12 }} />
+              <Line dataKey="oee" name="OEE" stroke={T.primary} strokeWidth={2.5} dot={{ r: 4, fill: T.primary }} />
+              <Line dataKey="disponibilidad" name="Disp." stroke={T.accent} strokeWidth={1.5} strokeDasharray="4 4" dot={false} />
+              <Line dataKey="rendimiento" name="Rend." stroke={T.warning} strokeWidth={1.5} strokeDasharray="4 4" dot={false} />
+            </LineChart>
+          </ResponsiveContainer>
+        </Card>
+        <Card>
+          <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 12 }}>Clasificación World Class</div>
+          <div style={{ padding: 10 }}>
+            {[{ label: "World Class", min: 85, max: 100, color: T.accent }, { label: "Bueno", min: 75, max: 85, color: T.primary }, { label: "Aceptable", min: 65, max: 75, color: T.warning }, { label: "Bajo", min: 0, max: 65, color: T.danger }].map((tier) => (
+              <div key={tier.label} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                <div style={{ width: 12, height: 12, borderRadius: 3, background: tier.color, flexShrink: 0 }} />
+                <span style={{ fontSize: 12, color: T.textSecondary, width: 80 }}>{tier.label}</span>
+                <div style={{ flex: 1, height: 6, background: T.border, borderRadius: 3, overflow: "hidden" }}>
+                  <div style={{ width: (+avgOEE >= tier.min && +avgOEE < tier.max) ? "100%" : "0%", height: "100%", background: tier.color, borderRadius: 3, transition: "width 0.5s" }} />
+                </div>
+                <span style={{ fontSize: 11, fontFamily: Fn.mono, color: T.textMuted, width: 60, textAlign: "right" }}>{tier.min}–{tier.max}%</span>
+              </div>
+            ))}
+            <div style={{ textAlign: "center", marginTop: 12, padding: 10, background: oeeColor(+avgOEE) + "15", borderRadius: 8, border: "1px solid " + oeeColor(+avgOEE) + "33" }}>
+              <span style={{ fontSize: 12, fontWeight: 600, color: oeeColor(+avgOEE) }}>
+                Tu flota: {avgOEE}% — {+avgOEE >= 85 ? "🏆 World Class" : +avgOEE >= 75 ? "✅ Bueno" : +avgOEE >= 65 ? "⚠️ Aceptable" : "🔴 Requiere mejora"}
+              </span>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      <Card>
+        <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 12 }}>OEE por Equipo</div>
+        <DataTable
+          cols={[
+            { label: "Equipo", render: (r) => (<span style={{ fontFamily: Fn.mono, fontWeight: 600, color: T.primary }}>{r.activo}</span>) },
+            { label: "Nombre", key: "nombre" },
+            { label: "Disp. %", render: (r) => (<span style={{ fontFamily: Fn.mono, color: r.disponibilidad >= 90 ? T.accent : r.disponibilidad >= 75 ? T.warning : T.danger }}>{r.disponibilidad}%</span>) },
+            { label: "Rend. %", render: (r) => (<span style={{ fontFamily: Fn.mono, color: r.rendimiento >= 90 ? T.accent : r.rendimiento >= 75 ? T.warning : T.danger }}>{r.rendimiento}%</span>) },
+            { label: "Calid. %", render: (r) => (<span style={{ fontFamily: Fn.mono, color: r.calidad >= 95 ? T.accent : T.warning }}>{r.calidad}%</span>) },
+            { label: "OEE %", render: (r) => (
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ flex: 1, height: 8, background: T.border, borderRadius: 4, maxWidth: 80, overflow: "hidden" }}>
+                  <div style={{ width: r.oee + "%", height: "100%", background: oeeColor(r.oee), borderRadius: 4 }} />
+                </div>
+                <span style={{ fontFamily: Fn.mono, fontWeight: 700, color: oeeColor(r.oee) }}>{r.oee}%</span>
+              </div>
+            )},
+          ]}
+          data={items}
+        />
+      </Card>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════
+// TPM PILAR 2: MANTENIMIENTO AUTÓNOMO
+// ═══════════════════════════════════════════════════
+
+const DEMO_CHECKLISTS = [
+  { id: 1, equipo: "FLT-VP-001", operador: "José Huamán", fecha: "2025-02-21", turno: "Mañana", nivel_aceite: true, presion_neumaticos: true, luces: true, frenos: true, limpieza: false, observaciones: "Falta limpieza cabina", puntaje: 80 },
+  { id: 2, equipo: "FLT-MA-001", operador: "Pedro Ramos", fecha: "2025-02-21", turno: "Mañana", nivel_aceite: true, presion_neumaticos: true, luces: true, frenos: true, limpieza: true, observaciones: "", puntaje: 100 },
+  { id: 3, equipo: "FLT-VP-002", operador: "Luis Díaz", fecha: "2025-02-20", turno: "Tarde", nivel_aceite: true, presion_neumaticos: false, luces: true, frenos: true, limpieza: true, observaciones: "Presión baja rueda trasera derecha", puntaje: 80 },
+  { id: 4, equipo: "FLT-MA-002", operador: "Carlos Quispe", fecha: "2025-02-20", turno: "Mañana", nivel_aceite: false, presion_neumaticos: true, luces: false, frenos: true, limpieza: false, observaciones: "Aceite bajo, faro izquierdo roto — reportado a supervisor", puntaje: 40 },
+];
+
+function AutonomoView() {
+  const { data: checks } = useAPI(() => apiFetch("/autonomo/checklists").catch(() => DEMO_CHECKLISTS), []);
+  const items = checks || DEMO_CHECKLISTS;
+  const cumpl = items.length > 0 ? (items.reduce((s, c) => s + c.puntaje, 0) / items.length).toFixed(0) : 0;
+  const conObs = items.filter((c) => c.observaciones && c.observaciones.length > 0).length;
+
+  return (
+    <div>
+      <h2 style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 16 }}>Mantenimiento Autónomo</h2>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 20 }}>
+        <KPICard label="Checklists Hoy" value={items.filter((c) => c.fecha === "2025-02-21").length} color={T.primary} />
+        <KPICard label="Cumplimiento" value={cumpl} unit="%" color={+cumpl >= 90 ? T.accent : T.warning} />
+        <KPICard label="Con Observaciones" value={conObs} color={T.warning} />
+        <KPICard label="Puntaje Prom." value={cumpl + "/100"} color={T.info} />
+      </div>
+
+      <Card style={{ marginBottom: 16 }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 12 }}>Checklists Pre-Operacionales</div>
+        <DataTable
+          cols={[
+            { label: "Equipo", render: (r) => (<span style={{ fontFamily: Fn.mono, fontWeight: 600, color: T.primary }}>{r.equipo}</span>) },
+            { label: "Operador", key: "operador" },
+            { label: "Fecha", key: "fecha" },
+            { label: "Turno", render: (r) => (<Badge l={r.turno} c={r.turno === "Mañana" ? T.warning : T.info} s />) },
+            { label: "Aceite", render: (r) => r.nivel_aceite ? (<span style={{ color: T.accent }}>✓</span>) : (<span style={{ color: T.danger }}>✗</span>) },
+            { label: "Neum.", render: (r) => r.presion_neumaticos ? (<span style={{ color: T.accent }}>✓</span>) : (<span style={{ color: T.danger }}>✗</span>) },
+            { label: "Luces", render: (r) => r.luces ? (<span style={{ color: T.accent }}>✓</span>) : (<span style={{ color: T.danger }}>✗</span>) },
+            { label: "Frenos", render: (r) => r.frenos ? (<span style={{ color: T.accent }}>✓</span>) : (<span style={{ color: T.danger }}>✗</span>) },
+            { label: "Puntaje", render: (r) => (
+              <span style={{ fontFamily: Fn.mono, fontWeight: 700, color: r.puntaje >= 90 ? T.accent : r.puntaje >= 70 ? T.warning : T.danger }}>{r.puntaje}%</span>
+            )},
+          ]}
+          data={items}
+        />
+      </Card>
+
+      {conObs > 0 && (
+        <Card>
+          <div style={{ fontSize: 13, fontWeight: 600, color: T.warning, marginBottom: 10 }}>⚠️ Observaciones Reportadas</div>
+          {items.filter((c) => c.observaciones).map((c, i) => (
+            <div key={i} style={{ padding: "8px 12px", marginBottom: 6, background: T.surfaceAlt, borderRadius: 8, borderLeft: "3px solid " + T.warning, fontSize: 12 }}>
+              <span style={{ fontFamily: Fn.mono, color: T.primary, marginRight: 8 }}>{c.equipo}</span>
+              <span style={{ color: T.textSecondary }}>{c.operador} — </span>
+              <span style={{ color: T.text }}>{c.observaciones}</span>
+            </div>
+          ))}
+        </Card>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════
+// TPM PILAR 3: CAPACITACIÓN Y ENTRENAMIENTO
+// ═══════════════════════════════════════════════════
+
+const DEMO_CAPACITACIONES = [
+  { id: 1, tema: "Lubricación Básica de Equipos", tipo: "Técnico", instructor: "Ing. Carlos Mendoza", duracion_h: 4, fecha: "2025-01-15", asistentes: 8, aprobados: 7, estado: "Completado" },
+  { id: 2, tema: "Operación Segura de Excavadoras", tipo: "Seguridad", instructor: "Ing. Ana Torres", duracion_h: 8, fecha: "2025-01-28", asistentes: 12, aprobados: 12, estado: "Completado" },
+  { id: 3, tema: "Diagnóstico Eléctrico Automotriz", tipo: "Técnico", instructor: "Tec. Luis Paredes", duracion_h: 16, fecha: "2025-02-10", asistentes: 5, aprobados: 4, estado: "Completado" },
+  { id: 4, tema: "Mantenimiento Hidráulico Avanzado", tipo: "Técnico", instructor: "Ing. Roberto Sánchez", duracion_h: 12, fecha: "2025-03-05", asistentes: 6, aprobados: 0, estado: "Programado" },
+  { id: 5, tema: "5S en Taller Mecánico", tipo: "TPM", instructor: "Ing. Álvaro Ruiz", duracion_h: 4, fecha: "2025-03-12", asistentes: 15, aprobados: 0, estado: "Programado" },
+];
+
+const DEMO_MATRIZ = [
+  { mecanico: "Carlos Quispe", lubricacion: 3, electrico: 1, hidraulico: 2, motor: 3, soldadura: 1, seguridad: 2 },
+  { mecanico: "Luis Mendoza", lubricacion: 2, electrico: 3, hidraulico: 2, motor: 2, soldadura: 2, seguridad: 3 },
+  { mecanico: "Miguel Sánchez", lubricacion: 2, electrico: 2, hidraulico: 1, motor: 2, soldadura: 3, seguridad: 2 },
+];
+
+function CapacitacionView() {
+  const [tab, setTab] = useState("cursos");
+  const { data: cursos } = useAPI(() => apiFetch("/capacitacion/cursos").catch(() => DEMO_CAPACITACIONES), []);
+  const items = cursos || DEMO_CAPACITACIONES;
+  const completados = items.filter((c) => c.estado === "Completado");
+  const hTotal = completados.reduce((s, c) => s + c.duracion_h, 0);
+  const nivelColor = (n) => n >= 3 ? T.accent : n === 2 ? T.warning : T.danger;
+
+  return (
+    <div>
+      <h2 style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 16 }}>Capacitación y Entrenamiento</h2>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 20 }}>
+        <KPICard label="Cursos Completados" value={completados.length} color={T.accent} />
+        <KPICard label="Horas Capacitación" value={hTotal} unit="h" color={T.primary} />
+        <KPICard label="Programados" value={items.filter((c) => c.estado === "Programado").length} color={T.warning} />
+        <KPICard label="Tasa Aprobación" value={completados.length > 0 ? Math.round(completados.reduce((s, c) => s + c.aprobados, 0) / completados.reduce((s, c) => s + c.asistentes, 0) * 100) : 0} unit="%" color={T.info} />
+      </div>
+
+      <div style={{ marginBottom: 16 }}>
+        <Chips opts={[{ v: "cursos", l: "📚 Cursos" }, { v: "matriz", l: "📊 Matriz de Habilidades" }]} val={tab} onChange={setTab} />
+      </div>
+
+      {tab === "cursos" ? (
+        <DataTable
+          cols={[
+            { label: "Tema", render: (r) => (<span style={{ fontWeight: 600, color: T.text }}>{r.tema}</span>) },
+            { label: "Tipo", render: (r) => (<Badge l={r.tipo} c={r.tipo === "Técnico" ? T.primary : r.tipo === "Seguridad" ? T.danger : T.info} s />) },
+            { label: "Instructor", key: "instructor" },
+            { label: "Duración", render: (r) => r.duracion_h + "h" },
+            { label: "Fecha", key: "fecha" },
+            { label: "Asist.", render: (r) => (<span style={{ fontFamily: Fn.mono }}>{r.aprobados}/{r.asistentes}</span>) },
+            { label: "Estado", render: (r) => (<Badge l={r.estado} c={r.estado === "Completado" ? T.accent : T.warning} />) },
+          ]}
+          data={items}
+        />
+      ) : (
+        <Card>
+          <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 12 }}>Matriz de Habilidades (1=Básico, 2=Intermedio, 3=Avanzado)</div>
+          <DataTable
+            cols={[
+              { label: "Mecánico", render: (r) => (<span style={{ fontWeight: 600, color: T.text }}>{r.mecanico}</span>) },
+              ...["lubricacion", "electrico", "hidraulico", "motor", "soldadura", "seguridad"].map((sk) => ({
+                label: sk.charAt(0).toUpperCase() + sk.slice(1),
+                render: (r) => (
+                  <div style={{ display: "flex", gap: 3 }}>
+                    {[1, 2, 3].map((n) => (
+                      <div key={n} style={{ width: 16, height: 16, borderRadius: 3, background: n <= r[sk] ? nivelColor(r[sk]) : T.border }} />
+                    ))}
+                  </div>
+                ),
+              })),
+            ]}
+            data={DEMO_MATRIZ}
+          />
+        </Card>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════
+// TPM PILAR 4: SEGURIDAD, SALUD Y MEDIO AMBIENTE
+// ═══════════════════════════════════════════════════
+
+const DEMO_SEGURIDAD = {
+  dias_sin_accidente: 47,
+  incidentes_mes: 1,
+  casi_accidentes: 3,
+  charlas_realizadas: 18,
+  incidentes: [
+    { id: 1, fecha: "2025-02-05", tipo: "Casi accidente", area: "Taller", descripcion: "Derrame menor de aceite hidráulico", severidad: "Bajo", estado: "Cerrado", accion_correctiva: "Instalación de bandeja de contención" },
+    { id: 2, fecha: "2025-01-20", tipo: "Incidente", area: "Campo", descripcion: "Golpe en mano al ajustar perno sin guantes", severidad: "Medio", estado: "Cerrado", accion_correctiva: "Reforzar uso de EPP, capacitación específica" },
+    { id: 3, fecha: "2025-02-18", tipo: "Casi accidente", area: "Taller", descripcion: "Herramienta neumática sin seguro activado", severidad: "Alto", estado: "En investigación", accion_correctiva: "Pendiente" },
+  ],
+  epps: [
+    { item: "Cascos", stock: 25, minimo: 10, estado: "OK" },
+    { item: "Guantes Mecánico", stock: 40, minimo: 20, estado: "OK" },
+    { item: "Lentes de Seguridad", stock: 8, minimo: 15, estado: "Bajo" },
+    { item: "Zapatos de Seguridad", stock: 12, minimo: 10, estado: "OK" },
+    { item: "Protector Auditivo", stock: 5, minimo: 15, estado: "Crítico" },
+  ],
+};
+
+function SeguridadView() {
+  const d = DEMO_SEGURIDAD;
+
+  return (
+    <div>
+      <h2 style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 16 }}>Seguridad, Salud y Medio Ambiente</h2>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 20 }}>
+        <Card glow={T.accent} style={{ textAlign: "center" }}>
+          <div style={{ fontSize: 11, color: T.textMuted, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Días sin accidentes</div>
+          <div style={{ fontSize: 42, fontWeight: 700, fontFamily: Fn.mono, color: T.accent }}>{d.dias_sin_accidente}</div>
+          <div style={{ fontSize: 11, color: T.textMuted, marginTop: 4 }}>🛡️ Meta: 90 días</div>
+        </Card>
+        <KPICard label="Incidentes/Mes" value={d.incidentes_mes} color={d.incidentes_mes === 0 ? T.accent : T.warning} />
+        <KPICard label="Casi Accidentes" value={d.casi_accidentes} color={T.info} />
+        <KPICard label="Charlas SHE" value={d.charlas_realizadas} color={T.primary} />
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 20 }}>
+        <Card>
+          <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 12 }}>Registro de Incidentes</div>
+          <DataTable
+            cols={[
+              { label: "Fecha", key: "fecha" },
+              { label: "Tipo", render: (r) => (<Badge l={r.tipo} c={r.tipo === "Incidente" ? T.danger : T.warning} s />) },
+              { label: "Área", key: "area" },
+              { label: "Severidad", render: (r) => (<Badge l={r.severidad} c={r.severidad === "Alto" ? T.danger : r.severidad === "Medio" ? T.warning : T.info} s />) },
+              { label: "Estado", render: (r) => (<Badge l={r.estado} c={r.estado === "Cerrado" ? T.accent : T.warning} />) },
+            ]}
+            data={d.incidentes}
+          />
+        </Card>
+        <Card>
+          <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 12 }}>Control de EPPs</div>
+          {d.epps.map((e, i) => (
+            <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "6px 0", borderBottom: "1px solid " + T.border + "22" }}>
+              <span style={{ fontSize: 12, color: T.text }}>{e.item}</span>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontFamily: Fn.mono, fontSize: 12, color: e.stock <= e.minimo ? T.danger : T.text }}>{e.stock}</span>
+                <Badge l={e.estado} c={e.estado === "OK" ? T.accent : e.estado === "Bajo" ? T.warning : T.danger} s />
+              </div>
+            </div>
+          ))}
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════
+// TPM PILAR 5: 5S Y AUDITORÍAS
+// ═══════════════════════════════════════════════════
+
+const DEMO_AUDITORIAS = [
+  { id: 1, area: "Taller Mecánico", fecha: "2025-02-15", auditor: "Ing. Álvaro Ruiz", seiri: 85, seiton: 78, seiso: 90, seiketsu: 72, shitsuke: 68, total: 78.6, estado: "Aprobado" },
+  { id: 2, area: "Almacén Repuestos", fecha: "2025-02-15", auditor: "Ing. Ana Torres", seiri: 92, seiton: 88, seiso: 95, seiketsu: 85, shitsuke: 80, total: 88.0, estado: "Aprobado" },
+  { id: 3, area: "Zona de Lavado", fecha: "2025-02-15", auditor: "Ing. Álvaro Ruiz", seiri: 60, seiton: 55, seiso: 70, seiketsu: 50, shitsuke: 45, total: 56.0, estado: "Observado" },
+  { id: 4, area: "Oficina Mant.", fecha: "2025-02-15", auditor: "Ing. Ana Torres", seiri: 88, seiton: 92, seiso: 85, seiketsu: 90, shitsuke: 88, total: 88.6, estado: "Aprobado" },
+];
+
+function CincoSView() {
+  const { data: audits } = useAPI(() => apiFetch("/5s/auditorias").catch(() => DEMO_AUDITORIAS), []);
+  const items = audits || DEMO_AUDITORIAS;
+  const prom = items.length > 0 ? (items.reduce((s, a) => s + a.total, 0) / items.length).toFixed(1) : 0;
+  const aprobadas = items.filter((a) => a.estado === "Aprobado").length;
+  const sColor = (v) => v >= 85 ? T.accent : v >= 70 ? T.warning : T.danger;
+
+  return (
+    <div>
+      <h2 style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 16 }}>5S y Auditorías TPM</h2>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 20 }}>
+        <KPICard label="Puntaje Promedio" value={prom} unit="/100" color={sColor(+prom)} />
+        <KPICard label="Auditorías" value={items.length} color={T.primary} />
+        <KPICard label="Aprobadas" value={aprobadas} color={T.accent} />
+        <KPICard label="Observadas" value={items.length - aprobadas} color={T.warning} />
+      </div>
+
+      <Card style={{ marginBottom: 16 }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 12 }}>Resultados por Área</div>
+        <DataTable
+          cols={[
+            { label: "Área", render: (r) => (<span style={{ fontWeight: 600, color: T.text }}>{r.area}</span>) },
+            { label: "Fecha", key: "fecha" },
+            { label: "Seiri", render: (r) => (<span style={{ fontFamily: Fn.mono, color: sColor(r.seiri) }}>{r.seiri}</span>) },
+            { label: "Seiton", render: (r) => (<span style={{ fontFamily: Fn.mono, color: sColor(r.seiton) }}>{r.seiton}</span>) },
+            { label: "Seiso", render: (r) => (<span style={{ fontFamily: Fn.mono, color: sColor(r.seiso) }}>{r.seiso}</span>) },
+            { label: "Seiketsu", render: (r) => (<span style={{ fontFamily: Fn.mono, color: sColor(r.seiketsu) }}>{r.seiketsu}</span>) },
+            { label: "Shitsuke", render: (r) => (<span style={{ fontFamily: Fn.mono, color: sColor(r.shitsuke) }}>{r.shitsuke}</span>) },
+            { label: "Total", render: (r) => (
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <div style={{ flex: 1, height: 8, background: T.border, borderRadius: 4, maxWidth: 60, overflow: "hidden" }}>
+                  <div style={{ width: r.total + "%", height: "100%", background: sColor(r.total), borderRadius: 4 }} />
+                </div>
+                <span style={{ fontFamily: Fn.mono, fontWeight: 700, color: sColor(r.total) }}>{r.total}</span>
+              </div>
+            )},
+            { label: "Estado", render: (r) => (<Badge l={r.estado} c={r.estado === "Aprobado" ? T.accent : T.warning} />) },
+          ]}
+          data={items}
+        />
+      </Card>
+
+      <Card>
+        <div style={{ fontSize: 13, fontWeight: 600, color: T.textSecondary, marginBottom: 12 }}>Radar 5S (Promedio General)</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12, textAlign: "center", padding: "12px 0" }}>
+          {[{ s: "整理", n: "Seiri", d: "Clasificar" }, { s: "整頓", n: "Seiton", d: "Ordenar" }, { s: "清掃", n: "Seiso", d: "Limpiar" }, { s: "清潔", n: "Seiketsu", d: "Estandarizar" }, { s: "躾", n: "Shitsuke", d: "Disciplina" }].map((item, idx) => {
+            const key = item.n.toLowerCase();
+            const avg = items.length > 0 ? Math.round(items.reduce((s, a) => s + a[key], 0) / items.length) : 0;
+            return (
+              <div key={idx}>
+                <div style={{ fontSize: 20, marginBottom: 4 }}>{item.s}</div>
+                <div style={{ fontSize: 24, fontWeight: 700, fontFamily: Fn.mono, color: sColor(avg) }}>{avg}</div>
+                <div style={{ fontSize: 11, fontWeight: 600, color: T.textSecondary }}>{item.n}</div>
+                <div style={{ fontSize: 10, color: T.textMuted }}>{item.d}</div>
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════
+// APP SHELL
+// ═══════════════════════════════════════════════════
+
+function IconGauge() { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>); }
+function IconClipboard() { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>); }
+function IconBook() { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>); }
+function IconShield() { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>); }
+function IconStar() { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>); }
+
+const NAV = [
+  { id: "dashboard", label: "Dashboard", icon: IconDash },
+  { id: "activos", label: "Activos", icon: IconTruck },
+  { id: "ots", label: "Órdenes de Trabajo", icon: IconWrench },
+  { id: "planes", label: "Planes Mant.", icon: IconCalendar },
+  { id: "oee", label: "OEE", icon: IconGauge },
+  { id: "autonomo", label: "Mant. Autónomo", icon: IconClipboard },
+  { id: "capacitacion", label: "Capacitación", icon: IconBook },
+  { id: "seguridad", label: "Seguridad SHE", icon: IconShield },
+  { id: "cincos", label: "5S / Auditorías", icon: IconStar },
+  { id: "mecanicos", label: "Mecánicos", icon: IconUsers },
+  { id: "alertas", label: "Alertas", icon: IconBell },
+];
+
+const VIEWS = {
+  dashboard: DashboardView,
+  activos: ActivosView,
+  ots: OTsView,
+  planes: PlanesView,
+  oee: OEEView,
+  autonomo: AutonomoView,
+  capacitacion: CapacitacionView,
+  seguridad: SeguridadView,
+  cincos: CincoSView,
+  mecanicos: MecanicosView,
+  alertas: AlertasView,
+};
+
+function App() {
+  const [view, setView] = useState("dashboard");
+  const [side, setSide] = useState(true);
+  const [toasts, setToasts] = useState([]);
+
+  const toast = useCallback((t) => {
+    const id = Date.now() + Math.random();
+    setToasts((p) => [...p, { id, ...t }]);
+    setTimeout(() => setToasts((p) => p.filter((x) => x.id !== id)), 6000);
+  }, []);
+
+  const ws = useWS((ev) => {
+    if (ev.event === "ot_creada") toast({ ti: "Nueva OT", ms: (ev.data && ev.data.numero_ot) + " — " + (ev.data && ev.data.activo), ic: "📋", sv: "info" });
+    if (ev.event === "ot_estado_cambio") toast({ ti: "Estado OT", ms: (ev.data && ev.data.numero_ot) + " → " + (ev.data && ev.data.estado_nuevo), ic: "🔄", sv: "info" });
+    if (ev.event === "alerta_preventivo") toast({ ti: "Alerta", ms: (ev.data && ev.data.plan) + " → " + (ev.data && ev.data.activo), ic: "⚠️", sv: "warning" });
+  });
+
+  const ViewComponent = VIEWS[view] || DashboardView;
+
+  return (
+    <div style={{ display: "flex", height: "100vh", fontFamily: Fn.body, background: T.bg, color: T.text, overflow: "hidden" }}>
+      <Toasts items={toasts} rm={(id) => setToasts((p) => p.filter((t) => t.id !== id))} />
+
+      <aside style={{ width: side ? 240 : 60, background: T.surface, borderRight: "1px solid " + T.border, transition: "width 0.2s", overflow: "hidden", flexShrink: 0, display: "flex", flexDirection: "column" }}>
+        <div style={{ padding: side ? "16px 20px" : "16px 14px", borderBottom: "1px solid " + T.border, display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }} onClick={() => setSide(!side)}>
+          <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg, " + T.primary + ", " + T.accent + ")", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: T.white, flexShrink: 0, fontFamily: Fn.mono }}>TPM</div>
+          {side && (
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: T.text }}>MTP360</div>
+              <div style={{ fontSize: 10, color: T.textMuted }}>MTP360 · TPM</div>
+            </div>
+          )}
+        </div>
+        <nav style={{ flex: 1, padding: "12px 8px" }}>
+          {NAV.map((n) => {
+            const active = view === n.id;
+            const NavIcon = n.icon;
+            return (
+              <div
+                key={n.id}
+                onClick={() => setView(n.id)}
+                style={{
+                  display: "flex", alignItems: "center", gap: 10,
+                  padding: side ? "10px 12px" : "10px 14px", borderRadius: 8, marginBottom: 2,
+                  cursor: "pointer", background: active ? T.primary + "15" : "transparent",
+                  color: active ? T.primary : T.textSecondary, transition: "all 0.15s",
+                  justifyContent: side ? "flex-start" : "center",
+                }}
+                onMouseEnter={(e) => { if (!active) e.currentTarget.style.background = T.cardHover; }}
+                onMouseLeave={(e) => { if (!active) e.currentTarget.style.background = "transparent"; }}
+              >
+                <NavIcon />
+                {side && <span style={{ fontSize: 13, fontWeight: active ? 600 : 400 }}>{n.label}</span>}
+                {n.id === "alertas" && side && (
+                  <div style={{ marginLeft: "auto", width: 18, height: 18, borderRadius: 9, background: T.danger, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: T.white }}>!</div>
+                )}
+              </div>
+            );
+          })}
+        </nav>
+        {side && <div style={{ padding: "12px 16px", borderTop: "1px solid " + T.border, fontSize: 10, color: T.textDim }}>INNOVAQ SOLUTIONS SAC<br />MTP360 v3.0</div>}
+      </aside>
+
+      <main style={{ flex: 1, overflow: "auto", background: T.bg }}>
+        <header style={{ padding: "12px 24px", borderBottom: "1px solid " + T.border, display: "flex", justifyContent: "space-between", alignItems: "center", background: T.surface }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <button onClick={() => setSide(!side)} style={{ background: "none", border: "none", color: T.textSecondary, cursor: "pointer", padding: 4 }}><IconMenu /></button>
+            <span style={{ fontSize: 14, color: T.textSecondary }}>{(NAV.find((n) => n.id === view) || {}).label || "Dashboard"}</span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <IconWifi />
+            <span style={{ fontSize: 10, fontFamily: Fn.mono, color: ws ? T.accent : T.danger }}>{ws ? "● Conectado" : "○ Desconectado"}</span>
+          </div>
+        </header>
+        <div style={{ padding: 24 }}>
+          <ViewComponent ws={ws} toast={toast} />
+        </div>
+      </main>
+    </div>
+  );
+}
+
+// Mount
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(App));
+    </script>
+</body>
+</html>
