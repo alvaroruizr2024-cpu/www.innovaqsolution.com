@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SumaERP - Portal Contador Campos</title>
+<meta name="description" content="SumaERP Portal Contador - Todos los modulos con dashboards limpios">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='url(%23g)'/><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%2332D74B'/><stop offset='100%25' stop-color='%230A84FF'/></linearGradient></defs><text x='50' y='68' font-size='50' font-weight='800' fill='white' text-anchor='middle' font-family='system-ui'>\u03A3</text></svg>">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/prop-types@15/prop-types.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+<script src="https://unpkg.com/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body,#root{width:100%;height:100%}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:#0a0e17}
+::-webkit-scrollbar-thumb{background:#1a2540;border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:#2a3550}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useCallback,useMemo,useRef}=React;
+const {BarChart,Bar,XAxis,YAxis,Tooltip,ResponsiveContainer,Cell,PieChart,Pie,LineChart,Line,CartesianGrid,Legend}=Recharts;
+
+/* ===== SUPABASE CONFIG ===== */
+const SUPA_URL="https://uinoropxppiuqgzktqjr.supabase.co";
+const SUPA_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpbm9yb3B4cHBpdXFnemt0cWpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1NjU0MTUsImV4cCI6MjA4NTE0MTQxNX0.V9sTNqTC_aldhwgE6RF66BEXfRvTF6jDLqm1WvbInTo";
+let sb=null;
+function getSB(){if(!sb&&window.supabase){sb=window.supabase.createClient(SUPA_URL,SUPA_KEY)}return sb}
+
+/* ===== PALETTE ===== */
+const P={bg:"#05070c",c1:"#0a0e17",c2:"#0f1520",c3:"#141c2c",bd:"#1a2540",hv:"#111b30",tx:"#d6e0f0",s1:"#8095b3",s2:"#4a6080",blue:"#0A84FF",grn:"#32D74B",org:"#FF9F0A",red:"#FF453A",pur:"#BF5AF2",cyan:"#64D2FF",yel:"#FFD60A",tl:"#2AC7B8",pk:"#FF375F",lime:"#A8E06C"};
+const nn=v=>(typeof v==="number"?v:parseFloat(v)||0);
+const $=(v,c="PEN")=>{const p=c==="USD"?"US$ ":c==="EUR"?"\u20ac ":"S/ ";return p+Math.abs(nn(v)).toLocaleString("es-PE",{minimumFractionDigits:2,maximumFractionDigits:2})};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const today=()=>new Date().toISOString().slice(0,10);
+
+/* ===== MODULES CONFIG ===== */
+const MODULES=[
+{id:"dashboard",label:"Dashboard",icon:"\u2302"},
+{id:"ventas",label:"Ventas SIRE",icon:"\ud83d\udcc4"},
+{id:"compras",label:"Compras SIRE",icon:"\ud83d\udce6"},
+{id:"almacen",label:"Almacen MRPII",icon:"\ud83c\udfed"},
+{id:"comex",label:"Comercio Ext.",icon:"\ud83c\udf0d"},
+{id:"costos",label:"Costos Prod.",icon:"\ud83d\udcca"},
+{id:"finanzas",label:"Finanzas",icon:"\ud83c\udfe6"},
+{id:"contabilidad",label:"Contabilidad",icon:"\ud83d\udcd2"},
+{id:"rrhh",label:"RRHH",icon:"\ud83d\udc65"},
+{id:"planes",label:"Planes",icon:"\ud83c\udfaf"},
+{id:"basedatos",label:"Base Datos",icon:"\ud83d\uddc4"}
+];
+
+/* ===== EMPRESAS ===== */
+const EMPRESAS=[
+{ruc:"20612044326",razon:"SERVICIOS W&G SAC",tipo:"SAC",sector:"Servicios",estado:"Activo",plan:"PRO",color:"#0A84FF"},
+{ruc:"20604890471",razon:"TRANSPORTES YURIKO SAC",tipo:"SAC",sector:"Transporte",estado:"Activo",plan:"BASICO",color:"#32D74B"},
+{ruc:"20604557829",razon:"IVAO CONSTRUCTORA SAC",tipo:"SAC",sector:"Construccion",estado:"Activo",plan:"PRO",color:"#FF9F0A"},
+{ruc:"20606826436",razon:"E&J RAMOS CONSTRUCTORA SAC",tipo:"SAC",sector:"Construccion",estado:"Activo",plan:"BASICO",color:"#BF5AF2"},
+{ruc:"20605878483",razon:"GRUPO EDUCATIVO SAN GABRIEL",tipo:"Asociacion",sector:"Educacion",estado:"Activo",plan:"PRO",color:"#64D2FF"},
+{ruc:"20602317596",razon:"INVERSIONES TURISTICAS SC 77",tipo:"SAC",sector:"Turismo",estado:"Activo",plan:"BASICO",color:"#FFD60A"},
+{ruc:"20603968981",razon:"COOPAC DANPER",tipo:"Cooperativa",sector:"Financiero",estado:"Activo",plan:"EMPRESA",color:"#2AC7B8"},
+{ruc:"10712856241",razon:"ASMAD RODRIGUEZ VERONICA",tipo:"PN",sector:"Independiente",estado:"Activo",plan:"BASICO",color:"#FF375F"},
+{ruc:"20607184705",razon:"INVERSIONES AGRONORTE JPLASENCIA EIRL",tipo:"EIRL",sector:"Agroindustria",estado:"Activo",plan:"PRO",color:"#A8E06C"},
+{ruc:"20540013129",razon:"BLACK STAR SAC",tipo:"SAC",sector:"Comercio",estado:"Activo",plan:"BASICO",color:"#0A84FF"},
+{ruc:"20605768564",razon:"TRACKING LOGISTIC EIRL",tipo:"EIRL",sector:"Logistica",estado:"Activo",plan:"PRO",color:"#BF5AF2"}
+];
+
+/* ===== SHARED COMPONENTS ===== */
+const Btn=({children,p,s,d,full,dis,onClick,style:st,...props})=>{
+const base={display:"inline-flex",alignItems:"center",gap:4,padding:s?"3px 7px":"6px 12px",fontSize:s?9:11,fontWeight:600,borderRadius:6,cursor:dis?"not-allowed":"pointer",border:"1px solid "+P.bd,background:p?P.blue:d?P.red+"20":P.c2,color:p?"#fff":d?P.red:P.tx,opacity:dis?.4:1,width:full?"100%":undefined,justifyContent:full?"center":undefined,fontFamily:"inherit",transition:"all .15s",...st};
+return <button style={base} onClick={dis?undefined:onClick} disabled={dis} {...props}>{children}</button>};
+
+const Inp=({l,v,onChange,ph,type="text",w})=>(
+<div style={{marginBottom:8,width:w||"100%"}}>
+{l&&<label style={{display:"block",fontSize:9,fontWeight:600,color:P.s2,marginBottom:3,textTransform:"uppercase",letterSpacing:.5}}>{l}</label>}
+<input type={type} value={v} onChange={e=>onChange(e.target.value)} placeholder={ph} style={{width:"100%",background:P.c1,border:"1px solid "+P.bd,borderRadius:6,padding:"8px 10px",color:P.tx,fontSize:11,outline:"none",fontFamily:"inherit"}}/>
+</div>);
+
+const Sel=({l,v,onChange,opts,w})=>(
+<div style={{marginBottom:8,width:w||"100%"}}>
+{l&&<label style={{display:"block",fontSize:9,fontWeight:600,color:P.s2,marginBottom:3,textTransform:"uppercase",letterSpacing:.5}}>{l}</label>}
+<select value={v} onChange={e=>onChange(e.target.value)} style={{width:"100%",background:P.c1,border:"1px solid "+P.bd,borderRadius:6,padding:"8px 10px",color:P.tx,fontSize:11,outline:"none",fontFamily:"inherit"}}>
+{opts.map(o=><option key={o.v||o} value={o.v||o}>{o.l||o}</option>)}
+</select></div>);
+
+const Badge=({s,c})=>{const cm={Emitida:P.blue,Pagada:P.grn,Pendiente:P.org,Pagado:P.grn,Anulada:P.red,"En Proceso":P.cyan,Procesado:P.grn,"Aprobado IA":P.grn,"Revision Manual":P.org,Activo:P.grn,Inactivo:P.red};const cc=c||cm[s]||P.s2;return<span style={{fontSize:8,padding:"1px 6px",borderRadius:4,background:cc+"15",color:cc,fontWeight:600,border:"1px solid "+cc+"20"}}>{s}</span>};
+
+const Toast=({msg,type,onDone})=>{useEffect(()=>{const t=setTimeout(onDone,3000);return()=>clearTimeout(t)},[]);const c=type==="err"?P.red:type==="warn"?P.org:P.grn;return<div style={{position:"fixed",bottom:20,right:20,background:P.c1,border:"1px solid "+c+"40",borderRadius:10,padding:"10px 16px",fontSize:11,color:P.tx,zIndex:99999,boxShadow:"0 8px 32px "+c+"20",display:"flex",alignItems:"center",gap:8,maxWidth:360}}><span style={{width:6,height:6,borderRadius:3,background:c}}/>{msg}</div>};
+
+const Modal=({open,onClose,title,children,wide})=>{if(!open)return null;return<div onClick={onClose} style={{position:"fixed",inset:0,background:"rgba(0,0,0,.7)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:9999}}><div onClick={e=>e.stopPropagation()} style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:12,padding:20,width:wide?700:440,maxWidth:"94vw",maxHeight:"85vh",overflow:"auto",scrollbarWidth:"thin"}}>{title&&<div style={{fontSize:14,fontWeight:700,marginBottom:12,display:"flex",justifyContent:"space-between"}}><span>{title}</span><button onClick={onClose} style={{background:"none",border:"none",color:P.s2,cursor:"pointer",fontSize:16}}>\u00d7</button></div>}{children}</div></div>};
+
+const KPI=({label,value,color,sub})=>(
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:"14px 16px",animation:"fadeIn .3s ease"}}>
+<div style={{fontSize:9,color:P.s2,marginBottom:4,fontWeight:600,textTransform:"uppercase"}}>{label}</div>
+<div style={{fontSize:20,fontWeight:800,color:color||P.tx}}>{value}</div>
+{sub&&<div style={{fontSize:9,color:P.s1,marginTop:2}}>{sub}</div>}
+</div>);
+
+/* ===== EXPORT XLS ===== */
+const exportXLS=(data,filename)=>{
+if(!data||!data.length){alert("No hay datos para exportar");return}
+const ws=XLSX.utils.json_to_sheet(data);
+const wb=XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(wb,ws,"Datos");
+XLSX.writeFile(wb,filename+".xlsx");
+};
+
+/* ===== TABLE COMPONENT ===== */
+const DataTable=({data,cols,empty,onExport,title})=>{
+const cH={padding:"6px 8px",color:P.s2,fontSize:8,fontWeight:700,borderBottom:"1px solid "+P.bd,textAlign:"left",textTransform:"uppercase",whiteSpace:"nowrap",background:P.c2};
+const cS={padding:"5px 8px",fontSize:10,borderBottom:"1px solid "+P.bd+"08"};
+return(
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:8,overflow:"hidden"}}>
+{(title||onExport)&&<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 10px",borderBottom:"1px solid "+P.bd}}>
+<span style={{fontSize:11,fontWeight:700}}>{title||""}</span>
+{onExport&&<Btn s onClick={onExport} style={{background:P.grn+"15",color:P.grn,border:"1px solid "+P.grn+"30"}}>\u2B07 Exportar XLS</Btn>}
+</div>}
+<div style={{overflowX:"auto"}}>
+<table style={{width:"100%",borderCollapse:"collapse"}}>
+<thead><tr>{cols.map(c=><th key={c.k} style={{...cH,textAlign:c.r?"right":"left"}}>{c.l}</th>)}</tr></thead>
+<tbody>
+{data.length===0?<tr><td colSpan={cols.length} style={{padding:30,textAlign:"center",color:P.s2,fontSize:11}}>{empty||"Sin datos"}</td></tr>
+:data.map((row,i)=>(
+<tr key={row.id||i} style={{background:i%2===0?"transparent":P.c2+"30"}}>
+{cols.map(c=><td key={c.k} style={{...cS,textAlign:c.r?"right":"left",fontFamily:c.mono?"monospace":"inherit",color:c.color||P.tx,fontWeight:c.b?700:400}}>{c.fmt?c.fmt(row[c.k]):c.render?c.render(row):row[c.k]}</td>)}
+</tr>))}
+</tbody></table></div></div>)};
+
+/* ===== MINI CHART ===== */
+const MiniChart=({data,color,h=60})=>(
+<ResponsiveContainer width="100%" height={h}>
+<LineChart data={data}><Line type="monotone" dataKey="v" stroke={color||P.blue} strokeWidth={2} dot={false}/></LineChart>
+</ResponsiveContainer>);
+
+/* ===== MODULE: DASHBOARD ===== */
+const ModDashboard=({D,empresas})=>{
+const totalVentas=D.facturas.reduce((a,f)=>a+nn(f.total),0);
+const totalCompras=D.compras.reduce((a,c)=>a+nn(c.total),0);
+const igvDebito=D.facturas.reduce((a,f)=>a+nn(f.igv),0);
+const igvCredito=D.compras.reduce((a,c)=>a+nn(c.igv),0);
+const chartData=[{m:"Ene",v:0},{m:"Feb",v:0},{m:"Mar",v:0},{m:"Abr",v:0},{m:"May",v:0},{m:"Jun",v:0}];
+return(<div>
+<div style={{fontSize:16,fontWeight:800,marginBottom:4}}>Dashboard General</div>
+<div style={{fontSize:10,color:P.s2,marginBottom:16}}>Resumen de operaciones \u2014 Nuevo Periodo Contable</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,marginBottom:16}}>
+<KPI label="Total Ventas" value={$(totalVentas)} color={P.grn} sub={D.facturas.length+" documentos"}/>
+<KPI label="Total Compras" value={$(totalCompras)} color={P.org} sub={D.compras.length+" documentos"}/>
+<KPI label="IGV D\u00e9bito" value={$(igvDebito)} color={P.red}/>
+<KPI label="IGV Cr\u00e9dito" value={$(igvCredito)} color={P.blue}/>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10,marginBottom:16}}>
+<KPI label="Empleados" value={D.empleados.length} color={P.cyan}/>
+<KPI label="Productos" value={D.productos.length} color={P.pur}/>
+<KPI label="Empresas Cliente" value={empresas.length} color={P.tl}/>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:14}}>
+<div style={{fontSize:11,fontWeight:700,marginBottom:8}}>Ventas vs Compras (Mensual)</div>
+<ResponsiveContainer width="100%" height={180}>
+<BarChart data={chartData}><XAxis dataKey="m" tick={{fill:P.s2,fontSize:9}}/><YAxis tick={{fill:P.s2,fontSize:9}}/><Tooltip/><Bar dataKey="v" fill={P.blue} radius={[4,4,0,0]}/></BarChart>
+</ResponsiveContainer>
+</div>
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:14}}>
+<div style={{fontSize:11,fontWeight:700,marginBottom:8}}>Estado de Documentos</div>
+<div style={{display:"flex",flexDirection:"column",gap:8,padding:"20px 0"}}>
+{[{l:"Facturas Emitidas",v:D.facturas.filter(f=>f.estado==="Emitida").length,c:P.blue},{l:"Facturas Pagadas",v:D.facturas.filter(f=>f.estado==="Pagada").length,c:P.grn},{l:"Compras Pendientes",v:D.compras.filter(c=>c.estado==="Pendiente").length,c:P.org},{l:"Compras Pagadas",v:D.compras.filter(c=>c.estado==="Pagado").length,c:P.grn}].map((s,i)=>(
+<div key={i} style={{display:"flex",alignItems:"center",gap:8}}>
+<div style={{width:8,height:8,borderRadius:4,background:s.c}}/>
+<span style={{fontSize:10,color:P.s1,flex:1}}>{s.l}</span>
+<span style={{fontSize:12,fontWeight:700,color:s.c}}>{s.v}</span>
+</div>))}
+</div></div></div>
+</div>)};
+
+/* ===== MODULE: VENTAS SIRE ===== */
+const ModVentas=({D,setD,notify})=>{
+const[showAdd,setShowAdd]=useState(false);
+const[f,setF]=useState({serie:"FE01",numero:"",fecha:today(),tipo:"Factura",cliente:"",ruc:"",moneda:"PEN",subtotal:"",igv:"",total:"",estado:"Emitida",tc:"1.000"});
+const add=()=>{const sub=nn(f.subtotal);const igv=nn(f.igv)||+(sub*.18).toFixed(2);const tot=nn(f.total)||+(sub+igv).toFixed(2);
+const nf={...f,id:uid(),subtotal:sub,igv,total:tot};
+setD(p=>({...p,facturas:[nf,...p.facturas]}));setShowAdd(false);notify("Factura registrada");
+setF({serie:"FE01",numero:"",fecha:today(),tipo:"Factura",cliente:"",ruc:"",moneda:"PEN",subtotal:"",igv:"",total:"",estado:"Emitida",tc:"1.000"})};
+const del=(id)=>{setD(p=>({...p,facturas:p.facturas.filter(x=>x.id!==id)}));notify("Factura eliminada","warn")};
+const cols=[
+{k:"serie",l:"Serie",mono:1,color:"#5B9CF6",b:1},{k:"numero",l:"Num",mono:1},{k:"fecha",l:"Fecha"},{k:"tipo",l:"Tipo"},
+{k:"cliente",l:"Cliente"},{k:"ruc",l:"RUC",mono:1},{k:"moneda",l:"Mon",color:P.yel},
+{k:"subtotal",l:"Base",r:1,fmt:v=>$(v)},{k:"igv",l:"IGV",r:1,fmt:v=>$(v)},{k:"total",l:"Total",r:1,b:1,fmt:v=>$(v)},
+{k:"estado",l:"Estado",render:r=><Badge s={r.estado}/>},
+{k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>\u2716</Btn>}];
+return(<div>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+<div><div style={{fontSize:16,fontWeight:800}}>Ventas SIRE</div><div style={{fontSize:10,color:P.s2}}>Registro de Ventas e Ingresos</div></div>
+<div style={{display:"flex",gap:6}}><Btn s onClick={()=>setShowAdd(true)} style={{background:P.blue+"15",color:P.blue}}>+ Nueva Factura</Btn></div>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<KPI label="Total Ventas" value={$(D.facturas.reduce((a,f)=>a+nn(f.total),0))} color={P.grn}/>
+<KPI label="Documentos" value={D.facturas.length} color={P.blue}/>
+<KPI label="Pagadas" value={D.facturas.filter(f=>f.estado==="Pagada").length} color={P.grn}/>
+<KPI label="IGV D\u00e9bito" value={$(D.facturas.reduce((a,f)=>a+nn(f.igv),0))} color={P.red}/>
+</div>
+<DataTable data={D.facturas} cols={cols} empty="Sin facturas registradas. Haz clic en + Nueva Factura." title="Registro de Ventas" onExport={()=>exportXLS(D.facturas,"Ventas_SIRE")}/>
+<Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nueva Factura de Venta">
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<Inp l="Serie" v={f.serie} onChange={v=>setF({...f,serie:v})}/>
+<Inp l="N\u00famero" v={f.numero} onChange={v=>setF({...f,numero:v})} ph="000001"/>
+<Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
+<Sel l="Tipo" v={f.tipo} onChange={v=>setF({...f,tipo:v})} opts={["Factura","Boleta","Nota Cr\u00e9dito","Nota D\u00e9bito"]}/>
+<Inp l="Cliente" v={f.cliente} onChange={v=>setF({...f,cliente:v})} ph="Raz\u00f3n social"/>
+<Inp l="RUC/DNI" v={f.ruc} onChange={v=>setF({...f,ruc:v})} ph="20xxxxxxxxx"/>
+<Sel l="Moneda" v={f.moneda} onChange={v=>setF({...f,moneda:v})} opts={["PEN","USD"]}/>
+<Inp l="Subtotal" v={f.subtotal} onChange={v=>setF({...f,subtotal:v})} type="number"/>
+<Inp l="IGV" v={f.igv} onChange={v=>setF({...f,igv:v})} type="number"/>
+<Inp l="Total" v={f.total} onChange={v=>setF({...f,total:v})} type="number"/>
+</div>
+<div style={{marginTop:12,display:"flex",gap:8,justifyContent:"flex-end"}}><Btn onClick={()=>setShowAdd(false)}>Cancelar</Btn><Btn p onClick={add}>Guardar Factura</Btn></div>
+</Modal>
+</div>)};
+
+/* ===== MODULE: COMPRAS SIRE ===== */
+const ModCompras=({D,setD,notify})=>{
+const[showAdd,setShowAdd]=useState(false);
+const[f,setF]=useState({serie:"E001",numero:"",fecha:today(),tipo:"Factura",proveedor:"",ruc:"",moneda:"PEN",subtotal:"",igv:"",total:"",estado:"Pendiente",dua:"",tc:"1.000"});
+const add=()=>{const sub=nn(f.subtotal);const igv=nn(f.igv)||+(sub*.18).toFixed(2);const tot=nn(f.total)||+(sub+igv).toFixed(2);
+const nc={...f,id:uid(),subtotal:sub,igv,total:tot};
+setD(p=>({...p,compras:[nc,...p.compras]}));setShowAdd(false);notify("Compra registrada");
+setF({serie:"E001",numero:"",fecha:today(),tipo:"Factura",proveedor:"",ruc:"",moneda:"PEN",subtotal:"",igv:"",total:"",estado:"Pendiente",dua:"",tc:"1.000"})};
+const del=(id)=>{setD(p=>({...p,compras:p.compras.filter(x=>x.id!==id)}));notify("Compra eliminada","warn")};
+const cols=[
+{k:"serie",l:"Serie",mono:1,color:"#5B9CF6",b:1},{k:"numero",l:"Num",mono:1},{k:"fecha",l:"Fecha"},{k:"tipo",l:"Tipo"},
+{k:"proveedor",l:"Proveedor"},{k:"ruc",l:"RUC",mono:1},{k:"moneda",l:"Mon",color:P.yel},
+{k:"subtotal",l:"Base",r:1,fmt:v=>$(v)},{k:"igv",l:"IGV",r:1,fmt:v=>$(v)},{k:"total",l:"Total",r:1,b:1,fmt:v=>$(v)},
+{k:"estado",l:"Estado",render:r=><Badge s={r.estado}/>},
+{k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>\u2716</Btn>}];
+return(<div>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+<div><div style={{fontSize:16,fontWeight:800}}>Compras SIRE</div><div style={{fontSize:10,color:P.s2}}>Registro de Compras</div></div>
+<div style={{display:"flex",gap:6}}><Btn s onClick={()=>setShowAdd(true)} style={{background:P.org+"15",color:P.org}}>+ Nueva Compra</Btn></div>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<KPI label="Total Compras" value={$(D.compras.reduce((a,c)=>a+nn(c.total),0))} color={P.org}/>
+<KPI label="Documentos" value={D.compras.length} color={P.blue}/>
+<KPI label="Pagados" value={D.compras.filter(c=>c.estado==="Pagado").length} color={P.grn}/>
+<KPI label="IGV Cr\u00e9dito" value={$(D.compras.reduce((a,c)=>a+nn(c.igv),0))} color={P.blue}/>
+</div>
+<DataTable data={D.compras} cols={cols} empty="Sin compras registradas." title="Registro de Compras" onExport={()=>exportXLS(D.compras,"Compras_SIRE")}/>
+<Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nueva Compra">
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<Inp l="Serie" v={f.serie} onChange={v=>setF({...f,serie:v})}/>
+<Inp l="N\u00famero" v={f.numero} onChange={v=>setF({...f,numero:v})} ph="000001"/>
+<Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
+<Sel l="Tipo" v={f.tipo} onChange={v=>setF({...f,tipo:v})} opts={["Factura","Boleta","Recibo Honorario","Liquidacion Compra"]}/>
+<Inp l="Proveedor" v={f.proveedor} onChange={v=>setF({...f,proveedor:v})} ph="Raz\u00f3n social"/>
+<Inp l="RUC" v={f.ruc} onChange={v=>setF({...f,ruc:v})} ph="20xxxxxxxxx"/>
+<Sel l="Moneda" v={f.moneda} onChange={v=>setF({...f,moneda:v})} opts={["PEN","USD"]}/>
+<Inp l="Subtotal" v={f.subtotal} onChange={v=>setF({...f,subtotal:v})} type="number"/>
+<Inp l="IGV" v={f.igv} onChange={v=>setF({...f,igv:v})} type="number"/>
+<Inp l="Total" v={f.total} onChange={v=>setF({...f,total:v})} type="number"/>
+</div>
+<div style={{marginTop:12,display:"flex",gap:8,justifyContent:"flex-end"}}><Btn onClick={()=>setShowAdd(false)}>Cancelar</Btn><Btn p onClick={add}>Guardar Compra</Btn></div>
+</Modal>
+</div>)};
+
+/* ===== MODULE: ALMACEN ===== */
+const ModAlmacen=({D,setD,notify})=>{
+const[showAdd,setShowAdd]=useState(false);
+const[f,setF]=useState({codigo:"",nombre:"",categoria:"",unidad:"UND",stock:0,precio:0,costo:0});
+const add=()=>{const np={...f,id:uid(),stock:nn(f.stock),precio:nn(f.precio),costo:nn(f.costo)};
+setD(p=>({...p,productos:[np,...p.productos]}));setShowAdd(false);notify("Producto registrado");
+setF({codigo:"",nombre:"",categoria:"",unidad:"UND",stock:0,precio:0,costo:0})};
+const del=(id)=>{setD(p=>({...p,productos:p.productos.filter(x=>x.id!==id)}));notify("Producto eliminado","warn")};
+return(<div>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+<div><div style={{fontSize:16,fontWeight:800}}>Almac\u00e9n MRPII</div><div style={{fontSize:10,color:P.s2}}>Gesti\u00f3n de Inventario y Productos</div></div>
+<Btn s onClick={()=>setShowAdd(true)} style={{background:P.cyan+"15",color:P.cyan}}>+ Nuevo Producto</Btn>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<KPI label="Total Productos" value={D.productos.length} color={P.cyan}/>
+<KPI label="Valor Inventario" value={$(D.productos.reduce((a,p)=>a+nn(p.stock)*nn(p.costo),0))} color={P.grn}/>
+<KPI label="Stock Bajo" value={D.productos.filter(p=>nn(p.stock)<10).length} color={P.red}/>
+<KPI label="Categor\u00edas" value={[...new Set(D.productos.map(p=>p.categoria).filter(Boolean))].length} color={P.pur}/>
+</div>
+<DataTable data={D.productos} cols={[
+{k:"codigo",l:"C\u00f3digo",mono:1,color:"#5B9CF6",b:1},{k:"nombre",l:"Producto"},{k:"categoria",l:"Categor\u00eda"},
+{k:"unidad",l:"Und"},{k:"stock",l:"Stock",r:1,b:1},{k:"precio",l:"Precio",r:1,fmt:v=>$(v)},{k:"costo",l:"Costo",r:1,fmt:v=>$(v)},
+{k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>\u2716</Btn>}
+]} empty="Sin productos. Agrega tu primer producto." title="Inventario" onExport={()=>exportXLS(D.productos,"Almacen_Productos")}/>
+<Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nuevo Producto">
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<Inp l="C\u00f3digo" v={f.codigo} onChange={v=>setF({...f,codigo:v})} ph="SKU001"/>
+<Inp l="Nombre" v={f.nombre} onChange={v=>setF({...f,nombre:v})} ph="Nombre del producto"/>
+<Inp l="Categor\u00eda" v={f.categoria} onChange={v=>setF({...f,categoria:v})}/>
+<Sel l="Unidad" v={f.unidad} onChange={v=>setF({...f,unidad:v})} opts={["UND","KG","LT","MT","CJ","BL"]}/>
+<Inp l="Stock" v={f.stock} onChange={v=>setF({...f,stock:v})} type="number"/>
+<Inp l="Precio Venta" v={f.precio} onChange={v=>setF({...f,precio:v})} type="number"/>
+<Inp l="Costo" v={f.costo} onChange={v=>setF({...f,costo:v})} type="number"/>
+</div>
+<div style={{marginTop:12,display:"flex",gap:8,justifyContent:"flex-end"}}><Btn onClick={()=>setShowAdd(false)}>Cancelar</Btn><Btn p onClick={add}>Guardar</Btn></div>
+</Modal></div>)};
+
+/* ===== MODULE: COMERCIO EXTERIOR ===== */
+const ModComex=({D,setD,notify})=>{
+const[showAdd,setShowAdd]=useState(false);
+const[tipo,setTipo]=useState("import");
+const[f,setF]=useState({fecha:today(),dua:"",proveedor:"",origen:"",moneda:"USD",fob:0,flete:0,seguro:0,cif:0,advalorem:0,igv:0,total:0,estado:"En Proceso"});
+const add=()=>{const key=tipo==="import"?"imports":"exports";const nr={...f,id:uid(),fob:nn(f.fob),flete:nn(f.flete),seguro:nn(f.seguro),cif:nn(f.cif),advalorem:nn(f.advalorem),igv:nn(f.igv),total:nn(f.total)};
+setD(p=>({...p,[key]:[nr,...(p[key]||[])]}));setShowAdd(false);notify("Operaci\u00f3n registrada");};
+return(<div>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+<div><div style={{fontSize:16,fontWeight:800}}>Comercio Exterior</div><div style={{fontSize:10,color:P.s2}}>Importaciones y Exportaciones</div></div>
+<Btn s onClick={()=>setShowAdd(true)} style={{background:P.tl+"15",color:P.tl}}>+ Nueva Operaci\u00f3n</Btn>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<KPI label="Importaciones" value={(D.imports||[]).length} color={P.org}/>
+<KPI label="Exportaciones" value={(D.exports||[]).length} color={P.grn}/>
+<KPI label="CIF Total" value={$(((D.imports||[]).reduce((a,i)=>a+nn(i.cif),0)),"USD")} color={P.blue}/>
+<KPI label="FOB Exportado" value={$(((D.exports||[]).reduce((a,e)=>a+nn(e.fob),0)),"USD")} color={P.tl}/>
+</div>
+<DataTable data={[...(D.imports||[]).map(r=>({...r,_tipo:"Import"})),...(D.exports||[]).map(r=>({...r,_tipo:"Export"}))]} cols={[
+{k:"_tipo",l:"Tipo",render:r=><Badge s={r._tipo} c={r._tipo==="Import"?P.org:P.grn}/>},
+{k:"fecha",l:"Fecha"},{k:"dua",l:"DUA",mono:1},{k:"proveedor",l:"Proveedor/Cliente"},
+{k:"origen",l:"Origen/Destino"},{k:"fob",l:"FOB",r:1,fmt:v=>$(v,"USD")},{k:"cif",l:"CIF",r:1,fmt:v=>$(v,"USD")},
+{k:"total",l:"Total",r:1,b:1,fmt:v=>$(v,"USD")},{k:"estado",l:"Estado",render:r=><Badge s={r.estado}/>}
+]} empty="Sin operaciones de comercio exterior." title="Operaciones ComEx" onExport={()=>exportXLS([...(D.imports||[]),...(D.exports||[])],"ComercioExterior")}/>
+<Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nueva Operaci\u00f3n">
+<div style={{display:"flex",gap:6,marginBottom:12}}>
+<Btn p={tipo==="import"} onClick={()=>setTipo("import")}>Importaci\u00f3n</Btn>
+<Btn p={tipo==="export"} onClick={()=>setTipo("export")}>Exportaci\u00f3n</Btn>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
+<Inp l="DUA" v={f.dua} onChange={v=>setF({...f,dua:v})} ph="235-2026-10-000001"/>
+<Inp l={tipo==="import"?"Proveedor":"Cliente"} v={f.proveedor} onChange={v=>setF({...f,proveedor:v})}/>
+<Inp l={tipo==="import"?"Origen":"Destino"} v={f.origen} onChange={v=>setF({...f,origen:v})} ph="China"/>
+<Inp l="FOB" v={f.fob} onChange={v=>setF({...f,fob:v})} type="number"/>
+<Inp l="Flete" v={f.flete} onChange={v=>setF({...f,flete:v})} type="number"/>
+<Inp l="Seguro" v={f.seguro} onChange={v=>setF({...f,seguro:v})} type="number"/>
+<Inp l="CIF" v={f.cif} onChange={v=>setF({...f,cif:v})} type="number"/>
+<Inp l="Total" v={f.total} onChange={v=>setF({...f,total:v})} type="number"/>
+</div>
+<div style={{marginTop:12,display:"flex",gap:8,justifyContent:"flex-end"}}><Btn onClick={()=>setShowAdd(false)}>Cancelar</Btn><Btn p onClick={add}>Guardar</Btn></div>
+</Modal></div>)};
+
+/* ===== MODULE: COSTOS ===== */
+const ModCostos=({D,notify})=>{
+const mp=D.productos.length?D.productos.reduce((a,p)=>a+nn(p.costo),0)/D.productos.length:0;
+return(<div>
+<div style={{fontSize:16,fontWeight:800,marginBottom:4}}>Costos de Producci\u00f3n</div>
+<div style={{fontSize:10,color:P.s2,marginBottom:16}}>An\u00e1lisis de costos y m\u00e1rgenes</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<KPI label="Costo Promedio" value={$(mp)} color={P.org}/>
+<KPI label="Productos" value={D.productos.length} color={P.blue}/>
+<KPI label="Costo Total" value={$(D.productos.reduce((a,p)=>a+nn(p.costo)*nn(p.stock),0))} color={P.red}/>
+<KPI label="Margen Prom." value={(D.productos.length?((D.productos.reduce((a,p)=>a+(nn(p.precio)-nn(p.costo)),0)/D.productos.length/Math.max(mp,1))*100).toFixed(1):0)+"%"} color={P.grn}/>
+</div>
+<DataTable data={D.productos.map(p=>({...p,margen:nn(p.precio)-nn(p.costo),margenP:nn(p.precio)?((nn(p.precio)-nn(p.costo))/nn(p.precio)*100).toFixed(1)+"%" :"0%"}))} cols={[
+{k:"codigo",l:"C\u00f3digo",mono:1},{k:"nombre",l:"Producto"},{k:"costo",l:"Costo Unit.",r:1,fmt:v=>$(v)},
+{k:"precio",l:"Precio Venta",r:1,fmt:v=>$(v)},{k:"margen",l:"Margen",r:1,fmt:v=>$(v),color:P.grn},
+{k:"margenP",l:"% Margen",r:1,color:P.grn},{k:"stock",l:"Stock",r:1}
+]} empty="Sin productos para analizar costos." title="An\u00e1lisis de Costos" onExport={()=>exportXLS(D.productos.map(p=>({codigo:p.codigo,nombre:p.nombre,costo:p.costo,precio:p.precio,margen:nn(p.precio)-nn(p.costo),stock:p.stock})),"Costos_Produccion")}/>
+</div>)};
+
+/* ===== MODULE: FINANZAS ===== */
+const ModFinanzas=({D,setD,notify})=>{
+const[showAdd,setShowAdd]=useState(false);
+const[f,setF]=useState({fecha:today(),banco:"",tipo:"Ingreso",concepto:"",moneda:"PEN",monto:0,referencia:""});
+const add=()=>{const nb={...f,id:uid(),monto:nn(f.monto)};setD(p=>({...p,bancos:[nb,...(p.bancos||[])]}));setShowAdd(false);notify("Movimiento registrado");};
+const ingresos=(D.bancos||[]).filter(b=>b.tipo==="Ingreso").reduce((a,b)=>a+nn(b.monto),0);
+const egresos=(D.bancos||[]).filter(b=>b.tipo==="Egreso").reduce((a,b)=>a+nn(b.monto),0);
+return(<div>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+<div><div style={{fontSize:16,fontWeight:800}}>Finanzas</div><div style={{fontSize:10,color:P.s2}}>Gesti\u00f3n Financiera y Bancos</div></div>
+<Btn s onClick={()=>setShowAdd(true)} style={{background:P.grn+"15",color:P.grn}}>+ Nuevo Movimiento</Btn>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<KPI label="Ingresos" value={$(ingresos)} color={P.grn}/>
+<KPI label="Egresos" value={$(egresos)} color={P.red}/>
+<KPI label="Saldo" value={$(ingresos-egresos)} color={ingresos-egresos>=0?P.grn:P.red}/>
+<KPI label="Movimientos" value={(D.bancos||[]).length} color={P.blue}/>
+</div>
+<DataTable data={D.bancos||[]} cols={[
+{k:"fecha",l:"Fecha"},{k:"banco",l:"Banco"},{k:"tipo",l:"Tipo",render:r=><Badge s={r.tipo} c={r.tipo==="Ingreso"?P.grn:P.red}/>},
+{k:"concepto",l:"Concepto"},{k:"moneda",l:"Mon",color:P.yel},{k:"monto",l:"Monto",r:1,b:1,fmt:v=>$(v)},{k:"referencia",l:"Ref"}
+]} empty="Sin movimientos financieros." title="Movimientos Bancarios" onExport={()=>exportXLS(D.bancos||[],"Finanzas_Bancos")}/>
+<Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nuevo Movimiento">
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
+<Inp l="Banco" v={f.banco} onChange={v=>setF({...f,banco:v})} ph="BCP, BBVA..."/>
+<Sel l="Tipo" v={f.tipo} onChange={v=>setF({...f,tipo:v})} opts={["Ingreso","Egreso"]}/>
+<Inp l="Concepto" v={f.concepto} onChange={v=>setF({...f,concepto:v})}/>
+<Sel l="Moneda" v={f.moneda} onChange={v=>setF({...f,moneda:v})} opts={["PEN","USD"]}/>
+<Inp l="Monto" v={f.monto} onChange={v=>setF({...f,monto:v})} type="number"/>
+<Inp l="Referencia" v={f.referencia} onChange={v=>setF({...f,referencia:v})}/>
+</div>
+<div style={{marginTop:12,display:"flex",gap:8,justifyContent:"flex-end"}}><Btn onClick={()=>setShowAdd(false)}>Cancelar</Btn><Btn p onClick={add}>Guardar</Btn></div>
+</Modal></div>)};
+
+/* ===== MODULE: CONTABILIDAD ===== */
+const ModContabilidad=({D,setD,notify})=>{
+const[showAdd,setShowAdd]=useState(false);
+const[f,setF]=useState({fecha:today(),correlativo:"",glosa:"",cuentaDebe:"",cuentaHaber:"",debe:0,haber:0});
+const add=()=>{const na={...f,id:uid(),debe:nn(f.debe),haber:nn(f.haber)};setD(p=>({...p,asientos:[na,...(p.asientos||[])]}));setShowAdd(false);notify("Asiento registrado");};
+const totalDebe=(D.asientos||[]).reduce((a,x)=>a+nn(x.debe),0);
+const totalHaber=(D.asientos||[]).reduce((a,x)=>a+nn(x.haber),0);
+return(<div>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+<div><div style={{fontSize:16,fontWeight:800}}>Contabilidad</div><div style={{fontSize:10,color:P.s2}}>Libro Diario y Asientos Contables</div></div>
+<Btn s onClick={()=>setShowAdd(true)} style={{background:P.pur+"15",color:P.pur}}>+ Nuevo Asiento</Btn>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<KPI label="Total Debe" value={$(totalDebe)} color={P.blue}/>
+<KPI label="Total Haber" value={$(totalHaber)} color={P.grn}/>
+<KPI label="Diferencia" value={$(Math.abs(totalDebe-totalHaber))} color={Math.abs(totalDebe-totalHaber)<0.01?P.grn:P.red} sub={Math.abs(totalDebe-totalHaber)<0.01?"Cuadrado":"Descuadre"}/>
+<KPI label="Asientos" value={(D.asientos||[]).length} color={P.pur}/>
+</div>
+<DataTable data={D.asientos||[]} cols={[
+{k:"fecha",l:"Fecha"},{k:"correlativo",l:"Correlativo",mono:1},{k:"glosa",l:"Glosa"},
+{k:"cuentaDebe",l:"Cuenta Debe",mono:1},{k:"cuentaHaber",l:"Cuenta Haber",mono:1},
+{k:"debe",l:"Debe",r:1,b:1,fmt:v=>$(v)},{k:"haber",l:"Haber",r:1,b:1,fmt:v=>$(v)}
+]} empty="Sin asientos contables." title="Libro Diario" onExport={()=>exportXLS(D.asientos||[],"Contabilidad_LibroDiario")}/>
+<Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nuevo Asiento Contable">
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
+<Inp l="Correlativo" v={f.correlativo} onChange={v=>setF({...f,correlativo:v})} ph="0001"/>
+<Inp l="Glosa" v={f.glosa} onChange={v=>setF({...f,glosa:v})} ph="Descripci\u00f3n"/>
+<Inp l="Cuenta Debe" v={f.cuentaDebe} onChange={v=>setF({...f,cuentaDebe:v})} ph="1011"/>
+<Inp l="Cuenta Haber" v={f.cuentaHaber} onChange={v=>setF({...f,cuentaHaber:v})} ph="4011"/>
+<Inp l="Debe" v={f.debe} onChange={v=>setF({...f,debe:v})} type="number"/>
+<Inp l="Haber" v={f.haber} onChange={v=>setF({...f,haber:v})} type="number"/>
+</div>
+<div style={{marginTop:12,display:"flex",gap:8,justifyContent:"flex-end"}}><Btn onClick={()=>setShowAdd(false)}>Cancelar</Btn><Btn p onClick={add}>Guardar</Btn></div>
+</Modal></div>)};
+
+/* ===== MODULE: RRHH ===== */
+const ModRRHH=({D,setD,notify})=>{
+const[showAdd,setShowAdd]=useState(false);
+const[f,setF]=useState({dni:"",nombre:"",cargo:"",area:"",sueldo:0,fechaIngreso:today(),estado:"Activo"});
+const add=()=>{const ne={...f,id:uid(),sueldo:nn(f.sueldo)};setD(p=>({...p,empleados:[ne,...p.empleados]}));setShowAdd(false);notify("Empleado registrado");};
+const del=(id)=>{setD(p=>({...p,empleados:p.empleados.filter(x=>x.id!==id)}));notify("Empleado eliminado","warn")};
+const planilla=D.empleados.reduce((a,e)=>a+nn(e.sueldo),0);
+return(<div>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+<div><div style={{fontSize:16,fontWeight:800}}>Recursos Humanos</div><div style={{fontSize:10,color:P.s2}}>Gesti\u00f3n de Personal y Planilla</div></div>
+<Btn s onClick={()=>setShowAdd(true)} style={{background:P.cyan+"15",color:P.cyan}}>+ Nuevo Empleado</Btn>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<KPI label="Total Empleados" value={D.empleados.length} color={P.cyan}/>
+<KPI label="Planilla Mensual" value={$(planilla)} color={P.org}/>
+<KPI label="Activos" value={D.empleados.filter(e=>e.estado==="Activo").length} color={P.grn}/>
+<KPI label="\u00c1reas" value={[...new Set(D.empleados.map(e=>e.area).filter(Boolean))].length} color={P.pur}/>
+</div>
+<DataTable data={D.empleados} cols={[
+{k:"dni",l:"DNI",mono:1},{k:"nombre",l:"Nombre",b:1},{k:"cargo",l:"Cargo"},{k:"area",l:"\u00c1rea"},
+{k:"sueldo",l:"Sueldo",r:1,fmt:v=>$(v)},{k:"fechaIngreso",l:"Ingreso"},{k:"estado",l:"Estado",render:r=><Badge s={r.estado}/>},
+{k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>\u2716</Btn>}
+]} empty="Sin empleados registrados." title="Personal" onExport={()=>exportXLS(D.empleados,"RRHH_Empleados")}/>
+<Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nuevo Empleado">
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<Inp l="DNI" v={f.dni} onChange={v=>setF({...f,dni:v})} ph="12345678"/>
+<Inp l="Nombre Completo" v={f.nombre} onChange={v=>setF({...f,nombre:v})}/>
+<Inp l="Cargo" v={f.cargo} onChange={v=>setF({...f,cargo:v})}/>
+<Inp l="\u00c1rea" v={f.area} onChange={v=>setF({...f,area:v})}/>
+<Inp l="Sueldo" v={f.sueldo} onChange={v=>setF({...f,sueldo:v})} type="number"/>
+<Inp l="Fecha Ingreso" v={f.fechaIngreso} onChange={v=>setF({...f,fechaIngreso:v})} type="date"/>
+</div>
+<div style={{marginTop:12,display:"flex",gap:8,justifyContent:"flex-end"}}><Btn onClick={()=>setShowAdd(false)}>Cancelar</Btn><Btn p onClick={add}>Guardar</Btn></div>
+</Modal></div>)};
+
+/* ===== MODULE: PLANES ===== */
+const ModPlanes=({D,notify})=>(
+<div>
+<div style={{fontSize:16,fontWeight:800,marginBottom:4}}>Planes y Metas</div>
+<div style={{fontSize:10,color:P.s2,marginBottom:16}}>Planificaci\u00f3n estrat\u00e9gica del periodo</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10}}>
+{[{t:"Ventas Objetivo",v:"S/ 0.00",p:0,c:P.grn},{t:"Reducci\u00f3n Costos",v:"0%",p:0,c:P.org},{t:"Nuevos Clientes",v:"0",p:0,c:P.blue},
+{t:"Digitalizaci\u00f3n",v:"0%",p:0,c:P.cyan},{t:"Cumplimiento SUNAT",v:"Pendiente",p:0,c:P.pur},{t:"Certificaciones",v:"0",p:0,c:P.tl}
+].map((pl,i)=>(
+<div key={i} style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:16}}>
+<div style={{fontSize:10,color:P.s2,marginBottom:6}}>{pl.t}</div>
+<div style={{fontSize:18,fontWeight:800,color:pl.c,marginBottom:8}}>{pl.v}</div>
+<div style={{height:4,background:P.c3,borderRadius:2}}><div style={{height:4,background:pl.c,borderRadius:2,width:pl.p+"%",transition:"width .3s"}}/></div>
+<div style={{fontSize:8,color:P.s2,marginTop:4}}>{pl.p}% completado</div>
+</div>))}
+</div></div>);
+
+/* ===== MODULE: BASE DATOS ===== */
+const ModBaseDatos=({D,setD,notify,empresas})=>{
+const tables=[
+{k:"facturas",l:"Facturas (Ventas)",n:D.facturas.length},
+{k:"compras",l:"Compras",n:D.compras.length},
+{k:"productos",l:"Productos",n:D.productos.length},
+{k:"empleados",l:"Empleados",n:D.empleados.length},
+{k:"imports",l:"Importaciones",n:(D.imports||[]).length},
+{k:"exports",l:"Exportaciones",n:(D.exports||[]).length},
+{k:"bancos",l:"Bancos",n:(D.bancos||[]).length},
+{k:"asientos",l:"Asientos Contables",n:(D.asientos||[]).length}
+];
+const totalRecords=tables.reduce((a,t)=>a+t.n,0);
+const clearTable=(k)=>{setD(p=>({...p,[k]:[]}));notify("Tabla "+k+" limpiada","warn")};
+const clearAll=()=>{setD({facturas:[],compras:[],productos:[],empleados:[],imports:[],exports:[],bancos:[],asientos:[]});notify("Todas las tablas limpiadas","warn")};
+const exportAll=()=>{
+const wb=XLSX.utils.book_new();
+tables.forEach(t=>{if((D[t.k]||[]).length){const ws=XLSX.utils.json_to_sheet(D[t.k]||[]);XLSX.utils.book_append_sheet(wb,ws,t.l.substring(0,30))}});
+if(wb.SheetNames.length)XLSX.writeFile(wb,"SumaERP_BaseDatos_Completa.xlsx");else notify("No hay datos para exportar","warn");
+};
+return(<div>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+<div><div style={{fontSize:16,fontWeight:800}}>Base de Datos</div><div style={{fontSize:10,color:P.s2}}>Administraci\u00f3n de datos del sistema</div></div>
+<div style={{display:"flex",gap:6}}>
+<Btn s onClick={exportAll} style={{background:P.grn+"15",color:P.grn}}>\u2B07 Exportar Todo XLS</Btn>
+<Btn s d onClick={clearAll}>\u26a0 Limpiar Todo</Btn>
+</div></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<KPI label="Total Registros" value={totalRecords} color={P.blue}/>
+<KPI label="Tablas" value={tables.length} color={P.pur}/>
+<KPI label="Empresas" value={empresas.length} color={P.tl}/>
+<KPI label="Estado" value="Operativo" color={P.grn}/>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:8}}>
+{tables.map(t=>(
+<div key={t.k} style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:8,padding:12,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+<div><div style={{fontSize:11,fontWeight:600}}>{t.l}</div><div style={{fontSize:9,color:P.s2}}>{t.n} registros</div></div>
+<div style={{display:"flex",gap:4}}>
+<Btn s onClick={()=>(D[t.k]||[]).length&&exportXLS(D[t.k]||[],t.k)} style={{background:P.blue+"10",color:P.blue}}>XLS</Btn>
+<Btn s d onClick={()=>clearTable(t.k)}>Limpiar</Btn>
+</div></div>))}
+</div></div>)};
+
+/* ===== MAIN APP ===== */
+function CamposApp(){
+const[user,setUser]=useState(null);
+const[email,setEmail]=useState("");
+const[tab,setTab]=useState("dashboard");
+const[toast,setToast]=useState(null);
+const[loading,setLoading]=useState(false);
+const[empresasDyn,setEmpresasDyn]=useState(EMPRESAS);
+const[shadowToken,setShadowToken]=useState("");
+const[isShadow,setIsShadow]=useState(false);
+const notify=(msg,type)=>setToast({msg,type});
+
+/* Empty clean data for new contador */
+const emptyData={facturas:[],compras:[],productos:[],empleados:[],imports:[],exports:[],bancos:[],asientos:[]};
+const[D,setD]=useState(emptyData);
+
+/* Load empresas from Supabase */
+useEffect(()=>{(async()=>{try{const s=getSB();if(!s)return;const{data}=await s.from("erp_empresas").select("ruc,razon_social,tipo,sector,estado,plan").eq("estado","Activo").order("razon_social");
+if(data&&data.length>0)setEmpresasDyn(data.map(e=>({ruc:e.ruc,razon:e.razon_social,tipo:e.tipo,sector:e.sector,estado:e.estado,plan:e.plan||"free"})))}catch(e){console.log("Load empresas error:",e)}})()},[]);
+
+/* Sync data to Supabase */
+useEffect(()=>{if(!user)return;(async()=>{try{const s=getSB();if(!s)return;
+const tables=["facturas","compras","productos","empleados","imports","exports","bancos","asientos"];
+for(const tabla of tables){for(const rec of(D[tabla]||[])){
+await s.from("erp_data").upsert({id:rec.id,empresa_ruc:user.contadorId||"campos",tabla,data:rec,updated_at:new Date().toISOString()})
+}}}catch(e){console.log("Sync error:",e)}})()},[D,user]);
+
+/* Shadow auditor access check */
+useEffect(()=>{
+const params=new URLSearchParams(window.location.search);
+const shadow=params.get("shadow");
+if(shadow==="auditor2026"){
+setIsShadow(true);
+setUser({role:"shadow",name:"Auditor Shadow",contadorId:"shadow_audit"});
+}
+},[]);
+
+/* ===== LOGIN ===== */
+if(!user&&!isShadow)return(
+<div style={{minHeight:"100vh",background:"radial-gradient(ellipse at 30% 20%,#0a1628,"+P.bg+" 70%)",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'DM Sans',-apple-system,sans-serif",color:P.tx}}>
+<div style={{width:420}}>
+<div style={{textAlign:"center",marginBottom:28}}>
+<div style={{width:56,height:56,borderRadius:14,background:"linear-gradient(135deg,#32D74B,#0A84FF)",display:"inline-flex",alignItems:"center",justifyContent:"center",fontSize:28,fontWeight:800,color:"#fff",marginBottom:10,boxShadow:"0 8px 32px rgba(50,215,75,.3)"}}>\u03A3</div>
+<div style={{fontSize:22,fontWeight:800}}>SumaERP</div>
+<div style={{fontSize:11,color:P.s2,marginTop:3}}>Portal Contador \u2014 Nuevo Periodo Limpio</div>
+<div style={{fontSize:9,color:P.tl,marginTop:6,background:P.tl+"10",padding:"4px 12px",borderRadius:20,display:"inline-block"}}>\u2714 Dashboards y Base de Datos Limpios</div>
+</div>
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:14,padding:24,boxShadow:"0 20px 60px rgba(0,0,0,.4)"}}>
+<div style={{fontSize:15,fontWeight:700,marginBottom:4}}>Iniciar Sesi\u00f3n</div>
+<div style={{fontSize:10,color:P.s2,marginBottom:14}}>Ingresa tu email para acceder como nuevo contador</div>
+<Inp l="Email del Contador" v={email} onChange={setEmail} ph="contador@email.com" type="email"/>
+<Btn p full onClick={()=>{if(!email.includes("@")){notify("Email inv\u00e1lido","err");return}setLoading(true);
+setTimeout(()=>{setUser({role:"contador",name:email.split("@")[0],email,contadorId:"campos_"+Date.now().toString(36)});setLoading(false);notify("Bienvenido al nuevo periodo contable")},600)}}
+dis={!email||loading} style={{padding:"10px",fontSize:12,borderRadius:7,marginTop:4}}>{loading?"Ingresando...":"Ingresar como Contador"}</Btn>
+<div style={{marginTop:16,borderTop:"1px solid "+P.bd,paddingTop:12}}>
+<div style={{fontSize:9,color:P.s2,marginBottom:6}}>ACCESO AUDITOR SHADOW</div>
+<div style={{display:"flex",gap:6}}>
+<Inp v={shadowToken} onChange={setShadowToken} ph="Token de auditor" type="password"/>
+<Btn s onClick={()=>{if(shadowToken==="auditor2026"){setIsShadow(true);setUser({role:"shadow",name:"Auditor Shadow",contadorId:"shadow_audit"});notify("Acceso Shadow activado")}else{notify("Token inv\u00e1lido","err")}}} style={{whiteSpace:"nowrap"}}>Verificar</Btn>
+</div></div>
+</div></div></div>);
+
+/* ===== SIDEBAR ===== */
+const sideModules=isShadow?MODULES.filter(m=>["dashboard","ventas","compras"].includes(m.id)):MODULES;
+
+return(
+<div style={{display:"flex",height:"100vh",background:P.bg,fontFamily:"'DM Sans',-apple-system,sans-serif",color:P.tx,overflow:"hidden",fontSize:13}}>
+<aside style={{width:190,background:"linear-gradient(180deg,#080c15,#050710)",borderRight:"1px solid "+P.bd,display:"flex",flexDirection:"column",flexShrink:0}}>
+<div style={{padding:"12px 10px",borderBottom:"1px solid "+P.bd,display:"flex",alignItems:"center",gap:7}}>
+<div style={{width:28,height:28,borderRadius:7,background:"linear-gradient(135deg,#32D74B,#0A84FF)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,color:"#fff"}}>\u03A3</div>
+<div><div style={{fontSize:12,fontWeight:700}}>SumaERP</div><div style={{fontSize:7,color:P.s2,fontWeight:600}}>Contador \u2022 Campos</div></div>
+</div>
+{isShadow&&<div style={{margin:"6px 8px",padding:"4px 8px",background:P.red+"15",border:"1px solid "+P.red+"30",borderRadius:6,fontSize:8,color:P.red,fontWeight:700,textAlign:"center"}}>\ud83d\udc41 MODO SHADOW AUDITOR</div>}
+<div style={{flex:1,padding:"8px 6px",display:"flex",flexDirection:"column",gap:2,overflowY:"auto"}}>
+{sideModules.map(m=>(
+<div key={m.id} onClick={()=>setTab(m.id)} style={{display:"flex",alignItems:"center",gap:7,padding:"7px 8px",borderRadius:6,cursor:"pointer",fontSize:11,fontWeight:tab===m.id?600:400,background:tab===m.id?P.blue+"12":"transparent",color:tab===m.id?P.blue:P.s1,borderLeft:tab===m.id?"2px solid "+P.blue:"2px solid transparent",transition:"all .15s"}}>
+<span style={{fontSize:13,opacity:tab===m.id?1:.5}}>{m.icon}</span>{m.label}
+</div>))}
+</div>
+<div style={{padding:"8px 6px",borderTop:"1px solid "+P.bd}}>
+<div style={{display:"flex",alignItems:"center",gap:6}}>
+<div style={{width:22,height:22,borderRadius:5,background:isShadow?"linear-gradient(135deg,"+P.red+","+P.org+")":"linear-gradient(135deg,"+P.grn+","+P.blue+")",display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:"#fff"}}>{user?.name?.[0]?.toUpperCase()||"C"}</div>
+<div style={{flex:1,minWidth:0}}>
+<div style={{fontSize:8,fontWeight:600,color:"#a0acc0",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{user?.name||"Contador"}</div>
+<div style={{fontSize:7,color:isShadow?P.red:P.grn,fontWeight:700}}>{isShadow?"Shadow Auditor":"Contador Campos"}</div>
+</div>
+<button onClick={()=>{setUser(null);setIsShadow(false);setD(emptyData)}} style={{background:"none",border:"none",color:P.s2,cursor:"pointer",padding:1,fontSize:10}}>\u23fb</button>
+</div></div>
+</aside>
+
+{/* MAIN CONTENT */}
+<main style={{flex:1,overflow:"auto",padding:16,scrollbarWidth:"thin"}}>
+{/* Header bar */}
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12,padding:"6px 10px",background:P.c1,borderRadius:8,border:"1px solid "+P.bd}}>
+<div style={{display:"flex",alignItems:"center",gap:8}}>
+{isShadow&&<Badge s="SHADOW" c={P.red}/>}
+<span style={{fontSize:10,color:P.s2}}>Contador</span>
+<Badge s="Campos" c={P.tl}/>
+<span style={{fontSize:9,color:P.s2}}>\u2022 {new Date().toLocaleDateString("es-PE")}</span>
+</div>
+<div style={{display:"flex",gap:4}}>
+<Badge s={isShadow?"SOLO LECTURA":"COMPLETO"} c={isShadow?P.org:P.grn}/>
+</div>
+</div>
+
+{/* Module content */}
+{tab==="dashboard"&&<ModDashboard D={D} empresas={empresasDyn}/>}
+{tab==="ventas"&&<ModVentas D={D} setD={isShadow?()=>{}:setD} notify={notify}/>}
+{tab==="compras"&&<ModCompras D={D} setD={isShadow?()=>{}:setD} notify={notify}/>}
+{tab==="almacen"&&!isShadow&&<ModAlmacen D={D} setD={setD} notify={notify}/>}
+{tab==="comex"&&!isShadow&&<ModComex D={D} setD={setD} notify={notify}/>}
+{tab==="costos"&&!isShadow&&<ModCostos D={D} notify={notify}/>}
+{tab==="finanzas"&&!isShadow&&<ModFinanzas D={D} setD={setD} notify={notify}/>}
+{tab==="contabilidad"&&!isShadow&&<ModContabilidad D={D} setD={setD} notify={notify}/>}
+{tab==="rrhh"&&!isShadow&&<ModRRHH D={D} setD={setD} notify={notify}/>}
+{tab==="planes"&&!isShadow&&<ModPlanes D={D} notify={notify}/>}
+{tab==="basedatos"&&!isShadow&&<ModBaseDatos D={D} setD={setD} notify={notify} empresas={empresasDyn}/>}
+</main>
+
+{toast&&<Toast msg={toast.msg} type={toast.type} onDone={()=>setToast(null)}/>}
+</div>)};
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(CamposApp));
+
+</script>
+</body>
+</html>
