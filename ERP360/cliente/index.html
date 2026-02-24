@@ -145,8 +145,8 @@ function ClientePortal() {
 
   /* Sync to localStorage on change */
   useEffect(() => { saveData(D); }, [D]);
-  useEffect(() => { if (user && user.empresaRuc && typeof SupaSync !== "undefined") { SupaSync.syncAll(D, user.empresaRuc); } }, [D, user]);
-  useEffect(() => { if (user && user.empresaRuc && scannedDocs.length > 0 && typeof SupaSync !== "undefined") { scannedDocs.forEach(function(doc) { SupaSync.addScannedDoc(doc, user.empresaRuc); }); } }, [scannedDocs, user]);
+  useEffect(() => { if (user && user.empresaRuc && typeof SupaSync !== "undefined") { If(window._supaInitLoaded){SupaSync.syncAll(D, user.empresaRuc)}; } }, [D, user]);
+  useEffect(() => { if (user && user.empresaRuc && scannedDocs.length > 0 && typeof SupaSync !== "undefined") { scannedDocs.forEach(function(doc) { if(window._supaInitLoaded) SupaSync.addScannedDoc(doc, user.empresaRuc); }); } }, [scannedDocs, user]);
   useEffect(() => { saveScannedDocs(scannedDocs); }, [scannedDocs]);
 
   /* Listen for changes from other tabs (contador) */
@@ -267,7 +267,7 @@ function ClientePortal() {
           <Btn p full onClick={() => {
             const found = EMPRESAS_CLIENTES.find(e => e.ruc === rucInput.trim());
             if (found) { setLoading(true); setTimeout(() => { setUser({ role: "cliente", empresa: found, empresaRuc: found.ruc, empresaRazon: found.razon });
-              if (typeof SupaSync !== "undefined") { SupaSync.loadForEmpresa(found.ruc).then(function(supaData) { if (supaData) { setD(supaData); } }); }
+              if (typeof SupaSync !== "undefined") { SupaSync.loadForEmpresa(found.ruc).then(function(supaData) { if (supaData) { setD(supaData); } window._supaInitLoaded=true; }); }
                setLoading(false); }, 600); }
             else { setRucError("RUC no registrado. Contacte al administrador."); }
           }} dis={rucInput.length !== 11 || loading} style={{ padding: "10px", fontSize: 12, borderRadius: 7, marginTop: 4 }}>{loading ? "Ingresando..." : "Ingresar"}</Btn>
