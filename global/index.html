@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INNOVAQ Solutions | Global SaaS Platform</title>
+    <meta name="description" content="Enterprise software for mining, construction and energy sectors. SIG 360°, ERP 360, TPM360, MTP360. ISO 9001, 14001, 45001, 37001 compliance.">
+    <meta name="keywords" content="INNOVAQ, SIG 360, ERP 360, TPM360, MTP360, ISO, mining software, construction software, SUNAT, Peru">
+    <meta property="og:title" content="INNOVAQ Solutions | Global SaaS Platform">
+    <meta property="og:description" content="Industrial-grade software solutions for mining, construction and energy.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.innovaqsolution.com/global/">
+    <link rel="canonical" href="https://www.innovaqsolution.com/global/">
+    <link rel="icon" type="image/x-icon" href="/1000608638.jpg">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+const { useState, useEffect, createContext, useContext, useCallback } = React;
+
+// ═══════════════════════════════════════════════════════════════
+// BRAND COLORS (from INNOVAQ logo)
+// ═══════════════════════════════════════════════════════════════
+const B = {
+  blue: '#126695', blueLight: '#2B9BCB', blueDark: '#0d4a6e',
+  orange: '#F1912B', orangeLight: '#f5aa5a', orangeDark: '#d4741a',
+  green: '#7AB648', greenDark: '#5a9430',
+  gray: '#777873',
+  bg: '#FBFBF9', bgCard: '#FFFFFF', bgDark: '#0d4a6e',
+  text: '#1a1a2e', textMuted: '#5a5a6e', textLight: '#8a8a9e',
+  border: '#e2e2dc', borderLight: '#eeeeea',
+};
+
+// ═══════════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════════
+const PRODUCTS = [
+  { code: 'SIG360', name: 'SIG 360°', sub: { en: 'Integrated Management System', es: 'Sistema Integrado de Gestión' }, desc: { en: 'ISO 9001, 14001, 45001, 37001 unified under Annex SL. The only platform in Peru integrating 4 standards.', es: 'ISO 9001, 14001, 45001, 37001 unificados bajo Annex SL. Única plataforma en Perú que integra 4 normas.' }, icon: '🛡️', color: B.green, plans: [{ tier: 'starter', mo: 149, yr: 1490, users: 10, loc: 1 }, { tier: 'professional', mo: 349, yr: 3490, users: 50, loc: 5 }, { tier: 'enterprise', mo: 699, yr: 6990, users: null, loc: null }], features: { en: ['Multi-standard ISO compliance', 'Document control', 'Audit management', 'IPERC Dynamic', 'Non-conformity tracking', 'Risk assessment Bow-Tie', 'Management review', 'Compliance channel E2EE', '84+ ISO templates'], es: ['Cumplimiento multi-norma ISO', 'Control documentario', 'Gestión auditorías', 'IPERC Dinámica', 'No conformidades', 'Evaluación riesgos Bow-Tie', 'Revisión por la dirección', 'Canal de denuncias E2EE', '84+ plantillas ISO'] } },
+  { code: 'ERP360', name: 'ERP 360', sub: { en: 'Enterprise Resource Planning', es: 'SumaERP — Planificación de Recursos' }, desc: { en: 'Complete ERP with SUNAT e-invoicing, foreign trade with Landed Cost, Peruvian HR and CFO Cockpit.', es: 'ERP completo con facturación SUNAT, ComEx con Landed Cost, RRHH peruano y CFO Cockpit.' }, icon: '📊', color: B.orange, plans: [{ tier: 'starter', mo: 199, yr: 1990, users: 15, loc: 1 }, { tier: 'professional', mo: 499, yr: 4990, users: 50, loc: 5 }, { tier: 'enterprise', mo: 999, yr: 9990, users: null, loc: null }], features: { en: ['SUNAT e-invoicing', 'Foreign trade & Landed Cost', 'Accounting PCGE/IFRS', 'HR & Peruvian payroll', 'Tax engine', 'CFO Cockpit', 'Multi-currency', 'Drawback management'], es: ['Facturación electrónica SUNAT', 'ComEx y Landed Cost', 'Contabilidad PCGE/NIIF', 'RRHH y planilla peruana', 'Motor tributario', 'CFO Cockpit', 'Multi-moneda', 'Gestión Drawback'] } },
+  { code: 'TPM360', name: 'TPM360', sub: { en: 'Total Productive Maintenance', es: 'Mantenimiento Productivo Total' }, desc: { en: 'Predictive maintenance with AI, equipment lifecycle management and mobile inspections.', es: 'Mantenimiento predictivo con IA, gestión del ciclo de vida de equipos e inspecciones móviles.' }, icon: '⚙️', color: B.blue, plans: [{ tier: 'starter', mo: 99, yr: 990, users: 5, loc: 1 }, { tier: 'professional', mo: 249, yr: 2490, users: 25, loc: 5 }, { tier: 'enterprise', mo: 499, yr: 4990, users: null, loc: null }], features: { en: ['Equipment lifecycle', 'Predictive AI', 'KPI dashboards', 'Mobile inspections', 'CMMS integration', 'Work orders'], es: ['Ciclo de vida equipos', 'IA predictiva', 'Dashboards KPIs', 'Inspecciones móviles', 'Integración CMMS', 'Órdenes de trabajo'] } },
+  { code: 'MTP360', name: 'MTP360', sub: { en: 'Master Training Plan', es: 'Plan Maestro de Capacitación' }, desc: { en: 'Training and competency management for regulated industries with ICAM and BowTie methodologies.', es: 'Gestión de capacitación y competencias con metodologías ICAM y BowTie para industrias reguladas.' }, icon: '🎓', color: '#7c3aed', plans: [{ tier: 'starter', mo: 79, yr: 790, users: 10, loc: 1 }, { tier: 'professional', mo: 189, yr: 1890, users: 50, loc: 5 }, { tier: 'enterprise', mo: 399, yr: 3990, users: null, loc: null }], features: { en: ['Competency matrix', 'Training scheduling', 'Certification tracking', 'Compliance reports', 'E-learning', 'Gap analysis'], es: ['Matriz competencias', 'Programación capacitaciones', 'Seguimiento certificaciones', 'Reportes cumplimiento', 'E-learning', 'Análisis brechas'] } },
+];
+
+const SERVICES = [
+  { icon: '🛡️', title: { en: 'ISO Implementation', es: 'Implementación ISO' }, desc: { en: 'Full implementation of ISO 9001, 14001, 45001 and 37001 standards with Annex SL integration.', es: 'Implementación integral de normas ISO 9001, 14001, 45001 y 37001 con integración Annex SL.' }, items: { en: ['ISO 9001 Quality', 'ISO 14001 Environmental', 'ISO 45001 Safety (Law 29783)', 'ISO 37001 Anti-Bribery (Law 30424)'], es: ['ISO 9001 Calidad', 'ISO 14001 Medio Ambiente', 'ISO 45001 Seguridad (Ley 29783)', 'ISO 37001 Antisoborno (Ley 30424)'] } },
+  { icon: '📋', title: { en: 'MINTRA Audits', es: 'Auditorías MINTRA' }, desc: { en: 'Legal audits under Law 29783 with SUNAFIL validity. 500+ accredited audit hours.', es: 'Auditorías legales bajo Ley 29783 con validez SUNAFIL. +500 horas de auditoría acreditadas.' }, items: { en: ['First & second party audits', 'SUNAFIL inspection readiness', '500+ accredited hours', 'Legal compliance reports'], es: ['Auditorías 1ra y 2da parte', 'Preparación inspección SUNAFIL', '+500 horas acreditadas', 'Informes cumplimiento legal'] } },
+  { icon: '🎓', title: { en: 'Specialized Training', es: 'Capacitación Especializada' }, desc: { en: 'World-class methodologies: ICAM, BowTie, High-Risk Work for mining and industrial operations.', es: 'Metodologías de clase mundial: ICAM, BowTie, Trabajos de Alto Riesgo para minería e industria.' }, items: { en: ['ICAM Incident Investigation', 'BowTie Risk Management', 'High-Risk Work', 'ISO Lead Auditor courses'], es: ['Investigación ICAM', 'Gestión Riesgos BowTie', 'Trabajos Alto Riesgo', 'Cursos Auditor Líder ISO'] } },
+  { icon: '💻', title: { en: 'Custom Software', es: 'Software a Medida' }, desc: { en: 'React/Full-Stack applications, APIs, Supabase integration and Progressive Web Apps.', es: 'Aplicaciones React/Full-Stack, APIs, integración Supabase y Progressive Web Apps.' }, items: { en: ['React / Full-Stack apps', 'APIs & microservices', 'Supabase / Cloud', 'Progressive Web Apps'], es: ['Aplicaciones React/Full-Stack', 'APIs y microservicios', 'Supabase / Cloud', 'Progressive Web Apps'] } },
+  { icon: '🤖', title: { en: 'AI Automation', es: 'Automatización con IA' }, desc: { en: 'AI integration in operational and management processes for predictive analysis.', es: 'Integración de IA en procesos operativos y de gestión para análisis predictivo.' }, items: { en: ['Shadow AI audits', 'Predictive financial analysis', 'Document auto-classification', 'Corporate chatbots'], es: ['Auditorías Shadow AI', 'Análisis predictivo financiero', 'Clasificación documental auto.', 'Chatbots corporativos'] } },
+  { icon: '📞', title: { en: 'Training & Support', es: 'Capacitación & Soporte' }, desc: { en: 'Onboarding programs, manuals, video tutorials and guaranteed SLA support.', es: 'Programas de onboarding, manuales, video-tutoriales y soporte con SLA garantizado.' }, items: { en: ['Personalized onboarding', 'Manuals & video tutorials', 'L1/L2/L3 Spanish support', 'Guaranteed SLA'], es: ['Onboarding personalizado', 'Manuales y video-tutoriales', 'Soporte L1/L2/L3 español', 'SLA garantizado'] } },
+];
+
+const SECTORS = [
+  { icon: '⛏️', name: { en: 'Mining', es: 'Minería' } }, { icon: '🏗️', name: { en: 'Construction', es: 'Construcción' } },
+  { icon: '🏭', name: { en: 'Manufacturing', es: 'Manufactura' } }, { icon: '⚡', name: { en: 'Energy & Oil/Gas', es: 'Energía y Petróleo' } },
+  { icon: '🚢', name: { en: 'Foreign Trade', es: 'Comercio Exterior' } }, { icon: '🌾', name: { en: 'Agroindustry', es: 'Agroindustria' } },
+  { icon: '🏥', name: { en: 'Healthcare', es: 'Salud' } }, { icon: '🎓', name: { en: 'Education', es: 'Educación' } },
+  { icon: '🏨', name: { en: 'Hospitality', es: 'Hotelería' } }, { icon: '🚚', name: { en: 'Logistics', es: 'Logística' } },
+  { icon: '🏛️', name: { en: 'Public Sector', es: 'Sector Público' } }, { icon: '🛒', name: { en: 'Retail', es: 'Retail' } },
+];
+
+const CURRENCIES = {
+  USD: { symbol: '$', rate: 1, locale: 'en-US', flag: '🇺🇸' }, EUR: { symbol: '€', rate: 0.92, locale: 'de-DE', flag: '🇪🇺' },
+  PEN: { symbol: 'S/', rate: 3.72, locale: 'es-PE', flag: '🇵🇪' }, GBP: { symbol: '£', rate: 0.79, locale: 'en-GB', flag: '🇬🇧' },
+  MXN: { symbol: 'MX$', rate: 17.15, locale: 'es-MX', flag: '🇲🇽' }, BRL: { symbol: 'R$', rate: 4.97, locale: 'pt-BR', flag: '🇧🇷' },
+  CLP: { symbol: 'CLP', rate: 890, locale: 'es-CL', flag: '🇨🇱', dec: 0 }, COP: { symbol: 'COP', rate: 3950, locale: 'es-CO', flag: '🇨🇴', dec: 0 },
+};
+
+const T = {
+  en: {
+    nav: { home: 'Home', products: 'Products', services: 'Services', pricing: 'Pricing', sectors: 'Sectors', contact: 'Contact', signin: 'Sign In', trial: 'Start Free Trial', dashboard: 'Dashboard', signout: 'Sign Out' },
+    hero: { badge: 'Digital Transformation for Global Industry', title1: 'Elevating Standards in', title2: 'Safety, Quality &', title3: 'Regulatory Compliance', desc: 'Integrated solutions in SIG 360, ERP 360, Specialized Training, MINTRA Audits and ISO Implementation for Mining, Construction and Energy sectors.', cta: 'Request a Demo', cta2: 'View Products', stats: [['19+', 'Years Experience'], ['500+', 'Audit Hours'], ['4', 'ISO Standards'], ['70%', 'Cost Savings']] },
+    services: { title: 'Our Services', sub: 'Comprehensive solutions for industrial excellence and regulatory compliance', more: 'Learn more' },
+    sectors: { title: 'Industries We Serve', sub: '12+ sectors with specialized solutions adapted to each industry' },
+    pricing: { title: 'Plans & Pricing', sub: 'All plans include 14-day free trial. Up to 70% more affordable than international platforms.', mo: 'Monthly', yr: 'Annual', save: '20% OFF', subscribe: 'Start Trial', contact: 'Contact Sales', starter: 'Starter', professional: 'Professional', enterprise: 'Enterprise', users: 'users', loc: 'sites', unlim: 'Unlimited', popular: 'MOST POPULAR', tax: 'Prices in {{c}}. Taxes may apply.', all: 'All plans include:', incl: ['24/7 Support', 'SSL Security', 'Auto Updates', 'API Access', '99.9% SLA', 'Onboarding'] },
+    iso: { title: 'Integrated ISO Standards', sub: '4 standards. 1 platform. Native Annex SL integration — unique in Peru.' },
+    certs: { title: 'Our Credentials', sub: 'ISO Lead Auditor · Licensed Industrial Engineer CIP 210152 · MBA' },
+    contact: { title: 'Request a Demo', sub: 'Our technical team will contact you within 24 hours.', name: 'Full Name', company: 'Company', email: 'Email', service: 'Service of Interest', msg: 'Message', send: 'Send Request', phone: 'Phone' },
+    cookie: { text: 'We use cookies to enhance your experience.', accept: 'Accept All', reject: 'Essential Only' },
+    footer: { rights: '© 2026 INNOVAQ SOLUTIONS SAC. All rights reserved.', made: 'Calidad Innovadora. Soluciones Prácticas.', slogan: 'Innovative Quality. Practical Solutions.' },
+  },
+  es: {
+    nav: { home: 'Inicio', products: 'Productos', services: 'Servicios', pricing: 'Precios', sectors: 'Sectores', contact: 'Contacto', signin: 'Ingresar', trial: 'Prueba Gratuita', dashboard: 'Panel', signout: 'Cerrar Sesión' },
+    hero: { badge: 'Transformación Digital para la Industria', title1: 'Elevando Estándares en', title2: 'Seguridad, Calidad y', title3: 'Cumplimiento Normativo', desc: 'Soluciones integrales en SIG 360, ERP 360, Capacitación Especializada, Auditoría MINTRA e Implementación ISO para Minería, Construcción y Energía.', cta: 'Solicitar Demo', cta2: 'Ver Productos', stats: [['19+', 'Años Experiencia'], ['500+', 'Horas Auditoría'], ['4', 'Normas ISO'], ['70%', 'Ahorro vs Int.']] },
+    services: { title: 'Nuestros Servicios', sub: 'Soluciones integrales para la excelencia industrial y cumplimiento normativo', more: 'Más información' },
+    sectors: { title: 'Sectores que Atendemos', sub: '12+ sectores con soluciones especializadas adaptadas a cada industria' },
+    pricing: { title: 'Planes y Precios', sub: 'Todos incluyen prueba de 14 días. Hasta 70% más económico que plataformas internacionales.', mo: 'Mensual', yr: 'Anual', save: '20% DESC.', subscribe: 'Iniciar Prueba', contact: 'Contactar Ventas', starter: 'Inicial', professional: 'Profesional', enterprise: 'Empresarial', users: 'usuarios', loc: 'sedes', unlim: 'Ilimitado', popular: 'MÁS POPULAR', tax: 'Precios en {{c}}. Impuestos pueden aplicar.', all: 'Todos los planes incluyen:', incl: ['Soporte 24/7', 'Seguridad SSL', 'Actualizaciones', 'Acceso API', 'SLA 99.9%', 'Onboarding'] },
+    iso: { title: 'Normas ISO Integradas', sub: '4 normas. 1 plataforma. Integración nativa Annex SL — único en Perú.' },
+    certs: { title: 'Nuestras Credenciales', sub: 'Auditor Líder ISO · Ingeniero Industrial CIP 210152 · MBA' },
+    contact: { title: 'Solicitar una Demo', sub: 'Nuestro equipo técnico lo contactará en 24 horas.', name: 'Nombre Completo', company: 'Empresa', email: 'Correo', service: 'Servicio de Interés', msg: 'Mensaje', send: 'Enviar Solicitud', phone: 'Teléfono' },
+    cookie: { text: 'Usamos cookies para mejorar tu experiencia.', accept: 'Aceptar Todo', reject: 'Solo Esenciales' },
+    footer: { rights: '© 2026 INNOVAQ SOLUTIONS SAC. Todos los derechos reservados.', made: 'Calidad Innovadora. Soluciones Prácticas.', slogan: 'Calidad Innovadora. Soluciones Prácticas.' },
+  },
+};
+
+const LOGO_URL = '/1000608638.jpg';
+
+// ═══════════════════════════════════════════════════════════════
+// CONTEXT
+// ═══════════════════════════════════════════════════════════════
+const Ctx = createContext();
+const useApp = () => useContext(Ctx);
+
+function Provider({ children }) {
+  const [lang, setLang] = useState('es');
+  const [currency, setCurrency] = useState('USD');
+  const [page, setPage] = useState('home');
+  const [cookies, setCookies] = useState(null);
+  const [user, setUser] = useState(null);
+  const [pageData, setPageData] = useState(null);
+  const t = useCallback((p) => { let v = T[lang]; for (const k of p.split('.')) v = v?.[k]; return v || p; }, [lang]);
+  const fmt = useCallback((usd) => { const c = CURRENCIES[currency]; return new Intl.NumberFormat(c.locale, { style: 'currency', currency, minimumFractionDigits: c.dec ?? 2, maximumFractionDigits: c.dec ?? 2 }).format(usd * c.rate); }, [currency]);
+  const go = useCallback((pg, data) => { setPage(pg); setPageData(data || null); window.scrollTo({ top: 0, behavior: 'smooth' }); }, []);
+  return <Ctx.Provider value={{ lang, setLang, currency, setCurrency, page, go, cookies, setCookies, user, setUser, pageData, t, fmt }}>{children}</Ctx.Provider>;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SHARED
+// ═══════════════════════════════════════════════════════════════
+const card = { background: B.bgCard, border: `1px solid ${B.border}`, borderRadius: 14, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' };
+const inp = { width: '100%', background: '#fff', border: `1.5px solid ${B.border}`, borderRadius: 10, padding: '11px 14px', color: B.text, fontSize: 14, fontFamily: "'DM Sans',sans-serif", outline: 'none' };
+const btnP = { background: B.orange, color: '#fff', border: 'none', borderRadius: 10, padding: '12px 28px', fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: "'DM Sans',sans-serif", transition: 'all 0.2s', boxShadow: '0 2px 8px rgba(246,141,46,0.3)' };
+const btnS = { ...btnP, background: B.blue, boxShadow: '0 2px 8px rgba(0,51,102,0.25)' };
+const btnO = { ...btnP, background: 'transparent', color: B.blue, border: `2px solid ${B.blue}`, boxShadow: 'none' };
+const Badge = ({ children, bg = B.orange }) => <span style={{ background: bg, color: '#fff', borderRadius: 6, padding: '3px 10px', fontSize: 11, fontWeight: 700 }}>{children}</span>;
+
+// ═══════════════════════════════════════════════════════════════
+// HEADER
+// ═══════════════════════════════════════════════════════════════
+function Header() {
+  const { lang, setLang, currency, setCurrency, t, page, go, user, setUser } = useApp();
+  const sel = { background: '#fff', border: `1px solid ${B.border}`, borderRadius: 8, padding: '5px 8px', color: B.text, fontSize: 12, fontFamily: "'DM Sans',sans-serif", cursor: 'pointer', outline: 'none' };
+  const navItems = [['home', t('nav.home')], ['products', t('nav.products')], ['services', t('nav.services')], ['pricing', t('nav.pricing')], ['sectors', t('nav.sectors')], ['contact', t('nav.contact')]];
+
+  return (
+    <header style={{ position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(16px)', background: 'rgba(245,245,240,0.92)', borderBottom: `1px solid ${B.border}` }}>
+      <div style={{ maxWidth: 1260, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }} onClick={() => go('home')}>
+          <img src={LOGO_URL} alt="INNOVAQ" style={{ height: 42, objectFit: 'contain' }} onError={e => { e.target.style.display = 'none'; }} />
+        </div>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap' }}>
+          {navItems.map(([p, label]) => (
+            <button key={p} onClick={() => go(p)} style={{ background: page === p ? B.blue + '10' : 'transparent', border: page === p ? `1px solid ${B.blue}25` : '1px solid transparent', borderRadius: 8, padding: '5px 12px', color: page === p ? B.blue : B.textMuted, fontSize: 13, fontWeight: page === p ? 700 : 500, cursor: 'pointer', fontFamily: "'DM Sans',sans-serif", transition: 'all 0.15s' }}>{label}</button>
+          ))}
+          <div style={{ width: 1, height: 18, background: B.border, margin: '0 4px' }} />
+          <select value={lang} onChange={e => setLang(e.target.value)} style={sel}><option value="es">🇪🇸 ES</option><option value="en">🇺🇸 EN</option></select>
+          <select value={currency} onChange={e => setCurrency(e.target.value)} style={sel}>{Object.entries(CURRENCIES).map(([c, v]) => <option key={c} value={c}>{v.flag} {c}</option>)}</select>
+          <button onClick={() => go('contact')} style={{ ...btnP, padding: '7px 16px', fontSize: 12, borderRadius: 8 }}>{t('nav.trial')}</button>
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HERO
+// ═══════════════════════════════════════════════════════════════
+function Hero() {
+  const { t, go } = useApp();
+  return (
+    <section style={{ position: 'relative', overflow: 'hidden', minHeight: 560 }}>
+      {/* Background image */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop" alt="Industrial Operations" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, ${B.blueDark}ee 0%, ${B.blue}cc 50%, ${B.blue}88 100%)` }} />
+      </div>
+      {/* Geometric pattern overlay */}
+      <div style={{ position: 'absolute', inset: 0, opacity: 0.06, backgroundImage: 'linear-gradient(60deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%), linear-gradient(60deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%)', backgroundSize: '56px 96px', backgroundPosition: '0 0, 28px 48px', zIndex: 1 }} />
+
+      <div style={{ position: 'relative', zIndex: 2, maxWidth: 1200, margin: '0 auto', padding: '80px 24px 70px', display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: 40, alignItems: 'center' }}>
+        <div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 16px', background: B.orange, borderRadius: 6, fontSize: 12, fontWeight: 700, color: '#fff', marginBottom: 24, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+            {t('hero.badge')}
+          </div>
+          <h1 style={{ fontSize: 'clamp(30px, 4.5vw, 52px)', fontWeight: 800, lineHeight: 1.1, color: '#fff', marginBottom: 20, letterSpacing: '-0.02em' }}>
+            {t('hero.title1')}<br />
+            <span style={{ color: B.orange }}>{t('hero.title2')}</span><br />
+            {t('hero.title3')}
+          </h1>
+          <p style={{ fontSize: 17, lineHeight: 1.7, color: 'rgba(255,255,255,0.8)', maxWidth: 540, marginBottom: 32 }}>{t('hero.desc')}</p>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <button onClick={() => go('contact')} style={{ ...btnP, padding: '14px 32px', fontSize: 15, borderRadius: 12 }}>{t('hero.cta')}</button>
+            <button onClick={() => go('products')} style={{ background: 'rgba(255,255,255,0.12)', color: '#fff', border: '2px solid rgba(255,255,255,0.3)', borderRadius: 12, padding: '14px 28px', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: "'DM Sans',sans-serif", backdropFilter: 'blur(8px)' }}>{t('hero.cta2')}</button>
+          </div>
+        </div>
+        {/* Stats grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+          {t('hero.stats').map(([v, l], i) => (
+            <div key={i} style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 14, padding: '22px 18px', textAlign: 'center' }}>
+              <div style={{ fontSize: 32, fontWeight: 800, color: i % 2 === 0 ? B.orange : '#fff', fontFamily: "'Space Mono',monospace" }}>{v}</div>
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', marginTop: 4, fontWeight: 500 }}>{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PAGES
+// ═══════════════════════════════════════════════════════════════
+function ProductsPage() {
+  const { t, lang, go } = useApp();
+  return (
+    <section style={{ padding: '64px 20px 80px', maxWidth: 1120, margin: '0 auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: 48 }}>
+        <h2 style={{ fontSize: 36, fontWeight: 800, color: B.blue, marginBottom: 10, letterSpacing: '-0.02em' }}>{lang === 'es' ? 'Nuestros Productos' : 'Our Products'}</h2>
+        <p style={{ fontSize: 15, color: B.textMuted }}>{lang === 'es' ? 'Plataformas empresariales diseñadas para la excelencia industrial' : 'Enterprise platforms designed for industrial excellence'}</p>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 }}>
+        {PRODUCTS.map(p => (
+          <div key={p.code} onClick={() => go('pricing')} style={{ ...card, padding: 28, cursor: 'pointer', transition: 'all 0.25s', borderLeft: `4px solid ${p.color}` }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'; }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+              <span style={{ fontSize: 32 }}>{p.icon}</span>
+              <div><h3 style={{ fontSize: 20, fontWeight: 800, color: B.blue }}>{p.name}</h3><p style={{ fontSize: 13, color: p.color, fontWeight: 600 }}>{p.sub[lang]}</p></div>
+            </div>
+            <p style={{ fontSize: 14, color: B.textMuted, lineHeight: 1.6, marginBottom: 16 }}>{p.desc[lang]}</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {(p.features[lang]).slice(0, 5).map((f, i) => <span key={i} style={{ fontSize: 11, color: B.textMuted, background: B.bg, border: `1px solid ${B.borderLight}`, borderRadius: 6, padding: '3px 8px' }}>{f}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ServicesPage() {
+  const { t, lang } = useApp();
+  return (
+    <section style={{ padding: '64px 20px 80px', maxWidth: 1120, margin: '0 auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: 48 }}>
+        <h2 style={{ fontSize: 36, fontWeight: 800, color: B.blue, marginBottom: 10 }}>{t('services.title')}</h2>
+        <p style={{ fontSize: 15, color: B.textMuted }}>{t('services.sub')}</p>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
+        {SERVICES.map((s, i) => (
+          <div key={i} style={{ ...card, padding: 26, transition: 'all 0.2s' }} onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.07)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'; }}>
+            <div style={{ fontSize: 36, marginBottom: 12 }}>{s.icon}</div>
+            <h4 style={{ fontSize: 17, fontWeight: 700, color: B.blue, marginBottom: 6 }}>{s.title[lang]}</h4>
+            <p style={{ fontSize: 13, color: B.textMuted, lineHeight: 1.6, marginBottom: 14 }}>{s.desc[lang]}</p>
+            <div style={{ borderTop: `1px solid ${B.borderLight}`, paddingTop: 12 }}>
+              {s.items[lang].map((item, j) => <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6, fontSize: 12, color: B.textMuted }}><span style={{ color: B.orange, fontWeight: 700 }}>▸</span>{item}</div>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function SectorsSection() {
+  const { t, lang } = useApp();
+  return (
+    <section style={{ padding: '64px 20px', background: B.bgCard }}>
+      <div style={{ maxWidth: 1000, margin: '0 auto', textAlign: 'center' }}>
+        <h2 style={{ fontSize: 32, fontWeight: 800, color: B.blue, marginBottom: 8 }}>{t('sectors.title')}</h2>
+        <p style={{ fontSize: 14, color: B.textMuted, marginBottom: 36 }}>{t('sectors.sub')}</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
+          {SECTORS.map(s => (
+            <div key={s.name.en} style={{ ...card, padding: '20px 14px', textAlign: 'center', transition: 'all 0.2s' }} onMouseEnter={e => { e.currentTarget.style.borderColor = B.orange; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={e => { e.currentTarget.style.borderColor = B.border; e.currentTarget.style.transform = 'none'; }}>
+              <div style={{ fontSize: 28, marginBottom: 6 }}>{s.icon}</div>
+              <div style={{ fontWeight: 700, fontSize: 13, color: B.blue }}>{s.name[lang]}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Pricing() {
+  const { lang, currency, t, fmt, go } = useApp();
+  const [billing, setBilling] = useState('annual');
+  const [active, setActive] = useState('SIG360');
+  const product = PRODUCTS.find(p => p.code === active);
+
+  return (
+    <section style={{ padding: '64px 20px 80px', maxWidth: 1100, margin: '0 auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: 40 }}>
+        <h2 style={{ fontSize: 36, fontWeight: 800, color: B.blue, marginBottom: 10 }}>{t('pricing.title')}</h2>
+        <p style={{ fontSize: 15, color: B.textMuted, maxWidth: 520, margin: '0 auto' }}>{t('pricing.sub')}</p>
+      </div>
+      {/* Product tabs */}
+      <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 24, flexWrap: 'wrap' }}>
+        {PRODUCTS.map(p => (
+          <button key={p.code} onClick={() => setActive(p.code)} style={{ background: active === p.code ? B.blue : '#fff', border: `1.5px solid ${active === p.code ? B.blue : B.border}`, borderRadius: 10, padding: '8px 16px', cursor: 'pointer', color: active === p.code ? '#fff' : B.textMuted, fontSize: 13, fontWeight: 700, fontFamily: "'DM Sans',sans-serif", transition: 'all 0.15s', display: 'flex', alignItems: 'center', gap: 5 }}>{p.icon} {p.name}</button>
+        ))}
+      </div>
+      {/* Billing toggle */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 36 }}>
+        <div style={{ display: 'inline-flex', background: '#fff', borderRadius: 10, padding: 3, border: `1.5px solid ${B.border}` }}>
+          {['monthly', 'annual'].map(b => (
+            <button key={b} onClick={() => setBilling(b)} style={{ background: billing === b ? B.blue : 'transparent', color: billing === b ? '#fff' : B.textMuted, border: 'none', borderRadius: 8, padding: '9px 22px', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: "'DM Sans',sans-serif", transition: 'all 0.15s', display: 'flex', alignItems: 'center', gap: 6 }}>
+              {t(`pricing.${b === 'annual' ? 'yr' : 'mo'}`)}
+              {b === 'annual' && <Badge bg={B.green}>{t('pricing.save')}</Badge>}
+            </button>
+          ))}
+        </div>
+      </div>
+      {/* Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18, maxWidth: 980, margin: '0 auto' }}>
+        {product?.plans.map(plan => {
+          const price = billing === 'annual' ? plan.yr / 12 : plan.mo;
+          const pop = plan.tier === 'professional';
+          return (
+            <div key={plan.tier} style={{ ...card, padding: '30px 24px', position: 'relative', borderColor: pop ? B.orange : B.border, borderWidth: pop ? 2 : 1, transition: 'all 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.08)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'; }}>
+              {pop && <div style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', background: B.orange, color: '#fff', padding: '4px 16px', borderRadius: 100, fontSize: 10, fontWeight: 800, letterSpacing: '0.06em' }}>{t('pricing.popular')}</div>}
+              <h3 style={{ fontSize: 20, fontWeight: 800, color: B.blue, marginBottom: 4 }}>{t(`pricing.${plan.tier}`)}</h3>
+              <p style={{ fontSize: 12, color: B.textLight, marginBottom: 18 }}>{plan.users || t('pricing.unlim')} {t('pricing.users')} · {plan.loc || t('pricing.unlim')} {t('pricing.loc')}</p>
+              <div style={{ marginBottom: 22 }}>
+                <span style={{ fontSize: 38, fontWeight: 800, color: B.blue, fontFamily: "'Space Mono',monospace" }}>{fmt(price)}</span>
+                <span style={{ fontSize: 14, color: B.textLight }}>/{lang === 'es' ? 'mes' : 'mo'}</span>
+                {billing === 'annual' && <div style={{ fontSize: 12, color: B.textLight, marginTop: 2 }}>{fmt(plan.yr)}/{lang === 'es' ? 'año' : 'yr'}</div>}
+              </div>
+              <button onClick={() => go('contact')} style={{ width: '100%', ...(pop ? btnP : btnO), padding: '11px 0', fontSize: 14, borderRadius: 10 }}>
+                {plan.tier === 'enterprise' ? t('pricing.contact') : t('pricing.subscribe')}
+              </button>
+              <div style={{ marginTop: 20, paddingTop: 16, borderTop: `1px solid ${B.borderLight}` }}>
+                {(product.features[lang]).map((f, j) => <div key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7, fontSize: 12, color: B.textMuted }}><span style={{ color: B.green, fontWeight: 700, fontSize: 11 }}>✓</span>{f}</div>)}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <p style={{ textAlign: 'center', fontSize: 12, color: B.textLight, marginTop: 28 }}>{t('pricing.tax').replace('{{c}}', currency)}</p>
+    </section>
+  );
+}
+
+function ISOSection() {
+  const { t } = useApp();
+  const isos = [
+    { n: '9001', label: { en: 'QUALITY', es: 'CALIDAD' }, color: B.blue, icon: '🏆', desc: { en: 'Document control, non-conformities, corrective actions, PDCA cycle, KPIs.', es: 'Control documental, no conformidades, acciones correctivas, ciclo PDCA, KPIs.' } },
+    { n: '14001', label: { en: 'ENVIRONMENTAL', es: 'MEDIO AMBIENTE' }, color: B.green, icon: '🌿', desc: { en: 'Environmental aspects & impacts, carbon footprint, waste management, monitoring.', es: 'Aspectos e impactos ambientales, huella de carbono, gestión residuos, monitoreos.' } },
+    { n: '45001', label: { en: 'SAFETY & HEALTH', es: 'SEGURIDAD Y SALUD' }, color: B.orange, icon: '🦺', desc: { en: 'Dynamic IPERC, BowTie investigation, Bird pyramid, IF/IS/IA indices, Law 29783.', es: 'IPERC dinámica, investigación Bow-Tie, pirámide Bird, índices IF/IS/IA, Ley 29783.' } },
+    { n: '37001', label: { en: 'ANTI-BRIBERY', es: 'ANTISOBORNO' }, color: '#7c3aed', icon: '⚖️', desc: { en: 'Anti-bribery system, Law 30424, due diligence, E2EE whistleblower channel.', es: 'Sistema antisoborno, Ley 30424, due diligence, canal denuncias E2EE.' } },
+  ];
+  return (
+    <section style={{ padding: '64px 20px', background: B.bgCard }}>
+      <div style={{ maxWidth: 980, margin: '0 auto', textAlign: 'center' }}>
+        <h2 style={{ fontSize: 32, fontWeight: 800, color: B.blue, marginBottom: 8 }}>{t('iso.title')}</h2>
+        <p style={{ fontSize: 14, color: B.textMuted, marginBottom: 36 }}>{t('iso.sub')}</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+          {isos.map(iso => (
+            <div key={iso.n} style={{ ...card, padding: 24, textAlign: 'left', borderLeft: `4px solid ${iso.color}` }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                <span style={{ fontSize: 28 }}>{iso.icon}</span>
+                <div><span style={{ fontSize: 22, fontWeight: 800, color: B.blue }}>ISO {iso.n}</span><div style={{ fontSize: 11, fontWeight: 700, color: iso.color, letterSpacing: '0.05em' }}>{iso.label[useApp().lang]}</div></div>
+              </div>
+              <p style={{ fontSize: 13, color: B.textMuted, lineHeight: 1.6 }}>{iso.desc[useApp().lang]}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactPage() {
+  const { t, lang } = useApp();
+  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ nombre: '', empresa: '', email: '', servicio: 'SIG 360° — Sistema Integrado de Gestión', mensaje: '' });
+  const u = (k, v) => setForm(p => ({ ...p, [k]: v }));
+  const handleSend = () => {
+    const subject = encodeURIComponent(`Solicitud Web: ${form.servicio} - ${form.empresa}`);
+    const body = encodeURIComponent(`Estimado equipo INNOVAQ Solutions,\n\nMe interesa: ${form.servicio}\n\nNombre: ${form.nombre}\nEmpresa: ${form.empresa}\nEmail: ${form.email}\n\nMensaje:\n${form.mensaje}\n\nQuedo atento a su respuesta.`);
+    window.open(`mailto:contacto@innovaqsolution.com?subject=${subject}&body=${body}`, '_blank');
+    setSent(true);
+  };
+  const lbl = { display: 'block', fontSize: 11, fontWeight: 700, color: B.textMuted, marginBottom: 5, letterSpacing: '0.04em', textTransform: 'uppercase' };
+  const waIcon = <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>;
+  const mailIcon = <svg width="20" height="20" viewBox="0 0 24 24" fill={B.orange}><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>;
+
+  return (
+    <section style={{ padding: '64px 20px 80px', maxWidth: 1100, margin: '0 auto' }}>
+      {sent ? (
+        <div style={{ ...card, padding: 56, textAlign: 'center', maxWidth: 520, margin: '0 auto' }}>
+          <div style={{ fontSize: 56, marginBottom: 16 }}>✅</div>
+          <h3 style={{ fontSize: 22, fontWeight: 700, color: B.blue, marginBottom: 8 }}>{lang === 'es' ? '¡Solicitud Enviada!' : 'Request Sent!'}</h3>
+          <p style={{ color: B.textMuted, fontSize: 14 }}>{lang === 'es' ? 'Se abrió su cliente de correo. Nuestro equipo técnico lo contactará en 24 horas.' : 'Your email client was opened. Our team will contact you within 24 hours.'}</p>
+        </div>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: 0, borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
+          {/* LEFT - Contact Info */}
+          <div style={{ background: `linear-gradient(160deg, ${B.blueDark}, ${B.blue})`, padding: '44px 36px', color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              <h2 style={{ fontSize: 28, fontWeight: 800, lineHeight: 1.2, marginBottom: 16, fontStyle: 'italic' }}>
+                {lang === 'es' ? 'Solicite una Cotización Corporativa' : 'Request a Corporate Quote'}
+              </h2>
+              <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', lineHeight: 1.7, marginBottom: 40 }}>
+                {lang === 'es'
+                  ? '¿Necesita implementar ISO 37001, realizar una Auditoría MINTRA o capacitar a su personal en trabajos de alto riesgo? Déjenos sus datos y un especialista técnico se contactará a la brevedad.'
+                  : 'Need ISO 37001 implementation, a MINTRA Audit or high-risk work training? Leave your details and a technical specialist will contact you shortly.'}
+              </p>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+              {/* WhatsApp */}
+              <div onClick={() => window.open('https://wa.me/51938430657', '_blank')} style={{ display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer', color: '#fff' }}>
+                <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(37,211,102,0.15)', border: '1px solid rgba(37,211,102,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  {waIcon}
+                </div>
+                <div>
+                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: 2 }}>WHATSAPP / {lang === 'es' ? 'CONTACTO' : 'CONTACT'}</div>
+                  <div style={{ fontSize: 15, fontWeight: 700 }}>+51 938 430 657</div>
+                </div>
+              </div>
+              {/* Email */}
+              <div onClick={() => window.open('mailto:contacto@innovaqsolution.com', '_blank')} style={{ display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer', color: '#fff' }}>
+                <div style={{ width: 44, height: 44, borderRadius: '50%', background: `rgba(241,145,43,0.15)`, border: `1px solid rgba(241,145,43,0.3)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  {mailIcon}
+                </div>
+                <div>
+                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: 2 }}>{lang === 'es' ? 'CORREO ELECTRÓNICO' : 'EMAIL'}</div>
+                  <div style={{ fontSize: 15, fontWeight: 700 }}>contacto@innovaqsolution.com</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* RIGHT - Form */}
+          <div style={{ background: '#fff', padding: '40px 36px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', gap: 12 }}>
+                <div style={{ flex: 1 }}><label style={lbl}>{lang === 'es' ? 'NOMBRE' : 'NAME'}</label><input value={form.nombre} onChange={e => u('nombre', e.target.value)} style={inp} placeholder={lang === 'es' ? 'Su nombre' : 'Your name'} /></div>
+                <div style={{ flex: 1 }}><label style={lbl}>{lang === 'es' ? 'EMPRESA' : 'COMPANY'}</label><input value={form.empresa} onChange={e => u('empresa', e.target.value)} style={inp} placeholder={lang === 'es' ? 'Nombre empresa' : 'Company name'} /></div>
+              </div>
+              <div><label style={lbl}>{lang === 'es' ? 'EMAIL CORPORATIVO' : 'CORPORATE EMAIL'}</label><input type="email" value={form.email} onChange={e => u('email', e.target.value)} style={inp} placeholder="ejemplo@empresa.com" /></div>
+              <div><label style={lbl}>{lang === 'es' ? 'SERVICIO DE INTERÉS' : 'SERVICE OF INTEREST'}</label>
+                <select value={form.servicio} onChange={e => u('servicio', e.target.value)} style={{ ...inp, cursor: 'pointer' }}>
+                  {['SIG 360° — Sistema Integrado de Gestión', 'ERP 360 (SumaERP)', 'TPM360 — Mantenimiento', 'MTP360 — Capacitación', 'Auditoría MINTRA / Ley 29783', 'Implementación ISO', 'Software a Medida', 'Automatización IA'].map(s => <option key={s} value={s}>{s}</option>)}
+                </select>
+              </div>
+              <div><label style={lbl}>{lang === 'es' ? 'MENSAJE' : 'MESSAGE'}</label><textarea rows={4} value={form.mensaje} onChange={e => u('mensaje', e.target.value)} style={{ ...inp, resize: 'vertical' }} placeholder={lang === 'es' ? 'Detalles de su requerimiento...' : 'Details of your requirement...'} /></div>
+              <button onClick={handleSend} style={{ ...btnP, width: '100%', borderRadius: 10, padding: '14px 0', fontSize: 15, letterSpacing: '0.04em', textTransform: 'uppercase' }}>{lang === 'es' ? 'ENVIAR SOLICITUD' : 'SEND REQUEST'}</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function CredsSection() {
+  const { t } = useApp();
+  return (
+    <section style={{ padding: '48px 20px', background: B.bg }}>
+      <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
+        <h3 style={{ fontSize: 22, fontWeight: 800, color: B.blue, marginBottom: 6 }}>{t('certs.title')}</h3>
+        <p style={{ fontSize: 13, color: B.textMuted, marginBottom: 24 }}>{t('certs.sub')}</p>
+        <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
+          {[{ n: 'ISO 9001', i: '🏆', c: B.blue }, { n: 'ISO 14001', i: '🌿', c: B.green }, { n: 'ISO 45001', i: '🦺', c: B.orange }, { n: 'ISO 37001', i: '⚖️', c: '#7c3aed' }].map(c => (
+            <div key={c.n} style={{ ...card, padding: '18px 22px', display: 'flex', alignItems: 'center', gap: 10, borderLeft: `3px solid ${c.c}` }}>
+              <span style={{ fontSize: 24 }}>{c.i}</span>
+              <span style={{ fontWeight: 800, fontSize: 14, color: B.blue }}>{c.n}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CookieBanner() {
+  const { t, cookies, setCookies } = useApp();
+  if (cookies !== null) return null;
+  return (
+    <div style={{ position: 'fixed', bottom: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 200, width: 'calc(100% - 32px)', maxWidth: 460, ...card, padding: '16px 20px', boxShadow: '0 8px 32px rgba(0,0,0,0.12)', borderColor: B.border }}>
+      <p style={{ fontSize: 13, color: B.textMuted, lineHeight: 1.5, marginBottom: 12 }}>🍪 {t('cookie.text')}</p>
+      <div style={{ display: 'flex', gap: 8 }}>
+        <button onClick={() => setCookies(true)} style={{ ...btnP, flex: 1, padding: '9px 0', fontSize: 12, borderRadius: 8 }}>{t('cookie.accept')}</button>
+        <button onClick={() => setCookies(false)} style={{ ...btnO, flex: 1, padding: '9px 0', fontSize: 12, borderRadius: 8 }}>{t('cookie.reject')}</button>
+      </div>
+    </div>
+  );
+}
+
+function Footer() {
+  const { t, lang, go } = useApp();
+  return (
+    <footer style={{ background: B.blueDark, padding: '44px 20px 24px', color: '#fff' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr', gap: 32, marginBottom: 32 }}>
+          <div>
+            <img src={LOGO_URL} alt="INNOVAQ" style={{ height: 48, objectFit: 'contain', filter: 'brightness(2)', marginBottom: 10 }} onError={e => { e.target.style.display = 'none'; }} />
+            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.6 }}>{t('footer.slogan')}</p>
+            <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 6 }}>RUC: 20606205105</p>
+          </div>
+          <div>
+            <h5 style={{ fontWeight: 800, fontSize: 12, marginBottom: 12, letterSpacing: '0.06em', textTransform: 'uppercase', color: B.orange }}>{lang === 'es' ? 'Productos' : 'Products'}</h5>
+            {PRODUCTS.map(p => <div key={p.code} onClick={() => go('pricing')} style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', marginBottom: 6, cursor: 'pointer' }}>{p.name}</div>)}
+          </div>
+          <div>
+            <h5 style={{ fontWeight: 800, fontSize: 12, marginBottom: 12, letterSpacing: '0.06em', textTransform: 'uppercase', color: B.orange }}>{lang === 'es' ? 'Servicios' : 'Services'}</h5>
+            {SERVICES.slice(0, 4).map((s, i) => <div key={i} style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', marginBottom: 6, cursor: 'pointer' }}>{s.title[lang]}</div>)}
+          </div>
+          <div>
+            <h5 style={{ fontWeight: 800, fontSize: 12, marginBottom: 12, letterSpacing: '0.06em', textTransform: 'uppercase', color: B.orange }}>{lang === 'es' ? 'Contacto' : 'Contact'}</h5>
+            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', lineHeight: 2 }}>
+              📧 comercial@innovaqsolutions.com<br />
+              📞 <span onClick={() => window.open('https://wa.me/51938430657', '_blank')} style={{ color: '#25D366', cursor: 'pointer', fontWeight: 600 }}>+51 938 430 657</span><br />
+              🌐 www.innovaqsolutions.com<br />
+              📍 Trujillo, La Libertad, Perú
+            </div>
+          </div>
+        </div>
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 16, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+          <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>{t('footer.rights')}</p>
+          <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>{t('footer.made')}</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ROUTER & APP
+// ═══════════════════════════════════════════════════════════════
+function WhatsAppFloat() {
+  const [hover, setHover] = useState(false);
+  const { lang } = useApp();
+  const msg = lang === 'es' ? 'Hola, me interesa conocer más sobre los servicios de INNOVAQ Solutions.' : 'Hi, I would like to learn more about INNOVAQ Solutions services.';
+  const url = `https://wa.me/51938430657?text=${encodeURIComponent(msg)}`;
+  return (
+    <>
+      <style>{`@keyframes wa-pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,0.5)}70%{box-shadow:0 0 0 18px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}`}</style>
+      <div onClick={() => window.open(url, '_blank')}
+        onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+        style={{ position: 'fixed', bottom: 28, right: 28, zIndex: 250, display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+        {hover && (
+          <div style={{ background: '#fff', color: '#333', padding: '8px 14px', borderRadius: 10, fontSize: 13, fontWeight: 600, fontFamily: "'DM Sans',sans-serif", boxShadow: '0 4px 16px rgba(0,0,0,0.12)', whiteSpace: 'nowrap', animation: 'slideIn 0.2s ease' }}>
+            {lang === 'es' ? '¡Escríbenos por WhatsApp!' : 'Chat with us on WhatsApp!'}
+          </div>
+        )}
+        <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#25D366', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 14px rgba(37,211,102,0.4)', animation: 'wa-pulse 2s infinite', transition: 'transform 0.2s', transform: hover ? 'scale(1.1)' : 'scale(1)' }}>
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function Content() {
+  const { page } = useApp();
+  const P = {
+    home: <><Hero /><ProductsPage /><ServicesPage /><SectorsSection /><ISOSection /><CredsSection /><ContactPage /><Footer /></>,
+    products: <><ProductsPage /><Footer /></>,
+    services: <><ServicesPage /><SectorsSection /><Footer /></>,
+    pricing: <><Pricing /><ISOSection /><CredsSection /><Footer /></>,
+    sectors: <><SectorsSection /><Footer /></>,
+    contact: <><ContactPage /><Footer /></>,
+  };
+  return P[page] || P.home;
+}
+
+function App() {
+  const [ok, setOk] = useState(false);
+  useEffect(() => { setTimeout(() => setOk(true), 60); }, []);
+  return (
+    <Provider>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=Space+Mono:wght@400;700&display=swap');*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(246,141,46,0.25);color:#003366}::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#F5F5F0}::-webkit-scrollbar-thumb{background:#ccc;border-radius:3px}@keyframes slideIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}`}</style>
+      <div style={{ fontFamily: "'DM Sans',sans-serif", background: B.bg, color: B.text, minHeight: '100vh', opacity: ok ? 1 : 0, transition: 'opacity 0.3s' }}>
+        <Header />
+        <Content />
+        <CookieBanner />
+        <WhatsAppFloat />
+      </div>
+    </Provider>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(App));
+    </script>
+</body>
+</html>
