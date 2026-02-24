@@ -12,6 +12,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -96,6 +97,14 @@ const Toast = ({ msg, type, onDone }) => { useEffect(() => { const t = setTimeou
 const Modal = ({ open, onClose, title, children, wide }) => { if (!open) return null; return <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 9999 }}><div onClick={e => e.stopPropagation()} style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 12, padding: 20, width: wide ? 640 : 440, maxWidth: "92vw", maxHeight: "85vh", overflow: "auto", scrollbarWidth: "thin" }}>{title && <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 12, display: "flex", justifyContent: "space-between" }}><span>{title}</span><button onClick={onClose} style={{ background: "none", border: "none", color: P.s2, cursor: "pointer", fontSize: 16 }}>×</button></div>}{children}</div></div>; };
 
 /* ===== PORTAL CLIENTE ===== */
+const exportXLS = (data, filename) => {
+  if (!data || !data.length) { alert("No hay datos para exportar"); return; }
+  const ws = XLSX.utils.json_to_sheet(data);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Datos");
+  XLSX.writeFile(wb, filename + ".xlsx");
+};
+
 function ClientePortal() {
   const [user, setUser] = useState(null);
   const [rucInput, setRucInput] = useState("");
@@ -276,7 +285,7 @@ function ClientePortal() {
               }
             } else {
               setRucError("RUC no registrado. Contacte al administrador.");
-            } dis={rucInput.length !== 11 || loading} style={{ padding: "10px", fontSize: 12, borderRadius: 7, marginTop: 4 }}>{loading ? "Ingresando..." : "Ingresar"}</Btn>
+            }}} dis={rucInput.length !== 11 || loading} style={{ padding: "10px", fontSize: 12, borderRadius: 7, marginTop: 4 }}>{loading ? "Ingresando..." : "Ingresar"}</Btn>
           
         </div>
       </div>
@@ -340,7 +349,8 @@ function ClientePortal() {
             <div style={{ fontSize: 10, color: P.s2 }}>RUC: {user.empresaRuc} · Documentos integrados con tu contador</div>
           </div>
           <div style={{ display: "flex", gap: 6 }}>
-            <Btn s onClick={() => handleScan(tab)} style={{ background: `${P.tl}15`, color: P.tl, border: `1px solid ${P.tl}30` }}><I.Sc /> Escanear Documento</Btn>
+            <Btn s onClick={() => exportXLS(tab === "ventas" ? myFacturas : myCompras, tab === "ventas" ? "Ventas_Cliente" : "Compras_Cliente")} style={{ background: P.grn + "15", color: P.grn, border: "1px solid " + P.grn + "30" }}><I.Dw /> Exportar XLS</Btn>
+              <Btn s onClick={() => handleScan(tab)} style={{ background: `${P.tl}15`, color: P.tl, border: `1px solid ${P.tl}30` }}><I.Sc /> Escanear Documento</Btn>
           </div>
         </div>
 
