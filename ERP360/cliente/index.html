@@ -20,6 +20,21 @@
 </head>
 <body style="background:#05070c;color:#d6e0f0;font-family:DM Sans,sans-serif">
     <div id="root"><div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#4a6080;font-size:14px">Cargando Portal Cliente...</div></div>
+    <script>
+  (function() {
+    var _sb = null;
+    function getSB() { if (!_sb && typeof window.supabase !== "undefined") { _sb = window.supabase.createClient("https://uinoropxppiuqgzktqjr.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpbm9yb3B4cHBpdXFnemt0cWpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1NjU0MTUsImV4cCI6MjA4NTE0MTQxNX0.V9sTNqTC_aldhwgE6RF66BEXfRvTF6jDLqm1WvbInTo"); } return _sb; }
+    window.SupaSync = {
+      getSB: getSB,
+      addRecord: async function(tabla, record, empresaRuc) { var sb = getSB(); if (!sb || !empresaRuc) return; var id = record.id || (Math.random().toString(36).substring(2) + Date.now().toString(36)); record.id = id; record._empresaRuc = empresaRuc; try { await sb.from("erp_data").upsert({ id: id, empresa_ruc: empresaRuc, tabla: tabla, data: record }); } catch(e) { console.log("SupaSync add error:", e); } },
+      updateRecord: async function(tabla, id, record, empresaRuc) { var sb = getSB(); if (!sb || !empresaRuc) return; record._empresaRuc = empresaRuc; try { await sb.from("erp_data").update({ data: record, updated_at: new Date().toISOString() }).eq("id", id).eq("empresa_ruc", empresaRuc); } catch(e) {} },
+      deleteRecord: async function(tabla, id, empresaRuc) { var sb = getSB(); if (!sb || !empresaRuc) return; try { await sb.from("erp_data").delete().eq("id", id).eq("empresa_ruc", empresaRuc); } catch(e) {} },
+      syncAll: async function(D, empresaRuc) { var sb = getSB(); if (!sb || !empresaRuc) return; var tables = ["facturas","compras","productos","empleados","imports","exports","bancos","asientos"]; for (var t = 0; t < tables.length; t++) { var tabla = tables[t]; var recs = D[tabla] || []; for (var r = 0; r < recs.length; r++) { var rec = recs[r]; var id = rec.id || (Math.random().toString(36).substring(2) + Date.now().toString(36)); rec.id = id; rec._empresaRuc = empresaRuc; try { await sb.from("erp_data").upsert({ id: id, empresa_ruc: empresaRuc, tabla: tabla, data: rec }); } catch(e) {} } } },
+      loadForEmpresa: async function(empresaRuc) { var sb = getSB(); if (!sb || !empresaRuc) return null; try { var result = await sb.from("erp_data").select("id, tabla, data").eq("empresa_ruc", empresaRuc); if (result.error || !result.data) return null; var D = { facturas:[], compras:[], productos:[], empleados:[], imports:[], exports:[], bancos:[], asientos:[] }; for (var i = 0; i < result.data.length; i++) { var row = result.data[i]; if (D[row.tabla]) D[row.tabla].push(row.data); } return D; } catch(e) { return null; } },
+      addScannedDoc: async function(doc, empresaRuc) { var sb = getSB(); if (!sb || !empresaRuc) return; var id = doc.id || (Math.random().toString(36).substring(2) + Date.now().toString(36)); try { await sb.from("erp_scanned_docs").upsert({ id: id, empresa_ruc: empresaRuc, data: doc }); } catch(e) {} }
+    };
+  })();
+</script>
     <script type="text/babel">
 const { useState, useEffect, useCallback, useMemo, useRef } = React;
 const { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, LineChart, Line, CartesianGrid, Legend } = Recharts;
@@ -130,6 +145,8 @@ function ClientePortal() {
 
   /* Sync to localStorage on change */
   useEffect(() => { saveData(D); }, [D]);
+  useEffect(() => { if (user && user.empresaRuc && typeof SupaSync !== "undefined") { SupaSync.syncAll(D, user.empresaRuc); } }, [D, user]);
+  useEffect(() => { if (user && user.empresaRuc && scannedDocs.length > 0 && typeof SupaSync !== "undefined") { scannedDocs.forEach(function(doc) { SupaSync.addScannedDoc(doc, user.empresaRuc); }); } }, [scannedDocs, user]);
   useEffect(() => { saveScannedDocs(scannedDocs); }, [scannedDocs]);
 
   /* Listen for changes from other tabs (contador) */
@@ -249,7 +266,9 @@ function ClientePortal() {
           )}
           <Btn p full onClick={() => {
             const found = EMPRESAS_CLIENTES.find(e => e.ruc === rucInput.trim());
-            if (found) { setLoading(true); setTimeout(() => { setUser({ role: "cliente", empresa: found, empresaRuc: found.ruc, empresaRazon: found.razon }); setLoading(false); }, 600); }
+            if (found) { setLoading(true); setTimeout(() => { setUser({ role: "cliente", empresa: found, empresaRuc: found.ruc, empresaRazon: found.razon });
+              if (typeof SupaSync !== "undefined") { SupaSync.loadForEmpresa(found.ruc).then(function(supaData) { if (supaData) { setD(supaData); } }); }
+               setLoading(false); }, 600); }
             else { setRucError("RUC no registrado. Contacte al administrador."); }
           }} dis={rucInput.length !== 11 || loading} style={{ padding: "10px", fontSize: 12, borderRadius: 7, marginTop: 4 }}>{loading ? "Ingresando..." : "Ingresar"}</Btn>
           <div style={{ marginTop: 12, background: P.c2, borderRadius: 7, padding: 8, maxHeight: 200, overflowY: "auto", scrollbarWidth: "thin" }}>
