@@ -261,11 +261,22 @@ function ClientePortal() {
           
           <Btn p full onClick={() => {
             const found = empresasDyn.find(e => e.ruc === rucInput.trim());
-            if (found) { setLoading(true); setTimeout(() => { setUser({ role: "cliente", empresa: found, empresaRuc: found.ruc, empresaRazon: found.razon });
-              if (typeof SupaSync !== "undefined") { SupaSync.loadForEmpresa(found.ruc).then(function(supaData) { if (supaData) { setD(supaData); } window._supaInitLoaded=true; }); }
-               setLoading(false); }, 600); }
-            else { setRucError("RUC no registrado. Contacte al administrador."); }
-          }} dis={rucInput.length !== 11 || loading} style={{ padding: "10px", fontSize: 12, borderRadius: 7, marginTop: 4 }}>{loading ? "Ingresando..." : "Ingresar"}</Btn>
+            if (found) {
+              setLoading(true);
+              const doLogin = (supaData) => {
+                if (supaData) setD(supaData);
+                window._supaInitLoaded = true;
+                setUser({ role: "cliente", empresa: found, empresaRuc: found.ruc, empresaRazon: found.razon });
+                setLoading(false);
+              };
+              if (typeof SupaSync !== "undefined") {
+                SupaSync.loadForEmpresa(found.ruc).then(doLogin).catch(() => doLogin(null));
+              } else {
+                setTimeout(() => doLogin(null), 400);
+              }
+            } else {
+              setRucError("RUC no registrado. Contacte al administrador.");
+            } dis={rucInput.length !== 11 || loading} style={{ padding: "10px", fontSize: 12, borderRadius: 7, marginTop: 4 }}>{loading ? "Ingresando..." : "Ingresar"}</Btn>
           
         </div>
       </div>
