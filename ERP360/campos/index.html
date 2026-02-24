@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SumaERP - Portal Contador Campos</title>
 <meta name="description" content="SumaERP Portal Contador - Todos los modulos con dashboards limpios">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='url(%23g)'/><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%2332D74B'/><stop offset='100%25' stop-color='%230A84FF'/></linearGradient></defs><text x='50' y='68' font-size='50' font-weight='800' fill='white' text-anchor='middle' font-family='system-ui'>\u03A3</text></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='url(%23g)'/><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%2332D74B'/><stop offset='100%25' stop-color='%230A84FF'/></linearGradient></defs><text x='50' y='68' font-size='50' font-weight='800' fill='white' text-anchor='middle' font-family='system-ui'>Σ</text></svg>">
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/prop-types@15/prop-types.min.js"></script>
@@ -42,23 +42,23 @@ function getSB(){if(!sb&&window.supabase){sb=window.supabase.createClient(SUPA_U
 /* ===== PALETTE ===== */
 const P={bg:"#05070c",c1:"#0a0e17",c2:"#0f1520",c3:"#141c2c",bd:"#1a2540",hv:"#111b30",tx:"#d6e0f0",s1:"#8095b3",s2:"#4a6080",blue:"#0A84FF",grn:"#32D74B",org:"#FF9F0A",red:"#FF453A",pur:"#BF5AF2",cyan:"#64D2FF",yel:"#FFD60A",tl:"#2AC7B8",pk:"#FF375F",lime:"#A8E06C"};
 const nn=v=>(typeof v==="number"?v:parseFloat(v)||0);
-const $=(v,c="PEN")=>{const p=c==="USD"?"US$ ":c==="EUR"?"\u20ac ":"S/ ";return p+Math.abs(nn(v)).toLocaleString("es-PE",{minimumFractionDigits:2,maximumFractionDigits:2})};
+const $=(v,c="PEN")=>{const p=c==="USD"?"US$ ":c==="EUR"?"€ ":"S/ ";return p+Math.abs(nn(v)).toLocaleString("es-PE",{minimumFractionDigits:2,maximumFractionDigits:2})};
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const today=()=>new Date().toISOString().slice(0,10);
 
 /* ===== MODULES CONFIG ===== */
 const MODULES=[
-{id:"dashboard",label:"Dashboard",icon:"\u2302"},
-{id:"ventas",label:"Ventas SIRE",icon:"\ud83d\udcc4"},
-{id:"compras",label:"Compras SIRE",icon:"\ud83d\udce6"},
-{id:"almacen",label:"Almacen MRPII",icon:"\ud83c\udfed"},
-{id:"comex",label:"Comercio Ext.",icon:"\ud83c\udf0d"},
-{id:"costos",label:"Costos Prod.",icon:"\ud83d\udcca"},
-{id:"finanzas",label:"Finanzas",icon:"\ud83c\udfe6"},
-{id:"contabilidad",label:"Contabilidad",icon:"\ud83d\udcd2"},
-{id:"rrhh",label:"RRHH",icon:"\ud83d\udc65"},
-{id:"planes",label:"Planes",icon:"\ud83c\udfaf"},
-{id:"basedatos",label:"Base Datos",icon:"\ud83d\uddc4"}
+{id:"dashboard",label:"Dashboard",icon:"⌂"},
+{id:"ventas",label:"Ventas SIRE",icon:"📄"},
+{id:"compras",label:"Compras SIRE",icon:"📦"},
+{id:"almacen",label:"Almacen MRPII",icon:"🏭"},
+{id:"comex",label:"Comercio Ext.",icon:"🌍"},
+{id:"costos",label:"Costos Prod.",icon:"📊"},
+{id:"finanzas",label:"Finanzas",icon:"🏦"},
+{id:"contabilidad",label:"Contabilidad",icon:"📒"},
+{id:"rrhh",label:"RRHH",icon:"👥"},
+{id:"planes",label:"Planes",icon:"🎯"},
+{id:"basedatos",label:"Base Datos",icon:"🗄"}
 ];
 
 /* ===== EMPRESAS ===== */
@@ -98,7 +98,7 @@ const Badge=({s,c})=>{const cm={Emitida:P.blue,Pagada:P.grn,Pendiente:P.org,Paga
 
 const Toast=({msg,type,onDone})=>{useEffect(()=>{const t=setTimeout(onDone,3000);return()=>clearTimeout(t)},[]);const c=type==="err"?P.red:type==="warn"?P.org:P.grn;return<div style={{position:"fixed",bottom:20,right:20,background:P.c1,border:"1px solid "+c+"40",borderRadius:10,padding:"10px 16px",fontSize:11,color:P.tx,zIndex:99999,boxShadow:"0 8px 32px "+c+"20",display:"flex",alignItems:"center",gap:8,maxWidth:360}}><span style={{width:6,height:6,borderRadius:3,background:c}}/>{msg}</div>};
 
-const Modal=({open,onClose,title,children,wide})=>{if(!open)return null;return<div onClick={onClose} style={{position:"fixed",inset:0,background:"rgba(0,0,0,.7)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:9999}}><div onClick={e=>e.stopPropagation()} style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:12,padding:20,width:wide?700:440,maxWidth:"94vw",maxHeight:"85vh",overflow:"auto",scrollbarWidth:"thin"}}>{title&&<div style={{fontSize:14,fontWeight:700,marginBottom:12,display:"flex",justifyContent:"space-between"}}><span>{title}</span><button onClick={onClose} style={{background:"none",border:"none",color:P.s2,cursor:"pointer",fontSize:16}}>\u00d7</button></div>}{children}</div></div>};
+const Modal=({open,onClose,title,children,wide})=>{if(!open)return null;return<div onClick={onClose} style={{position:"fixed",inset:0,background:"rgba(0,0,0,.7)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:9999}}><div onClick={e=>e.stopPropagation()} style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:12,padding:20,width:wide?700:440,maxWidth:"94vw",maxHeight:"85vh",overflow:"auto",scrollbarWidth:"thin"}}>{title&&<div style={{fontSize:14,fontWeight:700,marginBottom:12,display:"flex",justifyContent:"space-between"}}><span>{title}</span><button onClick={onClose} style={{background:"none",border:"none",color:P.s2,cursor:"pointer",fontSize:16}}>×</button></div>}{children}</div></div>};
 
 const KPI=({label,value,color,sub})=>(
 <div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:"14px 16px",animation:"fadeIn .3s ease"}}>
@@ -124,7 +124,7 @@ return(
 <div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:8,overflow:"hidden"}}>
 {(title||onExport)&&<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 10px",borderBottom:"1px solid "+P.bd}}>
 <span style={{fontSize:11,fontWeight:700}}>{title||""}</span>
-{onExport&&<Btn s onClick={onExport} style={{background:P.grn+"15",color:P.grn,border:"1px solid "+P.grn+"30"}}>\u2B07 Exportar XLS</Btn>}
+{onExport&&<Btn s onClick={onExport} style={{background:P.grn+"15",color:P.grn,border:"1px solid "+P.grn+"30"}}>⬇ Exportar XLS</Btn>}
 </div>}
 <div style={{overflowX:"auto"}}>
 <table style={{width:"100%",borderCollapse:"collapse"}}>
@@ -152,12 +152,12 @@ const igvCredito=D.compras.reduce((a,c)=>a+nn(c.igv),0);
 const chartData=[{m:"Ene",v:0},{m:"Feb",v:0},{m:"Mar",v:0},{m:"Abr",v:0},{m:"May",v:0},{m:"Jun",v:0}];
 return(<div>
 <div style={{fontSize:16,fontWeight:800,marginBottom:4}}>Dashboard General</div>
-<div style={{fontSize:10,color:P.s2,marginBottom:16}}>Resumen de operaciones \u2014 Nuevo Periodo Contable</div>
+<div style={{fontSize:10,color:P.s2,marginBottom:16}}>Resumen de operaciones — Nuevo Periodo Contable</div>
 <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,marginBottom:16}}>
 <KPI label="Total Ventas" value={$(totalVentas)} color={P.grn} sub={D.facturas.length+" documentos"}/>
 <KPI label="Total Compras" value={$(totalCompras)} color={P.org} sub={D.compras.length+" documentos"}/>
-<KPI label="IGV D\u00e9bito" value={$(igvDebito)} color={P.red}/>
-<KPI label="IGV Cr\u00e9dito" value={$(igvCredito)} color={P.blue}/>
+<KPI label="IGV Débito" value={$(igvDebito)} color={P.red}/>
+<KPI label="IGV Crédito" value={$(igvCredito)} color={P.blue}/>
 </div>
 <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10,marginBottom:16}}>
 <KPI label="Empleados" value={D.empleados.length} color={P.cyan}/>
@@ -197,7 +197,7 @@ const cols=[
 {k:"cliente",l:"Cliente"},{k:"ruc",l:"RUC",mono:1},{k:"moneda",l:"Mon",color:P.yel},
 {k:"subtotal",l:"Base",r:1,fmt:v=>$(v)},{k:"igv",l:"IGV",r:1,fmt:v=>$(v)},{k:"total",l:"Total",r:1,b:1,fmt:v=>$(v)},
 {k:"estado",l:"Estado",render:r=><Badge s={r.estado}/>},
-{k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>\u2716</Btn>}];
+{k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>✖</Btn>}];
 return(<div>
 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
 <div><div style={{fontSize:16,fontWeight:800}}>Ventas SIRE</div><div style={{fontSize:10,color:P.s2}}>Registro de Ventas e Ingresos</div></div>
@@ -207,16 +207,16 @@ return(<div>
 <KPI label="Total Ventas" value={$(D.facturas.reduce((a,f)=>a+nn(f.total),0))} color={P.grn}/>
 <KPI label="Documentos" value={D.facturas.length} color={P.blue}/>
 <KPI label="Pagadas" value={D.facturas.filter(f=>f.estado==="Pagada").length} color={P.grn}/>
-<KPI label="IGV D\u00e9bito" value={$(D.facturas.reduce((a,f)=>a+nn(f.igv),0))} color={P.red}/>
+<KPI label="IGV Débito" value={$(D.facturas.reduce((a,f)=>a+nn(f.igv),0))} color={P.red}/>
 </div>
 <DataTable data={D.facturas} cols={cols} empty="Sin facturas registradas. Haz clic en + Nueva Factura." title="Registro de Ventas" onExport={()=>exportXLS(D.facturas,"Ventas_SIRE")}/>
 <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nueva Factura de Venta">
 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
 <Inp l="Serie" v={f.serie} onChange={v=>setF({...f,serie:v})}/>
-<Inp l="N\u00famero" v={f.numero} onChange={v=>setF({...f,numero:v})} ph="000001"/>
+<Inp l="Número" v={f.numero} onChange={v=>setF({...f,numero:v})} ph="000001"/>
 <Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
-<Sel l="Tipo" v={f.tipo} onChange={v=>setF({...f,tipo:v})} opts={["Factura","Boleta","Nota Cr\u00e9dito","Nota D\u00e9bito"]}/>
-<Inp l="Cliente" v={f.cliente} onChange={v=>setF({...f,cliente:v})} ph="Raz\u00f3n social"/>
+<Sel l="Tipo" v={f.tipo} onChange={v=>setF({...f,tipo:v})} opts={["Factura","Boleta","Nota Crédito","Nota Débito"]}/>
+<Inp l="Cliente" v={f.cliente} onChange={v=>setF({...f,cliente:v})} ph="Razón social"/>
 <Inp l="RUC/DNI" v={f.ruc} onChange={v=>setF({...f,ruc:v})} ph="20xxxxxxxxx"/>
 <Sel l="Moneda" v={f.moneda} onChange={v=>setF({...f,moneda:v})} opts={["PEN","USD"]}/>
 <Inp l="Subtotal" v={f.subtotal} onChange={v=>setF({...f,subtotal:v})} type="number"/>
@@ -241,7 +241,7 @@ const cols=[
 {k:"proveedor",l:"Proveedor"},{k:"ruc",l:"RUC",mono:1},{k:"moneda",l:"Mon",color:P.yel},
 {k:"subtotal",l:"Base",r:1,fmt:v=>$(v)},{k:"igv",l:"IGV",r:1,fmt:v=>$(v)},{k:"total",l:"Total",r:1,b:1,fmt:v=>$(v)},
 {k:"estado",l:"Estado",render:r=><Badge s={r.estado}/>},
-{k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>\u2716</Btn>}];
+{k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>✖</Btn>}];
 return(<div>
 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
 <div><div style={{fontSize:16,fontWeight:800}}>Compras SIRE</div><div style={{fontSize:10,color:P.s2}}>Registro de Compras</div></div>
@@ -251,16 +251,16 @@ return(<div>
 <KPI label="Total Compras" value={$(D.compras.reduce((a,c)=>a+nn(c.total),0))} color={P.org}/>
 <KPI label="Documentos" value={D.compras.length} color={P.blue}/>
 <KPI label="Pagados" value={D.compras.filter(c=>c.estado==="Pagado").length} color={P.grn}/>
-<KPI label="IGV Cr\u00e9dito" value={$(D.compras.reduce((a,c)=>a+nn(c.igv),0))} color={P.blue}/>
+<KPI label="IGV Crédito" value={$(D.compras.reduce((a,c)=>a+nn(c.igv),0))} color={P.blue}/>
 </div>
 <DataTable data={D.compras} cols={cols} empty="Sin compras registradas." title="Registro de Compras" onExport={()=>exportXLS(D.compras,"Compras_SIRE")}/>
 <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nueva Compra">
 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
 <Inp l="Serie" v={f.serie} onChange={v=>setF({...f,serie:v})}/>
-<Inp l="N\u00famero" v={f.numero} onChange={v=>setF({...f,numero:v})} ph="000001"/>
+<Inp l="Número" v={f.numero} onChange={v=>setF({...f,numero:v})} ph="000001"/>
 <Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
 <Sel l="Tipo" v={f.tipo} onChange={v=>setF({...f,tipo:v})} opts={["Factura","Boleta","Recibo Honorario","Liquidacion Compra"]}/>
-<Inp l="Proveedor" v={f.proveedor} onChange={v=>setF({...f,proveedor:v})} ph="Raz\u00f3n social"/>
+<Inp l="Proveedor" v={f.proveedor} onChange={v=>setF({...f,proveedor:v})} ph="Razón social"/>
 <Inp l="RUC" v={f.ruc} onChange={v=>setF({...f,ruc:v})} ph="20xxxxxxxxx"/>
 <Sel l="Moneda" v={f.moneda} onChange={v=>setF({...f,moneda:v})} opts={["PEN","USD"]}/>
 <Inp l="Subtotal" v={f.subtotal} onChange={v=>setF({...f,subtotal:v})} type="number"/>
@@ -281,25 +281,25 @@ setF({codigo:"",nombre:"",categoria:"",unidad:"UND",stock:0,precio:0,costo:0})};
 const del=(id)=>{setD(p=>({...p,productos:p.productos.filter(x=>x.id!==id)}));notify("Producto eliminado","warn")};
 return(<div>
 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
-<div><div style={{fontSize:16,fontWeight:800}}>Almac\u00e9n MRPII</div><div style={{fontSize:10,color:P.s2}}>Gesti\u00f3n de Inventario y Productos</div></div>
+<div><div style={{fontSize:16,fontWeight:800}}>Almacén MRPII</div><div style={{fontSize:10,color:P.s2}}>Gestión de Inventario y Productos</div></div>
 <Btn s onClick={()=>setShowAdd(true)} style={{background:P.cyan+"15",color:P.cyan}}>+ Nuevo Producto</Btn>
 </div>
 <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
 <KPI label="Total Productos" value={D.productos.length} color={P.cyan}/>
 <KPI label="Valor Inventario" value={$(D.productos.reduce((a,p)=>a+nn(p.stock)*nn(p.costo),0))} color={P.grn}/>
 <KPI label="Stock Bajo" value={D.productos.filter(p=>nn(p.stock)<10).length} color={P.red}/>
-<KPI label="Categor\u00edas" value={[...new Set(D.productos.map(p=>p.categoria).filter(Boolean))].length} color={P.pur}/>
+<KPI label="Categorías" value={[...new Set(D.productos.map(p=>p.categoria).filter(Boolean))].length} color={P.pur}/>
 </div>
 <DataTable data={D.productos} cols={[
-{k:"codigo",l:"C\u00f3digo",mono:1,color:"#5B9CF6",b:1},{k:"nombre",l:"Producto"},{k:"categoria",l:"Categor\u00eda"},
+{k:"codigo",l:"Código",mono:1,color:"#5B9CF6",b:1},{k:"nombre",l:"Producto"},{k:"categoria",l:"Categoría"},
 {k:"unidad",l:"Und"},{k:"stock",l:"Stock",r:1,b:1},{k:"precio",l:"Precio",r:1,fmt:v=>$(v)},{k:"costo",l:"Costo",r:1,fmt:v=>$(v)},
-{k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>\u2716</Btn>}
+{k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>✖</Btn>}
 ]} empty="Sin productos. Agrega tu primer producto." title="Inventario" onExport={()=>exportXLS(D.productos,"Almacen_Productos")}/>
 <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nuevo Producto">
 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
-<Inp l="C\u00f3digo" v={f.codigo} onChange={v=>setF({...f,codigo:v})} ph="SKU001"/>
+<Inp l="Código" v={f.codigo} onChange={v=>setF({...f,codigo:v})} ph="SKU001"/>
 <Inp l="Nombre" v={f.nombre} onChange={v=>setF({...f,nombre:v})} ph="Nombre del producto"/>
-<Inp l="Categor\u00eda" v={f.categoria} onChange={v=>setF({...f,categoria:v})}/>
+<Inp l="Categoría" v={f.categoria} onChange={v=>setF({...f,categoria:v})}/>
 <Sel l="Unidad" v={f.unidad} onChange={v=>setF({...f,unidad:v})} opts={["UND","KG","LT","MT","CJ","BL"]}/>
 <Inp l="Stock" v={f.stock} onChange={v=>setF({...f,stock:v})} type="number"/>
 <Inp l="Precio Venta" v={f.precio} onChange={v=>setF({...f,precio:v})} type="number"/>
@@ -314,11 +314,11 @@ const[showAdd,setShowAdd]=useState(false);
 const[tipo,setTipo]=useState("import");
 const[f,setF]=useState({fecha:today(),dua:"",proveedor:"",origen:"",moneda:"USD",fob:0,flete:0,seguro:0,cif:0,advalorem:0,igv:0,total:0,estado:"En Proceso"});
 const add=()=>{const key=tipo==="import"?"imports":"exports";const nr={...f,id:uid(),fob:nn(f.fob),flete:nn(f.flete),seguro:nn(f.seguro),cif:nn(f.cif),advalorem:nn(f.advalorem),igv:nn(f.igv),total:nn(f.total)};
-setD(p=>({...p,[key]:[nr,...(p[key]||[])]}));setShowAdd(false);notify("Operaci\u00f3n registrada");};
+setD(p=>({...p,[key]:[nr,...(p[key]||[])]}));setShowAdd(false);notify("Operación registrada");};
 return(<div>
 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
 <div><div style={{fontSize:16,fontWeight:800}}>Comercio Exterior</div><div style={{fontSize:10,color:P.s2}}>Importaciones y Exportaciones</div></div>
-<Btn s onClick={()=>setShowAdd(true)} style={{background:P.tl+"15",color:P.tl}}>+ Nueva Operaci\u00f3n</Btn>
+<Btn s onClick={()=>setShowAdd(true)} style={{background:P.tl+"15",color:P.tl}}>+ Nueva Operación</Btn>
 </div>
 <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
 <KPI label="Importaciones" value={(D.imports||[]).length} color={P.org}/>
@@ -332,10 +332,10 @@ return(<div>
 {k:"origen",l:"Origen/Destino"},{k:"fob",l:"FOB",r:1,fmt:v=>$(v,"USD")},{k:"cif",l:"CIF",r:1,fmt:v=>$(v,"USD")},
 {k:"total",l:"Total",r:1,b:1,fmt:v=>$(v,"USD")},{k:"estado",l:"Estado",render:r=><Badge s={r.estado}/>}
 ]} empty="Sin operaciones de comercio exterior." title="Operaciones ComEx" onExport={()=>exportXLS([...(D.imports||[]),...(D.exports||[])],"ComercioExterior")}/>
-<Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nueva Operaci\u00f3n">
+<Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nueva Operación">
 <div style={{display:"flex",gap:6,marginBottom:12}}>
-<Btn p={tipo==="import"} onClick={()=>setTipo("import")}>Importaci\u00f3n</Btn>
-<Btn p={tipo==="export"} onClick={()=>setTipo("export")}>Exportaci\u00f3n</Btn>
+<Btn p={tipo==="import"} onClick={()=>setTipo("import")}>Importación</Btn>
+<Btn p={tipo==="export"} onClick={()=>setTipo("export")}>Exportación</Btn>
 </div>
 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
 <Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
@@ -355,8 +355,8 @@ return(<div>
 const ModCostos=({D,notify})=>{
 const mp=D.productos.length?D.productos.reduce((a,p)=>a+nn(p.costo),0)/D.productos.length:0;
 return(<div>
-<div style={{fontSize:16,fontWeight:800,marginBottom:4}}>Costos de Producci\u00f3n</div>
-<div style={{fontSize:10,color:P.s2,marginBottom:16}}>An\u00e1lisis de costos y m\u00e1rgenes</div>
+<div style={{fontSize:16,fontWeight:800,marginBottom:4}}>Costos de Producción</div>
+<div style={{fontSize:10,color:P.s2,marginBottom:16}}>Análisis de costos y márgenes</div>
 <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
 <KPI label="Costo Promedio" value={$(mp)} color={P.org}/>
 <KPI label="Productos" value={D.productos.length} color={P.blue}/>
@@ -364,10 +364,10 @@ return(<div>
 <KPI label="Margen Prom." value={(D.productos.length?((D.productos.reduce((a,p)=>a+(nn(p.precio)-nn(p.costo)),0)/D.productos.length/Math.max(mp,1))*100).toFixed(1):0)+"%"} color={P.grn}/>
 </div>
 <DataTable data={D.productos.map(p=>({...p,margen:nn(p.precio)-nn(p.costo),margenP:nn(p.precio)?((nn(p.precio)-nn(p.costo))/nn(p.precio)*100).toFixed(1)+"%" :"0%"}))} cols={[
-{k:"codigo",l:"C\u00f3digo",mono:1},{k:"nombre",l:"Producto"},{k:"costo",l:"Costo Unit.",r:1,fmt:v=>$(v)},
+{k:"codigo",l:"Código",mono:1},{k:"nombre",l:"Producto"},{k:"costo",l:"Costo Unit.",r:1,fmt:v=>$(v)},
 {k:"precio",l:"Precio Venta",r:1,fmt:v=>$(v)},{k:"margen",l:"Margen",r:1,fmt:v=>$(v),color:P.grn},
 {k:"margenP",l:"% Margen",r:1,color:P.grn},{k:"stock",l:"Stock",r:1}
-]} empty="Sin productos para analizar costos." title="An\u00e1lisis de Costos" onExport={()=>exportXLS(D.productos.map(p=>({codigo:p.codigo,nombre:p.nombre,costo:p.costo,precio:p.precio,margen:nn(p.precio)-nn(p.costo),stock:p.stock})),"Costos_Produccion")}/>
+]} empty="Sin productos para analizar costos." title="Análisis de Costos" onExport={()=>exportXLS(D.productos.map(p=>({codigo:p.codigo,nombre:p.nombre,costo:p.costo,precio:p.precio,margen:nn(p.precio)-nn(p.costo),stock:p.stock})),"Costos_Produccion")}/>
 </div>)};
 
 /* ===== MODULE: FINANZAS ===== */
@@ -379,7 +379,7 @@ const ingresos=(D.bancos||[]).filter(b=>b.tipo==="Ingreso").reduce((a,b)=>a+nn(b
 const egresos=(D.bancos||[]).filter(b=>b.tipo==="Egreso").reduce((a,b)=>a+nn(b.monto),0);
 return(<div>
 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
-<div><div style={{fontSize:16,fontWeight:800}}>Finanzas</div><div style={{fontSize:10,color:P.s2}}>Gesti\u00f3n Financiera y Bancos</div></div>
+<div><div style={{fontSize:16,fontWeight:800}}>Finanzas</div><div style={{fontSize:10,color:P.s2}}>Gestión Financiera y Bancos</div></div>
 <Btn s onClick={()=>setShowAdd(true)} style={{background:P.grn+"15",color:P.grn}}>+ Nuevo Movimiento</Btn>
 </div>
 <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
@@ -432,7 +432,7 @@ return(<div>
 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
 <Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
 <Inp l="Correlativo" v={f.correlativo} onChange={v=>setF({...f,correlativo:v})} ph="0001"/>
-<Inp l="Glosa" v={f.glosa} onChange={v=>setF({...f,glosa:v})} ph="Descripci\u00f3n"/>
+<Inp l="Glosa" v={f.glosa} onChange={v=>setF({...f,glosa:v})} ph="Descripción"/>
 <Inp l="Cuenta Debe" v={f.cuentaDebe} onChange={v=>setF({...f,cuentaDebe:v})} ph="1011"/>
 <Inp l="Cuenta Haber" v={f.cuentaHaber} onChange={v=>setF({...f,cuentaHaber:v})} ph="4011"/>
 <Inp l="Debe" v={f.debe} onChange={v=>setF({...f,debe:v})} type="number"/>
@@ -450,26 +450,26 @@ const del=(id)=>{setD(p=>({...p,empleados:p.empleados.filter(x=>x.id!==id)}));no
 const planilla=D.empleados.reduce((a,e)=>a+nn(e.sueldo),0);
 return(<div>
 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
-<div><div style={{fontSize:16,fontWeight:800}}>Recursos Humanos</div><div style={{fontSize:10,color:P.s2}}>Gesti\u00f3n de Personal y Planilla</div></div>
+<div><div style={{fontSize:16,fontWeight:800}}>Recursos Humanos</div><div style={{fontSize:10,color:P.s2}}>Gestión de Personal y Planilla</div></div>
 <Btn s onClick={()=>setShowAdd(true)} style={{background:P.cyan+"15",color:P.cyan}}>+ Nuevo Empleado</Btn>
 </div>
 <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
 <KPI label="Total Empleados" value={D.empleados.length} color={P.cyan}/>
 <KPI label="Planilla Mensual" value={$(planilla)} color={P.org}/>
 <KPI label="Activos" value={D.empleados.filter(e=>e.estado==="Activo").length} color={P.grn}/>
-<KPI label="\u00c1reas" value={[...new Set(D.empleados.map(e=>e.area).filter(Boolean))].length} color={P.pur}/>
+<KPI label="Áreas" value={[...new Set(D.empleados.map(e=>e.area).filter(Boolean))].length} color={P.pur}/>
 </div>
 <DataTable data={D.empleados} cols={[
-{k:"dni",l:"DNI",mono:1},{k:"nombre",l:"Nombre",b:1},{k:"cargo",l:"Cargo"},{k:"area",l:"\u00c1rea"},
+{k:"dni",l:"DNI",mono:1},{k:"nombre",l:"Nombre",b:1},{k:"cargo",l:"Cargo"},{k:"area",l:"Área"},
 {k:"sueldo",l:"Sueldo",r:1,fmt:v=>$(v)},{k:"fechaIngreso",l:"Ingreso"},{k:"estado",l:"Estado",render:r=><Badge s={r.estado}/>},
-{k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>\u2716</Btn>}
+{k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>✖</Btn>}
 ]} empty="Sin empleados registrados." title="Personal" onExport={()=>exportXLS(D.empleados,"RRHH_Empleados")}/>
 <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nuevo Empleado">
 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
 <Inp l="DNI" v={f.dni} onChange={v=>setF({...f,dni:v})} ph="12345678"/>
 <Inp l="Nombre Completo" v={f.nombre} onChange={v=>setF({...f,nombre:v})}/>
 <Inp l="Cargo" v={f.cargo} onChange={v=>setF({...f,cargo:v})}/>
-<Inp l="\u00c1rea" v={f.area} onChange={v=>setF({...f,area:v})}/>
+<Inp l="Área" v={f.area} onChange={v=>setF({...f,area:v})}/>
 <Inp l="Sueldo" v={f.sueldo} onChange={v=>setF({...f,sueldo:v})} type="number"/>
 <Inp l="Fecha Ingreso" v={f.fechaIngreso} onChange={v=>setF({...f,fechaIngreso:v})} type="date"/>
 </div>
@@ -480,10 +480,10 @@ return(<div>
 const ModPlanes=({D,notify})=>(
 <div>
 <div style={{fontSize:16,fontWeight:800,marginBottom:4}}>Planes y Metas</div>
-<div style={{fontSize:10,color:P.s2,marginBottom:16}}>Planificaci\u00f3n estrat\u00e9gica del periodo</div>
+<div style={{fontSize:10,color:P.s2,marginBottom:16}}>Planificación estratégica del periodo</div>
 <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10}}>
-{[{t:"Ventas Objetivo",v:"S/ 0.00",p:0,c:P.grn},{t:"Reducci\u00f3n Costos",v:"0%",p:0,c:P.org},{t:"Nuevos Clientes",v:"0",p:0,c:P.blue},
-{t:"Digitalizaci\u00f3n",v:"0%",p:0,c:P.cyan},{t:"Cumplimiento SUNAT",v:"Pendiente",p:0,c:P.pur},{t:"Certificaciones",v:"0",p:0,c:P.tl}
+{[{t:"Ventas Objetivo",v:"S/ 0.00",p:0,c:P.grn},{t:"Reducción Costos",v:"0%",p:0,c:P.org},{t:"Nuevos Clientes",v:"0",p:0,c:P.blue},
+{t:"Digitalización",v:"0%",p:0,c:P.cyan},{t:"Cumplimiento SUNAT",v:"Pendiente",p:0,c:P.pur},{t:"Certificaciones",v:"0",p:0,c:P.tl}
 ].map((pl,i)=>(
 <div key={i} style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:16}}>
 <div style={{fontSize:10,color:P.s2,marginBottom:6}}>{pl.t}</div>
@@ -515,10 +515,10 @@ if(wb.SheetNames.length)XLSX.writeFile(wb,"SumaERP_BaseDatos_Completa.xlsx");els
 };
 return(<div>
 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
-<div><div style={{fontSize:16,fontWeight:800}}>Base de Datos</div><div style={{fontSize:10,color:P.s2}}>Administraci\u00f3n de datos del sistema</div></div>
+<div><div style={{fontSize:16,fontWeight:800}}>Base de Datos</div><div style={{fontSize:10,color:P.s2}}>Administración de datos del sistema</div></div>
 <div style={{display:"flex",gap:6}}>
-<Btn s onClick={exportAll} style={{background:P.grn+"15",color:P.grn}}>\u2B07 Exportar Todo XLS</Btn>
-<Btn s d onClick={clearAll}>\u26a0 Limpiar Todo</Btn>
+<Btn s onClick={exportAll} style={{background:P.grn+"15",color:P.grn}}>⬇ Exportar Todo XLS</Btn>
+<Btn s d onClick={clearAll}>⚠ Limpiar Todo</Btn>
 </div></div>
 <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
 <KPI label="Total Registros" value={totalRecords} color={P.blue}/>
@@ -578,23 +578,23 @@ if(!user&&!isShadow)return(
 <div style={{minHeight:"100vh",background:"radial-gradient(ellipse at 30% 20%,#0a1628,"+P.bg+" 70%)",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'DM Sans',-apple-system,sans-serif",color:P.tx}}>
 <div style={{width:420}}>
 <div style={{textAlign:"center",marginBottom:28}}>
-<div style={{width:56,height:56,borderRadius:14,background:"linear-gradient(135deg,#32D74B,#0A84FF)",display:"inline-flex",alignItems:"center",justifyContent:"center",fontSize:28,fontWeight:800,color:"#fff",marginBottom:10,boxShadow:"0 8px 32px rgba(50,215,75,.3)"}}>\u03A3</div>
+<div style={{width:56,height:56,borderRadius:14,background:"linear-gradient(135deg,#32D74B,#0A84FF)",display:"inline-flex",alignItems:"center",justifyContent:"center",fontSize:28,fontWeight:800,color:"#fff",marginBottom:10,boxShadow:"0 8px 32px rgba(50,215,75,.3)"}}>Σ</div>
 <div style={{fontSize:22,fontWeight:800}}>SumaERP</div>
-<div style={{fontSize:11,color:P.s2,marginTop:3}}>Portal Contador \u2014 Nuevo Periodo Limpio</div>
-<div style={{fontSize:9,color:P.tl,marginTop:6,background:P.tl+"10",padding:"4px 12px",borderRadius:20,display:"inline-block"}}>\u2714 Dashboards y Base de Datos Limpios</div>
+<div style={{fontSize:11,color:P.s2,marginTop:3}}>Portal Contador — Nuevo Periodo Limpio</div>
+<div style={{fontSize:9,color:P.tl,marginTop:6,background:P.tl+"10",padding:"4px 12px",borderRadius:20,display:"inline-block"}}>✔ Dashboards y Base de Datos Limpios</div>
 </div>
 <div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:14,padding:24,boxShadow:"0 20px 60px rgba(0,0,0,.4)"}}>
-<div style={{fontSize:15,fontWeight:700,marginBottom:4}}>Iniciar Sesi\u00f3n</div>
+<div style={{fontSize:15,fontWeight:700,marginBottom:4}}>Iniciar Sesión</div>
 <div style={{fontSize:10,color:P.s2,marginBottom:14}}>Ingresa tu email para acceder como nuevo contador</div>
 <Inp l="Email del Contador" v={email} onChange={setEmail} ph="contador@email.com" type="email"/>
-<Btn p full onClick={()=>{if(!email.includes("@")){notify("Email inv\u00e1lido","err");return}setLoading(true);
+<Btn p full onClick={()=>{if(!email.includes("@")){notify("Email inválido","err");return}setLoading(true);
 setTimeout(()=>{setUser({role:"contador",name:email.split("@")[0],email,contadorId:"campos_"+Date.now().toString(36)});setLoading(false);notify("Bienvenido al nuevo periodo contable")},600)}}
 dis={!email||loading} style={{padding:"10px",fontSize:12,borderRadius:7,marginTop:4}}>{loading?"Ingresando...":"Ingresar como Contador"}</Btn>
 <div style={{marginTop:16,borderTop:"1px solid "+P.bd,paddingTop:12}}>
 <div style={{fontSize:9,color:P.s2,marginBottom:6}}>ACCESO AUDITOR SHADOW</div>
 <div style={{display:"flex",gap:6}}>
 <Inp v={shadowToken} onChange={setShadowToken} ph="Token de auditor" type="password"/>
-<Btn s onClick={()=>{if(shadowToken==="auditor2026"){setIsShadow(true);setUser({role:"shadow",name:"Auditor Shadow",contadorId:"shadow_audit"});notify("Acceso Shadow activado")}else{notify("Token inv\u00e1lido","err")}}} style={{whiteSpace:"nowrap"}}>Verificar</Btn>
+<Btn s onClick={()=>{if(shadowToken==="auditor2026"){setIsShadow(true);setUser({role:"shadow",name:"Auditor Shadow",contadorId:"shadow_audit"});notify("Acceso Shadow activado")}else{notify("Token inválido","err")}}} style={{whiteSpace:"nowrap"}}>Verificar</Btn>
 </div></div>
 </div></div></div>);
 
@@ -605,10 +605,10 @@ return(
 <div style={{display:"flex",height:"100vh",background:P.bg,fontFamily:"'DM Sans',-apple-system,sans-serif",color:P.tx,overflow:"hidden",fontSize:13}}>
 <aside style={{width:190,background:"linear-gradient(180deg,#080c15,#050710)",borderRight:"1px solid "+P.bd,display:"flex",flexDirection:"column",flexShrink:0}}>
 <div style={{padding:"12px 10px",borderBottom:"1px solid "+P.bd,display:"flex",alignItems:"center",gap:7}}>
-<div style={{width:28,height:28,borderRadius:7,background:"linear-gradient(135deg,#32D74B,#0A84FF)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,color:"#fff"}}>\u03A3</div>
-<div><div style={{fontSize:12,fontWeight:700}}>SumaERP</div><div style={{fontSize:7,color:P.s2,fontWeight:600}}>Contador \u2022 Campos</div></div>
+<div style={{width:28,height:28,borderRadius:7,background:"linear-gradient(135deg,#32D74B,#0A84FF)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,color:"#fff"}}>Σ</div>
+<div><div style={{fontSize:12,fontWeight:700}}>SumaERP</div><div style={{fontSize:7,color:P.s2,fontWeight:600}}>Contador • Campos</div></div>
 </div>
-{isShadow&&<div style={{margin:"6px 8px",padding:"4px 8px",background:P.red+"15",border:"1px solid "+P.red+"30",borderRadius:6,fontSize:8,color:P.red,fontWeight:700,textAlign:"center"}}>\ud83d\udc41 MODO SHADOW AUDITOR</div>}
+{isShadow&&<div style={{margin:"6px 8px",padding:"4px 8px",background:P.red+"15",border:"1px solid "+P.red+"30",borderRadius:6,fontSize:8,color:P.red,fontWeight:700,textAlign:"center"}}>👁 MODO SHADOW AUDITOR</div>}
 <div style={{flex:1,padding:"8px 6px",display:"flex",flexDirection:"column",gap:2,overflowY:"auto"}}>
 {sideModules.map(m=>(
 <div key={m.id} onClick={()=>setTab(m.id)} style={{display:"flex",alignItems:"center",gap:7,padding:"7px 8px",borderRadius:6,cursor:"pointer",fontSize:11,fontWeight:tab===m.id?600:400,background:tab===m.id?P.blue+"12":"transparent",color:tab===m.id?P.blue:P.s1,borderLeft:tab===m.id?"2px solid "+P.blue:"2px solid transparent",transition:"all .15s"}}>
@@ -622,7 +622,7 @@ return(
 <div style={{fontSize:8,fontWeight:600,color:"#a0acc0",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{user?.name||"Contador"}</div>
 <div style={{fontSize:7,color:isShadow?P.red:P.grn,fontWeight:700}}>{isShadow?"Shadow Auditor":"Contador Campos"}</div>
 </div>
-<button onClick={()=>{setUser(null);setIsShadow(false);setD(emptyData)}} style={{background:"none",border:"none",color:P.s2,cursor:"pointer",padding:1,fontSize:10}}>\u23fb</button>
+<button onClick={()=>{setUser(null);setIsShadow(false);setD(emptyData)}} style={{background:"none",border:"none",color:P.s2,cursor:"pointer",padding:1,fontSize:10}}>⏻</button>
 </div></div>
 </aside>
 
@@ -634,7 +634,7 @@ return(
 {isShadow&&<Badge s="SHADOW" c={P.red}/>}
 <span style={{fontSize:10,color:P.s2}}>Contador</span>
 <Badge s="Campos" c={P.tl}/>
-<span style={{fontSize:9,color:P.s2}}>\u2022 {new Date().toLocaleDateString("es-PE")}</span>
+<span style={{fontSize:9,color:P.s2}}>• {new Date().toLocaleDateString("es-PE")}</span>
 </div>
 <div style={{display:"flex",gap:4}}>
 <Badge s={isShadow?"SOLO LECTURA":"COMPLETO"} c={isShadow?P.org:P.grn}/>
