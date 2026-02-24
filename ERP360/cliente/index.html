@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/prop-types@15/prop-types.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -112,6 +113,20 @@ function ClientePortal() {
 
   const [D, setD] = useState(loadData);
   const [scannedDocs, setScannedDocs] = useState(loadScannedDocs);
+  const [empresasDyn, setEmpresasDyn] = useState(EMPRESAS_CLIENTES);
+  useEffect(() => {
+    (async () => {
+      try {
+        if (typeof window.supabase !== "undefined") {
+          const sb = window.supabase.createClient("https://uinoropxppiuqgzktqjr.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpbm9yb3B4cHBpdXFnemt0cWpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1NjU0MTUsImV4cCI6MjA4NTE0MTQxNX0.V9sTNqTC_aldhwgE6RF66BEXfRvTF6jDLqm1WvbInTo");
+          const { data } = await sb.from("erp_empresas").select("ruc, razon_social, tipo, sector, estado").eq("estado", "Activo").order("razon_social");
+          if (data && data.length > 0) {
+            setEmpresasDyn(data.map(e => ({ ruc: e.ruc, razon: e.razon_social, tipo: e.tipo, sector: e.sector, estado: e.estado })));
+          }
+        }
+      } catch(err) { console.log("Supabase empresas load error:", err); }
+    })();
+  }, []);
 
   /* Sync to localStorage on change */
   useEffect(() => { saveData(D); }, [D]);
@@ -239,7 +254,7 @@ function ClientePortal() {
           }} dis={rucInput.length !== 11 || loading} style={{ padding: "10px", fontSize: 12, borderRadius: 7, marginTop: 4 }}>{loading ? "Ingresando..." : "Ingresar"}</Btn>
           <div style={{ marginTop: 12, background: P.c2, borderRadius: 7, padding: 8, maxHeight: 200, overflowY: "auto", scrollbarWidth: "thin" }}>
             <div style={{ fontSize: 8, color: P.s2, fontWeight: 600, textTransform: "uppercase", letterSpacing: .5, marginBottom: 5 }}>Empresas Registradas</div>
-            {EMPRESAS_CLIENTES.map(e => (
+            {empresasDyn.map(e => (
               <div key={e.ruc} onClick={() => setRucInput(e.ruc)} style={{ display: "flex", alignItems: "center", gap: 6, padding: "4px 6px", borderRadius: 4, cursor: "pointer", fontSize: 9, marginBottom: 2, background: rucInput === e.ruc ? P.blue + "10" : "transparent" }}
                 onMouseEnter={ev => ev.currentTarget.style.background = P.hv} onMouseLeave={ev => ev.currentTarget.style.background = rucInput === e.ruc ? P.blue + "10" : "transparent"}>
                 <span style={{ fontFamily: "monospace", color: P.cyan, fontWeight: 600, minWidth: 80 }}>{e.ruc}</span>
