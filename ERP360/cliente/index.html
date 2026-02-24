@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SumaERP Â· Portal Cliente</title>
-    <meta name="description" content="SumaERP - Portal de acceso para clientes Â· Compras y Ventas">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>Î£</text></svg>">
+    <title>SumaERP · Portal Cliente</title>
+    <meta name="description" content="SumaERP - Portal de acceso para clientes · Compras y Ventas">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>Σ</text></svg>">
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/prop-types@15/prop-types.min.js"></script>
@@ -93,7 +93,7 @@ const Inp = ({ l, v, onChange, ph, type = "text" }) => (
 );
 const Badge = ({ s, c }) => { const cm = { Emitida: P.blue, Pagada: P.grn, Pendiente: P.org, Pagado: P.grn, Anulada: P.red, "En Proceso": P.cyan, Procesado: P.grn, "Aprobado IA": P.grn, "Revision Manual": P.org }; const cc = c || cm[s] || P.s2; return <span style={{ fontSize: 8, padding: "1px 6px", borderRadius: 4, background: cc + "15", color: cc, fontWeight: 600, border: `1px solid ${cc}20` }}>{s}</span>; };
 const Toast = ({ msg, type, onDone }) => { useEffect(() => { const t = setTimeout(onDone, 3000); return () => clearTimeout(t); }, []); const c = type === "err" ? P.red : type === "warn" ? P.org : P.grn; return <div style={{ position: "fixed", bottom: 20, right: 20, background: P.c1, border: `1px solid ${c}40`, borderRadius: 10, padding: "10px 16px", fontSize: 11, color: P.tx, zIndex: 99999, boxShadow: `0 8px 32px ${c}20`, display: "flex", alignItems: "center", gap: 8, maxWidth: 360 }}><span style={{ width: 6, height: 6, borderRadius: 3, background: c }} />{msg}</div>; };
-const Modal = ({ open, onClose, title, children, wide }) => { if (!open) return null; return <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 9999 }}><div onClick={e => e.stopPropagation()} style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 12, padding: 20, width: wide ? 640 : 440, maxWidth: "92vw", maxHeight: "85vh", overflow: "auto", scrollbarWidth: "thin" }}>{title && <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 12, display: "flex", justifyContent: "space-between" }}><span>{title}</span><button onClick={onClose} style={{ background: "none", border: "none", color: P.s2, cursor: "pointer", fontSize: 16 }}>Ã</button></div>}{children}</div></div>; };
+const Modal = ({ open, onClose, title, children, wide }) => { if (!open) return null; return <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 9999 }}><div onClick={e => e.stopPropagation()} style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 12, padding: 20, width: wide ? 640 : 440, maxWidth: "92vw", maxHeight: "85vh", overflow: "auto", scrollbarWidth: "thin" }}>{title && <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 12, display: "flex", justifyContent: "space-between" }}><span>{title}</span><button onClick={onClose} style={{ background: "none", border: "none", color: P.s2, cursor: "pointer", fontSize: 16 }}>×</button></div>}{children}</div></div>; };
 
 /* ===== PORTAL CLIENTE ===== */
 function ClientePortal() {
@@ -229,7 +229,7 @@ function ClientePortal() {
           setD(prev => ({ ...prev, compras: [{ id: uid(), serie: newDoc.serie, numero: newDoc.numero, fecha: newDoc.fecha, tipo: newDoc.tipo, proveedor: newDoc.proveedor, ruc: newDoc.ruc, _empresaRuc: user.empresaRuc, moneda: newDoc.moneda, subtotal: sub, igv: igvVal, total: totalVal, estado: "Pendiente", dua: "", tc: "1.000" }, ...prev.compras] }));
         }
         setScanModal(null);
-        notify(`Documento escaneado y registrado Â· ${newDoc.serie}-${newDoc.numero}`);
+        notify(`Documento escaneado y registrado · ${newDoc.serie}-${newDoc.numero}`);
       } catch (err) {
         console.error("Scan error:", err);
         notify("Error procesando documento: " + (err.message || "intenta otra imagen"), "err");
@@ -249,9 +249,9 @@ function ClientePortal() {
     <div style={{ minHeight: "100vh", background: `radial-gradient(ellipse at 30% 20%,#0a1628,${P.bg} 70%)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'DM Sans',-apple-system,sans-serif", color: P.tx }}>
       <div style={{ width: 420 }}>
         <div style={{ textAlign: "center", marginBottom: 28 }}>
-          <div style={{ width: 52, height: 52, borderRadius: 13, background: "linear-gradient(135deg,#32D74B,#0A84FF)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 26, fontWeight: 800, color: "#fff", marginBottom: 10, boxShadow: "0 8px 32px rgba(50,215,75,.3)" }}>Î£</div>
+          <div style={{ width: 52, height: 52, borderRadius: 13, background: "linear-gradient(135deg,#32D74B,#0A84FF)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 26, fontWeight: 800, color: "#fff", marginBottom: 10, boxShadow: "0 8px 32px rgba(50,215,75,.3)" }}>Σ</div>
           <div style={{ fontSize: 20, fontWeight: 800 }}>SumaERP</div>
-          <div style={{ fontSize: 10, color: P.s2, marginTop: 3 }}>Portal Cliente Â· Compras y Ventas</div>
+          <div style={{ fontSize: 10, color: P.s2, marginTop: 3 }}>Portal Cliente · Compras y Ventas</div>
         </div>
         <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 14, padding: 24, boxShadow: "0 20px 60px rgba(0,0,0,.4)" }}>
           <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 4 }}>Acceso Empresa</div>
@@ -299,7 +299,7 @@ function ClientePortal() {
       {/* Sidebar */}
       <aside style={{ width: 180, background: "linear-gradient(180deg,#080c15,#050710)", borderRight: `1px solid ${P.bd}`, display: "flex", flexDirection: "column", flexShrink: 0 }}>
         <div style={{ padding: "10px 9px", borderBottom: `1px solid ${P.bd}`, display: "flex", alignItems: "center", gap: 6 }}>
-          <div style={{ width: 26, height: 26, borderRadius: 6, background: "linear-gradient(135deg,#32D74B,#0A84FF)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "#fff" }}>Î£</div>
+          <div style={{ width: 26, height: 26, borderRadius: 6, background: "linear-gradient(135deg,#32D74B,#0A84FF)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "#fff" }}>Σ</div>
           <div><div style={{ fontSize: 11, fontWeight: 700 }}>SumaERP</div><div style={{ fontSize: 7, color: P.s2, fontWeight: 600 }}>Portal Cliente</div></div>
         </div>
         <div style={{ flex: 1, padding: "8px 6px", display: "flex", flexDirection: "column", gap: 2 }}>
@@ -314,7 +314,7 @@ function ClientePortal() {
             <div style={{ width: 20, height: 20, borderRadius: 4, background: `linear-gradient(135deg,${user.empresa?.color || P.grn},${P.blue})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 8, fontWeight: 700, color: "#fff" }}>{user.empresaRazon?.[0]}</div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 8, fontWeight: 600, color: "#a0acc0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{user.empresaRazon}</div>
-              <div style={{ fontSize: 7, color: P.grn, fontWeight: 700 }}>Cliente Â· {user.empresaRuc}</div>
+              <div style={{ fontSize: 7, color: P.grn, fontWeight: 700 }}>Cliente · {user.empresaRuc}</div>
             </div>
             <button onClick={() => setUser(null)} style={{ background: "none", border: "none", color: P.s2, cursor: "pointer", padding: 1 }}><I.Lo /></button>
           </div>
@@ -325,8 +325,8 @@ function ClientePortal() {
       <main style={{ flex: 1, overflow: "auto", padding: 16, scrollbarWidth: "thin" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
           <div>
-            <div style={{ fontSize: 16, fontWeight: 800 }}>{tab === "ventas" ? "Mis Ventas" : "Mis Compras"} Â· {user.empresaRazon}</div>
-            <div style={{ fontSize: 10, color: P.s2 }}>RUC: {user.empresaRuc} Â· Documentos integrados con tu contador</div>
+            <div style={{ fontSize: 16, fontWeight: 800 }}>{tab === "ventas" ? "Mis Ventas" : "Mis Compras"} · {user.empresaRazon}</div>
+            <div style={{ fontSize: 10, color: P.s2 }}>RUC: {user.empresaRuc} · Documentos integrados con tu contador</div>
           </div>
           <div style={{ display: "flex", gap: 6 }}>
             <Btn s onClick={() => handleScan(tab)} style={{ background: `${P.tl}15`, color: P.tl, border: `1px solid ${P.tl}30` }}><I.Sc /> Escanear Documento</Btn>
@@ -339,7 +339,7 @@ function ClientePortal() {
             { l: "Total " + (tab === "ventas" ? "Ventas" : "Compras"), v: $(tab === "ventas" ? totalVentas : totalCompras), c: tab === "ventas" ? P.grn : P.org },
             { l: tab === "ventas" ? "Pagadas" : "Pagados", v: (tab === "ventas" ? myFacturas : myCompras).filter(r => r.estado === "Pagada" || r.estado === "Pagado").length, c: P.grn },
             { l: "Pendientes", v: (tab === "ventas" ? myFacturas : myCompras).filter(r => r.estado === "Pendiente" || r.estado === "Emitida").length, c: P.org },
-            { l: tab === "ventas" ? "IGV DÃ©bito" : "IGV CrÃ©dito", v: $(tab === "ventas" ? igvDebito : igvCredito), c: tab === "ventas" ? P.red : P.blue },
+            { l: tab === "ventas" ? "IGV Débito" : "IGV Crédito", v: $(tab === "ventas" ? igvDebito : igvCredito), c: tab === "ventas" ? P.red : P.blue },
           ].map((k, i) => (
             <div key={i} style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 8, padding: 12 }}>
               <div style={{ fontSize: 9, color: P.s2, marginBottom: 3 }}>{k.l}</div>
@@ -400,7 +400,7 @@ function ClientePortal() {
           <div style={{ textAlign: "center", padding: 36 }}>
             <div style={{ width: 32, height: 32, border: `3px solid ${P.bd}`, borderTopColor: P.blue, borderRadius: "50%", animation: "spin .8s linear infinite", margin: "0 auto 12px" }} />
             <div style={{ fontSize: 12, fontWeight: 600 }}>Analizando {scanModal.file}...</div>
-            <div style={{ fontSize: 9, color: P.s2, marginTop: 4 }}>Extrayendo datos con IA Â· Identificando tipo de documento</div>
+            <div style={{ fontSize: 9, color: P.s2, marginTop: 4 }}>Extrayendo datos con IA · Identificando tipo de documento</div>
           </div>
         )}
       </Modal>
