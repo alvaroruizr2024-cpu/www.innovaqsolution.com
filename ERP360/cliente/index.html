@@ -145,7 +145,7 @@ function ClientePortal() {
 
   /* Sync to localStorage on change */
   useEffect(() => { saveData(D); }, [D]);
-  useEffect(() => { if (user && user.empresaRuc && typeof SupaSync !== "undefined") { If(window._supaInitLoaded){SupaSync.syncAll(D, user.empresaRuc)}; } }, [D, user]);
+  useEffect(() => { if (user && user.empresaRuc && typeof SupaSync !== "undefined") { if(window._supaInitLoaded){SupaSync.syncAll(D, user.empresaRuc)}; } }, [D, user]);
   useEffect(() => { if (user && user.empresaRuc && scannedDocs.length > 0 && typeof SupaSync !== "undefined") { scannedDocs.forEach(function(doc) { if(window._supaInitLoaded) SupaSync.addScannedDoc(doc, user.empresaRuc); }); } }, [scannedDocs, user]);
   useEffect(() => { saveScannedDocs(scannedDocs); }, [scannedDocs]);
 
