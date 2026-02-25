@@ -25,6 +25,8 @@ html,body,#root{width:100%;height:100%}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+@media(max-width:768px){.erp-sidebar{position:fixed!important;left:-260px;top:0;bottom:0;z-index:1000;transition:left .3s ease;width:220px!important;box-shadow:4px 0 20px rgba(0,0,0,.5)}.erp-sidebar.open{left:0}.erp-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999}.erp-overlay.open{display:block}.erp-hamburger{display:flex!important}.erp-main{padding:10px!important}.erp-kpi-grid{grid-template-columns:repeat(2,1fr)!important;gap:6px!important}.erp-kpi-value{font-size:14px!important}.erp-base-grid{grid-template-columns:1fr!important}}@media(min-width:769px){.erp-hamburger{display:none!important}.erp-overlay{display:none!important}}.erp-hamburger{display:none;align-items:center;justify-content:center;width:34px;height:34px;border-radius:7px;border:1px solid #1a2540;background:#0a0e17;color:#d6e0f0;cursor:pointer;font-size:18px;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -153,7 +155,7 @@ const chartData=[{m:"Ene",v:0},{m:"Feb",v:0},{m:"Mar",v:0},{m:"Abr",v:0},{m:"May
 return(<div>
 <div style={{fontSize:16,fontWeight:800,marginBottom:4}}>Dashboard General</div>
 <div style={{fontSize:10,color:P.s2,marginBottom:16}}>Resumen de operaciones — Nuevo Periodo Contable</div>
-<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,marginBottom:16}}>
+<div className="erp-kpi-grid" style={{display:"grid",gridTemplateColumns:"repeat(4, 1fr)",gap:10,marginBottom:16}}>
 <KPI label="Total Ventas" value={$(totalVentas)} color={P.grn} sub={D.facturas.length+" documentos"}/>
 <KPI label="Total Compras" value={$(totalCompras)} color={P.org} sub={D.compras.length+" documentos"}/>
 <KPI label="IGV Débito" value={$(igvDebito)} color={P.red}/>
@@ -164,7 +166,7 @@ return(<div>
 <KPI label="Productos" value={D.productos.length} color={P.pur}/>
 <KPI label="Empresas Cliente" value={empresas.length} color={P.tl}/>
 </div>
-<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+<div className="erp-base-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
 <div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:14}}>
 <div style={{fontSize:11,fontWeight:700,marginBottom:8}}>Ventas vs Compras (Mensual)</div>
 <ResponsiveContainer width="100%" height={180}>
@@ -203,7 +205,7 @@ return(<div>
 <div><div style={{fontSize:16,fontWeight:800}}>Ventas SIRE</div><div style={{fontSize:10,color:P.s2}}>Registro de Ventas e Ingresos</div></div>
 <div style={{display:"flex",gap:6}}><Btn s onClick={()=>setShowAdd(true)} style={{background:P.blue+"15",color:P.blue}}>+ Nueva Factura</Btn></div>
 </div>
-<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<div className="erp-kpi-grid" style={{display:"grid",gridTemplateColumns:"repeat(4, 1fr)",gap:8,marginBottom:12}}>
 <KPI label="Total Ventas" value={$(D.facturas.reduce((a,f)=>a+nn(f.total),0))} color={P.grn}/>
 <KPI label="Documentos" value={D.facturas.length} color={P.blue}/>
 <KPI label="Pagadas" value={D.facturas.filter(f=>f.estado==="Pagada").length} color={P.grn}/>
@@ -211,7 +213,7 @@ return(<div>
 </div>
 <DataTable data={D.facturas} cols={cols} empty="Sin facturas registradas. Haz clic en + Nueva Factura." title="Registro de Ventas" onExport={()=>exportXLS(D.facturas,"Ventas_SIRE")}/>
 <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nueva Factura de Venta">
-<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<div className="erp-base-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
 <Inp l="Serie" v={f.serie} onChange={v=>setF({...f,serie:v})}/>
 <Inp l="Número" v={f.numero} onChange={v=>setF({...f,numero:v})} ph="000001"/>
 <Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
@@ -247,7 +249,7 @@ return(<div>
 <div><div style={{fontSize:16,fontWeight:800}}>Compras SIRE</div><div style={{fontSize:10,color:P.s2}}>Registro de Compras</div></div>
 <div style={{display:"flex",gap:6}}><Btn s onClick={()=>setShowAdd(true)} style={{background:P.org+"15",color:P.org}}>+ Nueva Compra</Btn></div>
 </div>
-<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<div className="erp-kpi-grid" style={{display:"grid",gridTemplateColumns:"repeat(4, 1fr)",gap:8,marginBottom:12}}>
 <KPI label="Total Compras" value={$(D.compras.reduce((a,c)=>a+nn(c.total),0))} color={P.org}/>
 <KPI label="Documentos" value={D.compras.length} color={P.blue}/>
 <KPI label="Pagados" value={D.compras.filter(c=>c.estado==="Pagado").length} color={P.grn}/>
@@ -255,7 +257,7 @@ return(<div>
 </div>
 <DataTable data={D.compras} cols={cols} empty="Sin compras registradas." title="Registro de Compras" onExport={()=>exportXLS(D.compras,"Compras_SIRE")}/>
 <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nueva Compra">
-<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<div className="erp-base-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
 <Inp l="Serie" v={f.serie} onChange={v=>setF({...f,serie:v})}/>
 <Inp l="Número" v={f.numero} onChange={v=>setF({...f,numero:v})} ph="000001"/>
 <Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
@@ -284,7 +286,7 @@ return(<div>
 <div><div style={{fontSize:16,fontWeight:800}}>Almacén MRPII</div><div style={{fontSize:10,color:P.s2}}>Gestión de Inventario y Productos</div></div>
 <Btn s onClick={()=>setShowAdd(true)} style={{background:P.cyan+"15",color:P.cyan}}>+ Nuevo Producto</Btn>
 </div>
-<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<div className="erp-kpi-grid" style={{display:"grid",gridTemplateColumns:"repeat(4, 1fr)",gap:8,marginBottom:12}}>
 <KPI label="Total Productos" value={D.productos.length} color={P.cyan}/>
 <KPI label="Valor Inventario" value={$(D.productos.reduce((a,p)=>a+nn(p.stock)*nn(p.costo),0))} color={P.grn}/>
 <KPI label="Stock Bajo" value={D.productos.filter(p=>nn(p.stock)<10).length} color={P.red}/>
@@ -296,7 +298,7 @@ return(<div>
 {k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>✖</Btn>}
 ]} empty="Sin productos. Agrega tu primer producto." title="Inventario" onExport={()=>exportXLS(D.productos,"Almacen_Productos")}/>
 <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nuevo Producto">
-<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<div className="erp-base-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
 <Inp l="Código" v={f.codigo} onChange={v=>setF({...f,codigo:v})} ph="SKU001"/>
 <Inp l="Nombre" v={f.nombre} onChange={v=>setF({...f,nombre:v})} ph="Nombre del producto"/>
 <Inp l="Categoría" v={f.categoria} onChange={v=>setF({...f,categoria:v})}/>
@@ -320,7 +322,7 @@ return(<div>
 <div><div style={{fontSize:16,fontWeight:800}}>Comercio Exterior</div><div style={{fontSize:10,color:P.s2}}>Importaciones y Exportaciones</div></div>
 <Btn s onClick={()=>setShowAdd(true)} style={{background:P.tl+"15",color:P.tl}}>+ Nueva Operación</Btn>
 </div>
-<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<div className="erp-kpi-grid" style={{display:"grid",gridTemplateColumns:"repeat(4, 1fr)",gap:8,marginBottom:12}}>
 <KPI label="Importaciones" value={(D.imports||[]).length} color={P.org}/>
 <KPI label="Exportaciones" value={(D.exports||[]).length} color={P.grn}/>
 <KPI label="CIF Total" value={$(((D.imports||[]).reduce((a,i)=>a+nn(i.cif),0)),"USD")} color={P.blue}/>
@@ -337,7 +339,7 @@ return(<div>
 <Btn p={tipo==="import"} onClick={()=>setTipo("import")}>Importación</Btn>
 <Btn p={tipo==="export"} onClick={()=>setTipo("export")}>Exportación</Btn>
 </div>
-<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<div className="erp-base-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
 <Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
 <Inp l="DUA" v={f.dua} onChange={v=>setF({...f,dua:v})} ph="235-2026-10-000001"/>
 <Inp l={tipo==="import"?"Proveedor":"Cliente"} v={f.proveedor} onChange={v=>setF({...f,proveedor:v})}/>
@@ -357,7 +359,7 @@ const mp=D.productos.length?D.productos.reduce((a,p)=>a+nn(p.costo),0)/D.product
 return(<div>
 <div style={{fontSize:16,fontWeight:800,marginBottom:4}}>Costos de Producción</div>
 <div style={{fontSize:10,color:P.s2,marginBottom:16}}>Análisis de costos y márgenes</div>
-<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<div className="erp-kpi-grid" style={{display:"grid",gridTemplateColumns:"repeat(4, 1fr)",gap:8,marginBottom:12}}>
 <KPI label="Costo Promedio" value={$(mp)} color={P.org}/>
 <KPI label="Productos" value={D.productos.length} color={P.blue}/>
 <KPI label="Costo Total" value={$(D.productos.reduce((a,p)=>a+nn(p.costo)*nn(p.stock),0))} color={P.red}/>
@@ -382,7 +384,7 @@ return(<div>
 <div><div style={{fontSize:16,fontWeight:800}}>Finanzas</div><div style={{fontSize:10,color:P.s2}}>Gestión Financiera y Bancos</div></div>
 <Btn s onClick={()=>setShowAdd(true)} style={{background:P.grn+"15",color:P.grn}}>+ Nuevo Movimiento</Btn>
 </div>
-<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<div className="erp-kpi-grid" style={{display:"grid",gridTemplateColumns:"repeat(4, 1fr)",gap:8,marginBottom:12}}>
 <KPI label="Ingresos" value={$(ingresos)} color={P.grn}/>
 <KPI label="Egresos" value={$(egresos)} color={P.red}/>
 <KPI label="Saldo" value={$(ingresos-egresos)} color={ingresos-egresos>=0?P.grn:P.red}/>
@@ -393,7 +395,7 @@ return(<div>
 {k:"concepto",l:"Concepto"},{k:"moneda",l:"Mon",color:P.yel},{k:"monto",l:"Monto",r:1,b:1,fmt:v=>$(v)},{k:"referencia",l:"Ref"}
 ]} empty="Sin movimientos financieros." title="Movimientos Bancarios" onExport={()=>exportXLS(D.bancos||[],"Finanzas_Bancos")}/>
 <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nuevo Movimiento">
-<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<div className="erp-base-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
 <Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
 <Inp l="Banco" v={f.banco} onChange={v=>setF({...f,banco:v})} ph="BCP, BBVA..."/>
 <Sel l="Tipo" v={f.tipo} onChange={v=>setF({...f,tipo:v})} opts={["Ingreso","Egreso"]}/>
@@ -417,7 +419,7 @@ return(<div>
 <div><div style={{fontSize:16,fontWeight:800}}>Contabilidad</div><div style={{fontSize:10,color:P.s2}}>Libro Diario y Asientos Contables</div></div>
 <Btn s onClick={()=>setShowAdd(true)} style={{background:P.pur+"15",color:P.pur}}>+ Nuevo Asiento</Btn>
 </div>
-<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<div className="erp-kpi-grid" style={{display:"grid",gridTemplateColumns:"repeat(4, 1fr)",gap:8,marginBottom:12}}>
 <KPI label="Total Debe" value={$(totalDebe)} color={P.blue}/>
 <KPI label="Total Haber" value={$(totalHaber)} color={P.grn}/>
 <KPI label="Diferencia" value={$(Math.abs(totalDebe-totalHaber))} color={Math.abs(totalDebe-totalHaber)<0.01?P.grn:P.red} sub={Math.abs(totalDebe-totalHaber)<0.01?"Cuadrado":"Descuadre"}/>
@@ -429,7 +431,7 @@ return(<div>
 {k:"debe",l:"Debe",r:1,b:1,fmt:v=>$(v)},{k:"haber",l:"Haber",r:1,b:1,fmt:v=>$(v)}
 ]} empty="Sin asientos contables." title="Libro Diario" onExport={()=>exportXLS(D.asientos||[],"Contabilidad_LibroDiario")}/>
 <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nuevo Asiento Contable">
-<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<div className="erp-base-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
 <Inp l="Fecha" v={f.fecha} onChange={v=>setF({...f,fecha:v})} type="date"/>
 <Inp l="Correlativo" v={f.correlativo} onChange={v=>setF({...f,correlativo:v})} ph="0001"/>
 <Inp l="Glosa" v={f.glosa} onChange={v=>setF({...f,glosa:v})} ph="Descripción"/>
@@ -453,7 +455,7 @@ return(<div>
 <div><div style={{fontSize:16,fontWeight:800}}>Recursos Humanos</div><div style={{fontSize:10,color:P.s2}}>Gestión de Personal y Planilla</div></div>
 <Btn s onClick={()=>setShowAdd(true)} style={{background:P.cyan+"15",color:P.cyan}}>+ Nuevo Empleado</Btn>
 </div>
-<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<div className="erp-kpi-grid" style={{display:"grid",gridTemplateColumns:"repeat(4, 1fr)",gap:8,marginBottom:12}}>
 <KPI label="Total Empleados" value={D.empleados.length} color={P.cyan}/>
 <KPI label="Planilla Mensual" value={$(planilla)} color={P.org}/>
 <KPI label="Activos" value={D.empleados.filter(e=>e.estado==="Activo").length} color={P.grn}/>
@@ -465,7 +467,7 @@ return(<div>
 {k:"_",l:"",render:r=><Btn s d onClick={()=>del(r.id)}>✖</Btn>}
 ]} empty="Sin empleados registrados." title="Personal" onExport={()=>exportXLS(D.empleados,"RRHH_Empleados")}/>
 <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Nuevo Empleado">
-<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+<div className="erp-base-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
 <Inp l="DNI" v={f.dni} onChange={v=>setF({...f,dni:v})} ph="12345678"/>
 <Inp l="Nombre Completo" v={f.nombre} onChange={v=>setF({...f,nombre:v})}/>
 <Inp l="Cargo" v={f.cargo} onChange={v=>setF({...f,cargo:v})}/>
@@ -520,7 +522,7 @@ return(<div>
 <Btn s onClick={exportAll} style={{background:P.grn+"15",color:P.grn}}>⬇ Exportar Todo XLS</Btn>
 <Btn s d onClick={clearAll}>⚠ Limpiar Todo</Btn>
 </div></div>
-<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:12}}>
+<div className="erp-kpi-grid" style={{display:"grid",gridTemplateColumns:"repeat(4, 1fr)",gap:8,marginBottom:12}}>
 <KPI label="Total Registros" value={totalRecords} color={P.blue}/>
 <KPI label="Tablas" value={tables.length} color={P.pur}/>
 <KPI label="Empresas" value={empresas.length} color={P.tl}/>
@@ -541,6 +543,7 @@ function CamposApp(){
 const[user,setUser]=useState(null);
 const[email,setEmail]=useState("");
 const[tab,setTab]=useState("dashboard");
+const [sideOpen,setSideOpen]=React.useState(false);
 const[toast,setToast]=useState(null);
 const[loading,setLoading]=useState(false);
 const[empresasDyn,setEmpresasDyn]=useState(EMPRESAS);
@@ -632,7 +635,8 @@ const sideModules=isShadow?MODULES.filter(m=>["dashboard","ventas","compras"].in
 
 return(
 <div style={{display:"flex",height:"100vh",background:P.bg,fontFamily:"'DM Sans',-apple-system,sans-serif",color:P.tx,overflow:"hidden",fontSize:13}}>
-<aside style={{width:190,background:"linear-gradient(180deg,#080c15,#050710)",borderRight:"1px solid "+P.bd,display:"flex",flexDirection:"column",flexShrink:0}}>
+<div className={"erp-overlay"+(sideOpen?" open":"")} onClick={()=>setSideOpen(false)}/>
+<aside className={"erp-sidebar"+(sideOpen?" open":"")} style={{width:190,background:"linear-gradient(180deg,#080c15,#050710)",borderRight:"1px solid "+P.bd,display:"flex",flexDirection:"column",flexShrink:0}}>
 <div style={{padding:"12px 10px",borderBottom:"1px solid "+P.bd,display:"flex",alignItems:"center",gap:7}}>
 <div style={{width:28,height:28,borderRadius:7,background:"linear-gradient(135deg,#32D74B,#0A84FF)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,color:"#fff"}}>Σ</div>
 <div><div style={{fontSize:12,fontWeight:700}}>SumaERP</div><div style={{fontSize:7,color:P.s2,fontWeight:600}}>Contador • Campos</div></div>
@@ -648,7 +652,7 @@ return(
 <div style={{display:"flex",alignItems:"center",gap:6}}>
 <div style={{width:22,height:22,borderRadius:5,background:isShadow?"linear-gradient(135deg,"+P.red+","+P.org+")":"linear-gradient(135deg,"+P.grn+","+P.blue+")",display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:"#fff"}}>{user?.name?.[0]?.toUpperCase()||"C"}</div>
 <div style={{flex:1,minWidth:0}}>
-<div style={{fontSize:8,fontWeight:600,color:"#a0acc0",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{user?.name||"Contador"}</div>
+<div style={{fontSize:8,fontWeight:600,color:"#a0acc0",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}><button className="erp-hamburger" onClick={()=>setSideOpen(!sideOpen)}>☰</button>{user?.name||"Contador"}</div>
 <div style={{fontSize:7,color:isShadow?P.red:P.grn,fontWeight:700}}>{isShadow?"Shadow Auditor":"Contador Campos"}</div>
 </div>
 <button onClick={()=>{setUser(null);setIsShadow(false);setD(emptyData)}} style={{background:"none",border:"none",color:P.s2,cursor:"pointer",padding:1,fontSize:10}}>⏻</button>
@@ -656,7 +660,7 @@ return(
 </aside>
 
 {/* MAIN CONTENT */}
-<main style={{flex:1,overflow:"auto",padding:16,scrollbarWidth:"thin"}}>
+<main className="erp-main" style={{flex:1,overflow:"auto",padding:16,scrollbarWidth:"thin"}}>
 {/* Header bar */}
 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12,padding:"6px 10px",background:P.c1,borderRadius:8,border:"1px solid "+P.bd}}>
 <div style={{display:"flex",alignItems:"center",gap:8}}>
