@@ -472,7 +472,7 @@ function ClientePortal() {
         </div>
 
         {/* Table */}
-        {tab === "ventas" ? renderTable(myFacturas, [
+        {tab === "ventas" && renderTable(myFacturas, [
           { k: "serie", l: "Serie", mono: 1, color: "#5B9CF6", b: 1 },
           { k: "numero", l: "Num", mono: 1 },
           { k: "fecha", l: "Fecha" },
@@ -484,8 +484,8 @@ function ClientePortal() {
           { k: "igv", l: "IGV", r: 1, fmt: v => $(v) },
           { k: "total", l: "Total", r: 1, b: 1, fmt: v => $(v) },
           { k: "estado", l: "Estado", render: r => <Badge s={r.estado} /> },
-        ], "Sin ventas registradas. Usa 'Escanear Documento' para agregar.") :
-        renderTable(myCompras, [
+        ], "Sin ventas registradas. Usa 'Escanear Documento' para agregar.")}
+        {tab === "compras" && renderTable(myCompras, [
           { k: "serie", l: "Serie", mono: 1, color: "#5B9CF6", b: 1 },
           { k: "numero", l: "Num", mono: 1 },
           { k: "fecha", l: "Fecha" },
