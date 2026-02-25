@@ -497,7 +497,7 @@ function ClientePortal() {
           { k: "igv", l: "IGV", r: 1, fmt: v => $(v) },
           { k: "total", l: "Total", r: 1, b: 1, fmt: v => $(v) },
           { k: "estado", l: "Estado", render: r => <Badge s={r.estado} /> },
-        ], "Sin compras registradas. Usa 'Escanear Documento' para agregar.")}}
+        ], "Sin compras registradas. Usa 'Escanear Documento' para agregar.")}
         {tab === "contabilidad" && (<div>
           <div className="erp-kpi-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8, marginBottom: 14 }}>
             {[
