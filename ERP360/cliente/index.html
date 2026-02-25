@@ -423,8 +423,8 @@ function ClientePortal() {
           <div><div style={{ fontSize: 11, fontWeight: 700 }}>SumaERP</div><div style={{ fontSize: 7, color: P.s2, fontWeight: 600 }}>Portal Cliente</div></div>
         </div>
         <div style={{ flex: 1, padding: "8px 6px", display: "flex", flexDirection: "column", gap: 2 }}>
-          {[{ id: "ventas", l: "Mis Ventas", ic: <I.Sa /> }, { id: "compras", l: "Mis Compras", ic: <I.Bx /> }],
-            { id: "contabilidad", l: "Contabilidad", ic: <I.Cd /> }.map(n => (
+          {[{ id: "ventas", l: "Mis Ventas", ic: <I.Sa /> }, { id: "compras", l: "Mis Compras", ic: <I.Bx /> },
+            { id: "contabilidad", l: "Contabilidad", ic: <I.Cd /> }].map(n => (
             <div key={n.id} onClick={() => { setTab(n.id); setSideOpen(false); }} style={{ display: "flex", alignItems: "center", gap: 7, padding: "7px 8px", borderRadius: 6, cursor: "pointer", fontSize: 11, fontWeight: tab === n.id ? 600 : 400, background: tab === n.id ? P.blue + "12" : "transparent", color: tab === n.id ? P.blue : P.s1, borderLeft: tab === n.id ? `2px solid ${P.blue}` : "2px solid transparent" }}>
               <span style={{ opacity: tab === n.id ? 1 : 0.5 }}>{n.ic}</span>{n.l}
             </div>
