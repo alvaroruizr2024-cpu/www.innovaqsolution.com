@@ -554,7 +554,7 @@ const[D,setD]=useState(emptyData);
 
 /* Load empresas from Supabase */
 useEffect(()=>{(async()=>{try{const s=getSB();if(!s)return;const{data}=await s.from("erp_empresas").select("ruc,razon_social,tipo,sector,estado,plan").eq("estado","Activo").order("razon_social");
-if(data&&data.length>0)setEmpresasDyn(data.map(e=>({ruc:e.ruc,razon:e.razon_social,tipo:e.tipo,sector:e.sector,estado:e.estado,plan:e.plan||"free"})))}catch(e){console.log("Load empresas error:",e)}})()}
+if(data&&data.length>0)setEmpresasDyn(data.map(e=>({ruc:e.ruc,razon:e.razon_social,tipo:e.tipo,sector:e.sector,estado:e.estado,plan:e.plan||"free"})))}catch(e){console.log("Load empresas error:",e)}})()},[]);
 
 /* Load data from client portals via Supabase erp_data */
 useEffect(()=>{if(!user)return;(async()=>{try{const s=getSB();if(!s)return;
@@ -583,7 +583,7 @@ return next});
 console.log("Loaded from Supabase:",rows.length,"records,",scannedList.length,"scanned docs");
 }
 }catch(e){console.log("Load from Supabase error:",e)}})()},[user]);
-,[]);
+
 
 /* Sync data to Supabase */
 useEffect(()=>{if(!user)return;(async()=>{try{const s=getSB();if(!s)return;
