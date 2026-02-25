@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SumaERP · Portal Cliente</title>
-    <meta name="description" content="SumaERP - Portal de acceso para clientes · Compras y Ventas">
+    <meta name="description" content="SumaERP - Portal de acceso para clientes · Ventas, Compras y Contabilidad">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>Σ</text></svg>">
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
@@ -17,7 +17,28 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body, #root { width: 100%; height: 100%; }
-    </style>
+    
+    @media (max-width: 768px) {
+      .erp-sidebar { position: fixed !important; left: -260px; top: 0; bottom: 0; z-index: 1000; transition: left 0.3s ease; width: 220px !important; }
+      .erp-sidebar.open { left: 0; }
+      .erp-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; }
+      .erp-overlay.open { display: block; }
+      .erp-hamburger { display: flex !important; }
+      .erp-main { padding: 10px !important; }
+      .erp-header { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; }
+      .erp-header-title { font-size: 13px !important; }
+      .erp-header-sub { font-size: 9px !important; }
+      .erp-kpi-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 6px !important; }
+      .erp-kpi-value { font-size: 14px !important; }
+      .erp-btn-group { flex-wrap: wrap; }
+      .erp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    }
+    @media (min-width: 769px) {
+      .erp-hamburger { display: none !important; }
+      .erp-overlay { display: none !important; }
+    }
+    .erp-hamburger { display: none; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 6px; border: 1px solid #1a2540; background: #0a0e17; color: #d6e0f0; cursor: pointer; font-size: 16px; flex-shrink: 0; }
+</style>
 </head>
 <body style="background:#05070c;color:#d6e0f0;font-family:DM Sans,sans-serif">
     <div id="root"><div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#4a6080;font-size:14px">Cargando Portal Cliente...</div></div>
@@ -115,14 +136,17 @@ function ClientePortal() {
   const [tab, setTab] = useState("ventas");
   const [toast, setToast] = useState(null);
   const [scanModal, setScanModal] = useState(null);
+    const [sideOpen, setSideOpen] = useState(false);
+    const [contaModal, setContaModal] = useState(false);
+    const [contaForm, setContaForm] = useState({ fecha: today(), correlativo: "", glosa: "", cuentaDebe: "", cuentaHaber: "", debe: "", haber: "" });
   const notify = (msg, type) => setToast({ msg, type });
 
   /* Shared data via localStorage */
   const loadData = () => {
     try {
       const saved = localStorage.getItem('erp360_data');
-      return saved ? JSON.parse(saved) : { facturas: [], compras: [] };
-    } catch(e) { return { facturas: [], compras: [] }; }
+      const d = saved ? JSON.parse(saved) : { facturas: [], compras: [], asientos: [] }; if (!d.asientos) d.asientos = []; return d;
+    } catch(e) { return { facturas: [], compras: [], asientos: [] }; }
   };
   const saveData = (d) => {
     try { localStorage.setItem('erp360_data', JSON.stringify(d)); } catch(e) {}
@@ -177,6 +201,7 @@ function ClientePortal() {
   /* Filter data for this client's empresa */
   const myFacturas = useMemo(() => D.facturas?.filter(f => !user?.empresaRuc || f.ruc === user.empresaRuc || f._empresaRuc === user.empresaRuc) || [], [D.facturas, user]);
   const myCompras = useMemo(() => D.compras?.filter(c => !user?.empresaRuc || c.ruc === user.empresaRuc || c._empresaRuc === user.empresaRuc) || [], [D.compras, user]);
+    const myAsientos = useMemo(() => (D.asientos || []).filter(a => !user?.empresaRuc || a._empresaRuc === user.empresaRuc), [D.asientos, user]);
   const myScanned = useMemo(() => scannedDocs.filter(d => d.empresaRuc === user?.empresaRuc) || [], [scannedDocs, user]);
 
   /* AI Scanner */
@@ -334,7 +359,7 @@ function ClientePortal() {
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <div style={{ width: 52, height: 52, borderRadius: 13, background: "linear-gradient(135deg,#32D74B,#0A84FF)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 26, fontWeight: 800, color: "#fff", marginBottom: 10, boxShadow: "0 8px 32px rgba(50,215,75,.3)" }}>Σ</div>
           <div style={{ fontSize: 20, fontWeight: 800 }}>SumaERP</div>
-          <div style={{ fontSize: 10, color: P.s2, marginTop: 3 }}>Portal Cliente · Compras y Ventas</div>
+          <div style={{ fontSize: 10, color: P.s2, marginTop: 3 }}>Portal Cliente · Ventas, Compras y Contabilidad</div>
         </div>
         <div style={{ background: P.c1, border: `1px solid ${P.bd}`, borderRadius: 14, padding: 24, boxShadow: "0 20px 60px rgba(0,0,0,.4)" }}>
           <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 4 }}>Acceso Empresa</div>
@@ -391,14 +416,16 @@ function ClientePortal() {
   return (
     <div style={{ display: "flex", height: "100vh", background: P.bg, fontFamily: "'DM Sans',-apple-system,sans-serif", color: P.tx, overflow: "hidden", fontSize: 13 }}>
       {/* Sidebar */}
-      <aside style={{ width: 180, background: "linear-gradient(180deg,#080c15,#050710)", borderRight: `1px solid ${P.bd}`, display: "flex", flexDirection: "column", flexShrink: 0 }}>
+      <div className={"erp-overlay" + (sideOpen ? " open" : "")} onClick={() => setSideOpen(false)} />
+      <aside className={"erp-sidebar" + (sideOpen ? " open" : "")} style={{ width: 180, background: "linear-gradient(180deg,#080c15,#050710)", borderRight: `1px solid ${P.bd}`, display: "flex", flexDirection: "column", flexShrink: 0 }}>
         <div style={{ padding: "10px 9px", borderBottom: `1px solid ${P.bd}`, display: "flex", alignItems: "center", gap: 6 }}>
           <div style={{ width: 26, height: 26, borderRadius: 6, background: "linear-gradient(135deg,#32D74B,#0A84FF)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "#fff" }}>Σ</div>
           <div><div style={{ fontSize: 11, fontWeight: 700 }}>SumaERP</div><div style={{ fontSize: 7, color: P.s2, fontWeight: 600 }}>Portal Cliente</div></div>
         </div>
         <div style={{ flex: 1, padding: "8px 6px", display: "flex", flexDirection: "column", gap: 2 }}>
-          {[{ id: "ventas", l: "Mis Ventas", ic: <I.Sa /> }, { id: "compras", l: "Mis Compras", ic: <I.Bx /> }].map(n => (
-            <div key={n.id} onClick={() => setTab(n.id)} style={{ display: "flex", alignItems: "center", gap: 7, padding: "7px 8px", borderRadius: 6, cursor: "pointer", fontSize: 11, fontWeight: tab === n.id ? 600 : 400, background: tab === n.id ? P.blue + "12" : "transparent", color: tab === n.id ? P.blue : P.s1, borderLeft: tab === n.id ? `2px solid ${P.blue}` : "2px solid transparent" }}>
+          {[{ id: "ventas", l: "Mis Ventas", ic: <I.Sa /> }, { id: "compras", l: "Mis Compras", ic: <I.Bx /> }],
+            { id: "contabilidad", l: "Contabilidad", ic: <I.Cd /> }.map(n => (
+            <div key={n.id} onClick={() => { setTab(n.id); setSideOpen(false); }} style={{ display: "flex", alignItems: "center", gap: 7, padding: "7px 8px", borderRadius: 6, cursor: "pointer", fontSize: 11, fontWeight: tab === n.id ? 600 : 400, background: tab === n.id ? P.blue + "12" : "transparent", color: tab === n.id ? P.blue : P.s1, borderLeft: tab === n.id ? `2px solid ${P.blue}` : "2px solid transparent" }}>
               <span style={{ opacity: tab === n.id ? 1 : 0.5 }}>{n.ic}</span>{n.l}
             </div>
           ))}
@@ -416,15 +443,16 @@ function ClientePortal() {
       </aside>
 
       {/* Main content */}
-      <main style={{ flex: 1, overflow: "auto", padding: 16, scrollbarWidth: "thin" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+      <main className="erp-main" style={{ flex: 1, overflow: "auto", padding: 16, scrollbarWidth: "thin" }}>
+        <div className="erp-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, gap: 8 }}>
+            <button className="erp-hamburger" onClick={() => setSideOpen(!sideOpen)}>☰</button>
           <div>
-            <div style={{ fontSize: 16, fontWeight: 800 }}>{tab === "ventas" ? "Mis Ventas" : "Mis Compras"} · {user.empresaRazon}</div>
-            <div style={{ fontSize: 10, color: P.s2 }}>RUC: {user.empresaRuc} · Documentos integrados con tu contador</div>
+            <div className="erp-header-title" style={{ fontSize: 16, fontWeight: 800 }}>{tab === "ventas" ? "Mis Ventas" : tab === "compras" ? "Mis Compras" : "Contabilidad"} · {user.empresaRazon}</div>
+            <div className="erp-header-sub" style={{ fontSize: 10, color: P.s2 }}>RUC: {user.empresaRuc} · Documentos integrados con tu contador</div>
           </div>
-          <div style={{ display: "flex", gap: 6 }}>
+          <div className="erp-btn-group" style={{ display: "flex", gap: 6 }}>
             <Btn s onClick={() => exportXLS(tab === "ventas" ? myFacturas : myCompras, tab === "ventas" ? "Ventas_Cliente" : "Compras_Cliente")} style={{ background: P.grn + "15", color: P.grn, border: "1px solid " + P.grn + "30" }}><I.Dw /> Exportar XLS</Btn>
-              <Btn s onClick={() => handleScan(tab)} style={{ background: `${P.tl}15`, color: P.tl, border: `1px solid ${P.tl}30` }}><I.Sc /> Escanear Documento</Btn>
+              {tab !== "contabilidad" && <Btn s onClick={() => handleScan(tab)} style={{ background: `${P.tl}15`, color: P.tl, border: `1px solid ${P.tl}30` }}><I.Sc /> Escanear Documento</Btn>}
           </div>
         </div>
 
@@ -469,7 +497,52 @@ function ClientePortal() {
           { k: "igv", l: "IGV", r: 1, fmt: v => $(v) },
           { k: "total", l: "Total", r: 1, b: 1, fmt: v => $(v) },
           { k: "estado", l: "Estado", render: r => <Badge s={r.estado} /> },
-        ], "Sin compras registradas. Usa 'Escanear Documento' para agregar.")}
+        ], "Sin compras registradas. Usa 'Escanear Documento' para agregar.")}}
+        {tab === "contabilidad" && (<div>
+          <div className="erp-kpi-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8, marginBottom: 14 }}>
+            {[
+              { l: "Total Debe", v: $(myAsientos.reduce((a, r) => a + nn(r.debe), 0)), c: P.grn },
+              { l: "Total Haber", v: $(myAsientos.reduce((a, r) => a + nn(r.haber), 0)), c: P.org },
+              { l: "Diferencia", v: $(Math.abs(myAsientos.reduce((a, r) => a + nn(r.debe), 0) - myAsientos.reduce((a, r) => a + nn(r.haber), 0))), c: P.blue },
+              { l: "Asientos", v: myAsientos.length, c: P.cyan },
+            ].map((k, i) => (
+              <div key={i} style={{ background: P.c1, border: "1px solid " + P.bd, borderRadius: 8, padding: 12 }}>
+                <div style={{ fontSize: 9, color: P.s2, marginBottom: 3 }}>{k.l}</div>
+                <div className="erp-kpi-value" style={{ fontSize: 18, fontWeight: 800, color: k.c }}>{k.v}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 8 }}>
+            <Btn s onClick={() => setContaModal(true)} style={{ background: P.blue + "15", color: P.blue, border: "1px solid " + P.blue + "30" }}><I.Pl /> Nuevo Asiento</Btn>
+          </div>
+          {renderTable(myAsientos, [
+            { k: "fecha", l: "Fecha" },
+            { k: "correlativo", l: "Correlativo", mono: 1 },
+            { k: "glosa", l: "Glosa" },
+            { k: "cuentaDebe", l: "Cuenta Debe", mono: 1 },
+            { k: "cuentaHaber", l: "Cuenta Haber", mono: 1 },
+            { k: "debe", l: "Debe", r: 1, fmt: v => $(v) },
+            { k: "haber", l: "Haber", r: 1, fmt: v => $(v) },
+          ], "Sin asientos contables. Registre el primer asiento.")}
+          <Modal open={contaModal} onClose={() => setContaModal(false)} title="Nuevo Asiento Contable">
+            <Inp l="Fecha" v={contaForm.fecha} onChange={v => setContaForm({...contaForm, fecha: v})} type="date" />
+            <Inp l="Correlativo" v={contaForm.correlativo} onChange={v => setContaForm({...contaForm, correlativo: v})} ph="Ej: 001" />
+            <Inp l="Glosa" v={contaForm.glosa} onChange={v => setContaForm({...contaForm, glosa: v})} ph="Descripcion del asiento" />
+            <Inp l="Cuenta Debe" v={contaForm.cuentaDebe} onChange={v => setContaForm({...contaForm, cuentaDebe: v})} ph="Ej: 1011" />
+            <Inp l="Cuenta Haber" v={contaForm.cuentaHaber} onChange={v => setContaForm({...contaForm, cuentaHaber: v})} ph="Ej: 7011" />
+            <Inp l="Debe" v={contaForm.debe} onChange={v => setContaForm({...contaForm, debe: v})} ph="0.00" type="number" />
+            <Inp l="Haber" v={contaForm.haber} onChange={v => setContaForm({...contaForm, haber: v})} ph="0.00" type="number" />
+            <div style={{ marginTop: 12 }}>
+              <Btn p full onClick={() => {
+                const asiento = { id: uid(), ...contaForm, debe: nn(contaForm.debe), haber: nn(contaForm.haber), _empresaRuc: user.empresaRuc };
+                setD(prev => ({...prev, asientos: [asiento, ...(prev.asientos || [])]}));
+                setContaForm({ fecha: today(), correlativo: "", glosa: "", cuentaDebe: "", cuentaHaber: "", debe: "", haber: "" });
+                setContaModal(false);
+                notify("Asiento contable registrado");
+              }}>Guardar Asiento</Btn>
+            </div>
+          </Modal>
+        </div>)}
 
         {/* Scanned docs for this empresa */}
         {myScanned.length > 0 && (
