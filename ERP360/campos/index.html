@@ -554,7 +554,36 @@ const[D,setD]=useState(emptyData);
 
 /* Load empresas from Supabase */
 useEffect(()=>{(async()=>{try{const s=getSB();if(!s)return;const{data}=await s.from("erp_empresas").select("ruc,razon_social,tipo,sector,estado,plan").eq("estado","Activo").order("razon_social");
-if(data&&data.length>0)setEmpresasDyn(data.map(e=>({ruc:e.ruc,razon:e.razon_social,tipo:e.tipo,sector:e.sector,estado:e.estado,plan:e.plan||"free"})))}catch(e){console.log("Load empresas error:",e)}})()},[]);
+if(data&&data.length>0)setEmpresasDyn(data.map(e=>({ruc:e.ruc,razon:e.razon_social,tipo:e.tipo,sector:e.sector,estado:e.estado,plan:e.plan||"free"})))}catch(e){console.log("Load empresas error:",e)}})()}
+
+/* Load data from client portals via Supabase erp_data */
+useEffect(()=>{if(!user)return;(async()=>{try{const s=getSB();if(!s)return;
+const{data:rows}=await s.from("erp_data").select("id,empresa_ruc,tabla,data");
+if(rows&&rows.length>0){
+const merged={facturas:[],compras:[],productos:[],empleados:[],imports:[],exports:[],bancos:[],asientos:[]};
+rows.forEach(r=>{if(r.tabla&&merged[r.tabla]&&r.data){
+const rec=typeof r.data==="string"?JSON.parse(r.data):r.data;
+if(rec&&rec.id){rec._fromSupa=true;rec._empresaRuc=r.empresa_ruc;merged[r.tabla].push(rec)}
+}});
+const{data:scanned}=await s.from("erp_scanned_docs").select("id,empresa_ruc,data");
+const scannedList=[];
+if(scanned&&scanned.length>0){scanned.forEach(sd=>{
+const doc=typeof sd.data==="string"?JSON.parse(sd.data):sd.data;
+if(doc){doc._fromSupa=true;doc._empresaRuc=sd.empresa_ruc;scannedList.push(doc)}
+})}
+setD(prev=>{const next={...prev};
+["facturas","compras","productos","empleados","imports","exports","bancos","asientos"].forEach(tabla=>{
+const existing=prev[tabla]||[];
+const existingIds=new Set(existing.map(r=>r.id));
+const newRecs=merged[tabla].filter(r=>!existingIds.has(r.id));
+if(newRecs.length>0)next[tabla]=[...existing,...newRecs];
+});
+if(scannedList.length>0){next.scannedDocs=[...(prev.scannedDocs||[]),...scannedList.filter(s=>!(prev.scannedDocs||[]).find(p=>p.id===s.id))]}
+return next});
+console.log("Loaded from Supabase:",rows.length,"records,",scannedList.length,"scanned docs");
+}
+}catch(e){console.log("Load from Supabase error:",e)}})()},[user]);
+,[]);
 
 /* Sync data to Supabase */
 useEffect(()=>{if(!user)return;(async()=>{try{const s=getSB();if(!s)return;
