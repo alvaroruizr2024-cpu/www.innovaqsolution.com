@@ -201,7 +201,7 @@ function ClientePortal() {
   /* Filter data for this client's empresa */
   const myFacturas = useMemo(() => D.facturas?.filter(f => !user?.empresaRuc || f.ruc === user.empresaRuc || f._empresaRuc === user.empresaRuc) || [], [D.facturas, user]);
   const myCompras = useMemo(() => D.compras?.filter(c => !user?.empresaRuc || c.ruc === user.empresaRuc || c._empresaRuc === user.empresaRuc) || [], [D.compras, user]);
-    const myAsientos = useMemo(() => (D.asientos || []).filter(a => !user?.empresaRuc || a._empresaRuc === user.empresaRuc), [D.asientos, user]);
+    const myAsientos = useMemo(() => (Array.isArray(D.asientos) ? D.asientos : []).filter(a => !user?.empresaRuc || a._empresaRuc === user.empresaRuc), [D.asientos, user]);
   const myScanned = useMemo(() => scannedDocs.filter(d => d.empresaRuc === user?.empresaRuc) || [], [scannedDocs, user]);
 
   /* AI Scanner */
@@ -371,7 +371,7 @@ function ClientePortal() {
             const found = empresasDyn.find(e => e.ruc === rucInput.trim());
             if (found) {
               setLoading(true);
-              const doLogin = (supaData) => {
+              const doLogin = (supaData) => { if (supaData && !supaData.asientos) supaData.asientos = [];
                 if (supaData) setD(supaData);
                 window._supaInitLoaded = true;
                 setUser({ role: "cliente", empresa: found, empresaRuc: found.ruc, empresaRazon: found.razon });
