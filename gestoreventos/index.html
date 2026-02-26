@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedCongress Pro - Gestor de Congresos Médicos | INNOVAQ Solutions</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<style>
+:root{--primary:#0f766e;--primary-light:#14b8a6;--secondary:#1e40af;--accent:#f59e0b;--danger:#ef4444;--success:#22c55e;--bg-dark:#0f172a;--bg-card:#1e293b;--bg-input:#334155;--text-primary:#f8fafc;--text-secondary:#94a3b8;--border:#475569}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg-dark);color:var(--text-primary);min-height:100vh}
+.sidebar{width:260px;background:var(--bg-card);border-right:1px solid var(--border);height:100vh;position:fixed;left:0;top:0;z-index:50;transition:transform .3s}
+.sidebar-header{padding:1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem}
+.sidebar-header img{width:40px;height:40px;border-radius:8px}
+.sidebar-header h1{font-size:1.1rem;font-weight:700;color:var(--primary-light)}
+.sidebar-header span{font-size:.7rem;color:var(--text-secondary)}
+.nav-section{padding:1rem .75rem}
+.nav-section-title{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-secondary);padding:0 .75rem;margin-bottom:.5rem}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.65rem .75rem;border-radius:8px;cursor:pointer;transition:all .2s;color:var(--text-secondary);font-size:.875rem;margin-bottom:2px}
+.nav-item:hover{background:rgba(20,184,166,.1);color:var(--text-primary)}
+.nav-item.active{background:rgba(20,184,166,.15);color:var(--primary-light);font-weight:600}
+.nav-item i{width:20px;text-align:center;font-size:.9rem}
+.main-content{margin-left:260px;padding:1.5rem;min-height:100vh}
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding:1rem 1.5rem;background:var(--bg-card);border-radius:12px;border:1px solid var(--border)}
+.top-bar h2{font-size:1.25rem;font-weight:700}
+.search-box{display:flex;align-items:center;gap:.5rem;background:var(--bg-input);padding:.5rem 1rem;border-radius:8px;border:1px solid var(--border)}
+.search-box input{background:transparent;border:none;outline:none;color:var(--text-primary);font-size:.875rem;width:200px}
+.btn{padding:.5rem 1rem;border-radius:8px;font-size:.875rem;font-weight:600;cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-primary{background:var(--primary);color:white}.btn-primary:hover{background:var(--primary-light)}
+.btn-secondary{background:var(--secondary);color:white}
+.btn-accent{background:var(--accent);color:var(--bg-dark)}
+.btn-danger{background:var(--danger);color:white}
+.btn-success{background:var(--success);color:white}
+.btn-ghost{background:transparent;color:var(--text-secondary);border:1px solid var(--border)}.btn-ghost:hover{background:var(--bg-input)}
+.stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;transition:all .2s}
+.stat-card:hover{border-color:var(--primary-light);transform:translateY(-2px)}
+.stat-card .stat-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.25rem}
+.stat-card .stat-value{font-size:1.75rem;font-weight:800;margin:.5rem 0 .25rem}
+.stat-card .stat-label{font-size:.75rem;color:var(--text-secondary)}
+.stat-card .stat-change{font-size:.75rem;display:flex;align-items:center;gap:.25rem}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.card-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.card-header h3{font-size:1rem;font-weight:700}
+.card-body{padding:1.25rem}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:.75rem 1rem;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-secondary);border-bottom:1px solid var(--border);font-weight:600}
+td{padding:.75rem 1rem;font-size:.875rem;border-bottom:1px solid rgba(71,85,105,.3)}
+tr:hover{background:rgba(20,184,166,.03)}
+.badge{padding:.2rem .6rem;border-radius:6px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.badge-success{background:rgba(34,197,94,.15);color:#22c55e}
+.badge-warning{background:rgba(245,158,11,.15);color:#f59e0b}
+.badge-danger{background:rgba(239,68,68,.15);color:#ef4444}
+.badge-info{background:rgba(59,130,246,.15);color:#3b82f6}
+.badge-purple{background:rgba(139,92,246,.15);color:#8b5cf6}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:100;display:none;justify-content:center;align-items:center}
+.modal-overlay.active{display:flex}
+.modal{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;width:90%;max-width:600px;max-height:85vh;overflow-y:auto}
+.modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.modal-header h3{font-size:1.1rem;font-weight:700}
+.modal-body{padding:1.5rem}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--text-secondary);margin-bottom:.35rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:.6rem .8rem;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);font-size:.875rem;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary-light)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.tab-nav{display:flex;gap:.25rem;padding:.25rem;background:var(--bg-input);border-radius:10px;margin-bottom:1rem}
+.tab-btn{padding:.5rem 1rem;border-radius:8px;border:none;background:transparent;color:var(--text-secondary);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s}
+.tab-btn.active{background:var(--primary);color:white}
+.chart-container{position:relative;height:250px}
+.notification{position:fixed;top:1rem;right:1rem;padding:1rem 1.5rem;border-radius:10px;z-index:200;animation:slideIn .3s ease;display:flex;align-items:center;gap:.75rem;font-size:.875rem;font-weight:600}
+.notification.success{background:#065f46;border:1px solid #22c55e}
+.notification.error{background:#7f1d1d;border:1px solid #ef4444}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main-content{margin-left:0}.grid-4{grid-template-columns:repeat(2,1fr)}.form-row{grid-template-columns:1fr}}
+.loading{display:flex;justify-content:center;align-items:center;padding:3rem}
+.spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--primary-light);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty-state{text-align:center;padding:3rem;color:var(--text-secondary)}
+.empty-state i{font-size:3rem;margin-bottom:1rem;opacity:.3}
+.progress-bar{height:6px;background:var(--bg-input);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width .5s ease}
+.avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:white}
+.config-banner{background:linear-gradient(135deg,#1e40af,#0f766e);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;display:none}
+.config-banner.show{display:block}
+.config-banner h3{font-size:1rem;margin-bottom:.5rem}
+.config-banner p{font-size:.8rem;color:rgba(255,255,255,.7);margin-bottom:1rem}
+</style>
+</head>
+<body>
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<div style="width:40px;height:40px;background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-heartbeat" style="color:white;font-size:1.1rem"></i></div>
+<div><h1>MedCongress</h1><span>INNOVAQ Solutions</span></div>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Principal</div>
+<div class="nav-item active" onclick="showSection('dashboard')"><i class="fas fa-th-large"></i>Dashboard</div>
+<div class="nav-item" onclick="showSection('eventos')"><i class="fas fa-calendar-alt"></i>Eventos</div>
+<div class="nav-item" onclick="showSection('participantes')"><i class="fas fa-users"></i>Participantes</div>
+<div class="nav-item" onclick="showSection('pagos')"><i class="fas fa-credit-card"></i>Pagos</div>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Operaciones</div>
+<div class="nav-item" onclick="showSection('hotel')"><i class="fas fa-hotel"></i>Hotel</div>
+<div class="nav-item" onclick="showSection('vuelos')"><i class="fas fa-plane"></i>Vuelos/Traslados</div>
+<div class="nav-item" onclick="showSection('incidentes')"><i class="fas fa-exclamation-triangle"></i>Incidentes</div>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Inteligencia</div>
+<div class="nav-item" onclick="showSection('reportes')"><i class="fas fa-chart-bar"></i>Reportes BI</div>
+<div class="nav-item" onclick="showSection('auditoria')"><i class="fas fa-shield-alt"></i>Auditoría</div>
+</div>
+<div class="nav-section" style="margin-top:auto;border-top:1px solid var(--border);padding-top:1rem">
+<div class="nav-item" onclick="showSection('config')"><i class="fas fa-cog"></i>Configuración</div>
+</div>
+</div>
+
+<!-- MOBILE TOGGLE -->
+<button onclick="document.getElementById('sidebar').classList.toggle('open')" style="position:fixed;top:1rem;left:1rem;z-index:60;display:none;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);width:40px;height:40px;border-radius:8px;cursor:pointer;font-size:1.1rem" id="menuToggle"><i class="fas fa-bars"></i></button>
+
+<!-- MAIN CONTENT -->
+<div class="main-content" id="mainContent">
+<!-- CONFIG BANNER -->
+<div class="config-banner show" id="configBanner">
+<h3><i class="fas fa-info-circle"></i> Configuración Inicial Requerida</h3>
+<p>Para conectar con Supabase, configure las credenciales en la sección Configuración. Los datos se mostrarán con información de demostración hasta que se conecte la base de datos.</p>
+<button class="btn btn-accent" onclick="showSection('config')"><i class="fas fa-cog"></i> Ir a Configuración</button>
+<button class="btn btn-ghost" onclick="this.parentElement.style.display='none'" style="margin-left:.5rem">Cerrar</button>
+</div>
+
+<!-- ============ DASHBOARD SECTION ============ -->
+<div id="section-dashboard">
+<div class="top-bar">
+<div><h2><i class="fas fa-th-large" style="color:var(--primary-light);margin-right:.5rem"></i>Dashboard General</h2><p style="font-size:.8rem;color:var(--text-secondary);margin-top:.25rem">Vista general del ecosistema de congresos médicos</p></div>
+<div style="display:flex;gap:.5rem">
+<select class="btn btn-ghost" id="dashEventFilter" onchange="filterDashboard()"><option value="all">Todos los Eventos</option></select>
+<button class="btn btn-primary" onclick="refreshDashboard()"><i class="fas fa-sync-alt"></i> Actualizar</button>
+</div>
+</div>
+
+<div class="grid-4" id="statsGrid">
+<div class="stat-card"><div style="display:flex;justify-content:space-between"><div class="stat-icon" style="background:rgba(20,184,166,.15);color:var(--primary-light)"><i class="fas fa-calendar-check"></i></div></div><div class="stat-value" id="statEventos">3</div><div class="stat-label">Eventos Activos</div><div class="stat-change" style="color:var(--success)"><i class="fas fa-arrow-up"></i> 12% vs mes anterior</div></div>
+<div class="stat-card"><div style="display:flex;justify-content:space-between"><div class="stat-icon" style="background:rgba(59,130,246,.15);color:#3b82f6"><i class="fas fa-users"></i></div></div><div class="stat-value" id="statParticipantes">847</div><div class="stat-label">Participantes Registrados</div><div class="stat-change" style="color:var(--success)"><i class="fas fa-arrow-up"></i> 84.7% capacidad</div></div>
+<div class="stat-card"><div style="display:flex;justify-content:space-between"><div class="stat-icon" style="background:rgba(34,197,94,.15);color:var(--success)"><i class="fas fa-dollar-sign"></i></div></div><div class="stat-value" id="statIngresos">$1.69M</div><div class="stat-label">Ingresos Totales</div><div class="stat-change" style="color:var(--success)"><i class="fas fa-arrow-up"></i> Margen: 42.3%</div></div>
+<div class="stat-card"><div style="display:flex;justify-content:space-between"><div class="stat-icon" style="background:rgba(245,158,11,.15);color:var(--accent)"><i class="fas fa-bed"></i></div></div><div class="stat-value" id="statOcupacion">91.2%</div><div class="stat-label">Ocupación Hotelera</div><div class="stat-change" style="color:var(--accent)"><i class="fas fa-minus"></i> 847/928 habitaciones</div></div>
+</div>
+
+<div class="grid-2" style="margin-top:1.5rem">
+<div class="card"><div class="card-header"><h3><i class="fas fa-chart-line" style="color:var(--primary-light);margin-right:.5rem"></i>Ingresos vs Presupuesto</h3></div><div class="card-body"><div class="chart-container"><canvas id="chartIngresos"></canvas></div></div></div>
+<div class="card"><div class="card-header"><h3><i class="fas fa-chart-doughnut" style="color:var(--accent);margin-right:.5rem"></i>Participantes por Estado</h3></div><div class="card-body"><div class="chart-container"><canvas id="chartParticipantes"></canvas></div></div></div>
+</div>
+
+<div class="grid-3" style="margin-top:1.5rem">
+<div class="card"><div class="card-header"><h3>Próximos Eventos</h3></div><div class="card-body" id="proximosEventos"></div></div>
+<div class="card"><div class="card-header"><h3>Incidentes Abiertos</h3><span class="badge badge-danger" id="incidentCount">5</span></div><div class="card-body" id="incidentesAbiertos"></div></div>
+<div class="card"><div class="card-header"><h3>Actividad Reciente</h3></div><div class="card-body" id="actividadReciente"></div></div>
+</div>
+                                                                                                                                                                  </div>
+
+<!-- ============ EVENTOS SECTION ============ -->
+<div id="section-eventos" style="display:none">
+<div class="top-bar">
+<div><h2><i class="fas fa-calendar-alt" style="color:var(--primary-light);margin-right:.5rem"></i>Gestión de Eventos</h2><p style="font-size:.8rem;color:var(--text-secondary);margin-top:.25rem">Administra congresos médicos internacionales</p></div>
+<div style="display:flex;gap:.5rem">
+<div class="search-box"><i class="fas fa-search" style="color:var(--text-secondary)"></i><input placeholder="Buscar evento..." id="searchEvento" oninput="filterTable('eventos')"></div>
+<button class="btn btn-primary" onclick="openModal('modalEvento')"><i class="fas fa-plus"></i> Nuevo Evento</button>
+</div>
+</div>
+<div class="card"><div class="card-body" style="padding:0"><table><thead><tr><th>Código</th><th>Nombre</th><th>Especialidad</th><th>Fecha</th><th>Sede</th><th>Capacidad</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="tablaEventos"></tbody></table></div></div>
+</div>
+
+<!-- ============ PARTICIPANTES SECTION ============ -->
+<div id="section-participantes" style="display:none">
+<div class="top-bar">
+<div><h2><i class="fas fa-users" style="color:var(--secondary);margin-right:.5rem"></i>Participantes</h2><p style="font-size:.8rem;color:var(--text-secondary);margin-top:.25rem">Registro y gestión de asistentes a congresos</p></div>
+<div style="display:flex;gap:.5rem">
+<div class="search-box"><i class="fas fa-search" style="color:var(--text-secondary)"></i><input placeholder="Buscar participante..." id="searchParticipante" oninput="filterTable('participantes')"></div>
+<button class="btn btn-primary" onclick="openModal('modalParticipante')"><i class="fas fa-plus"></i> Nuevo Participante</button>
+<button class="btn btn-success" onclick="exportCSV('participantes')"><i class="fas fa-file-csv"></i> Exportar</button>
+</div>
+</div>
+<div class="card"><div class="card-body" style="padding:0"><table><thead><tr><th>Nombre</th><th>Email</th><th>Especialidad</th><th>Evento</th><th>Tipo</th><th>Estado</th><th>QR</th><th>Acciones</th></tr></thead><tbody id="tablaParticipantes"></tbody></table></div></div>
+</div>
+
+<!-- ============ PAGOS SECTION ============ -->
+<div id="section-pagos" style="display:none">
+<div class="top-bar">
+<div><h2><i class="fas fa-credit-card" style="color:var(--success);margin-right:.5rem"></i>Gestión de Pagos</h2><p style="font-size:.8rem;color:var(--text-secondary);margin-top:.25rem">Transacciones y cobros vía Stripe</p></div>
+<div style="display:flex;gap:.5rem">
+<div class="search-box"><i class="fas fa-search" style="color:var(--text-secondary)"></i><input placeholder="Buscar pago..." id="searchPago" oninput="filterTable('pagos')"></div>
+<button class="btn btn-primary" onclick="openModal('modalPago')"><i class="fas fa-plus"></i> Registrar Pago</button>
+</div>
+</div>
+<div class="grid-4" style="margin-bottom:1.5rem">
+<div class="stat-card"><div class="stat-value" style="color:var(--success)">$1.69M</div><div class="stat-label">Total Cobrado</div></div>
+<div class="stat-card"><div class="stat-value" style="color:var(--accent)">$42.5K</div><div class="stat-label">Pendiente</div></div>
+<div class="stat-card"><div class="stat-value" style="color:var(--danger)">$8.2K</div><div class="stat-label">Reembolsos</div></div>
+<div class="stat-card"><div class="stat-value" style="color:var(--primary-light)">97.3%</div><div class="stat-label">Tasa de Cobro</div></div>
+</div>
+<div class="card"><div class="card-body" style="padding:0"><table><thead><tr><th>ID</th><th>Participante</th><th>Evento</th><th>Monto</th><th>Método</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead><tbody id="tablaPagos"></tbody></table></div></div>
+</div>
+
+<!-- ============ HOTEL SECTION ============ -->
+<div id="section-hotel" style="display:none">
+<div class="top-bar">
+<div><h2><i class="fas fa-hotel" style="color:var(--accent);margin-right:.5rem"></i>Gestión Hotelera</h2><p style="font-size:.8rem;color:var(--text-secondary);margin-top:.25rem">Habitaciones, check-in/out y ocupación</p></div>
+<div style="display:flex;gap:.5rem">
+<button class="btn btn-primary" onclick="openModal('modalHabitacion')"><i class="fas fa-plus"></i> Asignar Habitación</button>
+</div>
+</div>
+<div class="grid-4" style="margin-bottom:1.5rem">
+<div class="stat-card"><div class="stat-value" style="color:var(--primary-light)">928</div><div class="stat-label">Total Habitaciones</div></div>
+<div class="stat-card"><div class="stat-value" style="color:var(--success)">847</div><div class="stat-label">Ocupadas</div></div>
+<div class="stat-card"><div class="stat-value" style="color:var(--accent)">52</div><div class="stat-label">Disponibles</div></div>
+<div class="stat-card"><div class="stat-value" style="color:var(--danger)">29</div><div class="stat-label">Mantenimiento</div></div>
+</div>
+<div class="card"><div class="card-body" style="padding:0"><table><thead><tr><th>Habitación</th><th>Tipo</th><th>Hotel</th><th>Participante</th><th>Check-in</th><th>Check-out</th><th>Noches</th><th>Costo</th><th>Estado</th></tr></thead><tbody id="tablaHotel"></tbody></table></div></div>
+</div>
+
+<!-- ============ VUELOS SECTION ============ -->
+<div id="section-vuelos" style="display:none">
+<div class="top-bar">
+<div><h2><i class="fas fa-plane" style="color:var(--secondary);margin-right:.5rem"></i>Vuelos y Traslados</h2><p style="font-size:.8rem;color:var(--text-secondary);margin-top:.25rem">Logística de transporte de participantes</p></div>
+<div style="display:flex;gap:.5rem">
+<button class="btn btn-primary" onclick="openModal('modalVuelo')"><i class="fas fa-plus"></i> Registrar Vuelo</button>
+</div>
+</div>
+<div class="card"><div class="card-body" style="padding:0"><table><thead><tr><th>Participante</th><th>Tipo</th><th>Aerolínea</th><th>Vuelo</th><th>Origen</th><th>Destino</th><th>Fecha</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="tablaVuelos"></tbody></table></div></div>
+</div>
+
+<!-- ============ INCIDENTES SECTION ============ -->
+<div id="section-incidentes" style="display:none">
+<div class="top-bar">
+<div><h2><i class="fas fa-exclamation-triangle" style="color:var(--danger);margin-right:.5rem"></i>Gestión de Incidentes</h2><p style="font-size:.8rem;color:var(--text-secondary);margin-top:.25rem">Seguimiento y resolución de problemas operativos</p></div>
+<div style="display:flex;gap:.5rem">
+<button class="btn btn-danger" onclick="openModal('modalIncidente')"><i class="fas fa-plus"></i> Reportar Incidente</button>
+</div>
+</div>
+<div class="grid-4" style="margin-bottom:1.5rem">
+<div class="stat-card"><div class="stat-value" style="color:var(--danger)">5</div><div class="stat-label">Abiertos</div></div>
+<div class="stat-card"><div class="stat-value" style="color:var(--accent)">3</div><div class="stat-label">En Progreso</div></div>
+<div class="stat-card"><div class="stat-value" style="color:var(--success)">127</div><div class="stat-label">Resueltos</div></div>
+<div class="stat-card"><div class="stat-value" style="color:var(--primary-light)">2.4h</div><div class="stat-label">Tiempo Promedio Resolución</div></div>
+</div>
+<div class="card"><div class="card-body" style="padding:0"><table><thead><tr><th>ID</th><th>Tipo</th><th>Severidad</th><th>Descripción</th><th>Asignado</th><th>SLA</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="tablaIncidentes"></tbody></table></div></div>
+                    </div>
+
+<!-- ============ REPORTES BI SECTION ============ -->
+<div id="section-reportes" style="display:none">
+<div class="top-bar">
+<div><h2><i class="fas fa-chart-bar" style="color:var(--primary-light);margin-right:.5rem"></i>Reportes e Inteligencia de Negocio</h2></div>
+<div style="display:flex;gap:.5rem">
+<select class="btn btn-ghost"><option>Último Evento</option><option>Todos los Eventos</option></select>
+<button class="btn btn-accent"><i class="fas fa-download"></i> Exportar PDF</button>
+</div>
+</div>
+<div class="grid-3" style="margin-bottom:1.5rem">
+<div class="card"><div class="card-header"><h3>Rentabilidad por Evento</h3></div><div class="card-body"><div class="chart-container"><canvas id="chartRentabilidad"></canvas></div></div></div>
+<div class="card"><div class="card-header"><h3>Distribución de Pagos</h3></div><div class="card-body"><div class="chart-container"><canvas id="chartPagos"></canvas></div></div></div>
+<div class="card"><div class="card-header"><h3>Incidentes por Tipo</h3></div><div class="card-body"><div class="chart-container"><canvas id="chartIncidentes"></canvas></div></div></div>
+</div>
+<div class="grid-2">
+<div class="card"><div class="card-header"><h3>Ocupación Hotelera (Histórico)</h3></div><div class="card-body"><div class="chart-container"><canvas id="chartOcupacion"></canvas></div></div></div>
+<div class="card"><div class="card-header"><h3>KPIs Ejecutivos</h3></div><div class="card-body" id="kpiExecutive">
+<div style="margin-bottom:1rem"><div style="display:flex;justify-content:space-between;margin-bottom:.35rem"><span style="font-size:.8rem">Margen Operativo</span><span style="font-size:.8rem;font-weight:700;color:var(--success)">42.3%</span></div><div class="progress-bar"><div class="progress-fill" style="width:84.6%;background:var(--success)"></div></div><p style="font-size:.7rem;color:var(--text-secondary);margin-top:.2rem">Meta: 40% | Estado: EN META</p></div>
+<div style="margin-bottom:1rem"><div style="display:flex;justify-content:space-between;margin-bottom:.35rem"><span style="font-size:.8rem">Tasa de Cobro</span><span style="font-size:.8rem;font-weight:700;color:var(--success)">97.3%</span></div><div class="progress-bar"><div class="progress-fill" style="width:97.3%;background:var(--primary-light)"></div></div></div>
+<div style="margin-bottom:1rem"><div style="display:flex;justify-content:space-between;margin-bottom:.35rem"><span style="font-size:.8rem">Ocupación Hotelera</span><span style="font-size:.8rem;font-weight:700;color:var(--accent)">91.2%</span></div><div class="progress-bar"><div class="progress-fill" style="width:91.2%;background:var(--accent)"></div></div></div>
+<div><div style="display:flex;justify-content:space-between;margin-bottom:.35rem"><span style="font-size:.8rem">Resolución Incidentes (SLA)</span><span style="font-size:.8rem;font-weight:700;color:var(--success)">94.8%</span></div><div class="progress-bar"><div class="progress-fill" style="width:94.8%;background:var(--success)"></div></div></div>
+</div></div>
+</div>
+</div>
+
+<!-- ============ AUDITORIA SECTION ============ -->
+<div id="section-auditoria" style="display:none">
+<div class="top-bar">
+<div><h2><i class="fas fa-shield-alt" style="color:var(--secondary);margin-right:.5rem"></i>Log de Auditoría</h2></div>
+<div style="display:flex;gap:.5rem">
+<select class="btn btn-ghost" id="auditFilter"><option value="all">Todas las tablas</option><option>eventos</option><option>participantes</option><option>pagos</option><option>habitaciones_hotel</option></select>
+<button class="btn btn-ghost"><i class="fas fa-download"></i> Exportar</button>
+</div>
+</div>
+<div class="card"><div class="card-body" style="padding:0"><table><thead><tr><th>Timestamp</th><th>Tabla</th><th>Acción</th><th>Usuario</th><th>Registro ID</th><th>Cambios</th></tr></thead><tbody id="tablaAuditoria"></tbody></table></div></div>
+</div>
+
+<!-- ============ CONFIG SECTION ============ -->
+<div id="section-config" style="display:none">
+<div class="top-bar">
+<div><h2><i class="fas fa-cog" style="color:var(--text-secondary);margin-right:.5rem"></i>Configuración del Sistema</h2></div>
+</div>
+<div class="grid-2">
+<div class="card"><div class="card-header"><h3><i class="fas fa-database" style="color:var(--primary-light);margin-right:.5rem"></i>Supabase</h3><span class="badge badge-danger" id="supabaseStatus">Desconectado</span></div><div class="card-body">
+<div class="form-group"><label>URL del Proyecto</label><input type="text" id="cfgSupabaseUrl" placeholder="https://xxxxx.supabase.co"></div>
+<div class="form-group"><label>Anon Key</label><input type="password" id="cfgSupabaseAnon" placeholder="eyJhbGci..."></div>
+<div class="form-group"><label>Service Role Key (solo admin)</label><input type="password" id="cfgSupabaseService" placeholder="eyJhbGci..."></div>
+<button class="btn btn-primary" onclick="testSupabaseConnection()"><i class="fas fa-plug"></i> Probar Conexión</button>
+<button class="btn btn-success" onclick="saveConfig('supabase')" style="margin-left:.5rem"><i class="fas fa-save"></i> Guardar</button>
+</div></div>
+<div class="card"><div class="card-header"><h3><i class="fab fa-stripe" style="color:#635bff;margin-right:.5rem"></i>Stripe</h3><span class="badge badge-danger" id="stripeStatus">No configurado</span></div><div class="card-body">
+<div class="form-group"><label>Publishable Key</label><input type="text" id="cfgStripePk" placeholder="pk_test_..."></div>
+<div class="form-group"><label>Secret Key</label><input type="password" id="cfgStripeSk" placeholder="sk_test_..."></div>
+<button class="btn btn-primary" onclick="saveConfig('stripe')"><i class="fas fa-save"></i> Guardar</button>
+</div></div>
+<div class="card"><div class="card-header"><h3><i class="fas fa-envelope" style="color:var(--accent);margin-right:.5rem"></i>Email (MailerSend)</h3></div><div class="card-body">
+<div class="form-group"><label>API Key</label><input type="password" id="cfgMailerKey" placeholder="mlsn.xxxxx"></div>
+<div class="form-group"><label>Dominio de envío</label><input type="text" id="cfgMailerDomain" placeholder="mail.tudominio.com"></div>
+<button class="btn btn-primary" onclick="saveConfig('mailer')"><i class="fas fa-save"></i> Guardar</button>
+</div></div>
+<div class="card"><div class="card-header"><h3><i class="fas fa-robot" style="color:var(--primary-light);margin-right:.5rem"></i>n8n Workflows</h3></div><div class="card-body">
+<div class="form-group"><label>URL de instancia n8n</label><input type="text" id="cfgN8nUrl" placeholder="https://xxxxx.app.n8n.cloud"></div>
+<div class="form-group"><label>API Key</label><input type="password" id="cfgN8nKey" placeholder="eyJhbGci..."></div>
+<button class="btn btn-primary" onclick="saveConfig('n8n')"><i class="fas fa-save"></i> Guardar</button>
+</div></div>
+</div>
+</div>
+</div><!-- end main-content -->
+
+<!-- ============ MODALES ============ -->
+<!-- Modal Evento -->
+<div class="modal-overlay" id="modalEvento">
+<div class="modal">
+<div class="modal-header"><h3>Nuevo Evento / Congreso</h3><button class="btn btn-ghost" onclick="closeModal('modalEvento')"><i class="fas fa-times"></i></button></div>
+<div class="modal-body">
+<div class="form-row"><div class="form-group"><label>Código del Evento</label><input id="evtCodigo" placeholder="MC-2026-W12"></div><div class="form-group"><label>Nombre del Congreso</label><input id="evtNombre" placeholder="XVI Congreso de Cardiología"></div></div>
+<div class="form-row"><div class="form-group"><label>Especialidad Médica</label><select id="evtEspecialidad"><option>Cardiología</option><option>Oncología</option><option>Neurología</option><option>Traumatología</option><option>Dermatología</option><option>Pediatría</option><option>Cirugía General</option><option>Medicina Interna</option></select></div><div class="form-group"><label>Capacidad Máxima</label><input type="number" id="evtCapacidad" value="1000"></div></div>
+<div class="form-row"><div class="form-group"><label>Fecha Inicio</label><input type="date" id="evtFechaInicio"></div><div class="form-group"><label>Fecha Fin</label><input type="date" id="evtFechaFin"></div></div>
+<div class="form-row"><div class="form-group"><label>Sede / Hotel</label><input id="evtSede" placeholder="Hard Rock Hotel Punta Cana"></div><div class="form-group"><label>Precio Base (USD)</label><input type="number" id="evtPrecio" placeholder="2000"></div></div>
+<div class="form-row"><div class="form-group"><label>Ciudad</label><input id="evtCiudad" value="Punta Cana"></div><div class="form-group"><label>País</label><input id="evtPais" value="República Dominicana"></div></div>
+<div class="form-group"><label>Presupuesto Total (USD)</label><input type="number" id="evtPresupuesto" placeholder="2000000"></div>
+<div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem"><button class="btn btn-ghost" onclick="closeModal('modalEvento')">Cancelar</button><button class="btn btn-primary" onclick="saveEvento()"><i class="fas fa-save"></i> Guardar Evento</button></div>
+</div></div></div>
+
+<!-- Modal Participante -->
+<div class="modal-overlay" id="modalParticipante">
+<div class="modal">
+<div class="modal-header"><h3>Nuevo Participante</h3><button class="btn btn-ghost" onclick="closeModal('modalParticipante')"><i class="fas fa-times"></i></button></div>
+<div class="modal-body">
+<div class="form-row"><div class="form-group"><label>Nombre Completo</label><input id="partNombre" placeholder="Dr. Juan Pérez"></div><div class="form-group"><label>Email</label><input type="email" id="partEmail" placeholder="juan@hospital.com"></div></div>
+<div class="form-row"><div class="form-group"><label>Teléfono</label><input id="partTelefono" placeholder="+1 809 555 1234"></div><div class="form-group"><label>País de Origen</label><input id="partPais" placeholder="México"></div></div>
+<div class="form-row"><div class="form-group"><label>Especialidad</label><select id="partEspecialidad"><option>Cardiología</option><option>Oncología</option><option>Neurología</option><option>Traumatología</option><option>Dermatología</option><option>Pediatría</option><option>Cirugía General</option><option>Medicina Interna</option></select></div><div class="form-group"><label>Institución</label><input id="partInstitucion" placeholder="Hospital Central"></div></div>
+<div class="form-row"><div class="form-group"><label>No. Licencia Médica</label><input id="partLicencia" placeholder="MED-12345"></div><div class="form-group"><label>Tipo de Participante</label><select id="partTipo"><option value="asistente">Asistente</option><option value="ponente">Ponente</option><option value="sponsor">Sponsor</option><option value="organizador">Organizador</option><option value="acompanante">Acompañante</option></select></div></div>
+<div class="form-group"><label>Evento</label><select id="partEvento"></select></div>
+<div class="form-group"><label>Necesidades Especiales</label><textarea id="partNotas" rows="2" placeholder="Alergias, dieta especial, accesibilidad..."></textarea></div>
+<div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem"><button class="btn btn-ghost" onclick="closeModal('modalParticipante')">Cancelar</button><button class="btn btn-primary" onclick="saveParticipante()"><i class="fas fa-save"></i> Registrar</button></div>
+</div></div></div>
+
+<!-- Modal Pago -->
+<div class="modal-overlay" id="modalPago">
+<div class="modal">
+<div class="modal-header"><h3>Registrar Pago</h3><button class="btn btn-ghost" onclick="closeModal('modalPago')"><i class="fas fa-times"></i></button></div>
+<div class="modal-body">
+<div class="form-row"><div class="form-group"><label>Participante</label><select id="pagoParticipante"></select></div><div class="form-group"><label>Evento</label><select id="pagoEvento"></select></div></div>
+<div class="form-row"><div class="form-group"><label>Monto (USD)</label><input type="number" id="pagoMonto" placeholder="2000"></div><div class="form-group"><label>Método de Pago</label><select id="pagoMetodo"><option>tarjeta_credito</option><option>tarjeta_debito</option><option>transferencia</option><option>paypal</option><option>efectivo</option><option>cortesia</option></select></div></div>
+<div class="form-group"><label>Notas</label><textarea id="pagoNotas" rows="2"></textarea></div>
+<div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem"><button class="btn btn-ghost" onclick="closeModal('modalPago')">Cancelar</button><button class="btn btn-primary" onclick="savePago()"><i class="fas fa-credit-card"></i> Procesar Pago</button></div>
+</div></div></div>
+
+<!-- Modal Habitación -->
+<div class="modal-overlay" id="modalHabitacion">
+<div class="modal">
+<div class="modal-header"><h3>Asignar Habitación</h3><button class="btn btn-ghost" onclick="closeModal('modalHabitacion')"><i class="fas fa-times"></i></button></div>
+<div class="modal-body">
+<div class="form-row"><div class="form-group"><label>Participante</label><select id="habParticipante"></select></div><div class="form-group"><label>Hotel</label><input id="habHotel" value="Hard Rock Hotel Punta Cana"></div></div>
+<div class="form-row"><div class="form-group"><label>Tipo de Habitación</label><select id="habTipo"><option>standard</option><option>superior</option><option>deluxe</option><option>suite</option><option>suite_presidencial</option></select></div><div class="form-group"><label>Número</label><input id="habNumero" placeholder="A-412"></div></div>
+<div class="form-row"><div class="form-group"><label>Check-in</label><input type="date" id="habCheckin"></div><div class="form-group"><label>Check-out</label><input type="date" id="habCheckout"></div></div>
+<div class="form-group"><label>Precio por Noche (USD)</label><input type="number" id="habPrecio" placeholder="250"></div>
+<div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem"><button class="btn btn-ghost" onclick="closeModal('modalHabitacion')">Cancelar</button><button class="btn btn-primary" onclick="saveHabitacion()"><i class="fas fa-save"></i> Asignar</button></div>
+</div></div></div>
+
+<!-- Modal Vuelo -->
+<div class="modal-overlay" id="modalVuelo">
+<div class="modal">
+<div class="modal-header"><h3>Registrar Vuelo/Traslado</h3><button class="btn btn-ghost" onclick="closeModal('modalVuelo')"><i class="fas fa-times"></i></button></div>
+<div class="modal-body">
+<div class="form-row"><div class="form-group"><label>Participante</label><select id="vueloParticipante"></select></div><div class="form-group"><label>Tipo</label><select id="vueloTipo"><option>vuelo_llegada</option><option>vuelo_salida</option><option>traslado_aeropuerto_hotel</option><option>traslado_hotel_aeropuerto</option><option>traslado_interno</option></select></div></div>
+<div class="form-row"><div class="form-group"><label>Aerolínea</label><input id="vueloAerolinea" placeholder="JetBlue"></div><div class="form-group"><label>No. Vuelo</label><input id="vueloNumero" placeholder="B6 1832"></div></div>
+<div class="form-row"><div class="form-group"><label>Origen</label><input id="vueloOrigen" placeholder="MIA"></div><div class="form-group"><label>Destino</label><input id="vueloDestino" placeholder="PUJ"></div></div>
+<div class="form-row"><div class="form-group"><label>Fecha/Hora Salida</label><input type="datetime-local" id="vueloSalida"></div><div class="form-group"><label>Fecha/Hora Llegada</label><input type="datetime-local" id="vueloLlegada"></div></div>
+<div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem"><button class="btn btn-ghost" onclick="closeModal('modalVuelo')">Cancelar</button><button class="btn btn-primary" onclick="saveVuelo()"><i class="fas fa-save"></i> Guardar</button></div>
+</div></div></div>
+
+<!-- Modal Incidente -->
+<div class="modal-overlay" id="modalIncidente">
+<div class="modal">
+<div class="modal-header"><h3>Reportar Incidente</h3><button class="btn btn-ghost" onclick="closeModal('modalIncidente')"><i class="fas fa-times"></i></button></div>
+<div class="modal-body">
+<div class="form-row"><div class="form-group"><label>Tipo</label><select id="incTipo"><option>error_bloqueo_hotel</option><option>error_pago</option><option>error_vuelo</option><option>documento_faltante</option><option>queja_participante</option><option>otro</option></select></div><div class="form-group"><label>Severidad</label><select id="incSeveridad"><option>baja</option><option>media</option><option>alta</option><option>critica</option></select></div></div>
+<div class="form-group"><label>Descripción</label><textarea id="incDescripcion" rows="3" placeholder="Describa el incidente en detalle..."></textarea></div>
+<div class="form-row"><div class="form-group"><label>Asignado a</label><input id="incAsignado" placeholder="Nombre del responsable"></div><div class="form-group"><label>SLA Deadline</label><input type="datetime-local" id="incSLA"></div></div>
+<div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem"><button class="btn btn-ghost" onclick="closeModal('modalIncidente')">Cancelar</button><button class="btn btn-danger" onclick="saveIncidente()"><i class="fas fa-exclamation-triangle"></i> Crear Incidente</button></div>
+</div></div></div>
+
+<!-- Modal QR -->
+<div class="modal-overlay" id="modalQR">
+<div class="modal" style="max-width:400px;text-align:center">
+<div class="modal-header"><h3>Credencial QR</h3><button class="btn btn-ghost" onclick="closeModal('modalQR')"><i class="fas fa-times"></i></button></div>
+<div class="modal-body">
+<canvas id="qrCanvas" style="margin:0 auto 1rem"></canvas>
+<p id="qrName" style="font-weight:700;font-size:1.1rem;margin-bottom:.25rem"></p>
+<p id="qrEvent" style="color:var(--text-secondary);font-size:.85rem;margin-bottom:.5rem"></p>
+<p id="qrType" class="badge badge-info" style="display:inline-block"></p>
+</div></div></div>
+
+<script>
+// ============================================================
+// MEDCONGRESS PRO - ENGINE PRINCIPAL
+// Ecosistema de Congresos Médicos Internacionales
+// INNOVAQ Solutions - Punta Cana
+// ============================================================
+
+// === CONFIGURACIÓN Y ESTADO ===
+const APP_STATE = {
+  supabase: null,
+  connected: false,
+  currentSection: 'dashboard',
+  config: JSON.parse(localStorage.getItem('medcongress_config') || '{}'),
+  demoMode: true
+};
+
+// === DATOS DEMO ===
+const DEMO_DATA = {
+  eventos: [
+    {id:'e1',codigo_evento:'MC-2026-W08',nombre:'XVI Congreso Internacional de Cardiología',especialidad:'Cardiología',fecha_inicio:'2026-03-15',fecha_fin:'2026-03-19',sede_hotel:'Hard Rock Hotel Punta Cana',ciudad:'Punta Cana',pais:'República Dominicana',capacidad_max:1000,precio_base_usd:2000,estado:'abierto',margen_objetivo:40,presupuesto_usd:2000000},
+    {id:'e2',codigo_evento:'MC-2026-W12',nombre:'IX Simposio de Oncología Tropical',especialidad:'Oncología',fecha_inicio:'2026-04-20',fecha_fin:'2026-04-24',sede_hotel:'Barceló Bávaro Palace',ciudad:'Punta Cana',pais:'República Dominicana',capacidad_max:800,precio_base_usd:2500,estado:'planificacion',margen_objetivo:40,presupuesto_usd:1800000},
+    {id:'e3',codigo_evento:'MC-2026-W16',nombre:'V Cumbre Latinoamericana de Neurología',especialidad:'Neurología',fecha_inicio:'2026-05-10',fecha_fin:'2026-05-14',sede_hotel:'Secrets Royal Beach',ciudad:'Punta Cana',pais:'República Dominicana',capacidad_max:600,precio_base_usd:1800,estado:'planificacion',margen_objetivo:42,presupuesto_usd:1200000}
+  ],
+  participantes: [
+    {id:'p1',nombre:'Dr. Carlos Mendoza',email:'cmendoza@cardio.mx',telefono:'+52 55 1234 5678',pais_origen:'México',especialidad:'Cardiología',institucion:'Instituto Nacional de Cardiología',licencia_medica:'MED-MX-45678',tipo:'ponente',estado:'confirmado',evento_id:'e1',qr_code:'QR-MC2026W08-P001'},
+    {id:'p2',nombre:'Dra. María Fernández',email:'mfernandez@onco.ar',telefono:'+54 11 9876 5432',pais_origen:'Argentina',especialidad:'Oncología',institucion:'Hospital Italiano de Buenos Aires',licencia_medica:'MED-AR-12345',tipo:'asistente',estado:'inscrito',evento_id:'e1',qr_code:'QR-MC2026W08-P002'},
+    {id:'p3',nombre:'Dr. James Wilson',email:'jwilson@mayo.edu',telefono:'+1 507 284 2511',pais_origen:'Estados Unidos',especialidad:'Cardiología',institucion:'Mayo Clinic',licencia_medica:'MED-US-99887',tipo:'ponente',estado:'checked_in',evento_id:'e1',qr_code:'QR-MC2026W08-P003'},
+    {id:'p4',nombre:'Dra. Ana Beatriz Santos',email:'absantos@usp.br',telefono:'+55 11 3091 3116',pais_origen:'Brasil',especialidad:'Neurología',institucion:'Universidade de São Paulo',licencia_medica:'CRM-SP-78901',tipo:'asistente',estado:'confirmado',evento_id:'e1',qr_code:'QR-MC2026W08-P004'},
+    {id:'p5',nombre:'Dr. Roberto Herrera',email:'rherrera@hcg.com.co',telefono:'+57 1 742 1900',pais_origen:'Colombia',especialidad:'Cardiología',institucion:'Fundación Cardioinfantil',licencia_medica:'MED-CO-34567',tipo:'sponsor',estado:'confirmado',evento_id:'e1',qr_code:'QR-MC2026W08-P005'},
+    {id:'p6',nombre:'Dra. Lisa Chen',email:'lchen@hopkins.edu',telefono:'+1 410 955 5000',pais_origen:'Estados Unidos',especialidad:'Oncología',institucion:'Johns Hopkins',licencia_medica:'MED-US-55443',tipo:'ponente',estado:'inscrito',evento_id:'e2',qr_code:'QR-MC2026W12-P001'}
+  ],
+  pagos: [
+    {id:'pay1',participante_id:'p1',evento_id:'e1',monto_usd:2000,metodo_pago:'tarjeta_credito',estado:'completado',fecha_pago:'2026-02-15T10:30:00',stripe_payment_id:'pi_3OxH...abc'},
+    {id:'pay2',participante_id:'p2',evento_id:'e1',monto_usd:2000,metodo_pago:'transferencia',estado:'pendiente',fecha_pago:null,stripe_payment_id:null},
+    {id:'pay3',participante_id:'p3',evento_id:'e1',monto_usd:2000,metodo_pago:'tarjeta_credito',estado:'completado',fecha_pago:'2026-02-10T14:20:00',stripe_payment_id:'pi_3OxG...def'},
+    {id:'pay4',participante_id:'p4',evento_id:'e1',monto_usd:2000,metodo_pago:'paypal',estado:'completado',fecha_pago:'2026-02-18T09:15:00',stripe_payment_id:'pi_3OxI...ghi'},
+    {id:'pay5',participante_id:'p5',evento_id:'e1',monto_usd:0,metodo_pago:'cortesia',estado:'completado',fecha_pago:'2026-02-01T08:00:00',stripe_payment_id:null},
+    {id:'pay6',participante_id:'p6',evento_id:'e2',monto_usd:2500,metodo_pago:'tarjeta_credito',estado:'procesando',fecha_pago:null,stripe_payment_id:'pi_3OxJ...jkl'}
+  ],
+  habitaciones: [
+    {id:'h1',evento_id:'e1',participante_id:'p1',hotel_nombre:'Hard Rock Hotel',tipo_habitacion:'suite',numero_habitacion:'A-501',piso:5,fecha_checkin:'2026-03-14',fecha_checkout:'2026-03-20',precio_noche:350,estado:'confirmada'},
+    {id:'h2',evento_id:'e1',participante_id:'p3',hotel_nombre:'Hard Rock Hotel',tipo_habitacion:'deluxe',numero_habitacion:'B-302',piso:3,fecha_checkin:'2026-03-14',fecha_checkout:'2026-03-20',precio_noche:280,estado:'checked_in'},
+    {id:'h3',evento_id:'e1',participante_id:'p4',hotel_nombre:'Hard Rock Hotel',tipo_habitacion:'superior',numero_habitacion:'C-215',piso:2,fecha_checkin:'2026-03-15',fecha_checkout:'2026-03-19',precio_noche:220,estado:'bloqueada'},
+    {id:'h4',evento_id:'e1',participante_id:'p5',hotel_nombre:'Hard Rock Hotel',tipo_habitacion:'suite_presidencial',numero_habitacion:'P-801',piso:8,fecha_checkin:'2026-03-14',fecha_checkout:'2026-03-20',precio_noche:600,estado:'confirmada'}
+  ],
+  vuelos: [
+    {id:'v1',participante_id:'p1',tipo:'vuelo_llegada',aerolinea:'Aeroméxico',numero_vuelo:'AM 456',origen:'MEX',destino:'PUJ',fecha_salida:'2026-03-14T06:00',fecha_llegada:'2026-03-14T11:30',estado:'confirmado'},
+    {id:'v2',participante_id:'p3',tipo:'vuelo_llegada',aerolinea:'JetBlue',numero_vuelo:'B6 1832',origen:'JFK',destino:'PUJ',fecha_salida:'2026-03-14T08:00',fecha_llegada:'2026-03-14T12:15',estado:'confirmado'},
+    {id:'v3',participante_id:'p4',tipo:'vuelo_llegada',aerolinea:'LATAM',numero_vuelo:'LA 8045',origen:'GRU',destino:'PUJ',fecha_salida:'2026-03-14T22:00',fecha_llegada:'2026-03-15T04:30',estado:'pendiente'},
+    {id:'v4',participante_id:'p1',tipo:'traslado_aeropuerto_hotel',aerolinea:'-',numero_vuelo:'-',origen:'PUJ Airport',destino:'Hard Rock Hotel',fecha_salida:'2026-03-14T12:00',fecha_llegada:'2026-03-14T12:45',estado:'confirmado'}
+  ],
+  incidentes: [
+    {id:'i1',tipo:'error_bloqueo_hotel',severidad:'alta',descripcion:'API del hotel retornó timeout al intentar bloquear hab. para Dr. Pérez',asignado_a:'María Ops',sla_deadline:'2026-02-25T18:00',estado:'abierto'},
+    {id:'i2',tipo:'error_pago',severidad:'media',descripcion:'Pago rechazado por banco emisor - tarjeta vencida',asignado_a:'Carlos Finance',sla_deadline:'2026-02-26T12:00',estado:'en_progreso'},
+    {id:'i3',tipo:'queja_participante',severidad:'baja',descripcion:'Solicitud de cambio de tipo de habitación de standard a suite',asignado_a:'Ana Soporte',sla_deadline:'2026-02-27T10:00',estado:'abierto'},
+    {id:'i4',tipo:'documento_faltante',severidad:'media',descripcion:'Póliza de seguro del evento no cargada en el sistema',asignado_a:'Luis Legal',sla_deadline:'2026-02-26T16:00',estado:'abierto'},
+    {id:'i5',tipo:'error_vuelo',severidad:'critica',descripcion:'Cancelación de vuelo AM 789 - 15 participantes afectados',asignado_a:'Roberto Logística',sla_deadline:'2026-02-25T14:00',estado:'en_progreso'}
+  ],
+  auditoria: [
+    {timestamp:'2026-02-25T23:45:12',tabla:'participantes',accion:'INSERT',usuario:'admin@innovaq.com',registro_id:'p6',cambios:'Nuevo registro: Dra. Lisa Chen'},
+    {timestamp:'2026-02-25T23:30:05',tabla:'pagos',accion:'UPDATE',usuario:'system@n8n',registro_id:'pay4',cambios:'estado: procesando → completado'},
+    {timestamp:'2026-02-25T22:15:33',tabla:'habitaciones_hotel',accion:'UPDATE',usuario:'operador@innovaq.com',registro_id:'h2',cambios:'estado: bloqueada → checked_in'},
+    {timestamp:'2026-02-25T21:00:00',tabla:'incidentes',accion:'INSERT',usuario:'n8n_error_trigger',registro_id:'i5',cambios:'Nuevo incidente crítico: vuelo cancelado'},
+    {timestamp:'2026-02-25T20:45:18',tabla:'eventos',accion:'UPDATE',usuario:'admin@innovaq.com',registro_id:'e1',cambios:'estado: planificacion → abierto'}
+  ]
+};
+
+// === FUNCIONES CORE ===
+function showSection(section) {
+  document.querySelectorAll('[id^="section-"]').forEach(s => s.style.display = 'none');
+  document.getElementById('section-' + section).style.display = 'block';
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  event.target.closest('.nav-item')?.classList.add('active');
+  APP_STATE.currentSection = section;
+  if (section === 'dashboard') initDashboard();
+  if (section === 'eventos') renderEventos();
+  if (section === 'participantes') renderParticipantes();
+  if (section === 'pagos') renderPagos();
+  if (section === 'hotel') renderHotel();
+  if (section === 'vuelos') renderVuelos();
+  if (section === 'incidentes') renderIncidentes();
+  if (section === 'reportes') initReportes();
+  if (section === 'auditoria') renderAuditoria();
+  if (section === 'config') loadConfig();
+}
+
+function openModal(id) { document.getElementById(id).classList.add('active'); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+function notify(msg, type='success') {
+  const n = document.createElement('div');
+  n.className = 'notification ' + type;
+  n.innerHTML = '<i class="fas fa-' + (type==='success'?'check-circle':'exclamation-circle') + '"></i> ' + msg;
+  document.body.appendChild(n);
+  setTimeout(() => n.remove(), 4000);
+}
+
+function getData(table) {
+  if (APP_STATE.demoMode) return DEMO_DATA[table] || [];
+  return [];
+}
+
+function getParticipanteName(id) {
+  const p = getData('participantes').find(x => x.id === id);
+  return p ? p.nombre : 'N/A';
+}
+
+function getEventoNombre(id) {
+  const e = getData('eventos').find(x => x.id === id);
+  return e ? e.codigo_evento : 'N/A';
+}
+
+function statusBadge(estado) {
+  const map = {
+    'abierto':'success','planificacion':'info','cerrado':'warning','en_curso':'purple','finalizado':'success','cancelado':'danger',
+    'inscrito':'info','confirmado':'success','checked_in':'purple','no_show':'danger','cancelado':'danger',
+    'pendiente':'warning','procesando':'info','completado':'success','fallido':'danger','reembolsado':'warning','disputado':'danger',
+    'disponible':'success','bloqueada':'info','confirmada':'success','checked_out':'warning',
+    'en_progreso':'warning','resuelto':'success','critica':'danger','alta':'danger','media':'warning','baja':'info'
+  };
+  const cls = map[estado] || 'info';
+  return '<span class="badge badge-'+cls+'">'+estado+'</span>';
+}
+
+// === RENDER FUNCTIONS ===
+function renderEventos() {
+  const data = getData('eventos');
+  const tbody = document.getElementById('tablaEventos');
+  tbody.innerHTML = data.map(e => '<tr>' +
+    '<td><strong>'+e.codigo_evento+'</strong></td>' +
+    '<td>'+e.nombre+'</td>' +
+    '<td>'+e.especialidad+'</td>' +
+    '<td>'+e.fecha_inicio+' / '+e.fecha_fin+'</td>' +
+    '<td>'+e.sede_hotel+'</td>' +
+    '<td>'+e.capacidad_max+'</td>' +
+    '<td>'+statusBadge(e.estado)+'</td>' +
+    '<td><button class="btn btn-ghost" style="padding:.25rem .5rem;font-size:.75rem" onclick="editEvento(\''+e.id+'\')"><i class="fas fa-edit"></i></button></td>' +
+  '</tr>').join('');
+}
+
+function renderParticipantes() {
+  const data = getData('participantes');
+  const tbody = document.getElementById('tablaParticipantes');
+  tbody.innerHTML = data.map(p => {
+    const colors = ['#0f766e','#1e40af','#9333ea','#c2410c','#15803d'];
+    const ci = p.nombre.charCodeAt(4) % colors.length;
+    return '<tr>' +
+    '<td style="display:flex;align-items:center;gap:.5rem"><div class="avatar" style="background:'+colors[ci]+'">'+p.nombre.split(' ').map(n=>n[0]).join('').substring(0,2)+'</div>'+p.nombre+'</td>' +
+    '<td>'+p.email+'</td>' +
+    '<td>'+p.especialidad+'</td>' +
+    '<td>'+getEventoNombre(p.evento_id)+'</td>' +
+    '<td>'+statusBadge(p.tipo)+'</td>' +
+    '<td>'+statusBadge(p.estado)+'</td>' +
+    '<td><button class="btn btn-ghost" style="padding:.25rem .5rem;font-size:.75rem" onclick="showQR(\''+p.id+'\')"><i class="fas fa-qrcode"></i></button></td>' +
+    '<td><button class="btn btn-ghost" style="padding:.25rem .5rem;font-size:.75rem"><i class="fas fa-edit"></i></button></td>' +
+    '</tr>';
+  }).join('');
+}
+
+function renderPagos() {
+  const data = getData('pagos');
+  const tbody = document.getElementById('tablaPagos');
+  tbody.innerHTML = data.map(p => '<tr>' +
+    '<td style="font-family:monospace;font-size:.8rem">'+p.id+'</td>' +
+    '<td>'+getParticipanteName(p.participante_id)+'</td>' +
+    '<td>'+getEventoNombre(p.evento_id)+'</td>' +
+    '<td><strong>$'+p.monto_usd.toLocaleString()+'</strong></td>' +
+    '<td>'+p.metodo_pago.replace('_',' ')+'</td>' +
+    '<td>'+statusBadge(p.estado)+'</td>' +
+    '<td>'+(p.fecha_pago ? new Date(p.fecha_pago).toLocaleDateString() : '-')+'</td>' +
+    '<td><button class="btn btn-ghost" style="padding:.25rem .5rem;font-size:.75rem"><i class="fas fa-eye"></i></button></td>' +
+  '</tr>').join('');
+}
+
+function renderHotel() {
+  const data = getData('habitaciones');
+  const tbody = document.getElementById('tablaHotel');
+  tbody.innerHTML = data.map(h => {
+    const nights = Math.ceil((new Date(h.fecha_checkout) - new Date(h.fecha_checkin)) / 86400000);
+    const cost = nights * h.precio_noche;
+    return '<tr>' +
+    '<td><strong>'+h.numero_habitacion+'</strong> (Piso '+h.piso+')</td>' +
+    '<td>'+statusBadge(h.tipo_habitacion)+'</td>' +
+    '<td>'+h.hotel_nombre+'</td>' +
+    '<td>'+getParticipanteName(h.participante_id)+'</td>' +
+    '<td>'+h.fecha_checkin+'</td>' +
+    '<td>'+h.fecha_checkout+'</td>' +
+    '<td>'+nights+'</td>' +
+    '<td><strong>$'+cost.toLocaleString()+'</strong></td>' +
+    '<td>'+statusBadge(h.estado)+'</td>' +
+    '</tr>';
+  }).join('');
+}
+
+function renderVuelos() {
+  const data = getData('vuelos');
+  const tbody = document.getElementById('tablaVuelos');
+  tbody.innerHTML = data.map(v => '<tr>' +
+    '<td>'+getParticipanteName(v.participante_id)+'</td>' +
+    '<td>'+statusBadge(v.tipo.replace(/_/g,' '))+'</td>' +
+    '<td>'+v.aerolinea+'</td>' +
+    '<td><strong>'+v.numero_vuelo+'</strong></td>' +
+    '<td>'+v.origen+'</td>' +
+    '<td>'+v.destino+'</td>' +
+    '<td>'+new Date(v.fecha_salida).toLocaleString()+'</td>' +
+    '<td>'+statusBadge(v.estado)+'</td>' +
+    '<td><button class="btn btn-ghost" style="padding:.25rem .5rem;font-size:.75rem"><i class="fas fa-edit"></i></button></td>' +
+  '</tr>').join('');
+}
+
+function renderIncidentes() {
+  const data = getData('incidentes');
+  const tbody = document.getElementById('tablaIncidentes');
+  tbody.innerHTML = data.map(i => '<tr>' +
+    '<td style="font-family:monospace;font-size:.8rem">'+i.id+'</td>' +
+    '<td>'+i.tipo.replace(/_/g,' ')+'</td>' +
+    '<td>'+statusBadge(i.severidad)+'</td>' +
+    '<td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+i.descripcion+'</td>' +
+    '<td>'+i.asignado_a+'</td>' +
+    '<td>'+new Date(i.sla_deadline).toLocaleString()+'</td>' +
+    '<td>'+statusBadge(i.estado)+'</td>' +
+    '<td><button class="btn btn-ghost" style="padding:.25rem .5rem;font-size:.75rem"><i class="fas fa-edit"></i></button></td>' +
+  '</tr>').join('');
+}
+
+function renderAuditoria() {
+  const data = getData('auditoria');
+  const tbody = document.getElementById('tablaAuditoria');
+  tbody.innerHTML = data.map(a => '<tr>' +
+    '<td style="font-size:.8rem">'+new Date(a.timestamp).toLocaleString()+'</td>' +
+    '<td><span class="badge badge-info">'+a.tabla+'</span></td>' +
+    '<td>'+statusBadge(a.accion.toLowerCase())+'</td>' +
+    '<td>'+a.usuario+'</td>' +
+    '<td style="font-family:monospace;font-size:.8rem">'+a.registro_id+'</td>' +
+    '<td style="font-size:.8rem;max-width:200px;overflow:hidden;text-overflow:ellipsis">'+a.cambios+'</td>' +
+  '</tr>').join('');
+}
+
+// === SAVE FUNCTIONS ===
+function saveEvento() {
+  const evt = {
+    id: 'e' + (getData('eventos').length + 1),
+    codigo_evento: document.getElementById('evtCodigo').value,
+    nombre: document.getElementById('evtNombre').value,
+    especialidad: document.getElementById('evtEspecialidad').value,
+    fecha_inicio: document.getElementById('evtFechaInicio').value,
+    fecha_fin: document.getElementById('evtFechaFin').value,
+    sede_hotel: document.getElementById('evtSede').value,
+    ciudad: document.getElementById('evtCiudad').value,
+    pais: document.getElementById('evtPais').value,
+    capacidad_max: parseInt(document.getElementById('evtCapacidad').value),
+    precio_base_usd: parseFloat(document.getElementById('evtPrecio').value),
+    estado: 'planificacion',
+    margen_objetivo: 40,
+    presupuesto_usd: parseFloat(document.getElementById('evtPresupuesto').value)
+  };
+  if (!evt.codigo_evento || !evt.nombre) { notify('Complete los campos requeridos','error'); return; }
+  DEMO_DATA.eventos.push(evt);
+  closeModal('modalEvento');
+  renderEventos();
+  notify('Evento creado: ' + evt.codigo_evento);
+}
+
+function saveParticipante() {
+  const p = {
+    id: 'p' + (getData('participantes').length + 1),
+    nombre: document.getElementById('partNombre').value,
+    email: document.getElementById('partEmail').value,
+    telefono: document.getElementById('partTelefono').value,
+    pais_origen: document.getElementById('partPais').value,
+    especialidad: document.getElementById('partEspecialidad').value,
+    institucion: document.getElementById('partInstitucion').value,
+    licencia_medica: document.getElementById('partLicencia').value,
+    tipo: document.getElementById('partTipo').value,
+    estado: 'inscrito',
+    evento_id: document.getElementById('partEvento').value,
+    qr_code: 'QR-' + Date.now()
+  };
+  if (!p.nombre || !p.email) { notify('Complete nombre y email','error'); return; }
+  DEMO_DATA.participantes.push(p);
+  closeModal('modalParticipante');
+  renderParticipantes();
+  notify('Participante registrado: ' + p.nombre);
+}
+
+function savePago() {
+  const p = {
+    id: 'pay' + (getData('pagos').length + 1),
+    participante_id: document.getElementById('pagoParticipante').value,
+    evento_id: document.getElementById('pagoEvento').value,
+    monto_usd: parseFloat(document.getElementById('pagoMonto').value),
+    metodo_pago: document.getElementById('pagoMetodo').value,
+    estado: 'procesando',
+    fecha_pago: new Date().toISOString(),
+    stripe_payment_id: 'pi_demo_' + Date.now()
+  };
+  DEMO_DATA.pagos.push(p);
+  closeModal('modalPago');
+  renderPagos();
+  notify('Pago registrado: $' + p.monto_usd);
+}
+
+function saveHabitacion() {
+  const h = {
+    id: 'h' + (getData('habitaciones').length + 1),
+    evento_id: 'e1',
+    participante_id: document.getElementById('habParticipante').value,
+    hotel_nombre: document.getElementById('habHotel').value,
+    tipo_habitacion: document.getElementById('habTipo').value,
+    numero_habitacion: document.getElementById('habNumero').value,
+    piso: parseInt(document.getElementById('habNumero').value.split('-')[0]?.charCodeAt(0)-64) || 1,
+    fecha_checkin: document.getElementById('habCheckin').value,
+    fecha_checkout: document.getElementById('habCheckout').value,
+    precio_noche: parseFloat(document.getElementById('habPrecio').value),
+    estado: 'bloqueada'
+  };
+  DEMO_DATA.habitaciones.push(h);
+  closeModal('modalHabitacion');
+  renderHotel();
+  notify('Habitación asignada: ' + h.numero_habitacion);
+}
+
+function saveVuelo() {
+  const v = {
+    id: 'v' + (getData('vuelos').length + 1),
+    participante_id: document.getElementById('vueloParticipante').value,
+    tipo: document.getElementById('vueloTipo').value,
+    aerolinea: document.getElementById('vueloAerolinea').value,
+    numero_vuelo: document.getElementById('vueloNumero').value,
+    origen: document.getElementById('vueloOrigen').value,
+    destino: document.getElementById('vueloDestino').value,
+    fecha_salida: document.getElementById('vueloSalida').value,
+    fecha_llegada: document.getElementById('vueloLlegada').value,
+    estado: 'pendiente'
+  };
+  DEMO_DATA.vuelos.push(v);
+  closeModal('modalVuelo');
+  renderVuelos();
+  notify('Vuelo registrado: ' + v.numero_vuelo);
+}
+
+function saveIncidente() {
+  const i = {
+    id: 'i' + (getData('incidentes').length + 1),
+    tipo: document.getElementById('incTipo').value,
+    severidad: document.getElementById('incSeveridad').value,
+    descripcion: document.getElementById('incDescripcion').value,
+    asignado_a: document.getElementById('incAsignado').value,
+    sla_deadline: document.getElementById('incSLA').value,
+    estado: 'abierto'
+  };
+  DEMO_DATA.incidentes.push(i);
+  closeModal('modalIncidente');
+  renderIncidentes();
+  notify('Incidente creado: ' + i.tipo, 'error');
+}
+
+// === QR CODE ===
+function showQR(participanteId) {
+  const p = getData('participantes').find(x => x.id === participanteId);
+  if (!p) return;
+  openModal('modalQR');
+  document.getElementById('qrName').textContent = p.nombre;
+  document.getElementById('qrEvent').textContent = getEventoNombre(p.evento_id) + ' | ' + p.especialidad;
+  document.getElementById('qrType').textContent = p.tipo;
+  const canvas = document.getElementById('qrCanvas');
+  QRCode.toCanvas(canvas, JSON.stringify({id:p.id,event:p.evento_id,type:p.tipo,qr:p.qr_code}), {width:200,color:{dark:'#0f766e',light:'#1e293b'}});
+}
+
+// === EXPORT CSV ===
+function exportCSV(table) {
+  const data = getData(table);
+  if (!data.length) return;
+  const headers = Object.keys(data[0]).join(',');
+  const rows = data.map(r => Object.values(r).join(','));
+  const csv = [headers, ...rows].join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = table + '_export.csv'; a.click();
+  notify('CSV exportado: ' + table);
+}
+
+function filterTable(table) {
+  // Simple filter implementation
+  notify('Filtro aplicado');
+}
+
+function editEvento(id) {
+  notify('Editor de evento: ' + id);
+  openModal('modalEvento');
+}
+
+// === DASHBOARD ===
+function initDashboard() {
+  renderProximosEventos();
+  renderIncidentesWidget();
+  renderActividadReciente();
+  initCharts();
+}
+
+function renderProximosEventos() {
+  const eventos = getData('eventos').slice(0,3);
+  document.getElementById('proximosEventos').innerHTML = eventos.map(e => 
+    '<div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;border-bottom:1px solid rgba(71,85,105,.2)">' +
+    '<div><p style="font-weight:600;font-size:.85rem">'+e.nombre+'</p><p style="font-size:.75rem;color:var(--text-secondary)">'+e.fecha_inicio+' | '+e.sede_hotel+'</p></div>' +
+    statusBadge(e.estado) + '</div>'
+  ).join('');
+}
+
+function renderIncidentesWidget() {
+  const inc = getData('incidentes').filter(i => i.estado !== 'resuelto' && i.estado !== 'cerrado').slice(0,4);
+  document.getElementById('incidentesAbiertos').innerHTML = inc.map(i =>
+    '<div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;border-bottom:1px solid rgba(71,85,105,.2)">' +
+    '<div><p style="font-weight:600;font-size:.85rem">'+i.tipo.replace(/_/g,' ')+'</p><p style="font-size:.75rem;color:var(--text-secondary)">'+i.asignado_a+'</p></div>' +
+    statusBadge(i.severidad) + '</div>'
+  ).join('');
+  document.getElementById('incidentCount').textContent = inc.length;
+}
+
+function renderActividadReciente() {
+  const acts = getData('auditoria').slice(0,5);
+  document.getElementById('actividadReciente').innerHTML = acts.map(a =>
+    '<div style="padding:.5rem 0;border-bottom:1px solid rgba(71,85,105,.2);font-size:.8rem">' +
+    '<div style="display:flex;justify-content:space-between"><span style="color:var(--primary-light)">'+a.accion+'</span><span style="color:var(--text-secondary)">'+new Date(a.timestamp).toLocaleTimeString()+'</span></div>' +
+    '<p style="color:var(--text-secondary);font-size:.75rem;margin-top:.15rem">'+a.cambios+'</p></div>'
+  ).join('');
+}
+
+// === CHARTS ===
+function initCharts() {
+  const chartDefaults = {responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}}};
+  
+  // Ingresos vs Presupuesto
+  const ctx1 = document.getElementById('chartIngresos');
+  if (ctx1 && !ctx1._chartInit) {
+    new Chart(ctx1, {type:'bar',data:{labels:['MC-W08','MC-W12','MC-W16'],datasets:[
+      {label:'Ingresos',data:[1690000,320000,0],backgroundColor:'rgba(20,184,166,.7)',borderRadius:6},
+      {label:'Presupuesto',data:[2000000,1800000,1200000],backgroundColor:'rgba(59,130,246,.3)',borderRadius:6}
+    ]},options:{...chartDefaults,scales:{x:{ticks:{color:'#94a3b8'},grid:{display:false}},y:{ticks:{color:'#94a3b8',callback:v=>'$'+v/1000+'K'},grid:{color:'rgba(71,85,105,.2)'}}}}});
+    ctx1._chartInit = true;
+  }
+  
+  // Participantes por estado
+  const ctx2 = document.getElementById('chartParticipantes');
+  if (ctx2 && !ctx2._chartInit) {
+    new Chart(ctx2, {type:'doughnut',data:{labels:['Confirmados','Inscritos','Checked-in','No Show'],datasets:[{data:[3,2,1,0],backgroundColor:['#22c55e','#3b82f6','#8b5cf6','#ef4444'],borderWidth:0}]},options:{...chartDefaults,cutout:'65%'}});
+    ctx2._chartInit = true;
+  }
+}
+
+function initReportes() {
+  const chartDefaults = {responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}}};
+  
+  const ctx3 = document.getElementById('chartRentabilidad');
+  if (ctx3 && !ctx3._chartInit) {
+    new Chart(ctx3, {type:'bar',data:{labels:['MC-W08','MC-W12','MC-W16'],datasets:[
+      {label:'Margen Real %',data:[42.3,0,0],backgroundColor:'rgba(34,197,94,.7)',borderRadius:6},
+      {label:'Margen Objetivo %',data:[40,40,42],backgroundColor:'rgba(245,158,11,.3)',borderRadius:6}
+    ]},options:{...chartDefaults,scales:{x:{ticks:{color:'#94a3b8'},grid:{display:false}},y:{ticks:{color:'#94a3b8',callback:v=>v+'%'},grid:{color:'rgba(71,85,105,.2)'}}}}});
+    ctx3._chartInit = true;
+  }
+  
+  const ctx4 = document.getElementById('chartPagos');
+  if (ctx4 && !ctx4._chartInit) {
+    new Chart(ctx4, {type:'pie',data:{labels:['Tarjeta Crédito','Transferencia','PayPal','Cortesía'],datasets:[{data:[65,20,10,5],backgroundColor:['#3b82f6','#22c55e','#f59e0b','#8b5cf6'],borderWidth:0}]},options:chartDefaults});
+    ctx4._chartInit = true;
+  }
+  
+  const ctx5 = document.getElementById('chartIncidentes');
+  if (ctx5 && !ctx5._chartInit) {
+    new Chart(ctx5, {type:'bar',data:{labels:['Error Hotel','Error Pago','Error Vuelo','Doc Faltante','Queja','Otro'],datasets:[{label:'Cantidad',data:[12,8,5,3,7,2],backgroundColor:['#ef4444','#f59e0b','#3b82f6','#8b5cf6','#22c55e','#94a3b8'],borderRadius:6}]},options:{...chartDefaults,indexAxis:'y',scales:{x:{ticks:{color:'#94a3b8'},grid:{color:'rgba(71,85,105,.2)'}},y:{ticks:{color:'#94a3b8'},grid:{display:false}}}}});
+    ctx5._chartInit = true;
+  }
+  
+  const ctx6 = document.getElementById('chartOcupacion');
+  if (ctx6 && !ctx6._chartInit) {
+    new Chart(ctx6, {type:'line',data:{labels:['Ene','Feb','Mar','Abr','May','Jun'],datasets:[{label:'Ocupación %',data:[75,82,91,0,0,0],borderColor:'#14b8a6',backgroundColor:'rgba(20,184,166,.1)',fill:true,tension:.4}]},options:{...chartDefaults,scales:{x:{ticks:{color:'#94a3b8'},grid:{display:false}},y:{ticks:{color:'#94a3b8',callback:v=>v+'%'},grid:{color:'rgba(71,85,105,.2)'},min:0,max:100}}}});
+    ctx6._chartInit = true;
+  }
+}
+
+// === CONFIG ===
+function loadConfig() {
+  const cfg = APP_STATE.config;
+  if (cfg.supabaseUrl) document.getElementById('cfgSupabaseUrl').value = cfg.supabaseUrl;
+  if (cfg.supabaseAnon) document.getElementById('cfgSupabaseAnon').value = '••••••••';
+  if (cfg.stripePk) document.getElementById('cfgStripePk').value = cfg.stripePk;
+}
+
+function saveConfig(service) {
+  if (service === 'supabase') {
+    APP_STATE.config.supabaseUrl = document.getElementById('cfgSupabaseUrl').value;
+    APP_STATE.config.supabaseAnon = document.getElementById('cfgSupabaseAnon').value;
+    APP_STATE.config.supabaseService = document.getElementById('cfgSupabaseService').value;
+  }
+  if (service === 'stripe') {
+    APP_STATE.config.stripePk = document.getElementById('cfgStripePk').value;
+    APP_STATE.config.stripeSk = document.getElementById('cfgStripeSk').value;
+  }
+  if (service === 'mailer') {
+    APP_STATE.config.mailerKey = document.getElementById('cfgMailerKey').value;
+    APP_STATE.config.mailerDomain = document.getElementById('cfgMailerDomain').value;
+  }
+  if (service === 'n8n') {
+    APP_STATE.config.n8nUrl = document.getElementById('cfgN8nUrl').value;
+    APP_STATE.config.n8nKey = document.getElementById('cfgN8nKey').value;
+  }
+  localStorage.setItem('medcongress_config', JSON.stringify(APP_STATE.config));
+  notify('Configuración de ' + service + ' guardada');
+}
+
+async function testSupabaseConnection() {
+  const url = document.getElementById('cfgSupabaseUrl').value;
+  const key = document.getElementById('cfgSupabaseAnon').value;
+  if (!url || !key || key === '••••••••') {
+    notify('Ingrese URL y Anon Key válidos','error');
+    return;
+  }
+  try {
+    const resp = await fetch(url + '/rest/v1/', {
+      headers: { 'apikey': key, 'Authorization': 'Bearer ' + key }
+    });
+    if (resp.ok) {
+      document.getElementById('supabaseStatus').className = 'badge badge-success';
+      document.getElementById('supabaseStatus').textContent = 'Conectado';
+      document.getElementById('configBanner').style.display = 'none';
+      APP_STATE.connected = true;
+      notify('Conexión a Supabase exitosa');
+    } else {
+      throw new Error('HTTP ' + resp.status);
+    }
+  } catch(e) {
+    document.getElementById('supabaseStatus').className = 'badge badge-danger';
+    document.getElementById('supabaseStatus').textContent = 'Error';
+    notify('Error de conexión: ' + e.message, 'error');
+  }
+}
+
+function refreshDashboard() {
+  notify('Dashboard actualizado');
+  initDashboard();
+}
+
+function filterDashboard() {
+  notify('Filtro de dashboard aplicado');
+}
+
+// === POPULATE SELECTS ===
+function populateSelects() {
+  const eventos = getData('eventos');
+  const participantes = getData('participantes');
+  const evtOptions = eventos.map(e => '<option value="'+e.id+'">'+e.codigo_evento+' - '+e.nombre+'</option>').join('');
+  const partOptions = participantes.map(p => '<option value="'+p.id+'">'+p.nombre+'</option>').join('');
+  
+  ['partEvento','pagoEvento'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = evtOptions;
+  });
+  ['pagoParticipante','habParticipante','vueloParticipante'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = partOptions;
+  });
+  const dashFilter = document.getElementById('dashEventFilter');
+  if (dashFilter) dashFilter.innerHTML = '<option value="all">Todos los Eventos</option>' + evtOptions;
+}
+
+// === INIT ===
+document.addEventListener('DOMContentLoaded', function() {
+  populateSelects();
+  initDashboard();
+  
+  // Responsive menu
+  if (window.innerWidth <= 768) {
+    document.getElementById('menuToggle').style.display = 'block';
+  }
+  window.addEventListener('resize', function() {
+    document.getElementById('menuToggle').style.display = window.innerWidth <= 768 ? 'block' : 'none';
+  });
+});
+<\/script>
+</body>
+  </html>
