@@ -370,65 +370,125 @@ function ContactPage() {
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ nombre: '', empresa: '', email: '', servicio: 'SIG 360° — Sistema Integrado de Gestión', mensaje: '' });
   const u = (k, v) => setForm(p => ({ ...p, [k]: v }));
+
+  // Calendar state
+  const today = new Date();
+  const [calYear, setCalYear] = useState(today.getFullYear());
+  const [calMonth, setCalMonth] = useState(today.getMonth());
+  const [selDate, setSelDate] = useState(null);
+  const [selTime, setSelTime] = useState(null);
+
+  const monthNames = lang === 'es'
+    ? ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+    : ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const dayNames = lang === 'es' ? ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'] : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const timeSlots = ['09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00'];
+
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const calDays = [];
+  for (let i = 0; i < firstDay; i++) calDays.push(null);
+  for (let d = 1; d <= daysInMonth; d++) calDays.push(d);
+
+  const isDatePast = (d) => {
+    if (!d) return true;
+    const dt = new Date(calYear, calMonth, d);
+    const t2 = new Date(); t2.setHours(0,0,0,0);
+    return dt < t2;
+  };
+  const isWeekend = (d) => {
+    if (!d) return false;
+    const dow = new Date(calYear, calMonth, d).getDay();
+    return dow === 0 || dow === 6;
+  };
+  const isSel = (d) => selDate && selDate.d === d && selDate.m === calMonth && selDate.y === calYear;
+
+  const prevMonth = () => { if (calMonth === 0) { setCalMonth(11); setCalYear(y => y - 1); } else setCalMonth(m => m - 1); };
+  const nextMonth = () => { if (calMonth === 11) { setCalMonth(0); setCalYear(y => y + 1); } else setCalMonth(m => m + 1); };
+
+  const formatDate = () => {
+    if (!selDate) return '';
+    const dt = new Date(selDate.y, selDate.m, selDate.d);
+    return dt.toLocaleDateString(lang === 'es' ? 'es-PE' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  };
+
   const handleSend = () => {
-    const subject = encodeURIComponent(`Solicitud Web: ${form.servicio} - ${form.empresa}`);
-    const body = encodeURIComponent(`Estimado equipo INNOVAQ Solutions,\n\nMe interesa: ${form.servicio}\n\nNombre: ${form.nombre}\nEmpresa: ${form.empresa}\nEmail: ${form.email}\n\nMensaje:\n${form.mensaje}\n\nQuedo atento a su respuesta.`);
+    const dateStr = selDate ? formatDate() : (lang === 'es' ? 'No seleccionada' : 'Not selected');
+    const timeStr = selTime || (lang === 'es' ? 'No seleccionada' : 'Not selected');
+    const subject = encodeURIComponent(`Solicitud de Reunión: ${form.servicio} - ${form.empresa}`);
+    const body = encodeURIComponent(
+      `Estimado equipo INNOVAQ Solutions,\n\n` +
+      `Solicito agendar una reunión con los siguientes datos:\n\n` +
+      `══════════════════════════════\n` +
+      `DATOS DE CONTACTO\n` +
+      `══════════════════════════════\n` +
+      `Nombre: ${form.nombre}\n` +
+      `Empresa: ${form.empresa}\n` +
+      `Email: ${form.email}\n\n` +
+      `══════════════════════════════\n` +
+      `REUNIÓN AGENDADA\n` +
+      `══════════════════════════════\n` +
+      `Servicio: ${form.servicio}\n` +
+      `Fecha: ${dateStr}\n` +
+      `Hora: ${timeStr} (GMT-5 Lima)\n` +
+      `Duración: 60 minutos\n\n` +
+      `══════════════════════════════\n` +
+      `MENSAJE\n` +
+      `══════════════════════════════\n` +
+      `${form.mensaje}\n\n` +
+      `Quedo atento a la confirmación.\n` +
+      `Saludos cordiales.`
+    );
     window.open(`mailto:contacto@innovaqsolution.com?subject=${subject}&body=${body}`, '_blank');
     setSent(true);
   };
+
   const lbl = { display: 'block', fontSize: 11, fontWeight: 700, color: B.textMuted, marginBottom: 5, letterSpacing: '0.04em', textTransform: 'uppercase' };
   const waIcon = <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>;
   const mailIcon = <svg width="20" height="20" viewBox="0 0 24 24" fill={B.orange}><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>;
+  const clockIcon = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={B.blue} strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
+  const calIcon = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={B.blue} strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>;
 
   return (
-    <section style={{ padding: '64px 20px 80px', maxWidth: 1100, margin: '0 auto' }}>
+    <section style={{ padding: '64px 20px 80px', maxWidth: 1200, margin: '0 auto' }}>
       {sent ? (
         <div style={{ ...card, padding: 56, textAlign: 'center', maxWidth: 520, margin: '0 auto' }}>
           <div style={{ fontSize: 56, marginBottom: 16 }}>✅</div>
-          <h3 style={{ fontSize: 22, fontWeight: 700, color: B.blue, marginBottom: 8 }}>{lang === 'es' ? '¡Solicitud Enviada!' : 'Request Sent!'}</h3>
-          <p style={{ color: B.textMuted, fontSize: 14 }}>{lang === 'es' ? 'Se abrió su cliente de correo. Nuestro equipo técnico lo contactará en 24 horas.' : 'Your email client was opened. Our team will contact you within 24 hours.'}</p>
+          <h3 style={{ fontSize: 22, fontWeight: 700, color: B.blue, marginBottom: 8 }}>{lang === 'es' ? '¡Reunión Agendada!' : 'Meeting Scheduled!'}</h3>
+          <p style={{ color: B.textMuted, fontSize: 14, marginBottom: 12 }}>{lang === 'es' ? 'Se abrió su cliente de correo con los datos de la reunión.' : 'Your email client was opened with meeting details.'}</p>
+          {selDate && <p style={{ color: B.blue, fontWeight: 700, fontSize: 15 }}>{formatDate()} {selTime && `— ${selTime}`}</p>}
+          <p style={{ color: B.textMuted, fontSize: 13, marginTop: 8 }}>{lang === 'es' ? 'Recibirá confirmación en contacto@innovaqsolution.com' : 'Confirmation will be sent to contacto@innovaqsolution.com'}</p>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: 0, borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.6fr', gap: 0, borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
           {/* LEFT - Contact Info */}
-          <div style={{ background: `linear-gradient(160deg, ${B.blueDark}, ${B.blue})`, padding: '44px 36px', color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div style={{ background: `linear-gradient(160deg, ${B.blueDark}, ${B.blue})`, padding: '40px 32px', color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
-              <h2 style={{ fontSize: 28, fontWeight: 800, lineHeight: 1.2, marginBottom: 16, fontStyle: 'italic' }}>
+              <h2 style={{ fontSize: 26, fontWeight: 800, lineHeight: 1.2, marginBottom: 14, fontStyle: 'italic' }}>
                 {lang === 'es' ? 'Solicite una Cotización Corporativa' : 'Request a Corporate Quote'}
               </h2>
-              <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', lineHeight: 1.7, marginBottom: 40 }}>
+              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.7, marginBottom: 32 }}>
                 {lang === 'es'
                   ? '¿Necesita implementar ISO 37001, realizar una Auditoría MINTRA o capacitar a su personal en trabajos de alto riesgo? Déjenos sus datos y un especialista técnico se contactará a la brevedad.'
                   : 'Need ISO 37001 implementation, a MINTRA Audit or high-risk work training? Leave your details and a technical specialist will contact you shortly.'}
               </p>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-              {/* WhatsApp */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
               <div onClick={() => window.open('https://wa.me/51938430657', '_blank')} style={{ display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer', color: '#fff' }}>
-                <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(37,211,102,0.15)', border: '1px solid rgba(37,211,102,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  {waIcon}
-                </div>
-                <div>
-                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: 2 }}>WHATSAPP / {lang === 'es' ? 'CONTACTO' : 'CONTACT'}</div>
-                  <div style={{ fontSize: 15, fontWeight: 700 }}>+51 938 430 657</div>
-                </div>
+                <div style={{ width: 42, height: 42, borderRadius: '50%', background: 'rgba(37,211,102,0.15)', border: '1px solid rgba(37,211,102,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{waIcon}</div>
+                <div><div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: 1 }}>WHATSAPP / {lang === 'es' ? 'CONTACTO' : 'CONTACT'}</div><div style={{ fontSize: 14, fontWeight: 700 }}>+51 938 430 657</div></div>
               </div>
-              {/* Email */}
               <div onClick={() => window.open('mailto:contacto@innovaqsolution.com', '_blank')} style={{ display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer', color: '#fff' }}>
-                <div style={{ width: 44, height: 44, borderRadius: '50%', background: `rgba(241,145,43,0.15)`, border: `1px solid rgba(241,145,43,0.3)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  {mailIcon}
-                </div>
-                <div>
-                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: 2 }}>{lang === 'es' ? 'CORREO ELECTRÓNICO' : 'EMAIL'}</div>
-                  <div style={{ fontSize: 15, fontWeight: 700 }}>contacto@innovaqsolution.com</div>
-                </div>
+                <div style={{ width: 42, height: 42, borderRadius: '50%', background: 'rgba(241,145,43,0.15)', border: '1px solid rgba(241,145,43,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{mailIcon}</div>
+                <div><div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: 1 }}>{lang === 'es' ? 'CORREO ELECTRÓNICO' : 'EMAIL'}</div><div style={{ fontSize: 14, fontWeight: 700 }}>contacto@innovaqsolution.com</div></div>
               </div>
             </div>
           </div>
-          {/* RIGHT - Form */}
-          <div style={{ background: '#fff', padding: '40px 36px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <div style={{ display: 'flex', gap: 12 }}>
+          {/* RIGHT - Form + Calendar */}
+          <div style={{ background: '#fff', padding: '32px 30px', display: 'flex', gap: 24 }}>
+            {/* Form column */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div style={{ display: 'flex', gap: 10 }}>
                 <div style={{ flex: 1 }}><label style={lbl}>{lang === 'es' ? 'NOMBRE' : 'NAME'}</label><input value={form.nombre} onChange={e => u('nombre', e.target.value)} style={inp} placeholder={lang === 'es' ? 'Su nombre' : 'Your name'} /></div>
                 <div style={{ flex: 1 }}><label style={lbl}>{lang === 'es' ? 'EMPRESA' : 'COMPANY'}</label><input value={form.empresa} onChange={e => u('empresa', e.target.value)} style={inp} placeholder={lang === 'es' ? 'Nombre empresa' : 'Company name'} /></div>
               </div>
@@ -438,8 +498,75 @@ function ContactPage() {
                   {['SIG 360° — Sistema Integrado de Gestión', 'ERP 360 (SumaERP)', 'TPM360 — Mantenimiento', 'MTP360 — Capacitación', 'Auditoría MINTRA / Ley 29783', 'Implementación ISO', 'Software a Medida', 'Automatización IA'].map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
-              <div><label style={lbl}>{lang === 'es' ? 'MENSAJE' : 'MESSAGE'}</label><textarea rows={4} value={form.mensaje} onChange={e => u('mensaje', e.target.value)} style={{ ...inp, resize: 'vertical' }} placeholder={lang === 'es' ? 'Detalles de su requerimiento...' : 'Details of your requirement...'} /></div>
+              <div><label style={lbl}>{lang === 'es' ? 'MENSAJE' : 'MESSAGE'}</label><textarea rows={3} value={form.mensaje} onChange={e => u('mensaje', e.target.value)} style={{ ...inp, resize: 'vertical' }} placeholder={lang === 'es' ? 'Detalles de su requerimiento...' : 'Details of your requirement...'} /></div>
+              {/* Selected appointment summary */}
+              {selDate && selTime && (
+                <div style={{ background: `${B.blue}08`, border: `1.5px solid ${B.blue}25`, borderRadius: 10, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <div style={{ fontSize: 24 }}>📅</div>
+                  <div>
+                    <div style={{ fontSize: 11, color: B.textMuted, fontWeight: 700, textTransform: 'uppercase' }}>{lang === 'es' ? 'Reunión agendada' : 'Scheduled meeting'}</div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: B.blue }}>{formatDate()} — {selTime}</div>
+                    <div style={{ fontSize: 11, color: B.textMuted }}>60 min · GMT-5 America/Lima</div>
+                  </div>
+                </div>
+              )}
               <button onClick={handleSend} style={{ ...btnP, width: '100%', borderRadius: 10, padding: '14px 0', fontSize: 15, letterSpacing: '0.04em', textTransform: 'uppercase' }}>{lang === 'es' ? 'ENVIAR SOLICITUD' : 'SEND REQUEST'}</button>
+            </div>
+            {/* Calendar column */}
+            <div style={{ width: 260, flexShrink: 0 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 800, color: B.blue, marginBottom: 4 }}>{lang === 'es' ? 'Agendar Reunión' : 'Schedule Meeting'}</h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
+                {clockIcon}<span style={{ fontSize: 12, color: B.textMuted }}>60 {lang === 'es' ? 'minutos' : 'minutes'}</span>
+              </div>
+              {/* Month nav */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+                <button onClick={prevMonth} style={{ background: 'none', border: `1px solid ${B.border}`, borderRadius: 6, width: 28, height: 28, cursor: 'pointer', color: B.blue, fontSize: 14, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>‹</button>
+                <span style={{ fontSize: 14, fontWeight: 700, color: B.blue }}>{monthNames[calMonth]} {calYear}</span>
+                <button onClick={nextMonth} style={{ background: B.blue, border: 'none', borderRadius: 6, width: 28, height: 28, cursor: 'pointer', color: '#fff', fontSize: 14, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>›</button>
+              </div>
+              {/* Day headers */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 2, marginBottom: 4 }}>
+                {dayNames.map(d => <div key={d} style={{ textAlign: 'center', fontSize: 10, fontWeight: 700, color: B.textLight, padding: '4px 0' }}>{d}</div>)}
+              </div>
+              {/* Calendar grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 2 }}>
+                {calDays.map((d, i) => {
+                  const past = isDatePast(d);
+                  const wknd = isWeekend(d);
+                  const disabled = !d || past || wknd;
+                  const selected = isSel(d);
+                  return (
+                    <div key={i} onClick={() => !disabled && setSelDate({ d, m: calMonth, y: calYear })}
+                      style={{ textAlign: 'center', padding: '7px 0', fontSize: 13, fontWeight: selected ? 800 : 500, borderRadius: 8, cursor: disabled ? 'default' : 'pointer',
+                        color: !d ? 'transparent' : disabled ? B.borderLight : selected ? '#fff' : B.text,
+                        background: selected ? B.blue : 'transparent',
+                        transition: 'all 0.15s'
+                      }}
+                      onMouseEnter={e => { if (!disabled && !selected) e.currentTarget.style.background = `${B.blue}12`; }}
+                      onMouseLeave={e => { if (!disabled && !selected) e.currentTarget.style.background = 'transparent'; }}>
+                      {d || ''}
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Time slots */}
+              {selDate && (
+                <div style={{ marginTop: 12 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: B.textMuted, marginBottom: 6, textTransform: 'uppercase' }}>{lang === 'es' ? 'Hora disponible' : 'Available time'}</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4 }}>
+                    {timeSlots.map(t => (
+                      <button key={t} onClick={() => setSelTime(t)}
+                        style={{ background: selTime === t ? B.blue : '#fff', color: selTime === t ? '#fff' : B.blue, border: `1.5px solid ${selTime === t ? B.blue : B.border}`, borderRadius: 6, padding: '6px 0', fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: "'DM Sans',sans-serif", transition: 'all 0.15s' }}>
+                        {t}
+                      </button>
+                    ))}
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 8, fontSize: 11, color: B.textLight }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={B.textLight} strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    GMT-05:00 America/Lima (GMT-5)
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
