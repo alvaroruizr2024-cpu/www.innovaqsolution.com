@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TransCaña ERPremium - Galarreta</title>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}html,body,#root{width:100%;height:100%}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#0a0e17}::-webkit-scrollbar-thumb{background:#1a2540;border-radius:3px}</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const{useState,useCallback,useEffect}=React;
+const{BarChart,Bar,XAxis,YAxis,Tooltip,ResponsiveContainer,PieChart,Pie,Cell,CartesianGrid,Legend}=Recharts;
+/* ICONS */
+const _ic=(p)=>({style:st,...pr}={})=>(<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display:"inline-block",verticalAlign:"middle",...st}} {...pr}>{p}</svg>);
+const DollarSign=_ic(<><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></>);
+const FileText=_ic(<><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></>);
+const Package=_ic(<><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></>);
+const Users=_ic(<><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></>);
+const ShoppingCart=_ic(<><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></>);
+const TrendingUp=_ic(<><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></>);
+const AlertTriangle=_ic(<><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></>);
+const Settings=_ic(<><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></>);
+const Search=_ic(<><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></>);
+const Calendar=_ic(<><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></>);
+const Tractor=_ic(<><path d="M3 14l.6-2.4A2 2 0 015.5 10h4.3a2 2 0 011.8 1.2l2 4.2"/><circle cx="7" cy="17" r="3"/><circle cx="17" cy="17" r="3"/><path d="M14 14h3l2.5-5H13"/></>);
+const Flask=_ic(<><path d="M9 3h6v7l5 8H4l5-8V3z"/><line x1="9" y1="3" x2="15" y2="3"/></>);
+const Banknote=_ic(<><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="12" cy="12" r="3"/></>);
+const UserCheck=_ic(<><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></>);
+const Wrench=_ic(<path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>);
+const Route=_ic(<><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 000-7h-11a3.5 3.5 0 010-7H15"/><circle cx="18" cy="5" r="3"/></>);
+const Activity=_ic(<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>);
+const BarChart3=_ic(<><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></>);
+const Eye=_ic(<><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></>);
+const Check=_ic(<polyline points="20 6 9 17 4 12"/>);
+const Lock=_ic(<><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></>);
+const LogOut=_ic(<><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></>);
+const Home=_ic(<><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></>);
+const Contact=_ic(<><path d="M17 18a2 2 0 00-2-2H9a2 2 0 00-2 2"/><rect x="3" y="4" width="18" height="18" rx="2"/><circle cx="12" cy="10" r="2"/></>);
+const Bell=_ic(<><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></>);
+/* Mini icons */
+const SvPl=()=>(<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>);
+const SvEd=()=>(<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>);
+const SvTr=()=>(<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>);
+const SvCk=()=>(<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>);
+const SvWn=()=>(<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FF9F0A" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>);
+const SvXx=()=>(<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>);
+/* Palette & Utils */
+const P={bg:"#05070c",c1:"#0a0e17",c2:"#0f1520",bd:"#1a2540",hv:"#111b30",tx:"#d6e0f0",s1:"#8095b3",s2:"#4a6080",blue:"#0A84FF",grn:"#32D74B",org:"#FF9F0A",red:"#FF453A",pur:"#BF5AF2",cyan:"#64D2FF",yel:"#FFD60A",tl:"#2AC7B8"};
+const nn=v=>(typeof v==="number"?v:parseFloat(v)||0);
+const Q=v=>"Q "+Math.abs(nn(v)).toLocaleString("es-GT",{minimumFractionDigits:2,maximumFractionDigits:2});
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const today=()=>new Date().toISOString().slice(0,10);
+const pct=(a,b)=>b>0?((a/b)*100).toFixed(1)+"%":"0%";
+/* UI COMPONENTS */
+function Badge({s,c:cl}){
+  const cm={Activa:P.grn,Completada:P.blue,Planificada:P.org,"En Tránsito":P.pur,Entregado:P.grn,Pendiente:P.org,Cancelado:P.red,Operativo:P.grn,Mantenimiento:P.org,"Fuera de Servicio":P.red,Aprobada:P.grn,Pagada:P.cyan,Borrador:P.s2,A:P.grn,B:P.blue,C:P.org,D:P.red,Activo:P.grn,Inactivo:P.red,Emitida:P.blue,Anulada:P.red,Ganado:P.grn,Perdido:P.red,"En Proceso":P.org,Liquidada:P.grn,Alta:P.red,Media:P.org,Baja:P.grn,Corporativo:P.blue,Distribuidor:P.pur,Exportador:P.tl,Retail:P.yel,Industrial:P.org,Preventivo:P.blue,Correctivo:P.red,"Contacto Inicial":P.s2,Propuesta:P.org,"Negociación":P.blue,Quincenal:P.blue,Mensual:P.pur};
+  const cc=cl||cm[s]||P.s2;
+  return(<span style={{background:cc+"14",color:cc,border:"1px solid "+cc+"25",padding:"2px 7px",borderRadius:4,fontSize:9.5,fontWeight:600,whiteSpace:"nowrap"}}>{s}</span>);
+}
+function K({l,v,icon,color:c,sub:s,glow}){
+  return(<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:9,padding:"12px 14px",position:"relative",overflow:"hidden",boxShadow:glow?"0 0 20px "+c+"12":"none"}}>
+    <div style={{position:"absolute",top:-12,right:-12,width:50,height:50,background:"radial-gradient(circle,"+c+"0c,transparent 70%)",borderRadius:"50%"}}/>
+    <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}><span style={{color:P.s1,fontSize:9,fontWeight:600,textTransform:"uppercase",letterSpacing:.5}}>{l}</span><span style={{color:c,opacity:.4}}>{icon}</span></div>
+    <div style={{fontSize:16,fontWeight:700,letterSpacing:-.3}}>{v}</div>
+    {s&&<div style={{fontSize:9,color:P.s2,marginTop:2}}>{s}</div>}
+  </div>);
+}
+function Btn({children,p,d,s,onClick:oc,dis,full,style:st}){
+  return(<button disabled={dis} onClick={oc} style={{background:d?"linear-gradient(135deg,#FF453A,#c33)":p?"linear-gradient(135deg,#0A84FF,#06c)":P.c2,color:p||d?"#fff":"#6b7a94",border:p||d?"none":"1px solid "+P.bd,borderRadius:6,padding:s?"3px 8px":"6px 12px",fontSize:s?9.5:10.5,fontWeight:600,cursor:dis?"not-allowed":"pointer",display:"inline-flex",alignItems:"center",justifyContent:"center",gap:4,opacity:dis?.5:1,whiteSpace:"nowrap",width:full?"100%":"auto",...st}}>{children}</button>);
+}
+function Inp({l,v,onChange:oc,type:t="text",opts,ro,req,ph}){
+  return(<div style={{display:"flex",flexDirection:"column",gap:3}}>
+    {l&&<label style={{color:P.s1,fontSize:8.5,fontWeight:600,textTransform:"uppercase",letterSpacing:.4}}>{l}{req&&<span style={{color:P.red}}>*</span>}</label>}
+    {opts?(<select value={v||""} onChange={e=>oc(e.target.value)} style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:5,padding:"7px 9px",color:P.tx,fontSize:11,outline:"none"}}><option value="">{"\u2014"}</option>{opts.map(o=><option key={o} value={o}>{o}</option>)}</select>
+    ):(<input type={t} value={v||""} onChange={e=>oc(e.target.value)} placeholder={ph} readOnly={ro} style={{background:ro?P.bg:P.c1,border:"1px solid "+P.bd,borderRadius:5,padding:"7px 9px",color:ro?P.s2:P.tx,fontSize:11,outline:"none",width:"100%"}}/>)}
+  </div>);
+}
+function G({children,c:cols=2}){return(<div style={{display:"grid",gridTemplateColumns:"repeat("+cols+",1fr)",gap:10}}>{children}</div>);}
+function Modal({open,onClose,title,children,wide}){
+  if(!open)return null;
+  return(<div style={{position:"fixed",inset:0,zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center"}}>
+    <div style={{position:"absolute",inset:0,background:"rgba(0,0,0,.65)",backdropFilter:"blur(4px)"}} onClick={onClose}/>
+    <div onClick={e=>e.stopPropagation()} style={{position:"relative",background:P.c1,border:"1px solid "+P.bd,borderRadius:12,width:wide?700:460,maxHeight:"88vh",display:"flex",flexDirection:"column",boxShadow:"0 25px 60px rgba(0,0,0,.5)"}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"12px 18px",borderBottom:"1px solid "+P.bd}}><span style={{fontSize:13,fontWeight:700}}>{title}</span><button onClick={onClose} style={{background:"none",border:"none",color:P.s2,cursor:"pointer"}}><SvXx/></button></div>
+      <div style={{flex:1,overflow:"auto",padding:"16px 18px"}}>{children}</div>
+    </div>
+  </div>);
+}
+function Toast({msg,type,onDone}){
+  useEffect(()=>{const t=setTimeout(onDone,3000);return()=>clearTimeout(t)},[onDone]);
+  const c=type==="ok"?P.grn:type==="err"?P.red:P.blue;
+  return(<div style={{position:"fixed",bottom:20,right:20,zIndex:2000,background:c+"18",border:"1px solid "+c+"30",borderRadius:8,padding:"10px 16px",color:c,fontSize:11,fontWeight:600,display:"flex",alignItems:"center",gap:6,maxWidth:380}}>{type==="ok"?<SvCk/>:<SvWn/>}{msg}</div>);
+}
+function Confirm({open,msg,onYes,onNo}){
+  if(!open)return null;
+  return(<div style={{position:"fixed",inset:0,zIndex:1100,display:"flex",alignItems:"center",justifyContent:"center"}}><div style={{position:"absolute",inset:0,background:"rgba(0,0,0,.6)"}} onClick={onNo}/><div onClick={e=>e.stopPropagation()} style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:20,width:360}}><div style={{color:P.tx,fontSize:13,marginBottom:14}}>{msg}</div><div style={{display:"flex",gap:8,justifyContent:"flex-end"}}><Btn onClick={onNo}>Cancelar</Btn><Btn d onClick={onYes}>Confirmar</Btn></div></div></div>);
+}
+function ProgressBar({value,max,color,label}){
+  const p=max>0?(value/max)*100:0;
+  return(<div style={{display:"flex",alignItems:"center",gap:6,width:"100%"}}>
+    {label&&<span style={{fontSize:9,color:P.s1,minWidth:60}}>{label}</span>}
+    <div style={{flex:1,height:6,background:P.c2,borderRadius:3,overflow:"hidden"}}><div style={{height:"100%",width:Math.min(p,100)+"%",background:color||P.blue,borderRadius:3,transition:"width .3s"}}/></div>
+    <span style={{fontSize:9,color:color,fontWeight:600,minWidth:30}}>{p.toFixed(0)}%</span>
+  </div>);
+}
+function DataTable({columns,data,onEdit,onDelete,onView}){
+  return(<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:8,overflow:"auto"}}>
+    <table style={{width:"100%",borderCollapse:"collapse",fontSize:10}}>
+      <thead><tr style={{background:P.c2}}>
+        {columns.map((c,i)=><th key={i} style={{padding:"8px 10px",color:P.s2,fontSize:8.5,fontWeight:700,textAlign:"left",whiteSpace:"nowrap",borderBottom:"1px solid "+P.bd}}>{c.label}</th>)}
+        {(onEdit||onDelete||onView)&&<th style={{padding:"8px 10px",color:P.s2,fontSize:8.5,fontWeight:700,borderBottom:"1px solid "+P.bd,width:80}}>ACCIONES</th>}
+      </tr></thead>
+      <tbody>{data.map((row,ri)=>(
+        <tr key={row.id||ri} style={{borderBottom:"1px solid "+P.bd+"10"}} onMouseEnter={e=>e.currentTarget.style.background=P.hv} onMouseLeave={e=>e.currentTarget.style.background=""}>
+          {columns.map((c,ci)=><td key={ci} style={{padding:"6px 10px",color:P.s1,whiteSpace:"nowrap"}}>{c.render?c.render(row):row[c.key]}</td>)}
+          {(onEdit||onDelete||onView)&&<td style={{padding:"6px 10px"}}><div style={{display:"flex",gap:4}}>
+            {onView&&<button onClick={()=>onView(row)} style={{background:"none",border:"none",color:P.blue,cursor:"pointer"}}><Eye style={{width:13,height:13}}/></button>}
+            {onEdit&&<button onClick={()=>onEdit(row)} style={{background:"none",border:"none",color:P.org,cursor:"pointer"}}><SvEd/></button>}
+            {onDelete&&<button onClick={()=>onDelete(row)} style={{background:"none",border:"none",color:P.red,cursor:"pointer"}}><SvTr/></button>}
+          </div></td>}
+        </tr>
+      ))}</tbody>
+    </table>
+    {data.length===0&&<div style={{textAlign:"center",padding:30,color:P.s2,fontSize:11}}>Sin registros</div>}
+  </div>);
+}
+/* DATA INIT */
+function initData(){return{
+facturas:[{id:"f1",numero:"FAC-001",cliente:"Ingenio Magdalena S.A.",fecha:"2025-12-01",total:45000,estado:"Emitida",items:"Azúcar refinada 500qq"},{id:"f2",numero:"FAC-002",cliente:"Distribuidora Central",fecha:"2025-12-05",total:28000,estado:"Pagada",items:"Melaza 200 barriles"},{id:"f3",numero:"FAC-003",cliente:"Exportadora del Sur",fecha:"2025-12-10",total:120000,estado:"Emitida",items:"Azúcar cruda 2000qq"},{id:"f4",numero:"FAC-004",cliente:"Supermercados La Torre",fecha:"2025-12-15",total:15500,estado:"Pendiente",items:"Azúcar morena 150qq"},{id:"f5",numero:"FAC-005",cliente:"Panificadora Guatemala",fecha:"2025-12-18",total:8900,estado:"Pagada",items:"Azúcar glass 80qq"}],
+compras:[{id:"c1",numero:"OC-001",proveedor:"Fertiguate S.A.",fecha:"2025-12-02",total:35000,estado:"Aprobada",items:"Fertilizante NPK 500 sacos"},{id:"c2",numero:"OC-002",proveedor:"Maquinaria Industrial GT",fecha:"2025-12-08",total:185000,estado:"Pendiente",items:"Repuestos de molino"},{id:"c3",numero:"OC-003",proveedor:"Combustibles del Pacífico",fecha:"2025-12-12",total:42000,estado:"Aprobada",items:"Diesel 5000 gal"},{id:"c4",numero:"OC-004",proveedor:"QuímicosGT",fecha:"2025-12-14",total:18500,estado:"Pagada",items:"Reactivos laboratorio"}],
+productos:[{id:"p1",nombre:"Azúcar Refinada",sku:"AZ-REF",categoria:"Azúcar",stock:2500,stockMin:500,precio:380,unidad:"qq",estado:"Activo"},{id:"p2",nombre:"Azúcar Cruda",sku:"AZ-CRU",categoria:"Azúcar",stock:4800,stockMin:1000,precio:320,unidad:"qq",estado:"Activo"},{id:"p3",nombre:"Azúcar Morena",sku:"AZ-MOR",categoria:"Azúcar",stock:1200,stockMin:300,precio:350,unidad:"qq",estado:"Activo"},{id:"p4",nombre:"Melaza",sku:"MEL-001",categoria:"Subproducto",stock:800,stockMin:200,precio:150,unidad:"barril",estado:"Activo"},{id:"p5",nombre:"Bagazo",sku:"BAG-001",categoria:"Subproducto",stock:15000,stockMin:5000,precio:25,unidad:"ton",estado:"Activo"},{id:"p6",nombre:"Azúcar Glass",sku:"AZ-GLS",categoria:"Azúcar",stock:180,stockMin:200,precio:450,unidad:"qq",estado:"Activo"}],
+clientes:[{id:"cl1",nombre:"Ingenio Magdalena S.A.",nit:"1234567-8",email:"ventas@magdalena.gt",telefono:"2222-3333",ciudad:"Escuintla",tipo:"Corporativo"},{id:"cl2",nombre:"Distribuidora Central",nit:"9876543-2",email:"compras@distcentral.gt",telefono:"2444-5555",ciudad:"Guatemala",tipo:"Distribuidor"},{id:"cl3",nombre:"Exportadora del Sur",nit:"5566778-9",email:"export@delsur.gt",telefono:"2666-7777",ciudad:"Quetzaltenango",tipo:"Exportador"},{id:"cl4",nombre:"Supermercados La Torre",nit:"3344556-7",email:"abasto@latorre.gt",telefono:"2888-9999",ciudad:"Guatemala",tipo:"Retail"}],
+empleados:[{id:"e1",nombre:"Carlos Galarreta López",cargo:"Gerente General",depto:"Dirección",sueldo:25000,isr:1250,ingreso:"2018-01-15",estado:"Activo"},{id:"e2",nombre:"María Fernanda Ruiz",cargo:"Jefa de Laboratorio",depto:"Laboratorio",sueldo:15000,isr:500,ingreso:"2019-06-01",estado:"Activo"},{id:"e3",nombre:"Roberto Méndez",cargo:"Supervisor de Campo",depto:"Operaciones",sueldo:12000,isr:300,ingreso:"2020-03-15",estado:"Activo"},{id:"e4",nombre:"Ana Lucía Morales",cargo:"Contadora General",depto:"Finanzas",sueldo:14000,isr:450,ingreso:"2019-09-01",estado:"Activo"},{id:"e5",nombre:"José Miguel Santos",cargo:"Jefe Mantenimiento",depto:"Mantenimiento",sueldo:13000,isr:350,ingreso:"2020-11-01",estado:"Activo"},{id:"e6",nombre:"Pedro Hernández",cargo:"Operador Molino",depto:"Producción",sueldo:6000,isr:0,ingreso:"2021-01-15",estado:"Activo"},{id:"e7",nombre:"Lucía Ramírez",cargo:"Analista Calidad",depto:"Laboratorio",sueldo:8500,isr:50,ingreso:"2022-04-01",estado:"Activo"}],
+leads:[{id:"l1",nombre:"Bebidas Centroamérica",contacto:"Ricardo Pérez",valor:250000,etapa:"Negociación",producto:"Azúcar refinada 5000qq/mes"},{id:"l2",nombre:"Confitería Dulce Vida",contacto:"Sandra López",valor:85000,etapa:"Propuesta",producto:"Azúcar glass 200qq/mes"},{id:"l3",nombre:"Licores de Guatemala",contacto:"Mario Estrada",valor:120000,etapa:"Contacto Inicial",producto:"Melaza 500 barriles/mes"},{id:"l4",nombre:"Exportadora Caribe",contacto:"Elena Vásquez",valor:500000,etapa:"Ganado",producto:"Azúcar cruda 10000qq/trim"}],
+zafras:[{id:"z1",nombre:"Zafra 2025-2026",inicio:"2025-11-01",fin:"2026-04-30",estado:"Activa",meta:150000,actual:67500,obs:"Campaña actual en progreso"},{id:"z2",nombre:"Zafra 2024-2025",inicio:"2024-11-01",fin:"2025-04-30",estado:"Completada",meta:140000,actual:138500,obs:"Muy buena temporada"},{id:"z3",nombre:"Zafra 2026-2027",inicio:"2026-11-01",fin:"2027-04-30",estado:"Planificada",meta:160000,actual:0,obs:"En planificación"}],
+rutas:[{id:"r1",nombre:"Ingenio-Finca El Progreso",origen:"Ingenio Central",destino:"Finca El Progreso",km:45,tiempo:"1h15min",estado:"Activo"},{id:"r2",nombre:"Ingenio-Finca Santa Lucía",origen:"Ingenio Central",destino:"Finca Santa Lucía",km:32,tiempo:"50min",estado:"Activo"},{id:"r3",nombre:"Ingenio-Finca La Esperanza",origen:"Ingenio Central",destino:"Finca La Esperanza",km:58,tiempo:"1h40min",estado:"Activo"},{id:"r4",nombre:"Ingenio-Finca San José",origen:"Ingenio Central",destino:"Finca San José",km:25,tiempo:"40min",estado:"Activo"}],
+viajes:[{id:"v1",ruta:"Finca El Progreso",conductor:"Miguel Torres",placa:"P-234ABC",fecha:"2025-12-20",bruta:52,netas:48.5,estado:"Entregado"},{id:"v2",ruta:"Finca Santa Lucía",conductor:"Jorge Paz",placa:"P-567DEF",fecha:"2025-12-20",bruta:45,netas:42.1,estado:"Entregado"},{id:"v3",ruta:"Finca El Progreso",conductor:"Miguel Torres",placa:"P-234ABC",fecha:"2025-12-21",bruta:50,netas:46.8,estado:"En Tránsito"},{id:"v4",ruta:"Finca La Esperanza",conductor:"Carlos Morán",placa:"P-890GHI",fecha:"2025-12-21",bruta:55,netas:51.2,estado:"Pendiente"},{id:"v5",ruta:"Finca San José",conductor:"Luis Hernández",placa:"P-111JKL",fecha:"2025-12-21",bruta:38,netas:35.4,estado:"Entregado"}],
+muestras:[{id:"mu1",codigo:"LAB-001",origen:"Finca El Progreso",fecha:"2025-12-20",brix:19.5,pol:15.8,fibra:13.2,pureza:81.03,rend:9.62,cal:"B",obs:"Buen contenido sacarosa"},{id:"mu2",codigo:"LAB-002",origen:"Finca Santa Lucía",fecha:"2025-12-20",brix:20.1,pol:17.2,fibra:12.8,pureza:85.57,rend:10.50,cal:"A",obs:"Excelente calidad"},{id:"mu3",codigo:"LAB-003",origen:"Finca La Esperanza",fecha:"2025-12-21",brix:18.3,pol:14.5,fibra:14.1,pureza:79.23,rend:8.72,cal:"B",obs:"Fibra elevada"},{id:"mu4",codigo:"LAB-004",origen:"Finca San José",fecha:"2025-12-21",brix:21.0,pol:18.1,fibra:12.5,pureza:86.19,rend:11.09,cal:"A",obs:"Óptimo para refinación"},{id:"mu5",codigo:"LAB-005",origen:"Finca Monte Verde",fecha:"2025-12-22",brix:17.8,pol:12.9,fibra:15.0,pureza:72.47,rend:7.68,cal:"C",obs:"Bajo rendimiento"}],
+nominas:[{id:"n1",periodo:"2025-12 Q1",tipo:"Quincenal",desde:"2025-12-01",hasta:"2025-12-15",estado:"Pagada",bruto:93500,igss:4516.05,isr:2900,neto:86083.95},{id:"n2",periodo:"2025-12 Q2",tipo:"Quincenal",desde:"2025-12-16",hasta:"2025-12-31",estado:"Borrador",bruto:93500,igss:4516.05,isr:2900,neto:86083.95}],
+colonos:[{id:"co1",nombre:"Juan Pérez García",finca:"Finca El Progreso",ha:150,variedad:"CP 72-2086",tel:"5555-1234",estado:"Activo",entregas:45,tonTotal:2175},{id:"co2",nombre:"María López",finca:"Finca Santa Lucía",ha:85,variedad:"MEX 69-290",tel:"5555-5678",estado:"Activo",entregas:28,tonTotal:1190},{id:"co3",nombre:"Roberto Castillo",finca:"Finca La Esperanza",ha:200,variedad:"CP 72-2086",tel:"5555-9012",estado:"Activo",entregas:52,tonTotal:2650},{id:"co4",nombre:"Elena Vásquez",finca:"Finca San José",ha:120,variedad:"B 49-119",tel:"5555-3456",estado:"Activo",entregas:35,tonTotal:1575}],
+entregasC:[{id:"en1",colono:"Juan Pérez García",fecha:"2025-12-20",bruta:52,impureza:6.7,netas:48.52,precio:210,total:10189.2,estado:"Liquidada"},{id:"en2",colono:"María López",fecha:"2025-12-20",bruta:45,impureza:7.1,netas:41.81,precio:210,total:8779.65,estado:"Liquidada"},{id:"en3",colono:"Roberto Castillo",fecha:"2025-12-21",bruta:55,impureza:6.9,netas:51.21,precio:210,total:10753.05,estado:"Pendiente"},{id:"en4",colono:"Elena Vásquez",fecha:"2025-12-21",bruta:38,impureza:6.5,netas:35.53,precio:210,total:7461.3,estado:"Pendiente"}],
+equipos:[{id:"eq1",nombre:"Molino Principal #1",tipo:"Molino",ubic:"Molienda",estado:"Operativo",ult:"2025-12-01",prox:"2026-01-15",horas:4500},{id:"eq2",nombre:"Caldera #1",tipo:"Caldera",ubic:"Casa Fuerza",estado:"Operativo",ult:"2025-11-15",prox:"2026-01-01",horas:5200},{id:"eq3",nombre:"Centrífuga A",tipo:"Centrífuga",ubic:"Centrifugación",estado:"Mantenimiento",ult:"2025-12-18",prox:"2025-12-25",horas:3800},{id:"eq4",nombre:"Evaporador #2",tipo:"Evaporador",ubic:"Evaporación",estado:"Operativo",ult:"2025-12-10",prox:"2026-02-10",horas:4100},{id:"eq5",nombre:"Molino #2",tipo:"Molino",ubic:"Molienda",estado:"Fuera de Servicio",ult:"2025-10-01",prox:"2026-03-01",horas:6200},{id:"eq6",nombre:"Generador",tipo:"Generador",ubic:"Casa Fuerza",estado:"Operativo",ult:"2025-12-05",prox:"2026-02-05",horas:3200}],
+ots:[{id:"ot1",equipo:"Centrífuga A",tipo:"Correctivo",desc:"Reemplazo rodamientos",prior:"Alta",estado:"En Proceso",creado:"2025-12-18",estimada:"2025-12-25",resp:"José Miguel Santos"},{id:"ot2",equipo:"Molino #2",tipo:"Preventivo",desc:"Overhaul mazas y cuchillas",prior:"Alta",estado:"Pendiente",creado:"2025-12-15",estimada:"2026-01-15",resp:"José Miguel Santos"},{id:"ot3",equipo:"Caldera #1",tipo:"Preventivo",desc:"Inspección tubos y limpieza",prior:"Media",estado:"Pendiente",creado:"2025-12-20",estimada:"2026-01-01",resp:"Pedro Hernández"},{id:"ot4",equipo:"Evaporador #2",tipo:"Correctivo",desc:"Reparar fuga intercambiador",prior:"Media",estado:"Completada",creado:"2025-12-08",estimada:"2025-12-12",resp:"José Miguel Santos"}],
+repuestos:[{id:"rp1",nombre:"Rodamiento SKF 6310",cat:"Rodamientos",stock:8,min:5,precio:850,ubic:"Bodega A",para:"Centrífuga"},{id:"rp2",nombre:"Cuchilla Molino 36\"",cat:"Cuchillas",stock:4,min:6,precio:3500,ubic:"Bodega B",para:"Molino"},{id:"rp3",nombre:"Empaque Caldera 24\"",cat:"Empaques",stock:12,min:4,precio:450,ubic:"Bodega A",para:"Caldera"},{id:"rp4",nombre:"Válvula seguridad 4\"",cat:"Válvulas",stock:3,min:2,precio:2200,ubic:"Bodega A",para:"Caldera"},{id:"rp5",nombre:"Faja transportadora 50m",cat:"Fajas",stock:2,min:3,precio:8500,ubic:"Bodega C",para:"Molino"}],
+}}
+/* LOGIN */
+function LoginScreen({onLogin}){
+  const[email,setEmail]=useState("");const[pass,setPass]=useState("");const[err,setErr]=useState("");
+  const users={"admin@transcana.gt":{pass:"admin",role:"admin",nombre:"Carlos Galarreta"},"contador@transcana.gt":{pass:"1234",role:"contador",nombre:"Ana Lucía Morales"},"colono@transcana.gt":{pass:"1234",role:"colono",nombre:"Juan Pérez"}};
+  const go=()=>{const u=users[email];if(u&&u.pass===pass)onLogin({email,role:u.role,nombre:u.nombre});else setErr("Credenciales inválidas")};
+  return(<div style={{minHeight:"100vh",background:"linear-gradient(135deg,"+P.bg+","+P.c1+")",display:"flex",alignItems:"center",justifyContent:"center"}}>
+    <div style={{width:380,background:P.c1,border:"1px solid "+P.bd,borderRadius:16,padding:32,boxShadow:"0 30px 60px rgba(0,0,0,.5)"}}>
+      <div style={{textAlign:"center",marginBottom:28}}><div style={{fontSize:42,marginBottom:8}}>{"\u{1F3ED}"}</div><h1 style={{fontSize:22,fontWeight:800,color:P.tx}}>TransCaña</h1><div style={{fontSize:11,color:P.grn,fontWeight:700,letterSpacing:1}}>ERPremium</div><p style={{fontSize:10,color:P.s2,marginTop:8}}>Sistema ERP Agroindustrial</p></div>
+      <div style={{display:"flex",flexDirection:"column",gap:12}}>
+        <Inp l="Correo" v={email} onChange={setEmail} ph="admin@transcana.gt" req/><Inp l="Contraseña" v={pass} onChange={setPass} type="password" req/>
+        {err&&<div style={{color:P.red,fontSize:10,textAlign:"center"}}>{err}</div>}
+        <Btn p full onClick={go} style={{padding:"10px 0",marginTop:4}}><Lock style={{width:14,height:14}}/> Iniciar Sesión</Btn>
+      </div>
+      <div style={{marginTop:20,padding:12,background:P.c2,borderRadius:8,border:"1px solid "+P.bd}}>
+        <div style={{fontSize:9,color:P.s2,fontWeight:600,marginBottom:6}}>DEMO</div>
+        {Object.entries(users).map(([e,u])=>(<div key={e} style={{fontSize:9,color:P.s1,marginBottom:3,cursor:"pointer"}} onClick={()=>{setEmail(e);setPass(u.pass)}}><span style={{color:P.blue}}>{e}</span> / {u.pass} <Badge s={u.role}/></div>))}
+      </div>
+    </div>
+  </div>);
+}
+/* MENU */
+const MENU=[
+  {sec:"Principal",items:[{id:"dash",l:"Dashboard",ic:<Home style={{width:15,height:15}}/>,r:["admin","contador","colono"]}]},
+  {sec:"Comercial",items:[{id:"ventas",l:"Ventas",ic:<FileText style={{width:15,height:15}}/>,r:["admin","contador"]},{id:"compras",l:"Compras",ic:<ShoppingCart style={{width:15,height:15}}/>,r:["admin","contador"]},{id:"inv",l:"Inventario",ic:<Package style={{width:15,height:15}}/>,r:["admin","contador"]},{id:"cli",l:"Clientes",ic:<Users style={{width:15,height:15}}/>,r:["admin","contador"]},{id:"crm",l:"CRM",ic:<Contact style={{width:15,height:15}}/>,r:["admin"]}]},
+  {sec:"TransCaña",items:[{id:"zafra",l:"Planificación Zafra",ic:<Calendar style={{width:15,height:15}}/>,r:["admin","contador"]},{id:"log",l:"Logística",ic:<Route style={{width:15,height:15}}/>,r:["admin","contador"]},{id:"lab",l:"Laboratorio",ic:<Flask style={{width:15,height:15}}/>,r:["admin","contador"]},{id:"col",l:"Portal Colonos",ic:<UserCheck style={{width:15,height:15}}/>,r:["admin","colono"]}]},
+  {sec:"Gestión",items:[{id:"rrhh",l:"RRHH",ic:<Users style={{width:15,height:15}}/>,r:["admin"]},{id:"nom",l:"Nómina",ic:<Banknote style={{width:15,height:15}}/>,r:["admin","contador"]},{id:"mant",l:"Mantenimiento",ic:<Wrench style={{width:15,height:15}}/>,r:["admin"]},{id:"bi",l:"Business Intelligence",ic:<BarChart3 style={{width:15,height:15}}/>,r:["admin"]}]},
+];
+/* MAIN APP */
+function TransCanaERP(){
+const[user,setUser]=useState(null);
+const[D,setD]=useState(()=>{try{const s=localStorage.getItem("erpremium_galarreta");if(s)return{...initData(),...JSON.parse(s)}}catch(e){}return initData()});
+useEffect(()=>{try{localStorage.setItem("erpremium_galarreta",JSON.stringify(D))}catch(e){}},[D]);
+const[mod,setMod]=useState("dash");const[ml,setMl]=useState(null);const[fd,setFd]=useState({});const[cfm,setCfm]=useState(null);const[toast,setToast]=useState(null);const[search,setSearch]=useState("");const[sbo,setSbo]=useState(true);
+const notify=useCallback((m,t="ok")=>setToast({msg:m,type:t}),[]);
+const sf=(k,v)=>setFd(p=>({...p,[k]:v}));const fv=(k,d="")=>fd[k]??d;
+if(!user)return<LoginScreen onLogin={setUser}/>;
+const add=(t,i)=>{setD(p=>({...p,[t]:[{id:uid(),...i},...p[t]]}));notify("Registro creado")};
+const upd=(t,id,i)=>{setD(p=>({...p,[t]:p[t].map(r=>r.id===id?{...r,...i}:r)}));notify("Actualizado")};
+const del=(t,id)=>{setD(p=>({...p,[t]:p[t].filter(r=>r.id!==id)}));notify("Eliminado");setCfm(null)};
+const closeMl=()=>{setMl(null);setFd({})};
+const saveMl=()=>{if(!ml)return;if(ml.ed)upd(ml.t,ml.id,fd);else add(ml.t,fd);closeMl()};
+const filt=(a,ks)=>{if(!search)return a;const s=search.toLowerCase();return a.filter(r=>ks.some(k=>String(r[k]||"").toLowerCase().includes(s)))};
+/* KPIs */
+const tv=D.facturas.reduce((a,f)=>a+nn(f.total),0);const tc=D.compras.reduce((a,c)=>a+nn(c.total),0);
+const lowS=D.productos.filter(p=>nn(p.stock)<nn(p.stockMin));
+const leadsAct=D.leads.filter(l=>l.etapa!=="Ganado"&&l.etapa!=="Perdido");
+const valPipe=D.leads.filter(l=>l.etapa!=="Perdido").reduce((s,l)=>s+nn(l.valor),0);
+const zafAct=D.zafras.filter(z=>z.estado==="Activa");
+const totTon=D.viajes.reduce((s,v)=>s+nn(v.netas),0);
+const otPend=D.ots.filter(o=>o.estado==="Pendiente"||o.estado==="En Proceso");
+const eqOp=D.equipos.filter(e=>e.estado==="Operativo").length;
+const calidadData=[{name:"A",value:D.muestras.filter(m=>m.cal==="A").length,color:P.grn},{name:"B",value:D.muestras.filter(m=>m.cal==="B").length,color:P.blue},{name:"C",value:D.muestras.filter(m=>m.cal==="C").length,color:P.org},{name:"D",value:D.muestras.filter(m=>m.cal==="D").length,color:P.red}].filter(d=>d.value>0);
+const prodData=D.zafras.map(z=>({name:z.nombre.replace("Zafra ",""),meta:nn(z.meta)/1000,actual:nn(z.actual)/1000}));
+const ventasMes=[{mes:"Oct",total:65000},{mes:"Nov",total:89000},{mes:"Dic",total:tv}];
+
+const renderMod=()=>{switch(mod){
+/* DASHBOARD */
+case "dash":return(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+<div><h2 style={{fontSize:18,fontWeight:800}}>Dashboard</h2><p style={{fontSize:10,color:P.s2}}>Bienvenido, {user.nombre}</p></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10}}>
+<K l="Ventas" v={Q(tv)} icon={<DollarSign style={{width:16,height:16}}/>} color={P.grn} sub="Facturado"/>
+<K l="Compras" v={Q(tc)} icon={<ShoppingCart style={{width:16,height:16}}/>} color={P.red} sub="Órdenes"/>
+<K l="Margen" v={Q(tv-tc)} icon={<TrendingUp style={{width:16,height:16}}/>} color={P.tl}/>
+<K l="Pipeline" v={Q(valPipe)} icon={<Contact style={{width:16,height:16}}/>} color={P.pur} sub={leadsAct.length+" leads"}/>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10}}>
+<K l="Facturas" v={String(D.facturas.length)} icon={<FileText style={{width:16,height:16}}/>} color={P.blue} sub={D.facturas.filter(f=>f.estado==="Pendiente").length+" pend"}/>
+<K l="Productos" v={String(D.productos.length)} icon={<Package style={{width:16,height:16}}/>} color={P.cyan}/>
+<K l="Clientes" v={String(D.clientes.length)} icon={<Users style={{width:16,height:16}}/>} color={P.yel}/>
+<K l="Stock Bajo" v={String(lowS.length)} icon={<AlertTriangle style={{width:16,height:16}}/>} color={lowS.length>0?P.org:P.s2}/>
+</div>
+<div><h3 style={{fontSize:13,fontWeight:700,color:P.s1,marginBottom:8}}>TransCaña</h3>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10}}>
+<K l="Zafras Activas" v={String(zafAct.length)} icon={<Tractor style={{width:16,height:16}}/>} color={P.grn} sub={D.viajes.length+" viajes"} glow/>
+<K l="Toneladas" v={totTon.toLocaleString("es-GT")} icon={<TrendingUp style={{width:16,height:16}}/>} color={P.org} sub="Transportadas"/>
+<K l="Muestras Lab" v={String(D.muestras.length)} icon={<Flask style={{width:16,height:16}}/>} color={P.pur}/>
+<K l="Colonos" v={String(D.colonos.filter(c=>c.estado==="Activo").length)} icon={<UserCheck style={{width:16,height:16}}/>} color={P.tl}/>
+</div></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:10}}>
+<K l="OT Pendientes" v={String(otPend.length)} icon={<Wrench style={{width:16,height:16}}/>} color={otPend.length>3?P.org:P.blue}/>
+<K l="Equipos" v={eqOp+"/"+D.equipos.length} icon={<Settings style={{width:16,height:16}}/>} color={eqOp<D.equipos.length?P.yel:P.grn} sub="Operativos"/>
+</div>
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:12}}>
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:14}}><div style={{fontSize:10,fontWeight:700,color:P.s1,marginBottom:8}}>VENTAS POR MES</div><ResponsiveContainer width="100%" height={180}><BarChart data={ventasMes}><XAxis dataKey="mes" tick={{fontSize:9,fill:P.s2}} axisLine={false}/><YAxis tick={{fontSize:8,fill:P.s2}} axisLine={false}/><Tooltip contentStyle={{background:P.c2,border:"1px solid "+P.bd,borderRadius:6,fontSize:10}}/><Bar dataKey="total" fill={P.grn} radius={[4,4,0,0]}/></BarChart></ResponsiveContainer></div>
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:14}}><div style={{fontSize:10,fontWeight:700,color:P.s1,marginBottom:8}}>PRODUCCIÓN ZAFRA (k ton)</div><ResponsiveContainer width="100%" height={180}><BarChart data={prodData}><XAxis dataKey="name" tick={{fontSize:8,fill:P.s2}} axisLine={false}/><YAxis tick={{fontSize:8,fill:P.s2}} axisLine={false}/><Tooltip contentStyle={{background:P.c2,border:"1px solid "+P.bd,borderRadius:6,fontSize:10}}/><Bar dataKey="meta" fill={P.s2} name="Meta" radius={[3,3,0,0]}/><Bar dataKey="actual" fill={P.blue} name="Actual" radius={[3,3,0,0]}/></BarChart></ResponsiveContainer></div>
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:14}}><div style={{fontSize:10,fontWeight:700,color:P.s1,marginBottom:8}}>CALIDAD LAB</div><ResponsiveContainer width="100%" height={180}><PieChart><Pie data={calidadData} cx="50%" cy="50%" innerRadius={40} outerRadius={70} paddingAngle={3} dataKey="value" label={({name,value})=>name+": "+value}>{calidadData.map((e,i)=><Cell key={i} fill={e.color}/>)}</Pie></PieChart></ResponsiveContainer></div>
+</div>
+{zafAct.length>0&&<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:14}}><div style={{fontSize:10,fontWeight:700,color:P.s1,marginBottom:10}}>PROGRESO ZAFRA</div>{zafAct.map(z=>(<div key={z.id}><div style={{display:"flex",justifyContent:"space-between",fontSize:10,marginBottom:4}}><span>{z.nombre}</span><span>{nn(z.actual).toLocaleString()} / {nn(z.meta).toLocaleString()} ton</span></div><ProgressBar value={nn(z.actual)} max={nn(z.meta)} color={P.grn}/></div>))}</div>}
+</div>);
+/* VENTAS */
+case "ventas":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:16,fontWeight:700}}>Ventas</h2><Btn p onClick={()=>{setFd({fecha:today(),estado:"Emitida"});setMl({t:"facturas",title:"Nueva Factura"})}}><SvPl/> Nueva</Btn></div>
+<DataTable columns={[{key:"numero",label:"#"},{key:"cliente",label:"CLIENTE"},{key:"fecha",label:"FECHA"},{key:"total",label:"TOTAL",render:r=>Q(r.total)},{key:"estado",label:"ESTADO",render:r=><Badge s={r.estado}/>}]} data={filt(D.facturas,["numero","cliente"])} onEdit={r=>{setFd(r);setMl({t:"facturas",title:"Editar",ed:true,id:r.id})}} onDelete={r=>setCfm({msg:"¿Eliminar "+r.numero+"?",fn:()=>del("facturas",r.id)})}/>
+</div>);
+/* COMPRAS */
+case "compras":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:16,fontWeight:700}}>Compras</h2><Btn p onClick={()=>{setFd({fecha:today(),estado:"Pendiente"});setMl({t:"compras",title:"Nueva OC"})}}><SvPl/> Nueva OC</Btn></div>
+<DataTable columns={[{key:"numero",label:"#"},{key:"proveedor",label:"PROVEEDOR"},{key:"fecha",label:"FECHA"},{key:"total",label:"TOTAL",render:r=>Q(r.total)},{key:"items",label:"DETALLE"},{key:"estado",label:"ESTADO",render:r=><Badge s={r.estado}/>}]} data={filt(D.compras,["numero","proveedor"])} onEdit={r=>{setFd(r);setMl({t:"compras",title:"Editar OC",ed:true,id:r.id})}} onDelete={r=>setCfm({msg:"¿Eliminar?",fn:()=>del("compras",r.id)})}/>
+</div>);
+/* INVENTARIO */
+case "inv":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:16,fontWeight:700}}>Inventario</h2><Btn p onClick={()=>{setFd({estado:"Activo",unidad:"qq"});setMl({t:"productos",title:"Nuevo Producto"})}}><SvPl/> Nuevo</Btn></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10}}><K l="Productos" v={String(D.productos.length)} color={P.blue} icon={<Package style={{width:14,height:14}}/>}/><K l="Stock Bajo" v={String(lowS.length)} color={lowS.length>0?P.red:P.grn} icon={<AlertTriangle style={{width:14,height:14}}/>}/><K l="Valor" v={Q(D.productos.reduce((s,p)=>s+nn(p.stock)*nn(p.precio),0))} color={P.grn} icon={<DollarSign style={{width:14,height:14}}/>}/></div>
+<DataTable columns={[{key:"sku",label:"SKU"},{key:"nombre",label:"PRODUCTO"},{key:"categoria",label:"CAT"},{key:"stock",label:"STOCK",render:r=><span style={{color:nn(r.stock)<nn(r.stockMin)?P.red:P.tx}}>{r.stock} {r.unidad}</span>},{key:"stockMin",label:"MIN"},{key:"precio",label:"PRECIO",render:r=>Q(r.precio)},{key:"estado",label:"",render:r=><Badge s={r.estado}/>}]} data={filt(D.productos,["nombre","sku","categoria"])} onEdit={r=>{setFd(r);setMl({t:"productos",title:"Editar",ed:true,id:r.id})}} onDelete={r=>setCfm({msg:"¿Eliminar?",fn:()=>del("productos",r.id)})}/>
+</div>);
+/* CLIENTES */
+case "cli":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:16,fontWeight:700}}>Clientes</h2><Btn p onClick={()=>{setFd({tipo:"Corporativo"});setMl({t:"clientes",title:"Nuevo Cliente"})}}><SvPl/> Nuevo</Btn></div>
+<DataTable columns={[{key:"nombre",label:"NOMBRE"},{key:"nit",label:"NIT"},{key:"email",label:"EMAIL"},{key:"telefono",label:"TEL"},{key:"ciudad",label:"CIUDAD"},{key:"tipo",label:"TIPO",render:r=><Badge s={r.tipo}/>}]} data={filt(D.clientes,["nombre","nit","email"])} onEdit={r=>{setFd(r);setMl({t:"clientes",title:"Editar",ed:true,id:r.id})}} onDelete={r=>setCfm({msg:"¿Eliminar?",fn:()=>del("clientes",r.id)})}/>
+</div>);
+/* CRM */
+case "crm":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:16,fontWeight:700}}>CRM Pipeline</h2><Btn p onClick={()=>{setFd({etapa:"Contacto Inicial"});setMl({t:"leads",title:"Nuevo Lead"})}}><SvPl/> Nuevo</Btn></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10}}><K l="Pipeline" v={Q(valPipe)} color={P.pur} icon={<DollarSign style={{width:14,height:14}}/>}/><K l="Activos" v={String(leadsAct.length)} color={P.blue} icon={<Contact style={{width:14,height:14}}/>}/><K l="Ganados" v={String(D.leads.filter(l=>l.etapa==="Ganado").length)} color={P.grn} icon={<Check style={{width:14,height:14}}/>}/><K l="Tasa" v={pct(D.leads.filter(l=>l.etapa==="Ganado").length,D.leads.length)} color={P.tl} icon={<TrendingUp style={{width:14,height:14}}/>}/></div>
+<DataTable columns={[{key:"nombre",label:"EMPRESA"},{key:"contacto",label:"CONTACTO"},{key:"producto",label:"INTERÉS"},{key:"valor",label:"VALOR",render:r=>Q(r.valor)},{key:"etapa",label:"ETAPA",render:r=><Badge s={r.etapa}/>}]} data={filt(D.leads,["nombre","contacto"])} onEdit={r=>{setFd(r);setMl({t:"leads",title:"Editar",ed:true,id:r.id})}} onDelete={r=>setCfm({msg:"¿Eliminar?",fn:()=>del("leads",r.id)})}/>
+</div>);
+/* RRHH */
+case "rrhh":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:16,fontWeight:700}}>Recursos Humanos</h2><Btn p onClick={()=>{setFd({estado:"Activo",ingreso:today()});setMl({t:"empleados",title:"Nuevo Empleado"})}}><SvPl/> Nuevo</Btn></div>
+<DataTable columns={[{key:"nombre",label:"NOMBRE"},{key:"cargo",label:"CARGO"},{key:"depto",label:"DEPTO"},{key:"sueldo",label:"SUELDO",render:r=>Q(r.sueldo)},{key:"ingreso",label:"INGRESO"},{key:"estado",label:"",render:r=><Badge s={r.estado}/>}]} data={filt(D.empleados,["nombre","cargo","depto"])} onEdit={r=>{setFd(r);setMl({t:"empleados",title:"Editar",ed:true,id:r.id})}} onDelete={r=>setCfm({msg:"¿Eliminar?",fn:()=>del("empleados",r.id)})}/>
+</div>);
+/* ZAFRA */
+case "zafra":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:16,fontWeight:700}}>Planificación de Zafra</h2><Btn p onClick={()=>{setFd({estado:"Planificada",meta:0,actual:0});setMl({t:"zafras",title:"Nueva Zafra"})}}><SvPl/> Nueva</Btn></div>
+{D.zafras.map(z=>(<div key={z.id} style={{background:P.c1,border:"1px solid "+(z.estado==="Activa"?P.grn+"40":P.bd),borderRadius:10,padding:16}}>
+<div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}><div><span style={{fontSize:14,fontWeight:700}}>{z.nombre}</span> <Badge s={z.estado}/></div><div style={{display:"flex",gap:4}}><Btn s onClick={()=>{setFd(z);setMl({t:"zafras",title:"Editar",ed:true,id:z.id})}}><SvEd/></Btn><Btn s d onClick={()=>setCfm({msg:"¿Eliminar?",fn:()=>del("zafras",z.id)})}><SvTr/></Btn></div></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,marginBottom:10,fontSize:10}}><div><div style={{color:P.s2,fontSize:8}}>INICIO</div>{z.inicio}</div><div><div style={{color:P.s2,fontSize:8}}>FIN</div>{z.fin}</div><div><div style={{color:P.s2,fontSize:8}}>META</div>{nn(z.meta).toLocaleString()} ton</div><div><div style={{color:P.s2,fontSize:8}}>ACTUAL</div><span style={{color:P.grn}}>{nn(z.actual).toLocaleString()} ton</span></div></div>
+<ProgressBar value={nn(z.actual)} max={nn(z.meta)} color={z.estado==="Completada"?P.grn:P.blue} label="Cumplimiento"/>
+</div>))}
+</div>);
+/* LOGISTICA */
+case "log":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:16,fontWeight:700}}>Logística</h2><div style={{display:"flex",gap:6}}><Btn onClick={()=>{setFd({estado:"Activo"});setMl({t:"rutas",title:"Nueva Ruta"})}}><SvPl/> Ruta</Btn><Btn p onClick={()=>{setFd({fecha:today(),estado:"Pendiente"});setMl({t:"viajes",title:"Nuevo Viaje"})}}><SvPl/> Viaje</Btn></div></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10}}><K l="Rutas" v={String(D.rutas.length)} color={P.blue} icon={<Route style={{width:14,height:14}}/>}/><K l="Viajes" v={String(D.viajes.length)} color={P.org} icon={<Tractor style={{width:14,height:14}}/>}/><K l="Toneladas" v={totTon.toFixed(1)} color={P.grn} icon={<TrendingUp style={{width:14,height:14}}/>}/><K l="En Tránsito" v={String(D.viajes.filter(v=>v.estado==="En Tránsito").length)} color={P.pur} icon={<Activity style={{width:14,height:14}}/>}/></div>
+<DataTable columns={[{key:"nombre",label:"RUTA"},{key:"destino",label:"DESTINO"},{key:"km",label:"KM"},{key:"tiempo",label:"TIEMPO"},{key:"estado",label:"",render:r=><Badge s={r.estado}/>}]} data={D.rutas} onEdit={r=>{setFd(r);setMl({t:"rutas",title:"Editar",ed:true,id:r.id})}} onDelete={r=>setCfm({msg:"¿Eliminar?",fn:()=>del("rutas",r.id)})}/>
+<DataTable columns={[{key:"ruta",label:"RUTA"},{key:"conductor",label:"CONDUCTOR"},{key:"placa",label:"PLACA"},{key:"fecha",label:"FECHA"},{key:"bruta",label:"BRUTA"},{key:"netas",label:"NETA"},{key:"estado",label:"",render:r=><Badge s={r.estado}/>}]} data={filt(D.viajes,["ruta","conductor"])} onEdit={r=>{setFd(r);setMl({t:"viajes",title:"Editar",ed:true,id:r.id})}} onDelete={r=>setCfm({msg:"¿Eliminar?",fn:()=>del("viajes",r.id)})}/>
+</div>);
+/* LABORATORIO */
+case "lab":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:16,fontWeight:700}}>Laboratorio y Calidad</h2><Btn p onClick={()=>{setFd({fecha:today(),codigo:"LAB-"+Date.now().toString().slice(-4)});setMl({t:"muestras",title:"Nueva Muestra"})}}><SvPl/> Nueva</Btn></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10}}><K l="Muestras" v={String(D.muestras.length)} color={P.pur} icon={<Flask style={{width:14,height:14}}/>}/><K l="Pureza Prom" v={(D.muestras.reduce((s,m)=>s+nn(m.pureza),0)/Math.max(D.muestras.length,1)).toFixed(1)+"%"} color={P.blue} icon={<Activity style={{width:14,height:14}}/>}/><K l="Rend Prom" v={(D.muestras.reduce((s,m)=>s+nn(m.rend),0)/Math.max(D.muestras.length,1)).toFixed(2)+"%"} color={P.grn} icon={<TrendingUp style={{width:14,height:14}}/>}/><K l="Grado A" v={String(D.muestras.filter(m=>m.cal==="A").length)} color={P.grn} icon={<Check style={{width:14,height:14}}/>}/></div>
+<DataTable columns={[{key:"codigo",label:"CÓDIGO"},{key:"origen",label:"ORIGEN"},{key:"fecha",label:"FECHA"},{key:"brix",label:"BRIX°"},{key:"pol",label:"POL"},{key:"fibra",label:"FIBRA%"},{key:"pureza",label:"PUREZA%",render:r=><span style={{color:nn(r.pureza)>=85?P.grn:nn(r.pureza)>=75?P.blue:nn(r.pureza)>=65?P.org:P.red}}>{nn(r.pureza).toFixed(1)}</span>},{key:"rend",label:"REND%",render:r=>nn(r.rend).toFixed(2)},{key:"cal",label:"GRADO",render:r=><Badge s={r.cal}/>}]} data={filt(D.muestras,["codigo","origen"])} onEdit={r=>{setFd(r);setMl({t:"muestras",title:"Editar",ed:true,id:r.id})}} onDelete={r=>setCfm({msg:"¿Eliminar?",fn:()=>del("muestras",r.id)})}/>
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:8,padding:12}}><div style={{fontSize:10,fontWeight:700,color:P.s1,marginBottom:6}}>CALIFICACIÓN</div><div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8}}>{[{g:"A",r:"Pureza ≥ 85%",c:P.grn},{g:"B",r:"≥ 75%",c:P.blue},{g:"C",r:"≥ 65%",c:P.org},{g:"D",r:"< 65%",c:P.red}].map(x=>(<div key={x.g} style={{background:x.c+"10",border:"1px solid "+x.c+"30",borderRadius:6,padding:8,textAlign:"center"}}><div style={{fontSize:18,fontWeight:800,color:x.c}}>{x.g}</div><div style={{fontSize:8,color:P.s2}}>{x.r}</div></div>))}</div></div>
+</div>);
+/* NOMINA */
+case "nom":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:16,fontWeight:700}}>Nómina</h2><Btn p onClick={()=>{const b=D.empleados.filter(e=>e.estado==="Activo").reduce((s,e)=>s+nn(e.sueldo),0);const ig=b*0.0483;const ir=D.empleados.filter(e=>e.estado==="Activo").reduce((s,e)=>s+nn(e.isr),0);setFd({tipo:"Quincenal",desde:today(),hasta:today(),estado:"Borrador",bruto:b,igss:ig.toFixed(2),isr:ir,neto:(b-ig-ir).toFixed(2)});setMl({t:"nominas",title:"Nuevo Período"})}}><SvPl/> Nuevo</Btn></div>
+<DataTable columns={[{key:"periodo",label:"PERÍODO"},{key:"tipo",label:"TIPO"},{key:"desde",label:"DESDE"},{key:"hasta",label:"HASTA"},{key:"bruto",label:"BRUTO",render:r=>Q(r.bruto)},{key:"igss",label:"IGSS",render:r=><span style={{color:P.org}}>{Q(r.igss)}</span>},{key:"isr",label:"ISR",render:r=><span style={{color:P.red}}>{Q(r.isr)}</span>},{key:"neto",label:"NETO",render:r=><span style={{color:P.grn,fontWeight:700}}>{Q(r.neto)}</span>},{key:"estado",label:"",render:r=><Badge s={r.estado}/>}]} data={D.nominas} onEdit={r=>{setFd(r);setMl({t:"nominas",title:"Editar",ed:true,id:r.id})}} onView={r=>{if(r.estado==="Borrador"){upd("nominas",r.id,{estado:"Aprobada"})}else if(r.estado==="Aprobada"){upd("nominas",r.id,{estado:"Pagada"})}}}/>
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:8,padding:14}}><div style={{fontSize:10,fontWeight:700,color:P.s1,marginBottom:8}}>DESGLOSE IGSS 4.83%</div>{D.empleados.filter(e=>e.estado==="Activo").map(e=>{const ig=nn(e.sueldo)*0.0483;return(<div key={e.id} style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr 1fr",gap:8,padding:"4px 8px",background:P.c2,borderRadius:4,fontSize:9,marginBottom:2}}><span>{e.nombre}</span><span style={{textAlign:"right"}}>{Q(e.sueldo)}</span><span style={{color:P.org,textAlign:"right"}}>-{Q(ig)}</span><span style={{color:P.red,textAlign:"right"}}>-{Q(e.isr)}</span><span style={{color:P.grn,textAlign:"right",fontWeight:700}}>{Q(nn(e.sueldo)-ig-nn(e.isr))}</span></div>)})}</div>
+</div>);
+/* COLONOS */
+case "col":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:16,fontWeight:700}}>Portal Colonos</h2><div style={{display:"flex",gap:6}}><Btn onClick={()=>{setFd({estado:"Activo",ha:0});setMl({t:"colonos",title:"Nuevo Colono"})}}><SvPl/> Colono</Btn><Btn p onClick={()=>{setFd({fecha:today(),estado:"Pendiente",precio:210,impureza:0});setMl({t:"entregasC",title:"Nueva Entrega"})}}><SvPl/> Entrega</Btn></div></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10}}><K l="Colonos" v={String(D.colonos.filter(c=>c.estado==="Activo").length)} color={P.tl} icon={<UserCheck style={{width:14,height:14}}/>}/><K l="Hectáreas" v={String(D.colonos.reduce((s,c)=>s+nn(c.ha),0))} color={P.grn} icon={<Tractor style={{width:14,height:14}}/>}/><K l="Entregas" v={String(D.entregasC.length)} color={P.blue} icon={<Package style={{width:14,height:14}}/>}/><K l="Pago Pend" v={Q(D.entregasC.filter(e=>e.estado==="Pendiente").reduce((s,e)=>s+nn(e.total),0))} color={P.org} icon={<DollarSign style={{width:14,height:14}}/>}/></div>
+<DataTable columns={[{key:"nombre",label:"NOMBRE"},{key:"finca",label:"FINCA"},{key:"ha",label:"HA"},{key:"variedad",label:"VARIEDAD"},{key:"tonTotal",label:"TON"},{key:"estado",label:"",render:r=><Badge s={r.estado}/>}]} data={filt(D.colonos,["nombre","finca"])} onEdit={r=>{setFd(r);setMl({t:"colonos",title:"Editar",ed:true,id:r.id})}} onDelete={r=>setCfm({msg:"¿Eliminar?",fn:()=>del("colonos",r.id)})}/>
+<DataTable columns={[{key:"colono",label:"COLONO"},{key:"fecha",label:"FECHA"},{key:"bruta",label:"BRUTA"},{key:"impureza",label:"IMP%"},{key:"netas",label:"NETA",render:r=><span style={{color:P.grn}}>{nn(r.netas).toFixed(2)}</span>},{key:"precio",label:"Q/TON"},{key:"total",label:"TOTAL",render:r=><span style={{fontWeight:700}}>{Q(r.total)}</span>},{key:"estado",label:"",render:r=><Badge s={r.estado}/>}]} data={filt(D.entregasC,["colono"])} onEdit={r=>{setFd(r);setMl({t:"entregasC",title:"Editar",ed:true,id:r.id})}} onView={r=>{if(r.estado==="Pendiente"){upd("entregasC",r.id,{estado:"Liquidada"})}}}/>
+</div>);
+/* MANTENIMIENTO */
+case "mant":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",justifyContent:"space-between"}}><h2 style={{fontSize:16,fontWeight:700}}>Mantenimiento</h2><div style={{display:"flex",gap:6}}><Btn onClick={()=>{setFd({estado:"Operativo",horas:0});setMl({t:"equipos",title:"Nuevo Equipo"})}}><SvPl/> Equipo</Btn><Btn onClick={()=>{setFd({prior:"Media",estado:"Pendiente",creado:today()});setMl({t:"ots",title:"Nueva OT"})}}><SvPl/> OT</Btn><Btn p onClick={()=>{setFd({stock:0,min:0});setMl({t:"repuestos",title:"Nuevo Repuesto"})}}><SvPl/> Repuesto</Btn></div></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10}}>{D.equipos.map(eq=>(<div key={eq.id} style={{background:P.c1,border:"1px solid "+(eq.estado==="Operativo"?P.grn:eq.estado==="Mantenimiento"?P.org:P.red)+"30",borderRadius:8,padding:12}}><div style={{display:"flex",justifyContent:"space-between",marginBottom:6}}><span style={{fontSize:11,fontWeight:700}}>{eq.nombre}</span><Badge s={eq.estado}/></div><div style={{fontSize:9,color:P.s2}}>Tipo: {eq.tipo} | Horas: {nn(eq.horas).toLocaleString()} | Próx: {eq.prox}</div><div style={{display:"flex",gap:4,marginTop:6}}><Btn s onClick={()=>{setFd(eq);setMl({t:"equipos",title:"Editar",ed:true,id:eq.id})}}><SvEd/></Btn></div></div>))}</div>
+<DataTable columns={[{key:"equipo",label:"EQUIPO"},{key:"tipo",label:"TIPO",render:r=><Badge s={r.tipo}/>},{key:"desc",label:"DESCRIPCIÓN"},{key:"prior",label:"PRIORIDAD",render:r=><Badge s={r.prior}/>},{key:"resp",label:"RESP"},{key:"estimada",label:"ESTIMADA"},{key:"estado",label:"",render:r=><Badge s={r.estado}/>}]} data={D.ots} onEdit={r=>{setFd(r);setMl({t:"ots",title:"Editar OT",ed:true,id:r.id})}} onView={r=>{if(r.estado!=="Completada")upd("ots",r.id,{estado:r.estado==="Pendiente"?"En Proceso":"Completada"})}}/>
+<DataTable columns={[{key:"nombre",label:"REPUESTO"},{key:"cat",label:"CAT"},{key:"stock",label:"STOCK",render:r=><span style={{color:nn(r.stock)<nn(r.min)?P.red:P.grn}}>{r.stock}</span>},{key:"min",label:"MIN"},{key:"precio",label:"PRECIO",render:r=>Q(r.precio)},{key:"ubic",label:"UBIC"},{key:"para",label:"PARA"}]} data={filt(D.repuestos,["nombre","cat"])} onEdit={r=>{setFd(r);setMl({t:"repuestos",title:"Editar",ed:true,id:r.id})}} onDelete={r=>setCfm({msg:"¿Eliminar?",fn:()=>del("repuestos",r.id)})}/>
+</div>);
+/* BI */
+case "bi":return(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div><h2 style={{fontSize:16,fontWeight:700}}>Business Intelligence</h2></div>
+<div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10}}><K l="Ingresos" v={Q(tv)} color={P.grn} icon={<TrendingUp style={{width:14,height:14}}/>} glow/><K l="Costos" v={Q(tc)} color={P.red} icon={<ShoppingCart style={{width:14,height:14}}/>}/><K l="Margen" v={pct(tv-tc,tv)} color={P.tl} icon={<Activity style={{width:14,height:14}}/>}/><K l="Módulos" v="17" color={P.blue} icon={<BarChart3 style={{width:14,height:14}}/>} sub="44 tablas"/></div>
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:14}}><div style={{fontSize:10,fontWeight:700,color:P.s1,marginBottom:8}}>PRODUCCIÓN</div><ResponsiveContainer width="100%" height={200}><BarChart data={prodData}><CartesianGrid strokeDasharray="3 3" stroke={P.bd}/><XAxis dataKey="name" tick={{fontSize:9,fill:P.s2}}/><YAxis tick={{fontSize:8,fill:P.s2}}/><Tooltip/><Legend wrapperStyle={{fontSize:9}}/><Bar dataKey="meta" fill={P.s2} name="Meta"/><Bar dataKey="actual" fill={P.blue} name="Actual"/></BarChart></ResponsiveContainer></div>
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:14}}><div style={{fontSize:10,fontWeight:700,color:P.s1,marginBottom:8}}>CALIDAD</div><ResponsiveContainer width="100%" height={200}><PieChart><Pie data={calidadData} cx="50%" cy="50%" innerRadius={45} outerRadius={75} paddingAngle={4} dataKey="value" label={({name,percent})=>name+": "+(percent*100).toFixed(0)+"%"}>{calidadData.map((e,i)=><Cell key={i} fill={e.color}/>)}</Pie></PieChart></ResponsiveContainer></div>
+</div>
+<div style={{background:P.c1,border:"1px solid "+P.bd,borderRadius:10,padding:14}}><div style={{fontSize:10,fontWeight:700,color:P.s1,marginBottom:8}}>ALERTAS</div>{[
+  lowS.length>0&&{c:P.red,t:"Stock bajo: "+lowS.map(p=>p.nombre).join(", ")},
+  D.repuestos.filter(r=>nn(r.stock)<nn(r.min)).length>0&&{c:P.org,t:"Repuestos bajo mínimo: "+D.repuestos.filter(r=>nn(r.stock)<nn(r.min)).map(r=>r.nombre).join(", ")},
+  otPend.length>0&&{c:P.blue,t:otPend.length+" OT pendientes"},
+  D.entregasC.filter(e=>e.estado==="Pendiente").length>0&&{c:P.pur,t:D.entregasC.filter(e=>e.estado==="Pendiente").length+" entregas por liquidar"},
+].filter(Boolean).map((a,i)=>(<div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:8,background:a.c+"10",border:"1px solid "+a.c+"20",borderRadius:6,marginBottom:4}}><AlertTriangle style={{width:14,height:14,color:a.c}}/><span style={{fontSize:10,color:a.c}}>{a.t}</span></div>))}</div>
+</div>);
+default:return<div style={{textAlign:"center",padding:40,color:P.s2}}>Módulo no disponible</div>;
+}};
+/* FORM FIELDS */
+const formFields=()=>{if(!ml)return null;switch(ml.t){
+case "facturas":return(<G c={2}><Inp l="Número" v={fv("numero")} onChange={v=>sf("numero",v)} req/><Inp l="Cliente" v={fv("cliente")} onChange={v=>sf("cliente",v)} req/><Inp l="Fecha" v={fv("fecha")} onChange={v=>sf("fecha",v)} type="date"/><Inp l="Total" v={fv("total")} onChange={v=>sf("total",v)} type="number"/><Inp l="Estado" v={fv("estado")} onChange={v=>sf("estado",v)} opts={["Emitida","Pagada","Pendiente","Anulada"]}/><Inp l="Detalle" v={fv("items")} onChange={v=>sf("items",v)}/></G>);
+case "compras":return(<G c={2}><Inp l="Número" v={fv("numero")} onChange={v=>sf("numero",v)} req/><Inp l="Proveedor" v={fv("proveedor")} onChange={v=>sf("proveedor",v)} req/><Inp l="Fecha" v={fv("fecha")} onChange={v=>sf("fecha",v)} type="date"/><Inp l="Total" v={fv("total")} onChange={v=>sf("total",v)} type="number"/><Inp l="Estado" v={fv("estado")} onChange={v=>sf("estado",v)} opts={["Pendiente","Aprobada","Pagada"]}/><Inp l="Detalle" v={fv("items")} onChange={v=>sf("items",v)}/></G>);
+case "productos":return(<G c={2}><Inp l="Nombre" v={fv("nombre")} onChange={v=>sf("nombre",v)} req/><Inp l="SKU" v={fv("sku")} onChange={v=>sf("sku",v)}/><Inp l="Categoría" v={fv("categoria")} onChange={v=>sf("categoria",v)} opts={["Azúcar","Subproducto","Insumo"]}/><Inp l="Stock" v={fv("stock")} onChange={v=>sf("stock",v)} type="number"/><Inp l="Stock Min" v={fv("stockMin")} onChange={v=>sf("stockMin",v)} type="number"/><Inp l="Precio" v={fv("precio")} onChange={v=>sf("precio",v)} type="number"/><Inp l="Unidad" v={fv("unidad")} onChange={v=>sf("unidad",v)} opts={["qq","ton","barril","unidad"]}/><Inp l="Estado" v={fv("estado")} onChange={v=>sf("estado",v)} opts={["Activo","Inactivo"]}/></G>);
+case "clientes":return(<G c={2}><Inp l="Nombre" v={fv("nombre")} onChange={v=>sf("nombre",v)} req/><Inp l="NIT" v={fv("nit")} onChange={v=>sf("nit",v)}/><Inp l="Email" v={fv("email")} onChange={v=>sf("email",v)}/><Inp l="Teléfono" v={fv("telefono")} onChange={v=>sf("telefono",v)}/><Inp l="Ciudad" v={fv("ciudad")} onChange={v=>sf("ciudad",v)}/><Inp l="Tipo" v={fv("tipo")} onChange={v=>sf("tipo",v)} opts={["Corporativo","Distribuidor","Exportador","Retail","Industrial"]}/></G>);
+case "leads":return(<G c={2}><Inp l="Empresa" v={fv("nombre")} onChange={v=>sf("nombre",v)} req/><Inp l="Contacto" v={fv("contacto")} onChange={v=>sf("contacto",v)}/><Inp l="Valor" v={fv("valor")} onChange={v=>sf("valor",v)} type="number"/><Inp l="Producto" v={fv("producto")} onChange={v=>sf("producto",v)}/><Inp l="Etapa" v={fv("etapa")} onChange={v=>sf("etapa",v)} opts={["Contacto Inicial","Propuesta","Negociación","Ganado","Perdido"]}/></G>);
+case "empleados":return(<G c={2}><Inp l="Nombre" v={fv("nombre")} onChange={v=>sf("nombre",v)} req/><Inp l="Cargo" v={fv("cargo")} onChange={v=>sf("cargo",v)}/><Inp l="Depto" v={fv("depto")} onChange={v=>sf("depto",v)} opts={["Dirección","Finanzas","Producción","Laboratorio","Operaciones","Mantenimiento"]}/><Inp l="Sueldo" v={fv("sueldo")} onChange={v=>sf("sueldo",v)} type="number"/><Inp l="ISR" v={fv("isr")} onChange={v=>sf("isr",v)} type="number"/><Inp l="Ingreso" v={fv("ingreso")} onChange={v=>sf("ingreso",v)} type="date"/><Inp l="Estado" v={fv("estado")} onChange={v=>sf("estado",v)} opts={["Activo","Inactivo"]}/></G>);
+case "zafras":return(<G c={2}><Inp l="Nombre" v={fv("nombre")} onChange={v=>sf("nombre",v)} req ph="Zafra 2025-2026"/><Inp l="Estado" v={fv("estado")} onChange={v=>sf("estado",v)} opts={["Planificada","Activa","Completada"]}/><Inp l="Inicio" v={fv("inicio")} onChange={v=>sf("inicio",v)} type="date"/><Inp l="Fin" v={fv("fin")} onChange={v=>sf("fin",v)} type="date"/><Inp l="Meta Ton" v={fv("meta")} onChange={v=>sf("meta",v)} type="number"/><Inp l="Actual Ton" v={fv("actual")} onChange={v=>sf("actual",v)} type="number"/><Inp l="Observaciones" v={fv("obs")} onChange={v=>sf("obs",v)}/></G>);
+case "rutas":return(<G c={2}><Inp l="Nombre" v={fv("nombre")} onChange={v=>sf("nombre",v)} req/><Inp l="Origen" v={fv("origen")} onChange={v=>sf("origen",v)}/><Inp l="Destino" v={fv("destino")} onChange={v=>sf("destino",v)}/><Inp l="Km" v={fv("km")} onChange={v=>sf("km",v)} type="number"/><Inp l="Tiempo" v={fv("tiempo")} onChange={v=>sf("tiempo",v)}/><Inp l="Estado" v={fv("estado")} onChange={v=>sf("estado",v)} opts={["Activo","Inactivo"]}/></G>);
+case "viajes":return(<G c={2}><Inp l="Ruta" v={fv("ruta")} onChange={v=>sf("ruta",v)} opts={D.rutas.map(r=>r.destino)}/><Inp l="Conductor" v={fv("conductor")} onChange={v=>sf("conductor",v)}/><Inp l="Placa" v={fv("placa")} onChange={v=>sf("placa",v)}/><Inp l="Fecha" v={fv("fecha")} onChange={v=>sf("fecha",v)} type="date"/><Inp l="Ton Bruta" v={fv("bruta")} onChange={v=>sf("bruta",v)} type="number"/><Inp l="Ton Neta" v={fv("netas")} onChange={v=>sf("netas",v)} type="number"/><Inp l="Estado" v={fv("estado")} onChange={v=>sf("estado",v)} opts={["Pendiente","En Tránsito","Entregado"]}/></G>);
+case "muestras":return(<><G c={2}><Inp l="Código" v={fv("codigo")} onChange={v=>sf("codigo",v)} req/><Inp l="Origen" v={fv("origen")} onChange={v=>sf("origen",v)}/><Inp l="Fecha" v={fv("fecha")} onChange={v=>sf("fecha",v)} type="date"/><Inp l="Brix°" v={fv("brix")} onChange={v=>{sf("brix",v);const b=nn(v),p=nn(fv("pol")),fi=nn(fv("fibra"));const pu=b>0?(p/b)*100:0;sf("pureza",pu.toFixed(2));sf("rend",(p*(1-fi/100)*0.7).toFixed(2));sf("cal",pu>=85?"A":pu>=75?"B":pu>=65?"C":"D")}} type="number"/><Inp l="Pol" v={fv("pol")} onChange={v=>{sf("pol",v);const b=nn(fv("brix")),p=nn(v),fi=nn(fv("fibra"));const pu=b>0?(p/b)*100:0;sf("pureza",pu.toFixed(2));sf("rend",(p*(1-fi/100)*0.7).toFixed(2));sf("cal",pu>=85?"A":pu>=75?"B":pu>=65?"C":"D")}} type="number"/><Inp l="Fibra%" v={fv("fibra")} onChange={v=>{sf("fibra",v);const b=nn(fv("brix")),p=nn(fv("pol")),fi=nn(v);const pu=b>0?(p/b)*100:0;sf("pureza",pu.toFixed(2));sf("rend",(p*(1-fi/100)*0.7).toFixed(2));sf("cal",pu>=85?"A":pu>=75?"B":pu>=65?"C":"D")}} type="number"/><Inp l="Pureza%" v={fv("pureza")} ro/><Inp l="Rendimiento%" v={fv("rend")} ro/></G><div style={{marginTop:8,padding:8,background:P.c2,borderRadius:6,textAlign:"center"}}><span style={{fontSize:10,color:P.s2}}>Calificación: </span><span style={{fontSize:16,fontWeight:800,color:fv("cal")==="A"?P.grn:fv("cal")==="B"?P.blue:fv("cal")==="C"?P.org:P.red}}>{fv("cal")||"-"}</span></div></>);
+case "nominas":return(<G c={2}><Inp l="Período" v={fv("periodo")} onChange={v=>sf("periodo",v)} req/><Inp l="Tipo" v={fv("tipo")} onChange={v=>sf("tipo",v)} opts={["Quincenal","Mensual"]}/><Inp l="Desde" v={fv("desde")} onChange={v=>sf("desde",v)} type="date"/><Inp l="Hasta" v={fv("hasta")} onChange={v=>sf("hasta",v)} type="date"/><Inp l="Bruto" v={fv("bruto")} ro/><Inp l="IGSS 4.83%" v={fv("igss")} ro/><Inp l="ISR" v={fv("isr")} ro/><Inp l="Neto" v={fv("neto")} ro/><Inp l="Estado" v={fv("estado")} onChange={v=>sf("estado",v)} opts={["Borrador","Aprobada","Pagada"]}/></G>);
+case "colonos":return(<G c={2}><Inp l="Nombre" v={fv("nombre")} onChange={v=>sf("nombre",v)} req/><Inp l="Finca" v={fv("finca")} onChange={v=>sf("finca",v)}/><Inp l="Hectáreas" v={fv("ha")} onChange={v=>sf("ha",v)} type="number"/><Inp l="Variedad" v={fv("variedad")} onChange={v=>sf("variedad",v)} opts={["CP 72-2086","MEX 69-290","B 49-119","CG 98-78"]}/><Inp l="Teléfono" v={fv("tel")} onChange={v=>sf("tel",v)}/><Inp l="Estado" v={fv("estado")} onChange={v=>sf("estado",v)} opts={["Activo","Inactivo"]}/></G>);
+case "entregasC":return(<G c={2}><Inp l="Colono" v={fv("colono")} onChange={v=>sf("colono",v)} opts={D.colonos.filter(c=>c.estado==="Activo").map(c=>c.nombre)}/><Inp l="Fecha" v={fv("fecha")} onChange={v=>sf("fecha",v)} type="date"/><Inp l="Ton Bruta" v={fv("bruta")} onChange={v=>{sf("bruta",v);const b=nn(v),imp=nn(fv("impureza")),pr=nn(fv("precio"));const n=b*(1-imp/100);sf("netas",n.toFixed(2));sf("total",(n*pr).toFixed(2))}} type="number"/><Inp l="Impureza%" v={fv("impureza")} onChange={v=>{sf("impureza",v);const b=nn(fv("bruta")),imp=nn(v),pr=nn(fv("precio"));const n=b*(1-imp/100);sf("netas",n.toFixed(2));sf("total",(n*pr).toFixed(2))}} type="number"/><Inp l="Q/Ton" v={fv("precio")} onChange={v=>{sf("precio",v);sf("total",(nn(fv("netas"))*nn(v)).toFixed(2))}} type="number"/><Inp l="Ton Neta" v={fv("netas")} ro/><Inp l="Total" v={fv("total")} ro/><Inp l="Estado" v={fv("estado")} onChange={v=>sf("estado",v)} opts={["Pendiente","Liquidada"]}/></G>);
+case "equipos":return(<G c={2}><Inp l="Nombre" v={fv("nombre")} onChange={v=>sf("nombre",v)} req/><Inp l="Tipo" v={fv("tipo")} onChange={v=>sf("tipo",v)} opts={["Molino","Caldera","Centrífuga","Evaporador","Generador","Bomba"]}/><Inp l="Ubicación" v={fv("ubic")} onChange={v=>sf("ubic",v)}/><Inp l="Estado" v={fv("estado")} onChange={v=>sf("estado",v)} opts={["Operativo","Mantenimiento","Fuera de Servicio"]}/><Inp l="Horas" v={fv("horas")} onChange={v=>sf("horas",v)} type="number"/><Inp l="Último Mant" v={fv("ult")} onChange={v=>sf("ult",v)} type="date"/><Inp l="Próximo Mant" v={fv("prox")} onChange={v=>sf("prox",v)} type="date"/></G>);
+case "ots":return(<G c={2}><Inp l="Equipo" v={fv("equipo")} onChange={v=>sf("equipo",v)} opts={D.equipos.map(e=>e.nombre)}/><Inp l="Tipo" v={fv("tipo")} onChange={v=>sf("tipo",v)} opts={["Preventivo","Correctivo","Predictivo"]}/><Inp l="Descripción" v={fv("desc")} onChange={v=>sf("desc",v)} req/><Inp l="Prioridad" v={fv("prior")} onChange={v=>sf("prior",v)} opts={["Baja","Media","Alta"]}/><Inp l="Responsable" v={fv("resp")} onChange={v=>sf("resp",v)}/><Inp l="Estimada" v={fv("estimada")} onChange={v=>sf("estimada",v)} type="date"/><Inp l="Estado" v={fv("estado")} onChange={v=>sf("estado",v)} opts={["Pendiente","En Proceso","Completada"]}/></G>);
+case "repuestos":return(<G c={2}><Inp l="Nombre" v={fv("nombre")} onChange={v=>sf("nombre",v)} req/><Inp l="Categoría" v={fv("cat")} onChange={v=>sf("cat",v)} opts={["Rodamientos","Cuchillas","Empaques","Válvulas","Fajas","Filtros"]}/><Inp l="Stock" v={fv("stock")} onChange={v=>sf("stock",v)} type="number"/><Inp l="Mínimo" v={fv("min")} onChange={v=>sf("min",v)} type="number"/><Inp l="Precio" v={fv("precio")} onChange={v=>sf("precio",v)} type="number"/><Inp l="Ubicación" v={fv("ubic")} onChange={v=>sf("ubic",v)} opts={["Bodega A","Bodega B","Bodega C"]}/><Inp l="Para" v={fv("para")} onChange={v=>sf("para",v)}/></G>);
+default:return null}};
+
+/* LAYOUT */
+return(<div style={{display:"flex",height:"100vh",background:P.bg,color:P.tx,fontFamily:"-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif",fontSize:12}}>
+{/* SIDEBAR */}
+<div style={{width:sbo?220:60,background:P.c1,borderRight:"1px solid "+P.bd,display:"flex",flexDirection:"column",transition:"width .2s",overflow:"hidden",flexShrink:0}}>
+<div style={{padding:sbo?"16px 14px":"16px 10px",borderBottom:"1px solid "+P.bd,display:"flex",alignItems:"center",gap:8,cursor:"pointer"}} onClick={()=>setSbo(!sbo)}>
+<span style={{fontSize:24}}>{"\u{1F3ED}"}</span>{sbo&&<div><div style={{fontSize:13,fontWeight:800}}>TransCaña</div><div style={{fontSize:8,color:P.grn,fontWeight:700}}>ERPremium</div></div>}
+</div>
+<div style={{flex:1,overflow:"auto",padding:"8px 0"}}>
+{MENU.map(s=>(<div key={s.sec}>{sbo&&<div style={{padding:"10px 14px 4px",fontSize:8,color:P.s2,fontWeight:700,textTransform:"uppercase",letterSpacing:.8}}>{s.sec}</div>}{s.items.filter(i=>i.r.includes(user.role)).map(i=>(<div key={i.id} onClick={()=>{setMod(i.id);setSearch("")}} style={{display:"flex",alignItems:"center",gap:8,padding:sbo?"7px 14px":"7px 18px",margin:"1px 6px",borderRadius:6,cursor:"pointer",background:mod===i.id?P.blue+"18":"transparent",color:mod===i.id?P.blue:P.s1,fontSize:10.5,fontWeight:mod===i.id?700:500}} onMouseEnter={e=>{if(mod!==i.id)e.currentTarget.style.background=P.hv}} onMouseLeave={e=>{if(mod!==i.id)e.currentTarget.style.background=""}}><span style={{opacity:mod===i.id?1:.6,flexShrink:0}}>{i.ic}</span>{sbo&&<span>{i.l}</span>}</div>))}</div>))}
+</div>
+<div style={{padding:12,borderTop:"1px solid "+P.bd}}>{sbo?(<div style={{display:"flex",justifyContent:"space-between"}}><div><div style={{fontSize:10,fontWeight:600}}>{user.nombre}</div><div style={{fontSize:8,color:P.s2}}>{user.role}</div></div><button onClick={()=>setUser(null)} style={{background:"none",border:"none",color:P.red,cursor:"pointer"}}><LogOut style={{width:14,height:14}}/></button></div>):(<button onClick={()=>setUser(null)} style={{background:"none",border:"none",color:P.red,cursor:"pointer"}}><LogOut style={{width:14,height:14}}/></button>)}</div>
+</div>
+{/* MAIN */}
+<div style={{flex:1,display:"flex",flexDirection:"column",overflow:"hidden"}}>
+<div style={{padding:"10px 20px",borderBottom:"1px solid "+P.bd,display:"flex",justifyContent:"space-between",background:P.c1}}>
+<div style={{position:"relative"}}><Search style={{width:14,height:14,position:"absolute",left:8,top:"50%",transform:"translateY(-50%)",color:P.s2}}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Buscar..." style={{background:P.c2,border:"1px solid "+P.bd,borderRadius:6,padding:"6px 10px 6px 28px",color:P.tx,fontSize:10,outline:"none",width:250}}/></div>
+<div style={{display:"flex",alignItems:"center",gap:10}}><div style={{position:"relative"}}><Bell style={{width:16,height:16,color:P.s2}}/>{(lowS.length+otPend.length)>0&&<div style={{position:"absolute",top:-3,right:-3,width:8,height:8,background:P.red,borderRadius:"50%"}}/>}</div><span style={{fontSize:10,color:P.s2}}>v1.15.0</span></div>
+</div>
+<div style={{flex:1,overflow:"auto",padding:20}}>{renderMod()}</div>
+</div>
+<Modal open={!!ml} onClose={closeMl} title={ml?.title} wide>{formFields()}<div style={{display:"flex",gap:8,justifyContent:"flex-end",marginTop:14,paddingTop:10,borderTop:"1px solid "+P.bd}}><Btn onClick={closeMl}>Cancelar</Btn><Btn p onClick={saveMl}>{ml?.ed?"Actualizar":"Guardar"}</Btn></div></Modal>
+<Confirm open={!!cfm} msg={cfm?.msg} onYes={cfm?.fn} onNo={()=>setCfm(null)}/>
+{toast&&<Toast msg={toast.msg} type={toast.type} onDone={()=>setToast(null)}/>}
+</div>);
+}
+const root=ReactDOM.createRoot(document.getElementById("root"));
+root.render(React.createElement(TransCanaERP));
+
+</script>
+</body>
+</html>
+
+/* ============================================================
+   MODULE: Mantenimiento Industrial
+   ============================================================ */
+const MantenimientoMod=({data,setData})=>{
+  const[tab,setTab]=useState('equipos');
+  const estadoEquipoColor={operativo:T.green,mantenimiento:T.orange,fuera_servicio:T.red};
+  const prioridadColor={baja:T.subtle,media:T.blue,alta:T.orange,crítica:T.red};
+  const estadoOTColor={pendiente:T.orange,en_progreso:T.blue,en_espera:T.yellow,completada:T.green,cancelada:T.red};
+
+  const equipoColumns=[
+    {key:'codigo',label:'Código',render:v=><span style={{fontWeight:600,color:T.blue}}>{v}</span>},
+    {key:'nombre',label:'Equipo',width:180,render:v=><span style={{fontWeight:600}}>{v}</span>},
+    {key:'tipo',label:'Tipo',render:v=><Badge color={T.subtle}>{v}</Badge>},
+    {key:'estado',label:'Estado',render:v=><Badge color={estadoEquipoColor[v]}>{v?.replace('_',' ')}</Badge>},
+    {key:'fabricante',label:'Fabricante'},
+    {key:'horasUso',label:'Horas',render:v=><span>{fmtN(v)} hrs</span>},
+    {key:'ultimoMant',label:'Últ. Mant.',render:v=>fmtD(v)},
+    {key:'proximoMant',label:'Próx. Mant.',render:v=>fmtD(v)},
+  ];
+  const equipoFields=[
+    {key:'nombre',label:'Nombre Equipo',required:true,fullWidth:true},
+    {key:'codigo',label:'Código',required:true},
+    {key:'tipo',label:'Tipo',options:['producción','generación','pesaje','transporte','auxiliar']},
+    {key:'ubicacion',label:'Ubicación'},
+    {key:'estado',label:'Estado',options:['operativo','mantenimiento','fuera_servicio']},
+    {key:'fabricante',label:'Fabricante'},
+    {key:'modelo',label:'Modelo'},
+    {key:'anio',label:'Año',type:'number'},
+    {key:'ultimoMant',label:'Último Mantenimiento',type:'date'},
+    {key:'proximoMant',label:'Próximo Mantenimiento',type:'date'},
+    {key:'horasUso',label:'Horas de Uso',type:'number'},
+    {key:'observaciones',label:'Observaciones',type:'textarea',fullWidth:true},
+  ];
+
+  const otColumns=[
+    {key:'numero',label:'OT',render:v=><span style={{fontWeight:600,color:T.blue}}>{v}</span>},
+    {key:'equipo',label:'Equipo',width:160},
+    {key:'tipo',label:'Tipo',render:v=><Badge color={v==='correctivo'?T.red:T.blue}>{v}</Badge>},
+    {key:'prioridad',label:'Prior.',render:v=><Badge color={prioridadColor[v]}>{v}</Badge>},
+    {key:'descripcion',label:'Descripción',width:200,render:v=><span style={{fontSize:12}}>{v?.substring(0,60)}</span>},
+    {key:'asignado',label:'Asignado',render:v=><span style={{fontSize:12}}>{v?.split(' ').slice(0,2).join(' ')}</span>},
+    {key:'estado',label:'Estado',render:v=><Badge color={estadoOTColor[v]}>{v?.replace('_',' ')}</Badge>},
+    {key:'costoEstimado',label:'Costo Est.',render:v=>fmtQ(v)},
+    {key:'costoReal',label:'Costo Real',render:v=>v?fmtQ(v):'-'},
+  ];
+  const otFields=[
+    {key:'numero',label:'Número OT'},
+    {key:'equipo',label:'Equipo',required:true,options:data.equipos.map(e=>({value:e.nombre,label:e.nombre}))},
+    {key:'tipo',label:'Tipo',options:['preventivo','correctivo','predictivo']},
+    {key:'prioridad',label:'Prioridad',options:['baja','media','alta','crítica']},
+    {key:'descripcion',label:'Descripción',type:'textarea',fullWidth:true,required:true},
+    {key:'asignado',label:'Asignado a'},
+    {key:'fechaCreacion',label:'Fecha Creación',type:'date'},
+    {key:'fechaInicio',label:'Fecha Inicio',type:'date'},
+    {key:'fechaFin',label:'Fecha Fin',type:'date'},
+    {key:'estado',label:'Estado',options:['pendiente','en_progreso','en_espera','completada','cancelada']},
+    {key:'costoEstimado',label:'Costo Estimado',type:'number'},
+    {key:'costoReal',label:'Costo Real',type:'number'},
+    {key:'observaciones',label:'Observaciones',type:'textarea',fullWidth:true},
+  ];
+
+  const repuestoColumns=[
+    {key:'codigo',label:'Código',render:v=><span style={{fontWeight:600,color:T.blue}}>{v}</span>},
+    {key:'nombre',label:'Repuesto',width:200,render:v=><span style={{fontWeight:600}}>{v}</span>},
+    {key:'equipo',label:'Equipo'},
+    {key:'stock',label:'Stock',render:(v,r)=><span style={{fontWeight:600,color:v<=r.stockMin?T.red:T.green}}>{v} {r.unidad}</span>},
+    {key:'stockMin',label:'Mínimo'},
+    {key:'costo',label:'Costo Unit.',render:v=>fmtQ(v)},
+    {key:'proveedor',label:'Proveedor',render:v=><span style={{fontSize:12}}>{v}</span>},
+    {key:'ubicacion',label:'Ubicación'},
+  ];
+  const repuestoFields=[
+    {key:'nombre',label:'Nombre',required:true,fullWidth:true},
+    {key:'codigo',label:'Código',required:true},
+    {key:'equipo',label:'Equipo Asociado'},
+    {key:'stock',label:'Stock Actual',type:'number'},
+    {key:'stockMin',label:'Stock Mínimo',type:'number'},
+    {key:'unidad',label:'Unidad',options:['unidad','metro','litro','kg','cartucho']},
+    {key:'costo',label:'Costo Unitario',type:'number'},
+    {key:'proveedor',label:'Proveedor'},
+    {key:'ubicacion',label:'Ubicación'},
+  ];
+
+  const repuestosBajos=data.repuestos.filter(r=>r.stock<=r.stockMin);
+
+  return(
+    <div className="fade-in">
+      <G cols={4} style={{marginBottom:16}}>
+        <K label="Equipos Operativos" value={`${data.equipos.filter(e=>e.estado==='operativo').length}/${data.equipos.length}`} color={T.green} icon={Icons.Wrench}/>
+        <K label="OT Abiertas" value={data.ordenesT.filter(o=>o.estado!=='completada'&&o.estado!=='cancelada').length} color={T.orange} icon={Icons.Clipboard}/>
+        <K label="En Mantenimiento" value={data.equipos.filter(e=>e.estado==='mantenimiento').length} color={T.yellow} icon={Icons.Settings}/>
+        <K label="Repuestos Bajo Stock" value={repuestosBajos.length} color={repuestosBajos.length>0?T.red:T.green} icon={Icons.AlertTriangle}/>
+      </G>
+
+      {repuestosBajos.length>0&&(
+        <div style={{background:T.red+'15',border:`1px solid ${T.red}33`,borderRadius:12,padding:12,marginBottom:16,display:'flex',alignItems:'center',gap:12}}>
+          <Icons.AlertTriangle size={18} color={T.red}/>
+          <div style={{fontSize:13}}>
+            <span style={{fontWeight:600,color:T.red}}>Repuestos bajo stock: </span>
+            <span style={{color:T.text}}>{repuestosBajos.map(r=>`${r.nombre} (${r.stock})`).join(', ')}</span>
+          </div>
+        </div>
+      )}
+
+      <Tabs tabs={[{key:'equipos',label:'Equipos'},{key:'ot',label:'Órdenes de Trabajo'},{key:'repuestos',label:'Repuestos'}]} active={tab} onChange={setTab}/>
+
+      {tab==='equipos'&&<CrudModule title="Equipo" icon={Icons.Wrench} data={data.equipos}
+        setData={v=>setData({...data,equipos:v})} columns={equipoColumns} formFields={equipoFields}
+        color={T.green} emptyObj={{nombre:'',codigo:'',tipo:'producción',ubicacion:'',estado:'operativo',fabricante:'',modelo:'',anio:2024,ultimoMant:today(),proximoMant:'',horasUso:0,observaciones:''}} exportName="equipos"/>}
+
+      {tab==='ot'&&<CrudModule title="Orden de Trabajo" icon={Icons.Clipboard} data={data.ordenesT}
+        setData={v=>setData({...data,ordenesT:v})} columns={otColumns} formFields={otFields}
+        color={T.orange} emptyObj={{numero:`OT-2025-${String(data.ordenesT.length+1).padStart(3,'0')}`,equipo:'',tipo:'preventivo',prioridad:'media',descripcion:'',asignado:'',fechaCreacion:today(),fechaInicio:'',fechaFin:'',estado:'pendiente',costoEstimado:0,costoReal:0,observaciones:''}} exportName="ordenes_trabajo"/>}
+
+      {tab==='repuestos'&&<CrudModule title="Repuesto" icon={Icons.Package} data={data.repuestos}
+        setData={v=>setData({...data,repuestos:v})} columns={repuestoColumns} formFields={repuestoFields}
+        color={T.blue} emptyObj={{nombre:'',codigo:'',equipo:'',stock:0,stockMin:0,unidad:'unidad',costo:0,proveedor:'',ubicacion:''}} exportName="repuestos"/>}
+    </div>
+  );
+};
+
