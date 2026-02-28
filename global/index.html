@@ -650,6 +650,67 @@ function Footer() {
 // ═══════════════════════════════════════════════════════════════
 // ROUTER & APP
 // ═══════════════════════════════════════════════════════════════
+
+function SpotifySection() {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = React.useRef(null);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setIsVisible(true); }, { threshold: 0.15 });
+    if (sectionRef.current) obs.observe(sectionRef.current);
+    return () => obs.disconnect();
+  }, []);
+  const feats = [
+    { d:'M5 3l14 9-14 9V3z', t:'Episodios Semanales', p:'Nuevo contenido cada semana sobre innovación, tecnología y gestión empresarial.' },
+    { d:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2', t:'Expertos Invitados', p:'Conversaciones con líderes de la industria y especialistas en transformación digital.' },
+    { d:'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z', t:'Casos de Éxito', p:'Historias reales de empresas que han transformado sus operaciones con tecnología.' }
+  ];
+  const spSvg = "M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z";
+  return (
+    <section ref={sectionRef} style={{ background:'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 30%, #16213e 60%, #0a0a0a 100%)', position:'relative', overflow:'hidden', padding:'80px 20px' }}>
+      <style>{`
+        @keyframes spFloat{0%,100%{transform:translateY(0) scale(1);opacity:.3}50%{transform:translateY(-20px) scale(1.5);opacity:.6}}
+        @keyframes spEq{0%,100%{height:8px;opacity:.5}50%{height:35px;opacity:1}}
+        .sp-fc:hover{background:rgba(29,185,84,.08)!important;border-color:rgba(29,185,84,.3)!important;transform:translateX(8px)}
+        .sp-fc{transition:all .3s ease}
+        .sp-cta:hover{background:#1ed760!important;transform:translateY(-2px);box-shadow:0 8px 30px rgba(29,185,84,.6)!important}
+        @media(max-width:768px){.sp-grid{grid-template-columns:1fr!important}.sp-ttl{font-size:28px!important}}
+      `}</style>
+      <div style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}>
+        {[10,80,50,30,70,20].map((l,i)=>(<div key={i} style={{position:'absolute',width:4+i*1.2,height:4+i*1.2,background:'#1DB954',borderRadius:'50%',opacity:.15+i*.03,top:(15+i*13)+'%',left:l+'%',animation:'spFloat '+(5+i*1.2)+'s infinite ease-in-out '+i*.4+'s'}}/>))}
+      </div>
+      <div style={{maxWidth:1200,margin:'0 auto',position:'relative',zIndex:2}}>
+        <div style={{textAlign:'center',marginBottom:50,opacity:isVisible?1:0,transform:isVisible?'translateY(0)':'translateY(30px)',transition:'all .8s ease'}}>
+          <div style={{display:'inline-flex',alignItems:'center',gap:12,background:'rgba(29,185,84,.1)',border:'1px solid rgba(29,185,84,.3)',borderRadius:50,padding:'8px 24px',marginBottom:24}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#1DB954"><path d={spSvg}/></svg>
+            <span style={{color:'#1DB954',fontSize:14,fontWeight:600,letterSpacing:1,textTransform:'uppercase'}}>Podcast en Spotify</span>
+          </div>
+          <h2 className="sp-ttl" style={{color:'#fff',fontSize:42,fontWeight:800,margin:'0 0 16px',lineHeight:1.2}}>Escucha Nuestro <span style={{background:'linear-gradient(90deg,#1DB954,#1ed760)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>Podcast</span></h2>
+          <p style={{color:'rgba(255,255,255,.6)',fontSize:18,maxWidth:600,margin:'0 auto',lineHeight:1.6}}>Descubre insights sobre transformación digital, gestión industrial y las últimas tendencias en tecnología empresarial.</p>
+        </div>
+        <div className="sp-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:40,alignItems:'center',opacity:isVisible?1:0,transform:isVisible?'translateY(0)':'translateY(30px)',transition:'all .8s ease .2s'}}>
+          <div style={{position:'relative'}}>
+            <div style={{background:'rgba(255,255,255,.05)',borderRadius:20,padding:24,border:'1px solid rgba(29,185,84,.2)',backdropFilter:'blur(10px)'}}>
+              <iframe style={{borderRadius:12}} src="https://open.spotify.com/embed/show/7qzC1HvDTZnJbjr9idjl7x?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowFullScreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"/>
+            </div>
+            <div style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'80%',height:'80%',background:'radial-gradient(circle,rgba(29,185,84,.15) 0%,transparent 70%)',pointerEvents:'none',zIndex:-1,filter:'blur(40px)'}}/>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:24}}>
+            {feats.map((f,i)=>(<div key={i} className="sp-fc" style={{display:'flex',alignItems:'flex-start',gap:16,background:'rgba(255,255,255,.03)',border:'1px solid rgba(255,255,255,.08)',borderRadius:16,padding:20,cursor:'default'}}><div style={{minWidth:48,height:48,background:'rgba(29,185,84,.15)',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center'}}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1DB954" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={f.d}/></svg></div><div><h4 style={{color:'#fff',fontSize:16,fontWeight:700,margin:'0 0 6px'}}>{f.t}</h4><p style={{color:'rgba(255,255,255,.5)',fontSize:14,margin:0,lineHeight:1.5}}>{f.p}</p></div></div>))}
+            <a href="https://open.spotify.com/show/7qzC1HvDTZnJbjr9idjl7x" target="_blank" rel="noopener noreferrer" className="sp-cta" style={{display:'inline-flex',alignItems:'center',justifyContent:'center',gap:12,background:'#1DB954',color:'#fff',fontSize:16,fontWeight:700,padding:'16px 32px',borderRadius:50,textDecoration:'none',transition:'all .3s ease',marginTop:8,boxShadow:'0 4px 20px rgba(29,185,84,.4)'}}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d={spSvg}/></svg>
+              Escuchar en Spotify
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+        <div style={{display:'flex',justifyContent:'center',gap:4,marginTop:50,height:40,alignItems:'flex-end',opacity:isVisible?1:0,transition:'opacity .8s ease .4s'}}>
+          {Array.from({length:12}).map((_,i)=>(<div key={i} style={{width:4,background:'#1DB954',borderRadius:2,animation:'spEq 1.2s infinite ease-in-out '+i*.1+'s'}}/>))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function WhatsAppFloat() {
   const [hover, setHover] = useState(false);
   const { lang } = useApp();
@@ -658,7 +719,8 @@ function WhatsAppFloat() {
   return (
     <>
       <style>{`@keyframes wa-pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,0.5)}70%{box-shadow:0 0 0 18px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}`}</style>
-      <div onClick={() => window.open(url, '_blank')}
+      <div onClick={() => window.open('https://open.spotify.com/show/7qzC1HvDTZnJbjr9idjl7x', '_blank')} onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(29,185,84,0.6)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(29,185,84,0.4)'; }} style={{ width: 54, height: 54, borderRadius: '50%', background: '#1DB954', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 15px rgba(29,185,84,0.4)', transition: 'all 0.3s ease', animation: 'wa-pulse 2s infinite' }}><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></div>
+            <div onClick={() => window.open(url, '_blank')}
         onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
         style={{ position: 'fixed', bottom: 28, right: 28, zIndex: 250, display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
         {hover && (
@@ -679,8 +741,8 @@ function WhatsAppFloat() {
 function Content() {
   const { page } = useApp();
   const P = {
-    home: <><Hero /><ProductsPage /><ServicesPage /><SectorsSection /><ISOSection /><CredsSection /><ContactPage /><Footer /></>,
-    products: <><ProductsPage /><Footer /></>,
+    home: <><Hero /><ProductsPage /><SpotifySection /><ServicesPage /><SectorsSection /><ISOSection /><CredsSection /><ContactPage /><Footer /></>,
+    products: <><ProductsPage /><SpotifySection /><Footer /></>,
     services: <><ServicesPage /><SectorsSection /><Footer /></>,
     pricing: <><Pricing /><ISOSection /><CredsSection /><Footer /></>,
     sectors: <><SectorsSection /><Footer /></>,
