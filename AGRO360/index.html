@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AGRO 360 - ERP Agroindustrial | INNOVAQ SOLUTIONS</title>
+<meta name="description" content="AGRO 360 - Solucion Integral Agroindustrial con modulos ERP: Comercio Exterior, SIRE, Contabilidad IA, Facturacion, Inventario, Compras">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#16a34a;--primary-dark:#15803d;--primary-light:#22c55e;--bg:#f8fafc;--bg-card:#ffffff;--bg-sidebar:#ffffff;--text:#1e293b;--text-secondary:#64748b;--border:#e2e8f0;--accent-red:#ef4444;--accent-blue:#3b82f6;--accent-yellow:#eab308;--accent-purple:#8b5cf6;--sidebar-w:240px;--header-h:60px}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.login-bg{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#15803d 0%,#16a34a 50%,#84cc16 100%)}
+.login-card{background:rgba(255,255,255,0.12);backdrop-filter:blur(20px);border-radius:24px;padding:48px 40px;width:100%;max-width:400px;text-align:center;border:1px solid rgba(255,255,255,0.15);color:#fff}
+.login-logo{width:64px;height:64px;background:rgba(255,255,255,0.15);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px}
+.login-card h1{font-size:28px;font-weight:800;margin-bottom:4px}
+.login-card h1 span{color:#86efac}
+.login-card p.sub{opacity:0.7;font-size:14px;margin-bottom:32px}
+.login-field{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:14px 16px;width:100%;color:#fff;font-size:14px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.login-field input{background:none;border:none;color:#fff;width:100%;outline:none;font-size:14px}
+.login-field input::placeholder{color:rgba(255,255,255,0.5)}
+.login-roles{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap;justify-content:center}
+.login-roles label{padding:8px 20px;border-radius:8px;cursor:pointer;font-size:13px;border:1px solid rgba(255,255,255,0.2);transition:all .2s}
+.login-roles input{display:none}
+.login-roles label:has(input:checked){background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.4)}
+.login-btn{width:100%;padding:16px;background:linear-gradient(135deg,var(--primary-dark),var(--primary));border:none;border-radius:12px;color:#fff;font-size:16px;font-weight:600;cursor:pointer;margin-top:16px;transition:transform .2s}
+.login-btn:hover{transform:scale(1.02)}
+.sidebar{position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:var(--bg-sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.sidebar-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.sidebar-header .logo{width:40px;height:40px;background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px}
+.sidebar-header h2{font-size:18px;font-weight:700}
+.sidebar-header h2 span{color:var(--primary)}
+.nav-menu{flex:1;padding:12px 0;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:12px;padding:12px 20px;cursor:pointer;color:var(--text-secondary);transition:all .2s;border-left:3px solid transparent;font-size:14px}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{background:linear-gradient(90deg,rgba(0,212,255,.05),transparent);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.nav-item i{width:20px;text-align:center;font-size:16px}
+.nav-separator{padding:8px 20px;font-size:10px;color:var(--primary);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-top:8px}
+.sidebar-user{padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.sidebar-user .avatar{width:36px;height:36px;border-radius:50%;background:var(--accent-purple);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px}
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.header{height:var(--header-h);background:var(--bg-sidebar);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.header h2{font-size:18px;font-weight:600}
+.header-right{display:flex;align-items:center;gap:16px}
+.header-right .user-info{text-align:right;font-size:13px}
+.header-right .user-info .name{font-weight:600}
+.header-right .user-info .role{color:var(--primary);font-size:11px;font-weight:600}
+.content{padding:24px}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px}
+.kpi-card{background:var(--bg-card);border-radius:16px;padding:20px;border:1px solid var(--border);position:relative}
+.kpi-card .icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+.kpi-card .icon.green{background:#dcfce7;color:var(--primary)}
+.kpi-card .icon.blue{background:#dbeafe;color:var(--accent-blue)}
+.kpi-card .icon.red{background:#fee2e2;color:var(--accent-red)}
+.kpi-card .icon.yellow{background:#fef9c3;color:var(--accent-yellow)}
+.kpi-card .icon.purple{background:#ede9fe;color:var(--accent-purple)}
+.kpi-card .value{font-size:28px;font-weight:700;margin-bottom:4px}
+.kpi-card .label{font-size:13px;color:var(--text-secondary)}
+.kpi-card .badge{position:absolute;top:16px;right:16px;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.badge-green{background:#dcfce7;color:#15803d}
+.badge-red{background:#fee2e2;color:#dc2626}
+.badge-blue{background:#dbeafe;color:#2563eb}
+.badge-yellow{background:#fef9c3;color:#a16207}
+.card{background:var(--bg-card);border-radius:16px;padding:20px;border:1px solid var(--border);margin-bottom:16px}
+.card-title{font-size:16px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.table-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+.table-row:last-child{border-bottom:none}
+.table-row .left{display:flex;flex-direction:column;gap:2px}
+.table-row .code{font-weight:600;font-size:14px}
+.table-row .sub{font-size:12px;color:var(--text-secondary)}
+.table-row .right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.table-row .amount{font-weight:600;font-size:14px}
+.status{padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;text-transform:uppercase}
+.status-green{background:#dcfce7;color:#15803d}
+.status-yellow{background:#fef9c3;color:#a16207}
+.status-red{background:#fee2e2;color:#dc2626}
+.status-blue{background:#dbeafe;color:#2563eb}
+.bar-chart{display:flex;flex-direction:column;gap:12px}
+.bar-item{display:flex;align-items:center;gap:12px}
+.bar-label{width:100px;font-size:13px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:24px;background:#f1f5f9;border-radius:8px;overflow:hidden}
+.bar-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:11px;color:#fff;font-weight:600;min-width:30px}
+.logout-btn{display:flex;align-items:center;gap:12px;padding:12px 20px;cursor:pointer;color:var(--accent-red);font-size:14px;border:none;background:none;width:100%}
+.logout-btn:hover{background:#fee2e2}
+.hidden{display:none!important}
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}}
+</style>
+</head>
+<body>
+<div id="loginScreen" class="login-bg">
+<div class="login-card">
+<div class="login-logo"><i class="fas fa-leaf"></i></div>
+<h1>AGRO <span>360</span></h1>
+<p class="sub">Solucion Integral Agroindustrial</p>
+<div class="login-field"><i class="fas fa-envelope"></i><input type="email" id="emailInput" placeholder="usuario@gmail.com"></div>
+<div class="login-field"><i class="fas fa-lock"></i><input type="password" id="passInput" placeholder="******"></div>
+<div style="text-align:left;opacity:0.7;font-size:12px;margin:12px 0 4px;letter-spacing:1px">ACCEDER COMO:</div>
+<div class="login-roles">
+<label><input type="radio" name="role" value="campo"><span>Campo</span></label>
+<label><input type="radio" name="role" value="supervisor"><span>Supervisor</span></label>
+<label><input type="radio" name="role" value="gerente"><span>Gerente</span></label>
+<label><input type="radio" name="role" value="admin" checked><span>Admin</span></label>
+</div>
+<button class="login-btn" onclick="doLogin()">INGRESAR AL SISTEMA <i class="fas fa-chevron-right"></i></button>
+<p style="margin-top:16px;font-size:12px;opacity:0.5">&copy; 2026 AGRO 360 Peru. Innovaqsolution</p>
+</div>
+</div>
+<div id="appScreen" class="hidden">
+<nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<div class="logo"><i class="fas fa-leaf"></i></div>
+<h2>AGRO <span>360</span></h2>
+</div>
+<div class="nav-menu">
+<div class="nav-item active" data-page="dashboard" onclick="nav('dashboard',this)"><i class="fas fa-th-large"></i>Dashboard</div>
+<div class="nav-item" data-page="smartfield" onclick="nav('smartfield',this)"><i class="fas fa-wand-magic-sparkles"></i>Smart Field</div>
+<div class="nav-item" data-page="agrohr" onclick="nav('agrohr',this)"><i class="fas fa-users"></i>Agro-HR</div>
+<div class="nav-item" data-page="packtrace" onclick="nav('packtrace',this)"><i class="fas fa-boxes-stacked"></i>Pack & Trace</div>
+<div class="nav-separator">ERP 360</div>
+<div class="nav-item" data-page="comercio" onclick="nav('comercio',this)"><i class="fas fa-globe"></i>Comercio Exterior</div>
+<div class="nav-item" data-page="sire" onclick="nav('sire',this)"><i class="fas fa-file-lines"></i>SIRE</div>
+<div class="nav-item" data-page="contabilidad" onclick="nav('contabilidad',this)"><i class="fas fa-brain"></i>Contabilidad IA</div>
+<div class="nav-item" data-page="facturacion" onclick="nav('facturacion',this)"><i class="fas fa-credit-card"></i>Facturacion</div>
+<div class="nav-item" data-page="inventario" onclick="nav('inventario',this)"><i class="fas fa-cubes"></i>Inventario</div>
+<div class="nav-item" data-page="compras" onclick="nav('compras',this)"><i class="fas fa-cart-shopping"></i>Compras</div>
+</div>
+<div style="padding:0 12px 8px">
+<div class="nav-item" onclick="nav('config',this)"><i class="fas fa-gear"></i>Configuracion</div>
+<button class="logout-btn" onclick="doLogout()"><i class="fas fa-right-from-bracket"></i>Cerrar Sesion</button>
+</div>
+<div class="sidebar-user">
+<div class="avatar">JP</div>
+<div><div style="font-weight:600;font-size:13px">Juan Perez</div><div style="font-size:11px;color:var(--primary);font-weight:600">ADMIN</div></div>
+</div>
+</nav>
+<div class="main">
+<div class="header">
+<h2 id="pageTitle">Dashboard</h2>
+<div class="header-right">
+<i class="fas fa-moon" style="cursor:pointer;color:var(--text-secondary)"></i>
+<i class="fas fa-bell" style="cursor:pointer;color:var(--text-secondary)"></i>
+<div class="user-info"><div class="name">Juan Perez</div><div class="role">ADMIN</div></div>
+<div style="width:36px;height:36px;border-radius:50%;background:var(--accent-purple);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px">JP</div>
+</div>
+</div>
+<div class="content" id="mainContent"></div>
+</div>
+</div>
+<script>
+function doLogin(){document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');nav('dashboard',document.querySelector('[data-page="dashboard"]'))}
+function doLogout(){document.getElementById('appScreen').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden')}
+function nav(p,el){document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});if(el)el.classList.add('active');document.getElementById('pageTitle').textContent=T[p]||p;document.getElementById('mainContent').innerHTML=P[p]?P[p]():'<div class="card"><p style="color:var(--text-secondary)">Modulo en desarrollo</p></div>'}
+var T={dashboard:'Dashboard',smartfield:'Smart Field',agrohr:'Agro-HR',packtrace:'Pack & Trace',comercio:'Comercio Exterior',sire:'SIRE',contabilidad:'Contabilidad IA',facturacion:'Facturacion',inventario:'Inventario',compras:'Compras',config:'Configuracion'};
+function K(i,c,v,l,b,bc){return '<div class="kpi-card"><div class="icon '+c+'"><i class="fas fa-'+i+'"></i></div><div class="value">'+v+'</div><div class="label">'+l+'</div>'+(b?'<div class="badge '+bc+'">'+b+'</div>':'')+'</div>'}
+function R(c,s,a,st,sc){return '<div class="table-row"><div class="left"><div class="code">'+c+'</div><div class="sub">'+s+'</div></div><div class="right"><div class="amount">'+a+'</div><div class="status '+sc+'">'+st+'</div></div></div>'}
+function B(l,p){return '<div class="bar-item"><div class="bar-label">'+l+'</div><div class="bar-track"><div class="bar-fill" style="width:'+p+'%">'+p+'%</div></div></div>'}
+function S(t,i,c){return '<div class="card"><div class="card-title">'+t+'<i class="fas fa-'+i+'" style="color:var(--text-secondary)"></i></div>'+c+'</div>'}
+var P={
+dashboard:function(){return '<div class="kpi-grid">'+K('seedling','green','1,247','Hectareas Activas','+5.2%','badge-green')+K('temperature-half','blue','24.3 C','Temp. Promedio','Optimo','badge-green')+K('droplet','blue','78%','Humedad Relativa','Normal','badge-blue')+K('chart-line','green','94.2%','Eficiencia Operativa','+3.1%','badge-green')+'</div><div class="grid-2">'+S('Produccion por Cultivo','chart-bar','<div class="bar-chart">'+B('Arandanos',85)+B('Esparragos',72)+B('Uva',63)+B('Palta',58)+B('Mandarina',45)+'</div>')+S('Alertas Recientes','bell',R('ALT-001','Sensor Humedad - Lote B3','Hace 15 min','CRITICA','status-red')+R('ALT-002','Temperatura - Invernadero 2','Hace 1h','ADVERTENCIA','status-yellow')+R('ALT-003','Riego completado - Lote A1','Hace 2h','INFO','status-blue')+R('ALT-004','Cosecha programada - Lote C2','Manana','PENDIENTE','status-yellow'))+'</div>'},
+smartfield:function(){return '<div class="kpi-grid">'+K('satellite','green','48','Sensores IoT Activos','En linea','badge-green')+K('cloud-sun','blue','32mm','Precipitacion Sem.','Normal','badge-blue')+K('leaf','green','8.2','NDVI Promedio','Optimo','badge-green')+K('bolt','yellow','156','Alertas Hoy','12 criticas','badge-red')+'</div><div class="grid-2">'+S('Estado de Lotes','map',R('Lote A1','Arandanos - 45 Ha','NDVI: 0.82','OPTIMO','status-green')+R('Lote B3','Esparragos - 32 Ha','NDVI: 0.71','BUENO','status-green')+R('Lote C2','Uva - 28 Ha','NDVI: 0.65','ATENCION','status-yellow')+R('Lote D1','Palta - 20 Ha','NDVI: 0.58','REVISAR','status-red'))+S('Pronostico 7 Dias','cloud','<div class="bar-chart">'+B('Lun',20)+B('Mar',35)+B('Mie',60)+B('Jue',45)+B('Vie',15)+'</div>')+'</div>'},
+agrohr:function(){return '<div class="kpi-grid">'+K('users','blue','342','Trabajadores Activos','+12','badge-green')+K('user-check','green','96.5%','Asistencia Hoy','Normal','badge-green')+K('helmet-safety','yellow','28','Capacitaciones','Este mes','badge-blue')+K('id-card','purple','15','Vacantes Abiertas','3 urgentes','badge-red')+'</div><div class="grid-2">'+S('Personal por Area','users',R('Cosecha','148 trabajadores','85% asist.','ACTIVO','status-green')+R('Empaque','76 trabajadores','92% asist.','ACTIVO','status-green')+R('Campo','68 trabajadores','78% asist.','ALERTA','status-yellow')+R('Mantenimiento','50 trabajadores','95% asist.','ACTIVO','status-green'))+S('Distribucion','chart-pie','<div class="bar-chart">'+B('Cosecha',43)+B('Empaque',22)+B('Campo',20)+B('Mantenim.',15)+'</div>')+'</div>'},
+packtrace:function(){return '<div class="kpi-grid">'+K('box','green','2,847','Cajas Procesadas Hoy','+12.4%','badge-green')+K('qrcode','blue','99.1%','Trazabilidad','Completa','badge-green')+K('truck','yellow','18','Embarques Hoy','3 pendientes','badge-yellow')+K('certificate','purple','12','Certificaciones','Vigentes','badge-green')+'</div><div class="grid-2">'+S('Ultimos Embarques','truck',R('EMB-2847','Container MSKU-7234','USA - Los Angeles','EN PUERTO','status-blue')+R('EMB-2846','Container TRIU-4521','Paises Bajos','EN TRANSITO','status-yellow')+R('EMB-2845','Container MSCU-9182','Espana - Barcelona','ENTREGADO','status-green')+R('EMB-2844','Container HLXU-3847','Hong Kong','DESPACHADO','status-green'))+S('Lineas de Empaque','industry','<div class="bar-chart">'+B('Linea 1',92)+B('Linea 2',87)+B('Linea 3',76)+B('Linea 4',95)+'</div>')+'</div>'},
+comercio:function(){return '<div class="kpi-grid">'+K('ship','green','142','Exportaciones Activas','+8.3%','badge-green')+K('boxes-stacked','blue','38','Contenedores en Puerto','En transito','badge-blue')+K('dollar-sign','green','$2.8M','FOB Acumulado Mes','+12.5%','badge-green')+K('file-invoice','yellow','96','DAMs Procesadas','5 pendientes','badge-yellow')+'</div><div class="grid-2">'+S('Ultimos Despachos','file-alt',R('DAM-2024-1847','Arandanos - EEUU','$125,400','EMBARCADO','status-green')+R('DAM-2024-1846','Esparragos - NL','$89,200','EN ADUANAS','status-yellow')+R('DAM-2024-1845','Uva - Espana','$67,800','EN TRANSITO','status-blue')+R('DAM-2024-1844','Palta - HK','$45,600','ENTREGADO','status-green'))+S('Destinos Principales','globe','<div class="bar-chart">'+B('EEUU',42)+B('P. Bajos',22)+B('Espana',15)+B('Hong Kong',12)+B('R. Unido',9)+'</div>')+'</div>'},
+sire:function(){return '<div class="kpi-grid">'+K('file-lines','green','1,847','Registros de Ventas','Ene 2026','badge-blue')+K('file-invoice','blue','2,315','Registros de Compras','Ene 2026','badge-blue')+K('check-circle','green','98.5%','Tasa de Validacion','Conforme','badge-green')+K('triangle-exclamation','red','12','Observaciones SUNAT','3 criticas','badge-red')+'</div><div class="grid-2">'+S('Registro de Ventas Electronico (RVIE)','search',R('F001-000456','Exportadora Ica SAC','S/ 45,200','VALIDADO','status-green')+R('F001-000457','AgroPiura EIRL','S/ 12,800','PENDIENTE','status-yellow')+R('F001-000458','Fundo Verde SA','S/ 89,400','VALIDADO','status-green')+R('F001-000459','Logistica Norte','S/ 5,600','OBSERVADO','status-red'))+S('Registro de Compras Electronico (RCIE)','chart-line',R('CP-100','Proveedor Local 1','S/ 3,973','VALIDADO','status-green')+R('CP-101','Proveedor Local 2','S/ 5,738','VALIDADO','status-green')+R('CP-102','Proveedor Local 3','S/ 1,896','VALIDADO','status-green')+R('CP-103','Proveedor Local 4','S/ 5,416','VALIDADO','status-green'))+'</div>'},
+contabilidad:function(){return '<div class="kpi-grid">'+K('robot','green','4,162','Asientos Auto-generados','+15.2%','badge-green')+K('bullseye','blue','99.2%','Precision IA','Alto','badge-green')+K('scale-balanced','green','S/ 2.4M','Balance General','Dic 2025','badge-blue')+K('clock','purple','84 hrs','Tiempo Ahorrado IA','vs manual','badge-green')+'</div><div class="grid-2">'+S('Asientos Contables Automaticos','wand-magic-sparkles',R('AS-4162','Venta Export. Arandanos','S/ 125,400','IA GENERADO','status-green')+R('AS-4161','Compra Insumos Agricolas','S/ 34,200','IA GENERADO','status-green')+R('AS-4160','Planilla Dic 2025','S/ 89,750','REVISION','status-yellow')+R('AS-4159','Depreciacion Activos','S/ 12,300','IA GENERADO','status-green'))+S('Estado de Resultados','chart-bar','<div class="bar-chart">'+B('Ingresos',100)+B('Costo Ventas',58)+B('Gastos Op.',22)+B('Utilidad',20)+'</div>')+'</div>'},
+facturacion:function(){return '<div class="kpi-grid">'+K('file-invoice-dollar','green','856','Facturas Emitidas','Ene 2026','badge-blue')+K('coins','green','S/ 3.2M','Facturado Total','+18.4%','badge-green')+K('clock','yellow','23','Pendientes de Cobro','S/ 185K','badge-yellow')+K('receipt','red','7','Notas de Credito','Este mes','badge-red')+'</div><div class="grid-2">'+S('Ultimas Facturas Emitidas','file-lines',R('F001-000856','AgroExport Ica SAC','S/ 89,400','ACEPTADA SUNAT','status-green')+R('F001-000855','Fresh Fruits Peru','S/ 45,200','ENVIADA','status-blue')+R('F001-000854','Campo Verde EIRL','S/ 23,100','PENDIENTE','status-yellow')+R('F001-000853','Distribuidora Norte','S/ 67,800','ACEPTADA SUNAT','status-green'))+S('Facturacion por Tipo','chart-pie','<div class="bar-chart">'+B('Facturas',68)+B('Boletas',18)+B('Notas Cred.',8)+B('Notas Deb.',4)+B('Guias Rem.',2)+'</div>')+'</div>'},
+inventario:function(){return '<div class="kpi-grid">'+K('warehouse','green','12,450','SKUs','4 almacenes','badge-blue')+K('money-bill','green','S/ 8.5M','Stock Valorizado','+2.1%','badge-green')+K('triangle-exclamation','red','34','Bajo Stock','Reabastecer','badge-red')+K('rotate','blue','97.8%','Rotacion','+3.2%','badge-green')+'</div><div class="grid-2">'+S('Movimientos Recientes','right-left',R('MOV-3847','Arandanos Premium 250g','500 cajas','ENTRADA','status-green')+R('MOV-3846','Esparragos Bundle','320 cajas','SALIDA','status-red')+R('MOV-3845','Uva Red Globe 500g','200 cajas','TRANSFER','status-blue')+R('MOV-3844','Palta Hass Export','180 cajas','ENTRADA','status-green'))+S('Stock por Almacen','building','<div class="bar-chart">'+B('Ica',85)+B('Piura',72)+B('Lima',63)+B('Camara Frio',91)+'</div>')+'</div>'},
+compras:function(){return '<div class="kpi-grid">'+K('cart-shopping','green','245','Ordenes de Compra','Ene 2026','badge-blue')+K('coins','green','S/ 1.8M','Total Compras','+5.7%','badge-green')+K('handshake','blue','68','Proveedores','12 nuevos','badge-blue')+K('stamp','yellow','18','Por Aprobar','3 urgentes','badge-red')+'</div><div class="grid-2">'+S('OC Recientes','file-signature',R('OC-2024-245','Fertilizantes del Sur','S/ 45,200','APROBADA','status-green')+R('OC-2024-244','Empaques Premium SAC','S/ 28,400','PENDIENTE','status-yellow')+R('OC-2024-243','Transporte Frio Norte','S/ 15,600','EN REVISION','status-blue')+R('OC-2024-242','Insumos Agricolas Peru','S/ 67,800','APROBADA','status-green'))+S('Distribucion por Categoria','chart-bar','<div class="bar-chart">'+B('Insumos',38)+B('Empaque',25)+B('Transporte',18)+B('Maquinaria',12)+B('Servicios',7)+'</div>')+'</div>'},
+config:function(){return '<div class="card"><div class="card-title">Configuracion General<i class="fas fa-gear" style="color:var(--text-secondary)"></i></div><p style="color:var(--text-secondary)">Configuracion del sistema AGRO 360. Modulo en desarrollo.</p></div>'}
+};
+</script>
+</body>
+</html>
