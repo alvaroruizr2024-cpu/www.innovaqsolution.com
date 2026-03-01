@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CATASTRO 360 IA - INNOVAQ SOLUTIONS SAC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/recharts@2.15.3/umd/Recharts.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body,html{height:100%;font-family:'Inter',system-ui,sans-serif;background:#0a0e1a;color:#e2e8f0}
+#root{height:100%}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#0f1629}::-webkit-scrollbar-thumb{background:#334155;border-radius:3px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useCallback}=React;
+const {BarChart,Bar,XAxis,YAxis,CartesianGrid,Tooltip,ResponsiveContainer,AreaChart,Area,LineChart,Line}=Recharts;
+
+const COLORS={primary:'#1565C0',danger:'#C62828',bg:'#0a0e1a',card:'#111827',sidebar:'#0f1629',border:'#1e293b',text:'#e2e8f0',muted:'#64748b',success:'#22c55e'};
+
+const revenueData=[{name:'Jul',actual:4200,predicted:4500},{name:'Ago',actual:5100,predicted:5300},{name:'Sep',actual:4800,predicted:5000},{name:'Oct',actual:6200,predicted:6000},{name:'Nov',actual:7100,predicted:7500},{name:'Dic',actual:8500,predicted:9200}];
+
+const parcels=[
+{id:1,x:15,y:10,w:18,h:12,type:'regular',cuc:'130101-0001-0001'},
+{id:2,x:38,y:8,w:15,h:14,type:'pending',cuc:'130101-0001-0002'},
+{id:3,x:58,y:12,w:20,h:10,type:'regular',cuc:'130101-0001-0003'},
+{id:4,x:10,y:30,w:16,h:12,type:'irregular',cuc:'130101-0001-0004'},
+{id:5,x:32,y:28,w:14,h:16,type:'regular',cuc:'130101-0001-0005'},
+{id:6,x:52,y:26,w:18,h:14,type:'irregular',cuc:'130101-0001-0006'},
+{id:7,x:75,y:10,w:15,h:18,type:'pending',cuc:'130101-0001-0007'},
+{id:8,x:20,y:50,w:20,h:12,type:'regular',cuc:'130101-0001-0008'},
+{id:9,x:45,y:48,w:16,h:14,type:'regular',cuc:'130101-0001-0009'},
+{id:10,x:68,y:45,w:18,h:16,type:'irregular',cuc:'130101-0001-0010'},
+{id:11,x:8,y:68,w:22,h:10,type:'pending',cuc:'130101-0001-0011'},
+{id:12,x:35,y:65,w:14,h:15,type:'regular',cuc:'130101-0001-0012'}
+];
+
+const engines=[
+{name:'BoundaryNet',desc:'Deteccion automatica de limites de parcelas desde imagenes UAV/satelite',arch:'U-Net + ResNet34',metric:'F1 Score',value:'0.81',status:'active',color:'#1565C0',lastRun:'Hace 2 horas'},
+{name:'ParcelVision',desc:'Segmentacion semantica de parcelas y deteccion de construcciones',arch:'Mask R-CNN + FPN',metric:'mAP',value:'0.85',status:'active',color:'#22c55e',lastRun:'Hace 5 horas'},
+{name:'DocuScan AI',desc:'Digitalizacion inteligente de planos y fichas catastrales',arch:'ResNet-50 + L-CNN + Tesseract',metric:'OCR Accuracy',value:'94%',status:'active',color:'#a78bfa',lastRun:'Hace 10 min'},
+{name:'ValuPredict',desc:'Valuacion masiva automatizada de predios con Machine Learning',arch:'XGBoost + LSTM',metric:'R\u00b2',value:'0.92',status:'active',color:'#f59e0b',lastRun:'Ayer'},
+{name:'ChangeDetect',desc:'Monitoreo automatico satelital de cambios territoriales',arch:'CNN Siamesa + RF',metric:'Accuracy',value:'90%',status:'active',color:'#ef4444',lastRun:'Hace 1 dia'},
+{name:'CadastreNLP',desc:'Procesamiento de lenguaje natural para documentos legales catastrales',arch:'BERT + RAG + ChromaDB',metric:'Recall',value:'0.88',status:'waiting',color:'#0d9488',lastRun:'Hace 3 dias'}
+];
+
+const sncpTasks=[
+{num:1,name:'Reconocimiento de campo',status:'done',progress:100,date:'12 Oct 2025'},
+{num:2,name:'Levantamiento topografico',status:'done',progress:100,date:'15 Oct 2025'},
+{num:3,name:'Llenado ficha catastral',status:'progress',progress:65,date:'En curso'},
+{num:4,name:'Digitalizacion planos',status:'progress',progress:40,date:'En curso'},
+{num:5,name:'Validacion topologica',status:'pending',progress:0,date:'-'},
+{num:6,name:'Asignacion CUC',status:'pending',progress:0,date:'-'},
+{num:7,name:'Control calidad',status:'pending',progress:0,date:'-'},
+{num:8,name:'Generacion reportes SNCP',status:'pending',progress:0,date:'-'},
+{num:9,name:'Valuacion masiva',status:'pending',progress:0,date:'-'},
+{num:10,name:'Deteccion cambios',status:'pending',progress:0,date:'-'}
+];
+
+function Sidebar({active,setActive}){
+const items=[
+{id:'dashboard',icon:'\u{1F4CA}',label:'Dashboard 360'},
+{id:'map',icon:'\u{1F5FA}',label:'Visor Espacial'},
+{id:'properties',icon:'\u{1F3E0}',label:'Padron de Predios'},
+{id:'ai',icon:'\u{1F9E0}',label:'Motores IA'},
+{id:'roi',icon:'\u{1F4B0}',label:'Simulador ROI'}
+];
+const modules=[
+{id:'levantamiento',icon:'\u{1F4CB}',label:'Levantamiento Catastral'},
+{id:'tributacion',icon:'\u{1F4B3}',label:'Tributacion Predial'},
+{id:'saneamiento',icon:'\u{2696}',label:'Saneamiento Fisico-Legal'},
+{id:'planificacion',icon:'\u{1F30D}',label:'Planificacion Territorial'}
+];
+return React.createElement('div',{style:{width:260,background:COLORS.sidebar,borderRight:'1px solid '+COLORS.border,display:'flex',flexDirection:'column',overflow:'auto',flexShrink:0}},
+React.createElement('div',{style:{padding:20,borderBottom:'1px solid '+COLORS.border,display:'flex',alignItems:'center',gap:12}},
+React.createElement('div',{style:{width:40,height:40,background:'linear-gradient(135deg,#1565C0,#0d47a1)',borderRadius:10,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:14,color:'#fff'}},'C'),
+React.createElement('div',null,React.createElement('div',{style:{fontSize:14,fontWeight:700,color:'#fff'}},'CATASTRO 360 IA'),React.createElement('div',{style:{fontSize:10,color:COLORS.muted}},'INNOVAQ SOLUTIONS SAC'))
+),
+React.createElement('div',{style:{padding:'16px 12px 8px',fontSize:10,fontWeight:600,color:'#475569',textTransform:'uppercase',letterSpacing:1}},'PRINCIPAL'),
+items.map(i=>React.createElement('div',{key:i.id,onClick:()=>setActive(i.id),style:{display:'flex',alignItems:'center',gap:10,padding:'10px 16px',margin:'2px 8px',borderRadius:8,cursor:'pointer',fontSize:13,color:active===i.id?'#fff':'#94a3b8',background:active===i.id?'linear-gradient(135deg,#1565C0,#1976d2)':'transparent',fontWeight:active===i.id?600:400}},React.createElement('span',{style:{fontSize:16}},i.icon),i.label)),
+React.createElement('div',{style:{padding:'16px 12px 8px',fontSize:10,fontWeight:600,color:'#475569',textTransform:'uppercase',letterSpacing:1}},'MODULOS FUNCIONALES'),
+modules.map(i=>React.createElement('div',{key:i.id,onClick:()=>setActive(i.id),style:{display:'flex',alignItems:'center',gap:10,padding:'10px 16px',margin:'2px 8px',borderRadius:8,cursor:'pointer',fontSize:13,color:active===i.id?'#fff':'#94a3b8',background:active===i.id?'linear-gradient(135deg,#1565C0,#1976d2)':'transparent',fontWeight:active===i.id?600:400}},React.createElement('span',{style:{fontSize:16}},i.icon),i.label)),
+React.createElement('div',{style:{padding:'16px 12px 8px',fontSize:10,fontWeight:600,color:'#475569',textTransform:'uppercase',letterSpacing:1}}),
+React.createElement('div',{onClick:()=>setActive('config'),style:{display:'flex',alignItems:'center',gap:10,padding:'10px 16px',margin:'2px 8px',borderRadius:8,cursor:'pointer',fontSize:13,color:'#94a3b8'}},'\u2699\uFE0F','Configuracion')
+);
+}
+
+function Header(){
+return React.createElement('div',{style:{height:60,background:COLORS.sidebar,borderBottom:'1px solid '+COLORS.border,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 24px',flexShrink:0}},
+React.createElement('input',{placeholder:'Buscar predio, CUC, propietario o expediente...',style:{background:'#1e293b',border:'1px solid #334155',borderRadius:8,padding:'8px 16px',color:'#e2e8f0',width:400,fontSize:13,outline:'none'}}),
+React.createElement('div',{style:{display:'flex',alignItems:'center',gap:16}},
+React.createElement('span',{style:{background:'rgba(21,101,192,.2)',color:'#42a5f5',border:'1px solid #1565C0',padding:'4px 12px',borderRadius:16,fontSize:11,fontWeight:600}},'\u2728 IA Activa'),
+React.createElement('span',{style:{fontSize:20,cursor:'pointer',position:'relative'}},'\u{1F514}',React.createElement('span',{style:{position:'absolute',top:-4,right:-4,background:'#C62828',color:'#fff',fontSize:8,padding:'1px 4px',borderRadius:8}},'3')),
+React.createElement('div',{style:{display:'flex',alignItems:'center',gap:8}},
+React.createElement('div',null,React.createElement('div',{style:{fontSize:12,fontWeight:600}},'Admin Municipal'),React.createElement('div',{style:{fontSize:10,color:COLORS.muted}},'Trujillo, La Libertad')),
+React.createElement('div',{style:{width:32,height:32,background:'linear-gradient(135deg,#1565C0,#42a5f5)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:14}},'A')
+))
+);
+  }
+
+function KPICard({label,value,change,changeType,icon,iconBg}){
+return React.createElement('div',{style:{background:COLORS.card,border:'1px solid '+COLORS.border,borderRadius:12,padding:20}},
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between'}},
+React.createElement('div',null,
+React.createElement('div',{style:{fontSize:12,color:COLORS.muted}},label),
+React.createElement('div',{style:{fontSize:28,fontWeight:800,color:'#fff',marginTop:4}},value),
+React.createElement('span',{style:{fontSize:11,padding:'2px 8px',borderRadius:10,display:'inline-block',marginTop:8,background:changeType==='up'?'rgba(34,197,94,.15)':'rgba(198,40,40,.15)',color:changeType==='up'?'#22c55e':'#ef4444'}},change)
+),
+React.createElement('div',{style:{width:40,height:40,background:iconBg||'rgba(21,101,192,.2)',borderRadius:10,display:'flex',alignItems:'center',justifyContent:'center',fontSize:20}},icon)
+));
+}
+
+function Dashboard(){
+return React.createElement('div',null,
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'start',marginBottom:24}},
+React.createElement('div',null,React.createElement('h1',{style:{fontSize:24,fontWeight:700}},'BI 360 - Decision Layer'),React.createElement('p',{style:{fontSize:13,color:COLORS.muted}},'Monitoreo predictivo y KPIs en tiempo real')),
+React.createElement('div',{style:{display:'flex',gap:8}},React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'1px solid #334155',background:'transparent',color:'#e2e8f0'}},'Exportar Reporte'),React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'none',background:'#1565C0',color:'#fff'}},'Actualizar Modelos IA'))
+),
+React.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:16,marginBottom:24}},
+React.createElement(KPICard,{label:'Recaudacion Proyectada',value:'S/ 14.5M',change:'+157% vs mes anterior',changeType:'up',icon:'\u{1F4B2}',iconBg:'rgba(34,197,94,.15)'}),
+React.createElement(KPICard,{label:'Cobertura Catastral',value:'85.2%',change:'+12.4% vs mes anterior',changeType:'up',icon:'\u{1F3DB}',iconBg:'rgba(21,101,192,.15)'}),
+React.createElement(KPICard,{label:'Eficiencia Operativa',value:'94%',change:'+8.1% vs mes anterior',changeType:'up',icon:'\u{1F4C8}',iconBg:'rgba(168,85,247,.15)'}),
+React.createElement(KPICard,{label:'Predios No Declarados',value:'3,421',change:'-450 vs mes anterior',changeType:'down',icon:'\u26A0',iconBg:'rgba(245,158,11,.15)'})
+),
+React.createElement('div',{style:{display:'grid',gridTemplateColumns:'2fr 1fr',gap:16}},
+React.createElement('div',{style:{background:COLORS.card,border:'1px solid '+COLORS.border,borderRadius:12,padding:20}},
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:16}},
+React.createElement('div',null,React.createElement('div',{style:{fontSize:16,fontWeight:700}},'Proyeccion de Recaudacion Tributaria'),React.createElement('div',{style:{fontSize:11,color:COLORS.muted}},'Modelo ValuPredict (XGBoost+LSTM)')),
+React.createElement('select',{style:{background:'#1e293b',border:'1px solid #334155',borderRadius:6,padding:'4px 8px',color:'#e2e8f0',fontSize:11}},'Ultimos 6 meses')
+),
+React.createElement(ResponsiveContainer,{width:'100%',height:200},
+React.createElement(AreaChart,{data:revenueData},
+React.createElement(CartesianGrid,{strokeDasharray:'3 3',stroke:'#1e293b'}),
+React.createElement(XAxis,{dataKey:'name',stroke:'#64748b',fontSize:11}),
+React.createElement(YAxis,{stroke:'#64748b',fontSize:11,tickFormatter:v=>'S/'+Math.round(v/1000)+'k'}),
+React.createElement(Tooltip,{contentStyle:{background:'#1e293b',border:'1px solid #334155',borderRadius:8,fontSize:11}}),
+React.createElement(Area,{type:'monotone',dataKey:'actual',stroke:'#C62828',fill:'rgba(198,40,40,.2)',strokeWidth:2}),
+React.createElement(Area,{type:'monotone',dataKey:'predicted',stroke:'#1565C0',fill:'rgba(21,101,192,.1)',strokeWidth:2,strokeDasharray:'5 5'})
+))),
+React.createElement('div',{style:{background:COLORS.card,border:'1px solid '+COLORS.border,borderRadius:12,padding:20}},
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:16}},
+React.createElement('div',{style:{fontSize:16,fontWeight:700}},'Alertas ChangeDetect IA'),
+React.createElement('span',{style:{width:8,height:8,background:'#ef4444',borderRadius:'50%',display:'inline-block'}})
+),
+React.createElement('div',{style:{fontSize:11,color:COLORS.muted,marginBottom:12}},'Monitoreo satelital automatico'),
+[{title:'Construccion Nueva',detail:'Sector 4, Mz H Lt 12',confidence:'98%',time:'Hace 2 horas',verified:true},
+{title:'Ampliacion Detectada',detail:'Urb. El Recreo, Lt 45',confidence:'87%',time:'Hace 5 horas',verified:false},
+{title:'Demolicion Parcial',detail:'Av. Larco 890',confidence:'91%',time:'Ayer',verified:true}].map((a,i)=>
+React.createElement('div',{key:i,style:{background:'#1e293b',borderRadius:8,padding:12,marginBottom:8,borderLeft:'3px solid #C62828'}},
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center'}},
+React.createElement('div',{style:{fontSize:13,fontWeight:600}},'\u26A0 '+a.title),
+React.createElement('span',{style:{fontSize:9,padding:'2px 6px',borderRadius:4,fontWeight:700,background:'rgba(198,40,40,.3)',color:'#ef4444'}},a.confidence)),
+React.createElement('div',{style:{fontSize:11,color:COLORS.muted,marginTop:4}},a.detail),
+React.createElement('div',{style:{fontSize:10,color:COLORS.muted,marginTop:4,display:'flex',justifyContent:'space-between'}},
+React.createElement('span',null,a.time),
+React.createElement('span',{style:{color:a.verified?'#22c55e':'#f59e0b'}},a.verified?'\u2705 Verificado':'\u23F3 Pendiente'))
+)))
+));
+       }
+
+function MapViewer(){
+return React.createElement('div',null,
+React.createElement('h1',{style:{fontSize:24,fontWeight:700,marginBottom:4}},'Visor Espacial'),
+React.createElement('p',{style:{fontSize:13,color:COLORS.muted,marginBottom:24}},'Catastro georreferenciado - PostGIS 3.4 + GeoServer 2.24'),
+React.createElement('div',{style:{height:450,background:'#0a1628',borderRadius:12,position:'relative',overflow:'hidden',border:'1px solid '+COLORS.border}},
+React.createElement('div',{style:{position:'absolute',inset:0,backgroundImage:'linear-gradient(rgba(30,41,59,.3) 1px,transparent 1px),linear-gradient(90deg,rgba(30,41,59,.3) 1px,transparent 1px)',backgroundSize:'60px 60px'}}),
+parcels.map(p=>React.createElement('div',{key:p.id,title:p.cuc,style:{position:'absolute',left:p.x+'%',top:p.y+'%',width:p.w+'%',height:p.h+'%',border:'2px solid',borderColor:p.type==='regular'?'#22c55e':p.type==='irregular'?'#ef4444':'#f59e0b',background:p.type==='regular'?'rgba(34,197,94,.1)':p.type==='irregular'?'rgba(239,68,68,.1)':'rgba(245,158,11,.1)',borderRadius:2,opacity:.7,cursor:'pointer',transition:'all .2s'}})),
+React.createElement('div',{style:{position:'absolute',top:16,right:16,background:'rgba(15,22,41,.95)',border:'1px solid '+COLORS.border,borderRadius:8,padding:16}},
+React.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:8}},'\u{1F5FA} Leyenda Catastral'),
+[{label:'Predio Regular',color:'#22c55e'},{label:'Irregular / No Declarado',color:'#ef4444'},{label:'En Tramite / Pendiente',color:'#f59e0b'}].map((l,i)=>
+React.createElement('div',{key:i,style:{display:'flex',alignItems:'center',gap:8,fontSize:11,color:'#94a3b8',marginBottom:4}},
+React.createElement('div',{style:{width:12,height:12,borderRadius:2,border:'2px solid '+l.color}}),l.label)),
+React.createElement('div',{style:{marginTop:8,fontSize:10,color:COLORS.muted}},'Motores IA Activos:'),
+React.createElement('div',{style:{display:'flex',gap:4,marginTop:4}},
+React.createElement('span',{style:{fontSize:9,padding:'2px 6px',borderRadius:4,background:'rgba(21,101,192,.2)',color:'#42a5f5'}},'BoundaryNet'),
+React.createElement('span',{style:{fontSize:9,padding:'2px 6px',borderRadius:4,background:'rgba(34,197,94,.2)',color:'#22c55e'}},'ParcelVision'))
+),
+React.createElement('div',{style:{position:'absolute',bottom:8,left:16,fontFamily:'monospace',fontSize:11,color:COLORS.muted}},'EPSG:3857  Lon: -79.0299  Lat: -8.1090  ',React.createElement('span',{style:{color:'#22c55e'}},'PostGIS 3.4 + GeoServer 2.24'))
+));
+}
+
+function PropertyTable(){
+const data=[
+{cuc:'130101-0001-0001',dir:'Av. Larco 1240',prop:'Juan Perez',area:'120 m\u00b2',valor:'S/ 245,000',estado:'Regular',alerta:'-'},
+{cuc:'130101-0001-0002',dir:'Calle Los Cedros 450',prop:'Maria Gomez',area:'95 m\u00b2',valor:'S/ 180,000',estado:'Irregular',alerta:'Subvaluacion'},
+{cuc:'130101-0001-0003',dir:'Jr. Pizarro 780',prop:'Carlos Ruiz',area:'200 m\u00b2',valor:'S/ 520,000',estado:'Regular',alerta:'-'},
+{cuc:'130101-0001-0004',dir:'Av. Espana 320',prop:'Ana Torres',area:'150 m\u00b2',valor:'S/ 310,000',estado:'Pendiente',alerta:'No Declarado'},
+{cuc:'130101-0001-0005',dir:'Calle Colon 156',prop:'Luis Mendoza',area:'80 m\u00b2',valor:'S/ 145,000',estado:'Regular',alerta:'-'},
+{cuc:'130101-0001-0006',dir:'Av. America 920',prop:'Rosa Diaz',area:'180 m\u00b2',valor:'S/ 385,000',estado:'Irregular',alerta:'Construccion ilegal'}
+];
+return React.createElement('div',null,
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'start',marginBottom:24}},
+React.createElement('div',null,React.createElement('h1',{style:{fontSize:24,fontWeight:700}},'Padron de Predios'),React.createElement('p',{style:{fontSize:13,color:COLORS.muted}},'Gestion catastral y tributaria')),
+React.createElement('div',{style:{display:'flex',gap:8}},React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'1px solid #334155',background:'transparent',color:'#e2e8f0'}},'\u{1F50D} Filtros Avanzados'),React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'1px solid #334155',background:'transparent',color:'#e2e8f0'}},'\u{1F4E5} Exportar Padron'),React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'none',background:'#C62828',color:'#fff'}},'Nuevo Predio'))
+),
+React.createElement('div',{style:{marginBottom:16,display:'flex',justifyContent:'space-between',alignItems:'center'}},
+React.createElement('input',{placeholder:'Buscar por CUC, propietario o direccion...',style:{background:'#1e293b',border:'1px solid #334155',borderRadius:8,padding:'8px 16px',color:'#e2e8f0',width:400,fontSize:13,outline:'none'}}),
+React.createElement('span',{style:{fontSize:12,color:COLORS.muted}},'Mostrando ',React.createElement('b',null,'6'),' de ',React.createElement('b',null,'14,230'),' predios')
+),
+React.createElement('div',{style:{background:COLORS.card,border:'1px solid '+COLORS.border,borderRadius:12,overflow:'hidden'}},
+React.createElement('table',{style:{width:'100%',borderCollapse:'collapse'}},
+React.createElement('thead',null,React.createElement('tr',null,
+['CUC','DIRECCION','PROPIETARIO','AREA','VALOR IA','ESTADO','ALERTA IA'].map(h=>React.createElement('th',{key:h,style:{textAlign:'left',padding:'12px 16px',fontSize:11,fontWeight:600,color:COLORS.muted,textTransform:'uppercase',background:'#0f1629',borderBottom:'1px solid '+COLORS.border}},h)))),
+React.createElement('tbody',null,data.map((d,i)=>React.createElement('tr',{key:i,style:{borderBottom:'1px solid '+COLORS.border}},
+React.createElement('td',{style:{padding:'12px 16px',fontSize:13,color:'#42a5f5'}},d.cuc),
+React.createElement('td',{style:{padding:'12px 16px',fontSize:13}},d.dir),
+React.createElement('td',{style:{padding:'12px 16px',fontSize:13}},d.prop),
+React.createElement('td',{style:{padding:'12px 16px',fontSize:13}},d.area),
+React.createElement('td',{style:{padding:'12px 16px',fontSize:13,fontWeight:600}},d.valor),
+React.createElement('td',{style:{padding:'12px 16px'}},React.createElement('span',{style:{padding:'2px 8px',borderRadius:10,fontSize:11,fontWeight:600,background:d.estado==='Regular'?'rgba(34,197,94,.15)':d.estado==='Irregular'?'rgba(239,68,68,.15)':'rgba(245,158,11,.15)',color:d.estado==='Regular'?'#22c55e':d.estado==='Irregular'?'#ef4444':'#f59e0b'}},d.estado)),
+React.createElement('td',{style:{padding:'12px 16px',fontSize:12,color:d.alerta==='-'?COLORS.muted:'#f59e0b'}},d.alerta!=='-'?'\u26A0 '+d.alerta:'-')
+)))
+)));
+              }
+
+function AIEngines(){
+return React.createElement('div',null,
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'start',marginBottom:24}},
+React.createElement('div',null,React.createElement('h1',{style:{fontSize:24,fontWeight:700}},'AI Engine - 6 Motores'),React.createElement('p',{style:{fontSize:13,color:COLORS.muted}},'Gestion y monitoreo de modelos de Inteligencia Artificial')),
+React.createElement('div',{style:{display:'flex',gap:8}},React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'1px solid #334155',background:'transparent',color:'#e2e8f0'}},'\u2699 Configuracion Global'),React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'none',background:'#1565C0',color:'#fff'}},'\u2728 Ejecutar Todos'))
+),
+React.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16}},
+engines.map((e,i)=>React.createElement('div',{key:i,style:{background:COLORS.card,border:'1px solid '+COLORS.border,borderRadius:12,padding:20,transition:'all .2s'}},
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'start',marginBottom:12}},
+React.createElement('div',{style:{width:40,height:40,background:'rgba('+{blue:'21,101,192',green:'34,197,94',purple:'168,85,250',yellow:'245,158,11',red:'239,68,68',teal:'13,148,136'}[['blue','green','purple','yellow','red','teal'][i]]+',.2)',borderRadius:10,display:'flex',alignItems:'center',justifyContent:'center',fontSize:18}},'\u{1F9E0}'),
+React.createElement('span',{style:{fontSize:10,padding:'2px 8px',borderRadius:10,fontWeight:600,background:e.status==='active'?'rgba(34,197,94,.15)':'rgba(245,158,11,.15)',color:e.status==='active'?'#22c55e':'#f59e0b'}},e.status==='active'?'\u2705 Activo':'\u23F3 En Espera')
+),
+React.createElement('div',{style:{fontSize:16,fontWeight:700,marginBottom:4}},e.name),
+React.createElement('div',{style:{fontSize:11,color:COLORS.muted,marginBottom:12}},e.desc),
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontSize:12,marginBottom:4}},React.createElement('span',{style:{color:COLORS.muted}},'Arquitectura:'),React.createElement('span',{style:{fontFamily:'monospace',fontSize:10,padding:'2px 6px',borderRadius:4,background:'#1e293b',color:'#94a3b8'}},e.arch)),
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontSize:12,marginBottom:4}},React.createElement('span',{style:{color:COLORS.muted}},'Precision:'),React.createElement('span',{style:{fontFamily:'monospace',fontWeight:600,color:e.color}},e.metric+': '+e.value)),
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontSize:12,marginBottom:12}},React.createElement('span',{style:{color:COLORS.muted}},'Ultima ejecucion:'),React.createElement('span',{style:{fontSize:11}},e.lastRun)),
+React.createElement('div',{style:{display:'flex',gap:8}},
+React.createElement('button',{style:{flex:1,padding:'6px 12px',borderRadius:6,fontSize:11,fontWeight:600,cursor:'pointer',border:'1px solid #334155',background:'transparent',color:'#e2e8f0'}},'Ver Logs'),
+React.createElement('button',{style:{flex:1,padding:'6px 12px',borderRadius:6,fontSize:11,fontWeight:600,cursor:'pointer',border:'none',background:e.color,color:'#fff'}},'Ejecutar')
+))))
+);
+}
+
+function ROISimulator(){
+const [predios,setPredios]=useState(15000);
+const [evasion,setEvasion]=useState(35);
+const [ticket,setTicket]=useState(450);
+const [costo,setCosto]=useState(120000);
+const incremento=Math.round(predios*(evasion/100)*ticket);
+const recTotal=Math.round(predios*ticket);
+const roi=Math.round(((incremento-costo)/costo)*100);
+const compData=[{name:'Sin IA',value:recTotal-incremento},{name:'Con IA',value:recTotal}];
+return React.createElement('div',null,
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'start',marginBottom:24}},
+React.createElement('div',null,React.createElement('h1',{style:{fontSize:24,fontWeight:700}},'Simulador de ROI Tributario'),React.createElement('p',{style:{fontSize:13,color:COLORS.muted}},'Proyeccion de retorno de inversion con Tributacion Predial Inteligente')),
+React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'1px solid #334155',background:'transparent',color:'#e2e8f0'}},'\u{1F4C4} Generar Informe PDF')
+),
+React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr 1fr',gap:16,marginBottom:24}},
+React.createElement('div',{style:{background:COLORS.card,border:'1px solid '+COLORS.border,borderRadius:12,padding:20,gridColumn:'span 1'}},
+React.createElement('h3',{style:{fontSize:16,fontWeight:700,marginBottom:16}},'Parametros de Simulacion'),
+React.createElement('div',{style:{marginBottom:16}},React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontSize:13,marginBottom:6}},React.createElement('span',null,'Total de Predios Estimados'),React.createElement('span',{style:{fontWeight:600}},predios.toLocaleString())),React.createElement('input',{type:'range',min:5000,max:50000,value:predios,onChange:e=>setPredios(+e.target.value),style:{width:'100%',accentColor:'#1565C0'}})),
+React.createElement('div',{style:{marginBottom:16}},React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontSize:13,marginBottom:6}},React.createElement('span',null,'Tasa de Evasion / Subvaluacion (%)'),React.createElement('span',{style:{fontWeight:600}},evasion+'%')),React.createElement('input',{type:'range',min:10,max:70,value:evasion,onChange:e=>setEvasion(+e.target.value),style:{width:'100%',accentColor:'#C62828'}})),
+React.createElement('div',{style:{marginBottom:16}},React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontSize:13,marginBottom:6}},React.createElement('span',null,'Ticket Promedio Predial (S/)'),React.createElement('span',{style:{fontWeight:600}},'S/ '+ticket)),React.createElement('input',{type:'range',min:100,max:2000,value:ticket,onChange:e=>setTicket(+e.target.value),style:{width:'100%',accentColor:'#0d9488'}})),
+React.createElement('div',null,React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontSize:13,marginBottom:6}},React.createElement('span',null,'Costo Estimado Plataforma IA (S/)'),React.createElement('span',{style:{fontWeight:600}},'S/ '+costo.toLocaleString())),React.createElement('input',{type:'range',min:50000,max:500000,step:10000,value:costo,onChange:e=>setCosto(+e.target.value),style:{width:'100%',accentColor:'#a78bfa'}}))
+),
+React.createElement('div',{style:{background:COLORS.card,border:'1px solid '+COLORS.border,borderRadius:12,padding:20,textAlign:'center'}},React.createElement('div',{style:{fontSize:12,color:COLORS.muted}},'\u{1F4C8} Incremento Anual'),React.createElement('div',{style:{fontSize:28,fontWeight:800,color:'#fff',marginTop:4}},'S/ '+(incremento/1000000).toFixed(2)+'M')),
+React.createElement('div',{style:{background:COLORS.card,border:'1px solid '+COLORS.border,borderRadius:12,padding:20,textAlign:'center'}},React.createElement('div',{style:{fontSize:12,color:COLORS.muted}},'\u{1F4B5} Recaudacion Total'),React.createElement('div',{style:{fontSize:28,fontWeight:800,color:'#fff',marginTop:4}},'S/ '+(recTotal/1000000).toFixed(2)+'M')),
+React.createElement('div',{style:{background:'linear-gradient(135deg,#0d47a1,#1565C0)',borderRadius:12,padding:20,textAlign:'center'}},React.createElement('div',{style:{fontSize:36,fontWeight:800,color:'#22c55e'}},'+'+roi+'%'),React.createElement('div',{style:{fontSize:12,color:'#94a3b8'}},'ROI Estimado'),React.createElement('div',{style:{fontSize:10,color:'#64748b',marginTop:4}},'Retorno de inversion en el primer ano'))
+),
+React.createElement('div',{style:{background:COLORS.card,border:'1px solid '+COLORS.border,borderRadius:12,padding:20}},
+React.createElement('h3',{style:{fontSize:16,fontWeight:700,marginBottom:16}},'Comparativa de Recaudacion'),
+React.createElement(ResponsiveContainer,{width:'100%',height:200},
+React.createElement(BarChart,{data:compData},
+React.createElement(CartesianGrid,{strokeDasharray:'3 3',stroke:'#1e293b'}),
+React.createElement(XAxis,{dataKey:'name',stroke:'#64748b',fontSize:11}),
+React.createElement(YAxis,{stroke:'#64748b',fontSize:11,tickFormatter:v=>'S/'+(v/1000000).toFixed(1)+'M'}),
+React.createElement(Tooltip,{contentStyle:{background:'#1e293b',border:'1px solid #334155',borderRadius:8,fontSize:11},formatter:v=>'S/ '+v.toLocaleString()}),
+React.createElement(Bar,{dataKey:'value',radius:[4,4,0,0],fill:function(e,i){return i===0?'#C62828':'#1565C0'}})
+)))
+);
+  }
+
+function LevantamientoCatastral(){
+return React.createElement('div',null,
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'start',marginBottom:24}},
+React.createElement('div',null,React.createElement('h1',{style:{fontSize:24,fontWeight:700}},'Levantamiento Catastral Inteligente'),React.createElement('p',{style:{fontSize:13,color:COLORS.muted}},'Gestion de las 10 tareas del Sistema Nacional Integrado de Informacion Catastral Predial (SNCP)')),
+React.createElement('div',{style:{display:'flex',gap:8}},React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'1px solid #334155',background:'transparent',color:'#e2e8f0'}},'Generar Reporte SNCP'),React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'none',background:'#C62828',color:'#fff'}},'Nueva Campana'))
+),
+React.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16}},
+sncpTasks.map(t=>React.createElement('div',{key:t.num,style:{background:COLORS.card,border:'1px solid '+COLORS.border,borderRadius:12,padding:16}},
+React.createElement('div',{style:{display:'flex',alignItems:'center',gap:8,marginBottom:8}},
+React.createElement('div',{style:{width:28,height:28,background:'#1e293b',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:12,fontWeight:700,color:t.status==='done'?'#22c55e':t.status==='progress'?'#42a5f5':'#64748b'}},t.num),
+React.createElement('span',{style:{fontSize:14}},t.status==='done'?'\u2705':t.status==='progress'?'\u25B6':'\u23F3'),
+React.createElement('span',{style:{fontSize:10,color:COLORS.muted,marginLeft:'auto'}},t.date)),
+React.createElement('div',{style:{fontSize:14,fontWeight:600,marginBottom:8}},t.name),
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontSize:11,color:COLORS.muted,marginBottom:4}},
+React.createElement('span',null,t.status==='done'?'Completado':t.status==='progress'?'En Progreso':'Pendiente'),
+React.createElement('span',null,t.progress+'%')),
+React.createElement('div',{style:{height:6,background:'#1e293b',borderRadius:3,overflow:'hidden'}},
+React.createElement('div',{style:{height:'100%',width:t.progress+'%',borderRadius:3,background:t.status==='done'?'linear-gradient(90deg,#22c55e,#16a34a)':t.status==='progress'?'linear-gradient(90deg,#1565C0,#42a5f5)':'#334155'}}))
+)))
+);
+}
+
+function TributacionPredial(){
+const data=[
+{cuc:'130101-0001-0001',contrib:'Juan Perez',deuda:'S/ 0.00',estado:'Al Dia',sub:'-',pago:'12 Oct 2025'},
+{cuc:'130101-0001-0002',contrib:'Maria Gomez',deuda:'S/ 4,500.00',estado:'Moroso',sub:'Si (S/ 120k)',pago:'15 Ene 2024'},
+{cuc:'130101-0001-0003',contrib:'Carlos Ruiz',deuda:'S/ 1,200.00',estado:'Moroso',sub:'-',pago:'03 Jun 2025'},
+{cuc:'130101-0001-0004',contrib:'Ana Torres',deuda:'S/ 0.00',estado:'Al Dia',sub:'Si (S/ 85k)',pago:'20 Nov 2025'},
+{cuc:'130101-0001-0005',contrib:'Luis Mendoza',deuda:'S/ 8,900.00',estado:'Moroso',sub:'Si (S/ 200k)',pago:'08 Mar 2023'}
+];
+return React.createElement('div',null,
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'start',marginBottom:24}},
+React.createElement('div',null,React.createElement('h1',{style:{fontSize:24,fontWeight:700}},'Tributacion Predial Inteligente'),React.createElement('p',{style:{fontSize:13,color:COLORS.muted}},'Deteccion de morosidad, subvaluacion y optimizacion de cobranza')),
+React.createElement('div',{style:{display:'flex',gap:8}},React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'1px solid #334155',background:'transparent',color:'#e2e8f0'}},'\u{1F50D} Filtros'),React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'1px solid #334155',background:'transparent',color:'#e2e8f0'}},'\u{1F4E5} Exportar'),React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'none',background:'#C62828',color:'#fff'}},'Notificacion Masiva'))
+),
+React.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16,marginBottom:24}},
+React.createElement(KPICard,{label:'Deuda Total Recuperable',value:'S/ 4.2M',change:'+12% vs mes anterior',changeType:'up',icon:'\u{1F4B0}'}),
+React.createElement(KPICard,{label:'Predios Subvaluados (IA)',value:'1,245',change:'Requieren fiscalizacion',changeType:'down',icon:'\u{1F50D}'}),
+React.createElement(KPICard,{label:'Indice de Morosidad',value:'28.4%',change:'-2.1% tras notificaciones IA',changeType:'up',icon:'\u{1F4C9}'})
+),
+React.createElement('div',{style:{background:COLORS.card,border:'1px solid '+COLORS.border,borderRadius:12,overflow:'hidden'}},
+React.createElement('table',{style:{width:'100%',borderCollapse:'collapse'}},
+React.createElement('thead',null,React.createElement('tr',null,['CUC','CONTRIBUYENTE','DEUDA TOTAL','ESTADO','SUBVALUACION IA','ULTIMO PAGO'].map(h=>React.createElement('th',{key:h,style:{textAlign:'left',padding:'12px 16px',fontSize:11,fontWeight:600,color:COLORS.muted,textTransform:'uppercase',background:'#0f1629',borderBottom:'1px solid '+COLORS.border}},h)))),
+React.createElement('tbody',null,data.map((d,i)=>React.createElement('tr',{key:i,style:{borderBottom:'1px solid '+COLORS.border}},
+React.createElement('td',{style:{padding:'12px 16px',fontSize:13,color:'#42a5f5'}},d.cuc),
+React.createElement('td',{style:{padding:'12px 16px',fontSize:13}},d.contrib),
+React.createElement('td',{style:{padding:'12px 16px',fontSize:13,fontWeight:600}},d.deuda),
+React.createElement('td',{style:{padding:'12px 16px'}},React.createElement('span',{style:{padding:'2px 8px',borderRadius:10,fontSize:11,fontWeight:600,background:d.estado==='Al Dia'?'rgba(34,197,94,.15)':'rgba(239,68,68,.15)',color:d.estado==='Al Dia'?'#22c55e':'#ef4444'}},d.estado==='Al Dia'?'\u2705 '+d.estado:'\u26A0 '+d.estado)),
+React.createElement('td',{style:{padding:'12px 16px',fontSize:12,color:d.sub==='-'?COLORS.muted:'#f59e0b'}},d.sub!=='-'?'\u26A0 '+d.sub:'-'),
+React.createElement('td',{style:{padding:'12px 16px',fontSize:12,color:COLORS.muted}},d.pago)
+))))
+);
+}
+
+function SaneamientoLegal(){
+const exp=[
+{id:'EXP-2025-001',cuc:'130101-0001-0001',tipo:'Inmatriculacion',sunarp:'Coincide',super:'Ninguna',prog:45},
+{id:'EXP-2025-002',cuc:'130101-0001-0002',tipo:'Subdivision',sunarp:'Discrepancia Area',super:'Superposicion 12%',prog:20},
+{id:'EXP-2025-003',cuc:'130101-0001-0003',tipo:'Acumulacion',sunarp:'Coincide',super:'Ninguna',prog:100},
+{id:'EXP-2025-004',cuc:'130101-0001-0004',tipo:'Rectificacion',sunarp:'Pendiente',super:'Ninguna',prog:60}
+];
+return React.createElement('div',null,
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'start',marginBottom:24}},
+React.createElement('div',null,React.createElement('h1',{style:{fontSize:24,fontWeight:700}},'Saneamiento Fisico-Legal'),React.createElement('p',{style:{fontSize:13,color:COLORS.muted}},'Gestion de expedientes, cruce registral SUNARP y deteccion de superposiciones')),
+React.createElement('div',{style:{display:'flex',gap:8}},React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'1px solid #334155',background:'transparent',color:'#e2e8f0'}},'\u{1F9E0} Analisis Masivo'),React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'none',background:'#1565C0',color:'#fff'}},'Nuevo Expediente'))
+),
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',marginBottom:16}},
+React.createElement('input',{placeholder:'Buscar expediente o CUC...',style:{background:'#1e293b',border:'1px solid #334155',borderRadius:8,padding:'8px 16px',color:'#e2e8f0',width:400,fontSize:13,outline:'none'}}),
+React.createElement('div',{style:{display:'flex',gap:8}},React.createElement('span',{style:{fontSize:12,color:COLORS.muted,padding:'6px 12px'}},'Total: 1,240'),React.createElement('span',{style:{fontSize:12,padding:'6px 12px',borderRadius:8,background:'rgba(198,40,40,.15)',color:'#ef4444',fontWeight:600}},'Observados: 342'))
+),
+React.createElement('div',{style:{background:COLORS.card,border:'1px solid '+COLORS.border,borderRadius:12,overflow:'hidden'}},
+React.createElement('table',{style:{width:'100%',borderCollapse:'collapse'}},
+React.createElement('thead',null,React.createElement('tr',null,['EXPEDIENTE','CUC','TIPO','CRUCE SUNARP (IA)','SUPERPOSICION (IA)','PROGRESO'].map(h=>React.createElement('th',{key:h,style:{textAlign:'left',padding:'12px 16px',fontSize:11,fontWeight:600,color:COLORS.muted,textTransform:'uppercase',background:'#0f1629',borderBottom:'1px solid '+COLORS.border}},h)))),
+React.createElement('tbody',null,exp.map((e,i)=>React.createElement('tr',{key:i,style:{borderBottom:'1px solid '+COLORS.border}},
+React.createElement('td',{style:{padding:'12px 16px',fontSize:13,fontWeight:600}},e.id),
+React.createElement('td',{style:{padding:'12px 16px',fontSize:13,color:'#42a5f5'}},e.cuc),
+React.createElement('td',{style:{padding:'12px 16px',fontSize:13}},e.tipo),
+React.createElement('td',{style:{padding:'12px 16px'}},React.createElement('span',{style:{color:e.sunarp==='Coincide'?'#22c55e':e.sunarp==='Pendiente'?COLORS.muted:'#f59e0b'}},e.sunarp==='Coincide'?'\u2705 ':e.sunarp==='Pendiente'?'\u23F3 ':'\u26A0 ',e.sunarp)),
+React.createElement('td',{style:{padding:'12px 16px',color:e.super==='Ninguna'?'#22c55e':'#ef4444'}},e.super==='Ninguna'?'\u2705 Ninguna':'\u26A0 '+e.super),
+React.createElement('td',{style:{padding:'12px 16px'}},React.createElement('div',{style:{display:'flex',alignItems:'center',gap:8}},React.createElement('div',{style:{flex:1,height:6,background:'#1e293b',borderRadius:3,overflow:'hidden'}},React.createElement('div',{style:{height:'100%',width:e.prog+'%',borderRadius:3,background:e.prog===100?'#22c55e':e.prog>50?'#1565C0':'#f59e0b'}})),React.createElement('span',{style:{fontSize:11,minWidth:30}},e.prog+'%')))
+))))
+);
+}
+
+function PlanificacionTerritorial(){
+return React.createElement('div',null,
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'start',marginBottom:24}},
+React.createElement('div',null,React.createElement('h1',{style:{fontSize:24,fontWeight:700}},'Planificacion Territorial'),React.createElement('p',{style:{fontSize:13,color:COLORS.muted}},'Zonificacion, uso de suelo y analisis de riesgos CENEPRED')),
+React.createElement('div',{style:{display:'flex',gap:8}},React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'1px solid #334155',background:'transparent',color:'#e2e8f0'}},'\u{1F5FA} Capas PDU'),React.createElement('button',{style:{padding:'8px 16px',borderRadius:8,fontSize:12,fontWeight:600,cursor:'pointer',border:'none',background:'#1565C0',color:'#fff'}},'Simular Escenario'))
+),
+React.createElement('div',{style:{display:'grid',gridTemplateColumns:'2fr 1fr',gap:16}},
+React.createElement('div',{style:{height:400,position:'relative',borderRadius:12,overflow:'hidden',background:'#0a1628',border:'1px solid '+COLORS.border}},
+React.createElement('div',{style:{position:'absolute',left:'5%',top:'3%',width:'50%',height:'50%',background:'rgba(139,128,0,.5)',borderRadius:4,clipPath:'polygon(10% 5%, 85% 5%, 80% 90%, 5% 85%)'}}),
+React.createElement('div',{style:{position:'absolute',left:'40%',top:'40%',width:'55%',height:'55%',background:'rgba(13,148,136,.5)',borderRadius:4,clipPath:'polygon(15% 10%, 90% 5%, 85% 90%, 10% 85%)'}}),
+React.createElement('div',{style:{position:'absolute',left:'55%',top:'2%',width:'40%',height:'40%',background:'rgba(21,101,192,.5)',borderRadius:4,clipPath:'polygon(5% 5%, 95% 5%, 90% 90%, 10% 85%)'}}),
+React.createElement('div',{style:{position:'absolute',left:'2%',top:'45%',width:'40%',height:'50%',background:'rgba(127,29,29,.5)',borderRadius:4,clipPath:'polygon(5% 5%, 90% 10%, 85% 90%, 10% 85%)'}}),
+React.createElement('div',{style:{position:'absolute',left:'25%',top:'35%',color:'#fff',fontWeight:700,fontSize:18}},'RDA'),
+React.createElement('div',{style:{position:'absolute',left:'55%',top:'65%',color:'#fff',fontWeight:700,fontSize:18}},'RDM'),
+React.createElement('div',{style:{position:'absolute',left:'70%',top:'15%',color:'#fff',fontWeight:700,fontSize:14}},'CZ'),
+React.createElement('div',{style:{position:'absolute',left:'10%',top:'65%',color:'#fff',fontWeight:700,fontSize:14}},'RI')
+),
+React.createElement('div',null,
+React.createElement('div',{style:{fontSize:16,fontWeight:700,marginBottom:12}},'\u26A0 Alertas CENEPRED'),
+[{title:'Sector 4 - Quebrada San Ildefonso',risk:'MUY ALTO',type:'Inundacion / Huaico',predios:145,color:'#ef4444'},
+{title:'Urb. El Recreo',risk:'MEDIO',type:'Sismo',predios:850,color:'#eab308'},
+{title:'Sector 2 - Borde Costero',risk:'ALTO',type:'Erosion Costera',predios:320,color:'#f59e0b'}].map((r,i)=>
+React.createElement('div',{key:i,style:{background:'#1e293b',borderRadius:8,padding:12,marginBottom:8,borderLeft:'3px solid '+r.color}},
+React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center'}},
+React.createElement('div',{style:{fontSize:13,fontWeight:600}},r.title),
+React.createElement('span',{style:{fontSize:9,padding:'2px 6px',borderRadius:4,fontWeight:700,background:r.risk==='MUY ALTO'?'rgba(239,68,68,.3)':r.risk==='ALTO'?'rgba(245,158,11,.3)':'rgba(234,179,8,.3)',color:r.color}},r.risk)),
+React.createElement('div',{style:{fontSize:11,color:COLORS.muted,marginTop:2}},r.type+' \u2022 '+r.predios+' predios'),
+React.createElement('div',{style:{fontSize:10,color:COLORS.muted,marginTop:2}},'\u{1F4CD} Fuente: CENEPRED')
+))
+))
+);
+}
+
+function App(){
+const [active,setActive]=useState('dashboard');
+const renderPage=()=>{
+switch(active){
+case 'dashboard':return React.createElement(Dashboard);
+case 'map':return React.createElement(MapViewer);
+case 'properties':return React.createElement(PropertyTable);
+case 'ai':return React.createElement(AIEngines);
+case 'roi':return React.createElement(ROISimulator);
+case 'levantamiento':return React.createElement(LevantamientoCatastral);
+case 'tributacion':return React.createElement(TributacionPredial);
+case 'saneamiento':return React.createElement(SaneamientoLegal);
+case 'planificacion':return React.createElement(PlanificacionTerritorial);
+default:return React.createElement(Dashboard);
+}};
+return React.createElement('div',{style:{display:'flex',height:'100vh',width:'100vw',overflow:'hidden'}},
+React.createElement(Sidebar,{active,setActive}),
+React.createElement('div',{style:{flex:1,display:'flex',flexDirection:'column',overflow:'hidden'}},
+React.createElement(Header),
+React.createElement('div',{style:{flex:1,overflowY:'auto',padding:24,background:COLORS.bg}},renderPage())
+));
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+</script>
+</body>
+</html>
