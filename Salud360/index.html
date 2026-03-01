@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SALUD 360 - ERP Clínico con IA | INNOVAQ SOLUTIONS</title>
+<meta name="description" content="Plataforma de Gestión de Salud con Inteligencia Artificial - Clinical ERP 360 by INNOVAQ SOLUTIONS">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-primary:#0a1628;--bg-secondary:#0f1d32;--bg-card:#132238;--bg-card-hover:#1a2d4a;--accent:#00d4ff;--accent2:#0ea5e9;--accent-green:#10b981;--accent-red:#ef4444;--accent-yellow:#f59e0b;--accent-purple:#8b5cf6;--text-primary:#e2e8f0;--text-secondary:#94a3b8;--text-muted:#64748b;--border:#1e3a5f;--sidebar-w:260px;--header-h:60px}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg-primary);color:var(--text-primary);min-height:100vh;overflow-x:hidden}
+.sidebar{position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:var(--bg-secondary);border-right:1px solid var(--border);z-index:100;display:flex;flex-direction:column;transition:transform .3s}
+.sidebar-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.sidebar-header .logo{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent-purple));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.sidebar-header h2{font-size:18px;font-weight:700;color:#fff}
+.sidebar-header span{font-size:10px;color:var(--accent);display:block;letter-spacing:2px;text-transform:uppercase}
+.nav-menu{flex:1;padding:12px 0;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:12px;padding:12px 20px;cursor:pointer;color:var(--text-secondary);transition:all .2s;border-left:3px solid transparent;font-size:14px}
+.nav-item:hover{background:var(--bg-card);color:var(--text-primary)}
+.nav-item.active{background:linear-gradient(90deg,rgba(0,212,255,.1),transparent);color:var(--accent);border-left-color:var(--accent)}
+.nav-item i{width:20px;text-align:center;font-size:16px}
+.nav-item .badge{margin-left:auto;background:var(--accent-red);color:#fff;font-size:10px;padding:2px 6px;border-radius:10px}
+.sidebar-user{padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.sidebar-user .avatar{width:36px;height:36px;border-radius:50%;background:var(--accent-purple);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px}
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.header{height:var(--header-h);background:var(--bg-secondary);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:50}
+.search-box{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:8px 16px;display:flex;align-items:center;gap:8px;width:350px}
+.search-box input{background:none;border:none;color:var(--text-primary);outline:none;width:100%;font-size:14px}
+.header-actions{display:flex;align-items:center;gap:16px}
+.btn-ia{background:linear-gradient(135deg,var(--accent),var(--accent-purple));color:#fff;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+.notif{position:relative;cursor:pointer;font-size:18px;color:var(--text-secondary)}
+.notif .dot{position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:var(--accent-red);border-radius:50%}
+.content{padding:24px}
+.page-title{font-size:24px;font-weight:700;margin-bottom:4px}
+.page-subtitle{color:var(--text-secondary);font-size:14px;margin-bottom:24px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:24px}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all .3s}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.stat-card .stat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+.stat-card .stat-value{font-size:28px;font-weight:700;color:#fff}
+.stat-card .stat-label{color:var(--text-secondary);font-size:13px;margin-top:4px}
+.stat-card .stat-trend{font-size:12px;margin-left:8px}
+.trend-up{color:var(--accent-green)}
+.trend-down{color:var(--accent-red)}
+.chart-container{position:relative;height:300px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:12px 16px;color:var(--text-secondary);font-size:12px;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--border);font-weight:600}
+td{padding:12px 16px;border-bottom:1px solid rgba(30,58,95,.5);font-size:14px}
+tr:hover td{background:rgba(0,212,255,.03)}
+.badge-status{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-critico{background:rgba(239,68,68,.15);color:var(--accent-red)}
+.badge-advertencia{background:rgba(245,158,11,.15);color:var(--accent-yellow)}
+.badge-normal{background:rgba(16,185,129,.15);color:var(--accent-green)}
+.badge-urgente{background:rgba(239,68,68,.15);color:var(--accent-red)}
+.badge-pendiente{background:rgba(245,158,11,.15);color:var(--accent-yellow)}
+.badge-completado{background:rgba(16,185,129,.15);color:var(--accent-green)}
+.badge-proceso{background:rgba(0,212,255,.15);color:var(--accent)}
+.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s}
+.btn-primary{background:var(--accent);color:var(--bg-primary)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text-primary)}
+.btn-danger{background:var(--accent-red);color:#fff}
+.btn-sm{padding:4px 10px;font-size:12px}
+.soap-section{margin-bottom:16px}
+.soap-section label{display:block;font-weight:600;margin-bottom:6px;color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px}
+.soap-section textarea,.soap-section input,.form-input{width:100%;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text-primary);font-size:14px;resize:vertical;outline:none}
+.soap-section textarea:focus,.form-input:focus{border-color:var(--accent)}
+.ia-panel{background:linear-gradient(135deg,rgba(0,212,255,.05),rgba(139,92,246,.05));border:1px solid rgba(0,212,255,.2);border-radius:12px;padding:16px;margin-bottom:16px}
+.ia-panel h4{color:var(--accent);font-size:14px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.ia-badge{background:linear-gradient(135deg,var(--accent),var(--accent-purple));color:#fff;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.tab-bar{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px}
+.tab{padding:10px 20px;cursor:pointer;color:var(--text-secondary);font-size:14px;border-bottom:2px solid transparent;transition:all .2s}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.patient-list{max-height:400px;overflow-y:auto}
+.patient-item{padding:12px 16px;border-bottom:1px solid rgba(30,58,95,.3);cursor:pointer;transition:all .2s;display:flex;justify-content:space-between;align-items:center}
+.patient-item:hover,.patient-item.active{background:var(--bg-card-hover)}
+.footer{text-align:center;padding:16px;color:var(--text-muted);font-size:12px;border-top:1px solid var(--border);margin-top:24px}
+.module-page{display:none}
+.module-page.active{display:block}
+.progress-bar{height:6px;background:var(--bg-primary);border-radius:3px;overflow:hidden;margin-top:8px}
+.progress-fill{height:100%;border-radius:3px;transition:width .5s}
+.triaje-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;margin-bottom:8px;background:var(--bg-primary)}
+.triaje-color{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.guardia-cell{padding:6px;text-align:center;border-radius:6px;font-size:11px}
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.grid-4,.grid-3{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}.search-box{width:200px}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.pulse{animation:pulse 2s infinite}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .5s ease-out}
+</style>
+</head>
+<body>
+<div class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<div class="logo"><i class="fas fa-heartbeat"></i></div>
+<div><h2>SALUD 360</h2><span>INNOVAQ SOLUTIONS</span></div>
+</div>
+<nav class="nav-menu">
+<div class="nav-item active" onclick="showModule('dashboard')"><i class="fas fa-chart-line"></i>Dashboard Principal</div>
+<div class="nav-item" onclick="showModule('hce')"><i class="fas fa-file-medical"></i>HCE 360<span class="badge">5</span></div>
+<div class="nav-item" onclick="showModule('auditoria')"><i class="fas fa-shield-halved"></i>Auditoría FUA</div>
+<div class="nav-item" onclick="showModule('lis')"><i class="fas fa-flask"></i>LIS 360</div>
+<div class="nav-item" onclick="showModule('farmacia')"><i class="fas fa-pills"></i>Farmacia 360</div>
+<div class="nav-item" onclick="showModule('imagenes')"><i class="fas fa-x-ray"></i>Imágenes Dx</div>
+<div class="nav-item" onclick="showModule('facturacion')"><i class="fas fa-file-invoice-dollar"></i>Facturación SIS</div>
+<div class="nav-item" onclick="showModule('citas')"><i class="fas fa-calendar-check"></i>Citas y Triaje</div>
+<div class="nav-item" onclick="showModule('rrhh')"><i class="fas fa-user-md"></i>RRHH Salud</div>
+<div class="nav-item" onclick="showModule('bi')"><i class="fas fa-chart-pie"></i>BI Clínico</div>
+</nav>
+<div class="sidebar-user">
+<div class="avatar">DR</div>
+<div><div style="font-size:13px;font-weight:600">Dr. Admin</div><div style="font-size:11px;color:var(--text-muted)">Director Médico</div></div>
+</div>
+</div>
+<div class="main">
+<div class="header">
+<div style="display:flex;align-items:center;gap:16px">
+<i class="fas fa-bars" style="cursor:pointer;font-size:18px;display:none" id="menuBtn" onclick="document.getElementById('sidebar').classList.toggle('open')"></i>
+<div class="search-box"><i class="fas fa-search" style="color:var(--text-muted)"></i><input placeholder="Buscar paciente, DNI, HC..."></div>
+</div>
+<div class="header-actions">
+<button class="btn-ia"><i class="fas fa-robot"></i> IA Activa</button>
+<div class="notif"><i class="fas fa-bell"></i><span class="dot"></span></div>
+</div>
+</div>
+<div class="content">
+<!-- DASHBOARD -->
+<div class="module-page active" id="mod-dashboard">
+<h1 class="page-title">Visión General</h1>
+<p class="page-subtitle">Métricas en tiempo real procesadas por IA • Última actualización: hace 2 min</p>
+<div class="grid-4">
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(0,212,255,.15);color:var(--accent)"><i class="fas fa-users"></i></div><div class="stat-label">Pacientes Atendidos</div><div><span class="stat-value">1,248</span><span class="stat-trend trend-up">+12%</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(239,68,68,.15);color:var(--accent-red)"><i class="fas fa-exclamation-triangle"></i></div><div class="stat-label">Alertas FUA</div><div><span class="stat-value">24</span><span class="stat-trend trend-down">-5%</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(16,185,129,.15);color:var(--accent-green)"><i class="fas fa-check-circle"></i></div><div class="stat-label">Eficiencia Triaje IA</div><div><span class="stat-value">94%</span><span class="stat-trend trend-up">+2%</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(139,92,246,.15);color:var(--accent-purple)"><i class="fas fa-coins"></i></div><div class="stat-label">Facturación SIS Mes</div><div><span class="stat-value">S/45.2K</span><span class="stat-trend trend-up">+8%</span></div></div>
+</div>
+<div class="grid-2">
+<div class="card"><h3 style="margin-bottom:16px;font-size:16px">Flujo de Pacientes (7 Días)</h3><div class="chart-container"><canvas id="chartPacientes"></canvas></div></div>
+<div class="card"><h3 style="margin-bottom:16px;font-size:16px">Distribución por Especialidad</h3><div class="chart-container"><canvas id="chartEspecialidad"></canvas></div></div>
+</div>
+<div class="ia-panel fade-in">
+<h4><i class="fas fa-robot"></i> Shadow AI Health — Resumen Diario</h4>
+<p style="font-size:14px;color:var(--text-secondary)">Se detectaron <strong style="color:var(--accent-red)">12 FUAs críticas</strong> con incompatibilidad diagnóstico-procedimiento. Se recomienda revisión inmediata de los formatos 001-239482 al 001-239493. Ahorro estimado por prevención de rechazos: <strong style="color:var(--accent-green)">S/ 8,450</strong>.</p>
+</div>
+</div>
+
+<!-- HCE 360 -->
+<div class="module-page" id="mod-hce">
+<h1 class="page-title">HCE 360 — Historia Clínica Electrónica</h1>
+<p class="page-subtitle">Ley 30024 • RENHICE • HL7 FHIR R4 • Firma Digital RENIEC</p>
+<div class="grid-2" style="grid-template-columns:300px 1fr">
+<div class="card">
+<h4 style="margin-bottom:12px;color:var(--accent)">Pacientes en Espera</h4>
+<div class="patient-list">
+<div class="patient-item active" onclick="selectPatient(this)"><div><strong>Juan Pérez Gómez</strong><div style="font-size:12px;color:var(--text-muted)">HC-10293</div></div><div><span class="badge-status badge-urgente">Urgencia</span><div style="font-size:11px;color:var(--text-muted)">10:15 AM</div></div></div>
+<div class="patient-item" onclick="selectPatient(this)"><div><strong>María Silva Ruiz</strong><div style="font-size:12px;color:var(--text-muted)">HC-10294</div></div><div><span class="badge-status badge-normal">Normal</span><div style="font-size:11px;color:var(--text-muted)">10:30 AM</div></div></div>
+<div class="patient-item" onclick="selectPatient(this)"><div><strong>Carlos Mendoza</strong><div style="font-size:12px;color:var(--text-muted)">HC-10295</div></div><div><span class="badge-status badge-normal">Normal</span><div style="font-size:11px;color:var(--text-muted)">10:45 AM</div></div></div>
+<div class="patient-item" onclick="selectPatient(this)"><div><strong>Rosa Torres V.</strong><div style="font-size:12px;color:var(--text-muted)">HC-10296</div></div><div><span class="badge-status badge-pendiente">Preferente</span><div style="font-size:11px;color:var(--text-muted)">11:00 AM</div></div></div>
+<div class="patient-item" onclick="selectPatient(this)"><div><strong>Luis Ramos Ch.</strong><div style="font-size:12px;color:var(--text-muted)">HC-10297</div></div><div><span class="badge-status badge-normal">Normal</span><div style="font-size:11px;color:var(--text-muted)">11:15 AM</div></div></div>
+</div>
+</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h4 style="color:var(--accent)">Nota Clínica SOAP</h4><span class="ia-badge"><i class="fas fa-robot"></i> IA Asistida</span></div>
+<div class="grid-2">
+<div class="soap-section"><label>S — Subjetivo</label><textarea rows="3" placeholder="Motivo de consulta...">Paciente refiere dolor abdominal en fosa ilíaca derecha de 12 horas de evolución, acompañado de náuseas y fiebre.</textarea></div>
+<div class="soap-section"><label>O — Objetivo</label><textarea rows="3" placeholder="Examen físico...">Abdomen doloroso a la palpación profunda en FID. Signo de McBurney positivo. T: 38.2°C, FC: 98 lpm, PA: 120/80.</textarea></div>
+<div class="soap-section"><label>A — Apreciación</label><textarea rows="2" placeholder="Diagnóstico...">Probable apendicitis aguda.</textarea><div class="ia-panel" style="margin-top:8px;padding:10px"><h4 style="font-size:12px"><i class="fas fa-robot"></i> Sugerencia CIE-10</h4><span style="color:var(--accent);font-weight:600">K35.8 - Apendicitis aguda, otra y la no especificada</span></div></div>
+<div class="soap-section"><label>P — Plan</label><textarea rows="3" placeholder="Plan terapéutico...">1. NPO\n2. Solicitar Hemograma y Ecografía Abdominal\n3. Interconsulta con Cirugía\n4. Hidratación EV</textarea></div>
+</div>
+<div style="display:flex;gap:12px;justify-content:flex-end;margin-top:16px">
+<button class="btn btn-outline">Guardar Borrador</button>
+<button class="btn btn-primary"><i class="fas fa-signature"></i> Firmar y Cerrar HC</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- AUDITORIA FUA -->
+<div class="module-page" id="mod-auditoria">
+<h1 class="page-title">Auditoría FUA — Shadow AI Health</h1>
+<p class="page-subtitle">Motor de validación con 48+ reglas SIS • R.J. N° 160-2021-SIS</p>
+<div class="grid-4">
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(0,212,255,.15);color:var(--accent)"><i class="fas fa-file-alt"></i></div><div class="stat-label">FUAs Procesados</div><div><span class="stat-value">3,450</span><span class="stat-trend" style="color:var(--text-muted)">Últimos 30 días</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(239,68,68,.15);color:var(--accent-red)"><i class="fas fa-times-circle"></i></div><div class="stat-label">Tasa de Rechazo</div><div><span class="stat-value">4.2%</span><span class="stat-trend trend-down">-1.5%</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(245,158,11,.15);color:var(--accent-yellow)"><i class="fas fa-eye"></i></div><div class="stat-label">Observaciones IA</div><div><span class="stat-value">142</span><span class="stat-trend" style="color:var(--accent-red)">Requieren revisión</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(16,185,129,.15);color:var(--accent-green)"><i class="fas fa-piggy-bank"></i></div><div class="stat-label">Ahorro Estimado</div><div><span class="stat-value">S/12.4K</span><span class="stat-trend trend-up">Prev. rechazos</span></div></div>
+</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h4>Alertas de Validación (Shadow AI)</h4><div style="display:flex;gap:8px"><span class="badge-status badge-critico">Críticas (12)</span><span class="badge-status badge-advertencia">Advertencias (45)</span></div></div>
+<table>
+<thead><tr><th>N° FUA</th><th>Paciente</th><th>Fecha</th><th>Regla Infringida (IA)</th><th>Estado</th><th>Acción</th></tr></thead>
+<tbody>
+<tr><td>001-239482</td><td>Ana López</td><td>01/03/2026</td><td><i class="fas fa-robot" style="color:var(--accent);margin-right:4px"></i>R12: Incompatibilidad Dx vs Procedimiento</td><td><span class="badge-status badge-critico">Crítico</span></td><td><button class="btn btn-sm btn-primary">Corregir</button></td></tr>
+<tr><td>001-239485</td><td>Luis Ramos</td><td>01/03/2026</td><td><i class="fas fa-robot" style="color:var(--accent);margin-right:4px"></i>R05: Falta firma de profesional</td><td><span class="badge-status badge-critico">Crítico</span></td><td><button class="btn btn-sm btn-primary">Corregir</button></td></tr>
+<tr><td>001-239490</td><td>Carmen Díaz</td><td>28/02/2026</td><td><i class="fas fa-robot" style="color:var(--accent);margin-right:4px"></i>R34: Dosis de medicamento excede tope SIS</td><td><span class="badge-status badge-advertencia">Advertencia</span></td><td><button class="btn btn-sm btn-primary">Corregir</button></td></tr>
+<tr><td>001-239501</td><td>Jorge Ruiz</td><td>28/02/2026</td><td><i class="fas fa-robot" style="color:var(--accent);margin-right:4px"></i>R18: Edad no corresponde con Dx (Pediatría)</td><td><span class="badge-status badge-advertencia">Advertencia</span></td><td><button class="btn btn-sm btn-primary">Corregir</button></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- LIS 360 -->
+<div class="module-page" id="mod-lis">
+<h1 class="page-title">LIS 360 — Sistema de Laboratorio</h1>
+<p class="page-subtitle">Protocolos ASTM/LIS2-A2, HL7v2 • Control de Calidad Westgard</p>
+<div class="grid-4">
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(0,212,255,.15);color:var(--accent)"><i class="fas fa-vial"></i></div><div class="stat-label">Muestras Hoy</div><div><span class="stat-value">187</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(245,158,11,.15);color:var(--accent-yellow)"><i class="fas fa-clock"></i></div><div class="stat-label">Pendientes</div><div><span class="stat-value">34</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(16,185,129,.15);color:var(--accent-green)"><i class="fas fa-check"></i></div><div class="stat-label">Validados</div><div><span class="stat-value">153</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(239,68,68,.15);color:var(--accent-red)"><i class="fas fa-exclamation"></i></div><div class="stat-label">Valores Críticos</div><div><span class="stat-value">3</span></div></div>
+</div>
+<div class="card">
+<h4 style="margin-bottom:16px">Muestras en Proceso</h4>
+<table>
+<thead><tr><th>Código</th><th>Paciente</th><th>Examen</th><th>Estado</th><th>Resultado</th><th>Validación</th></tr></thead>
+<tbody>
+<tr><td>LAB-4521</td><td>Juan Pérez</td><td>Hemograma Completo</td><td><span class="badge-status badge-completado">Completado</span></td><td>Hb: 14.2 g/dL, WBC: 12,800</td><td><button class="btn btn-sm btn-primary">Validar</button></td></tr>
+<tr><td>LAB-4522</td><td>María Silva</td><td>Glucosa Basal</td><td><span class="badge-status badge-proceso">Procesando</span></td><td>---</td><td><span style="color:var(--text-muted)">Pendiente</span></td></tr>
+<tr><td>LAB-4523</td><td>Carlos Mendoza</td><td>Perfil Lipídico</td><td><span class="badge-status badge-completado">Completado</span></td><td>Col: 245, TG: 180, HDL: 38</td><td><button class="btn btn-sm btn-danger">Crítico</button></td></tr>
+<tr><td>LAB-4524</td><td>Rosa Torres</td><td>TSH, T4 Libre</td><td><span class="badge-status badge-pendiente">Pendiente</span></td><td>---</td><td><span style="color:var(--text-muted)">Pendiente</span></td></tr>
+<tr><td>LAB-4525</td><td>Luis Ramos</td><td>Urocultivo</td><td><span class="badge-status badge-proceso">Incubación</span></td><td>24h restantes</td><td><span style="color:var(--text-muted)">Pendiente</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- FARMACIA 360 -->
+<div class="module-page" id="mod-farmacia">
+<h1 class="page-title">Farmacia 360 — Gestión de Inventario</h1>
+<p class="page-subtitle">Trazabilidad DIGEMID • Integración SISMED • Alertas IA Desabastecimiento</p>
+<div class="grid-4">
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(0,212,255,.15);color:var(--accent)"><i class="fas fa-pills"></i></div><div class="stat-label">Items Activos</div><div><span class="stat-value">1,842</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(239,68,68,.15);color:var(--accent-red)"><i class="fas fa-battery-empty"></i></div><div class="stat-label">Stock Crítico</div><div><span class="stat-value">23</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(245,158,11,.15);color:var(--accent-yellow)"><i class="fas fa-calendar-times"></i></div><div class="stat-label">Próximos a Vencer</div><div><span class="stat-value">45</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(16,185,129,.15);color:var(--accent-green)"><i class="fas fa-hand-holding-medical"></i></div><div class="stat-label">Dispensaciones Hoy</div><div><span class="stat-value">312</span></div></div>
+</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h4>Alertas de Inventario</h4><button class="btn btn-outline btn-sm"><i class="fas fa-download"></i> Exportar SISMED</button></div>
+<table>
+<thead><tr><th>Medicamento</th><th>Lote</th><th>Stock</th><th>Mínimo</th><th>Vencimiento</th><th>Estado</th></tr></thead>
+<tbody>
+<tr><td>Amoxicilina 500mg</td><td>LOT-2024-089</td><td style="color:var(--accent-red);font-weight:600">15</td><td>50</td><td>Mar 2026</td><td><span class="badge-status badge-critico">Crítico</span></td></tr>
+<tr><td>Omeprazol 20mg</td><td>LOT-2024-156</td><td style="color:var(--accent-yellow);font-weight:600">38</td><td>40</td><td>Jun 2026</td><td><span class="badge-status badge-advertencia">Bajo</span></td></tr>
+<tr><td>Metformina 850mg</td><td>LOT-2024-201</td><td>120</td><td>30</td><td>Abr 2026</td><td><span class="badge-status badge-normal">OK</span></td></tr>
+<tr><td>Enalapril 10mg</td><td>LOT-2023-445</td><td>85</td><td>25</td><td style="color:var(--accent-red)">Feb 2026</td><td><span class="badge-status badge-critico">Vence Pronto</span></td></tr>
+<tr><td>Ibuprofeno 400mg</td><td>LOT-2024-312</td><td style="color:var(--accent-red);font-weight:600">8</td><td>60</td><td>Sep 2026</td><td><span class="badge-status badge-critico">Crítico</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="ia-panel"><h4><i class="fas fa-robot"></i> Predicción IA de Desabastecimiento</h4><p style="font-size:14px;color:var(--text-secondary)">Basado en patrones de consumo, se proyecta desabastecimiento de <strong style="color:var(--accent-red)">Amoxicilina 500mg</strong> en 3 días y <strong style="color:var(--accent-red)">Ibuprofeno 400mg</strong> en 5 días. Se recomienda generar orden de compra urgente.</p></div>
+</div>
+<!-- IMAGENES DIAGNOSTICAS -->
+<div class="module-page" id="mod-imagenes">
+<h1 class="page-title">Imágenes Diagnósticas</h1>
+<p class="page-subtitle">PACS/DICOM • Motor CNN para Rx y CT • Visor Web Integrado</p>
+<div class="grid-4">
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(0,212,255,.15);color:var(--accent)"><i class="fas fa-x-ray"></i></div><div class="stat-label">Estudios Hoy</div><div><span class="stat-value">67</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(139,92,246,.15);color:var(--accent-purple)"><i class="fas fa-brain"></i></div><div class="stat-label">Análisis IA</div><div><span class="stat-value">42</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(245,158,11,.15);color:var(--accent-yellow)"><i class="fas fa-clock"></i></div><div class="stat-label">Pendientes Lectura</div><div><span class="stat-value">12</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(239,68,68,.15);color:var(--accent-red)"><i class="fas fa-flag"></i></div><div class="stat-label">Hallazgos Críticos</div><div><span class="stat-value">2</span></div></div>
+</div>
+<div class="grid-2">
+<div class="card" style="text-align:center">
+<h4 style="margin-bottom:12px">Visor DICOM</h4>
+<div style="background:var(--bg-primary);border-radius:8px;height:280px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border)">
+<div><i class="fas fa-lungs" style="font-size:80px;color:var(--text-muted);opacity:.3"></i><p style="color:var(--text-muted);margin-top:12px">Rx Tórax PA - Juan Pérez Gómez</p><p style="color:var(--accent);font-size:12px">Haga clic para abrir en visor completo</p></div>
+</div>
+</div>
+<div class="card">
+<h4 style="margin-bottom:12px;color:var(--accent)"><i class="fas fa-robot"></i> Análisis CNN - Detección Automática</h4>
+<div class="ia-panel">
+<p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px"><strong style="color:var(--accent-yellow)">Hallazgo detectado:</strong> Opacidad nodular en lóbulo inferior derecho de 12mm.</p>
+<div style="margin-bottom:8px"><span style="font-size:12px;color:var(--text-muted)">Confianza del modelo</span><div class="progress-bar"><div class="progress-fill" style="width:87%;background:var(--accent-yellow)"></div></div><span style="font-size:11px;color:var(--accent-yellow)">87%</span></div>
+<div style="margin-bottom:8px"><span style="font-size:12px;color:var(--text-muted)">Clasificación: Nódulo Pulmonar Solitario</span></div>
+<div><span style="font-size:12px;color:var(--text-muted)">Recomendación IA:</span><span style="color:var(--accent);font-size:13px"> Tomografía de tórax de alta resolución + seguimiento 3 meses</span></div>
+</div>
+<table style="margin-top:12px">
+<thead><tr><th>Estudio</th><th>Paciente</th><th>IA Status</th></tr></thead>
+<tbody>
+<tr><td>Rx Tórax PA</td><td>Juan Pérez</td><td><span class="badge-status badge-advertencia">Hallazgo</span></td></tr>
+<tr><td>Eco Abdominal</td><td>María Silva</td><td><span class="badge-status badge-normal">Normal</span></td></tr>
+<tr><td>TC Cerebro</td><td>Carlos M.</td><td><span class="badge-status badge-normal">Normal</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- FACTURACION SIS -->
+<div class="module-page" id="mod-facturacion">
+<h1 class="page-title">Facturación SIS/FISSAL</h1>
+<p class="page-subtitle">Liquidación automática • FUA Digital • Conciliación Inteligente</p>
+<div class="grid-4">
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(16,185,129,.15);color:var(--accent-green)"><i class="fas fa-check-double"></i></div><div class="stat-label">FUAs Aprobados</div><div><span class="stat-value">2,890</span><span class="stat-trend trend-up">94%</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(239,68,68,.15);color:var(--accent-red)"><i class="fas fa-ban"></i></div><div class="stat-label">Rechazados</div><div><span class="stat-value">198</span><span class="stat-trend trend-down">6%</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(0,212,255,.15);color:var(--accent)"><i class="fas fa-money-bill-wave"></i></div><div class="stat-label">Monto Liquidado</div><div><span class="stat-value">S/185K</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(245,158,11,.15);color:var(--accent-yellow)"><i class="fas fa-hourglass-half"></i></div><div class="stat-label">CoNQ Pendiente</div><div><span class="stat-value">S/23.5K</span></div></div>
+</div>
+<div class="card"><div style="display:flex;justify-content:space-between;margin-bottom:16px"><h4>Conciliación Financiera</h4><button class="btn btn-outline btn-sm"><i class="fas fa-sync"></i> Sincronizar SIS</button></div>
+<div class="chart-container" style="height:250px"><canvas id="chartFacturacion"></canvas></div>
+</div>
+</div>
+
+<!-- CITAS Y TRIAJE -->
+<div class="module-page" id="mod-citas">
+<h1 class="page-title">Citas, Triaje y Telemedicina</h1>
+<p class="page-subtitle">Programación IA • Triaje Manchester • WebRTC Teleconsulta</p>
+<div class="grid-2">
+<div class="card">
+<h4 style="margin-bottom:12px;color:var(--accent)"><i class="fas fa-calendar-day"></i> Agenda del Día</h4>
+<div class="patient-list">
+<div class="patient-item"><div><strong>08:00</strong> - Ana López<div style="font-size:12px;color:var(--text-muted)">Cardiología • Control</div></div><span class="badge-status badge-completado">Atendido</span></div>
+<div class="patient-item"><div><strong>08:30</strong> - Pedro García<div style="font-size:12px;color:var(--text-muted)">Med. General • Primera vez</div></div><span class="badge-status badge-completado">Atendido</span></div>
+<div class="patient-item active"><div><strong>09:00</strong> - Sofía Vargas<div style="font-size:12px;color:var(--text-muted)">Pediatría • Urgencia</div></div><span class="badge-status badge-proceso">En consulta</span></div>
+<div class="patient-item"><div><strong>09:30</strong> - Miguel Torres<div style="font-size:12px;color:var(--text-muted)">Traumatología • Control</div></div><span class="badge-status badge-pendiente">Esperando</span></div>
+<div class="patient-item"><div><strong>10:00</strong> - Carmen Ruiz<div style="font-size:12px;color:var(--text-muted)">Ginecología • Control</div></div><span class="badge-status badge-pendiente">Esperando</span></div>
+<div class="patient-item"><div><strong>10:30</strong> - 📹 Roberto Díaz<div style="font-size:12px;color:var(--text-muted)">Teleconsulta • Dermatología</div></div><span class="badge-status badge-pendiente">Programada</span></div>
+</div>
+</div>
+<div class="card">
+<h4 style="margin-bottom:16px;color:var(--accent)"><i class="fas fa-robot"></i> Triaje IA en Vivo — Protocolo Manchester</h4>
+<div class="triaje-item"><div class="triaje-color" style="background:#e00"></div><div style="flex:1"><strong>Rojo - Emergencia</strong><div style="font-size:12px;color:var(--text-muted)">Atención inmediata</div></div><span style="font-size:20px;font-weight:700;color:#e00">1</span></div>
+<div class="triaje-item"><div class="triaje-color" style="background:#f80"></div><div style="flex:1"><strong>Naranja - Muy Urgente</strong><div style="font-size:12px;color:var(--text-muted)">&lt; 10 min</div></div><span style="font-size:20px;font-weight:700;color:#f80">3</span></div>
+<div class="triaje-item"><div class="triaje-color" style="background:#ee0"></div><div style="flex:1"><strong>Amarillo - Urgente</strong><div style="font-size:12px;color:var(--text-muted)">&lt; 60 min</div></div><span style="font-size:20px;font-weight:700;color:#ee0">7</span></div>
+<div class="triaje-item"><div class="triaje-color" style="background:#0a0"></div><div style="flex:1"><strong>Verde - Poco Urgente</strong><div style="font-size:12px;color:var(--text-muted)">&lt; 120 min</div></div><span style="font-size:20px;font-weight:700;color:#0a0">12</span></div>
+<div class="triaje-item"><div class="triaje-color" style="background:#00f"></div><div style="flex:1"><strong>Azul - No Urgente</strong><div style="font-size:12px;color:var(--text-muted)">&lt; 240 min</div></div><span style="font-size:20px;font-weight:700;color:#44f">5</span></div>
+<div class="ia-panel" style="margin-top:12px"><h4><i class="fas fa-robot"></i> Scoring Automático IA</h4><p style="font-size:13px;color:var(--text-secondary)">Última clasificación: <strong>Sofía Vargas (3años)</strong> → <strong style="color:#f80">Naranja</strong> - Fiebre 39.5°C + convulsión febril. Confianza: 94%</p></div>
+</div>
+</div>
+</div>
+
+<!-- RRHH SALUD -->
+<div class="module-page" id="mod-rrhh">
+<h1 class="page-title">RRHH Salud</h1>
+<p class="page-subtitle">Gestión de Personal Médico • Credenciales CMP/CEP • Guardias 24/7</p>
+<div class="grid-4">
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(0,212,255,.15);color:var(--accent)"><i class="fas fa-user-md"></i></div><div class="stat-label">Personal Activo</div><div><span class="stat-value">284</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(16,185,129,.15);color:var(--accent-green)"><i class="fas fa-stethoscope"></i></div><div class="stat-label">Médicos</div><div><span class="stat-value">86</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(139,92,246,.15);color:var(--accent-purple)"><i class="fas fa-user-nurse"></i></div><div class="stat-label">Enfermeras</div><div><span class="stat-value">124</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(245,158,11,.15);color:var(--accent-yellow)"><i class="fas fa-moon"></i></div><div class="stat-label">En Guardia Hoy</div><div><span class="stat-value">18</span></div></div>
+</div>
+<div class="card">
+<h4 style="margin-bottom:16px">Programación de Guardias — Semana Actual</h4>
+<table>
+<thead><tr><th>Personal</th><th>CMP/CEP</th><th>Especialidad</th><th>Lun</th><th>Mar</th><th>Mié</th><th>Jue</th><th>Vie</th><th>Sáb</th><th>Dom</th></tr></thead>
+<tbody>
+<tr><td>Dr. Rodríguez</td><td>CMP-45678</td><td>Cirugía</td><td class="guardia-cell" style="background:rgba(0,212,255,.15);color:var(--accent)">D</td><td></td><td class="guardia-cell" style="background:rgba(139,92,246,.15);color:var(--accent-purple)">N</td><td></td><td class="guardia-cell" style="background:rgba(0,212,255,.15);color:var(--accent)">D</td><td></td><td class="guardia-cell" style="background:rgba(139,92,246,.15);color:var(--accent-purple)">N</td></tr>
+<tr><td>Dra. Martínez</td><td>CMP-56789</td><td>Pediatría</td><td></td><td class="guardia-cell" style="background:rgba(0,212,255,.15);color:var(--accent)">D</td><td></td><td class="guardia-cell" style="background:rgba(139,92,246,.15);color:var(--accent-purple)">N</td><td></td><td class="guardia-cell" style="background:rgba(0,212,255,.15);color:var(--accent)">D</td><td></td></tr>
+<tr><td>Lic. Pérez</td><td>CEP-12345</td><td>Enfermería</td><td class="guardia-cell" style="background:rgba(139,92,246,.15);color:var(--accent-purple)">N</td><td class="guardia-cell" style="background:rgba(0,212,255,.15);color:var(--accent)">D</td><td></td><td class="guardia-cell" style="background:rgba(0,212,255,.15);color:var(--accent)">D</td><td class="guardia-cell" style="background:rgba(139,92,246,.15);color:var(--accent-purple)">N</td><td></td><td class="guardia-cell" style="background:rgba(0,212,255,.15);color:var(--accent)">D</td></tr>
+</tbody>
+</table>
+<p style="font-size:11px;color:var(--text-muted);margin-top:8px">D = Diurno (7am-7pm) • N = Nocturno (7pm-7am) • Optimizado por IA</p>
+</div>
+</div>
+
+<!-- BI CLINICO -->
+<div class="module-page" id="mod-bi">
+<h1 class="page-title">BI Clínico y Analítica</h1>
+<p class="page-subtitle">Dashboards Ejecutivos • KPIs MINSA/SIS • Analítica Predictiva</p>
+<div class="grid-4">
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(0,212,255,.15);color:var(--accent)"><i class="fas fa-bed"></i></div><div class="stat-label">Ocupación Camas</div><div><span class="stat-value">85%</span><span class="stat-trend trend-up">+2%</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(16,185,129,.15);color:var(--accent-green)"><i class="fas fa-clock"></i></div><div class="stat-label">Estancia Promedio</div><div><span class="stat-value">4.2d</span><span class="stat-trend trend-down">-0.3d</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(245,158,11,.15);color:var(--accent-yellow)"><i class="fas fa-redo"></i></div><div class="stat-label">Readmisiones 30d</div><div><span class="stat-value">3.1%</span><span class="stat-trend trend-down">-0.5%</span></div></div>
+<div class="card stat-card"><div class="stat-icon" style="background:rgba(139,92,246,.15);color:var(--accent-purple)"><i class="fas fa-dollar-sign"></i></div><div class="stat-label">Revenue/Encounter</div><div><span class="stat-value">S/285</span><span class="stat-trend trend-up">+12%</span></div></div>
+</div>
+<div class="grid-2">
+<div class="card"><h4 style="margin-bottom:16px">Ingresos SIS vs Privado (3 Meses)</h4><div class="chart-container"><canvas id="chartBI"></canvas></div></div>
+<div class="card"><h4 style="margin-bottom:16px">Predicción de Demanda (30 días)</h4><div class="chart-container"><canvas id="chartPrediccion"></canvas></div></div>
+</div>
+<div class="ia-panel"><h4><i class="fas fa-robot"></i> Analítica Predictiva IA</h4><p style="font-size:14px;color:var(--text-secondary)">Se proyecta un incremento de <strong style="color:var(--accent-yellow)">23% en consultas respiratorias</strong> en las próximas 2 semanas según patrón estacional. Se recomienda reforzar turnos en Med. General y Pediatría. Probabilidad de brote: <strong style="color:var(--accent-red)">Moderada (65%)</strong>.</p></div>
+</div>
+
+</div>
+<div class="footer">© 2025 INNOVAQ SOLUTIONS SAC • SALUD 360 - ERP Clínico con IA • Todos los derechos reservados • RUC 20606205105</div>
+</div>
+<script>
+function showModule(mod){document.querySelectorAll('.module-page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById('mod-'+mod).classList.add('active');event.currentTarget.classList.add('active');if(mod==='dashboard')initDashboardCharts();if(mod==='facturacion')initFacturacionChart();if(mod==='bi')initBICharts();window.scrollTo(0,0)}
+function selectPatient(el){document.querySelectorAll('.patient-item').forEach(p=>p.classList.remove('active'));el.classList.add('active')}
+function initDashboardCharts(){
+const ctx1=document.getElementById('chartPacientes');if(!ctx1)return;if(ctx1._chart)ctx1._chart.destroy();
+ctx1._chart=new Chart(ctx1,{type:'line',data:{labels:['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],datasets:[{label:'Consultas',data:[120,150,180,140,200,110,80],borderColor:'#00d4ff',backgroundColor:'rgba(0,212,255,0.1)',fill:true,tension:.4},{label:'Emergencias',data:[30,45,38,52,48,25,18],borderColor:'#8b5cf6',backgroundColor:'rgba(139,92,246,0.1)',fill:true,tension:.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8'}}},scales:{x:{grid:{color:'rgba(30,58,95,0.3)'},ticks:{color:'#94a3b8'}},y:{grid:{color:'rgba(30,58,95,0.3)'},ticks:{color:'#94a3b8'}}}}});
+const ctx2=document.getElementById('chartEspecialidad');if(!ctx2)return;if(ctx2._chart)ctx2._chart.destroy();
+ctx2._chart=new Chart(ctx2,{type:'doughnut',data:{labels:['Cardiología','Ginecología','Med. General','Pediatría','Cirugía','Traumatología'],datasets:[{data:[22,18,28,16,10,6],backgroundColor:['#ef4444','#f59e0b','#10b981','#00d4ff','#8b5cf6','#ec4899'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#94a3b8',padding:12}}}}})
+}
+function initFacturacionChart(){
+const ctx=document.getElementById('chartFacturacion');if(!ctx)return;if(ctx._chart)ctx._chart.destroy();
+ctx._chart=new Chart(ctx,{type:'bar',data:{labels:['Ene','Feb','Mar'],datasets:[{label:'Aprobados S/',data:[145000,152000,185000],backgroundColor:'#10b981'},{label:'Rechazados S/',data:[12000,9800,8500],backgroundColor:'#ef4444'},{label:'CoNQ S/',data:[23000,18000,23500],backgroundColor:'#f59e0b'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8'}}},scales:{x:{grid:{color:'rgba(30,58,95,0.3)'},ticks:{color:'#94a3b8'}},y:{grid:{color:'rgba(30,58,95,0.3)'},ticks:{color:'#94a3b8'}}}}})
+}
+function initBICharts(){
+const ctx1=document.getElementById('chartBI');if(!ctx1)return;if(ctx1._chart)ctx1._chart.destroy();
+ctx1._chart=new Chart(ctx1,{type:'bar',data:{labels:['Ene','Feb','Mar'],datasets:[{label:'SIS',data:[120000,135000,145200],backgroundColor:'#00d4ff'},{label:'Privado',data:[45000,52000,48000],backgroundColor:'#8b5cf6'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8'}}},scales:{x:{grid:{color:'rgba(30,58,95,0.3)'},ticks:{color:'#94a3b8'}},y:{grid:{color:'rgba(30,58,95,0.3)'},ticks:{color:'#94a3b8'}}}}});
+const ctx2=document.getElementById('chartPrediccion');if(!ctx2)return;if(ctx2._chart)ctx2._chart.destroy();
+ctx2._chart=new Chart(ctx2,{type:'line',data:{labels:['S1','S2','S3','S4'],datasets:[{label:'Real',data:[180,195,null,null],borderColor:'#00d4ff',tension:.4,pointRadius:4},{label:'Predicción IA',data:[null,195,210,235],borderColor:'#f59e0b',borderDash:[5,5],tension:.4,pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8'}}},scales:{x:{grid:{color:'rgba(30,58,95,0.3)'},ticks:{color:'#94a3b8'}},y:{grid:{color:'rgba(30,58,95,0.3)'},ticks:{color:'#94a3b8'}}}}})
+}
+document.addEventListener('DOMContentLoaded',()=>{initDashboardCharts()});
+</script>
+</body>
+</html>
