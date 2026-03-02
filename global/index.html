@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INNOVAQ Solutions | Global SaaS Platform</title>
-    <meta name="description" content="Enterprise software for mining, construction and energy sectors. SIG 360°, ERP 360, TPM360, MTP360. ISO 9001, 14001, 45001, 37001 compliance.">
+    <meta name="description" content="Enterprise software for mining, construction, energy, healthcare, hospitality and agriculture. SIG 360°, ERP 360, TPM360, MTP360, PMO360, AGRO360, FOOD360, HOTEL360, SALUD360, CATASTRO360. ISO 9001, 14001, 45001, 37001 compliance.">
     <meta name="keywords" content="INNOVAQ, SIG 360, ERP 360, TPM360, MTP360, ISO, mining software, construction software, SUNAT, Peru">
     <meta property="og:title" content="INNOVAQ Solutions | Global SaaS Platform">
     <meta property="og:description" content="Industrial-grade software solutions for mining, construction and energy.">
@@ -42,6 +42,14 @@ const PRODUCTS = [
   { code: 'ERP360', name: 'ERP 360', sub: { en: 'Enterprise Resource Planning', es: 'SumaERP — Planificación de Recursos' }, desc: { en: 'Complete ERP with SUNAT e-invoicing, foreign trade with Landed Cost, Peruvian HR and CFO Cockpit.', es: 'ERP completo con facturación SUNAT, ComEx con Landed Cost, RRHH peruano y CFO Cockpit.' }, icon: '📊', color: B.orange, plans: [{ tier: 'starter', mo: 199, yr: 1990, users: 15, loc: 1 }, { tier: 'professional', mo: 499, yr: 4990, users: 50, loc: 5 }, { tier: 'enterprise', mo: 999, yr: 9990, users: null, loc: null }], features: { en: ['SUNAT e-invoicing', 'Foreign trade & Landed Cost', 'Accounting PCGE/IFRS', 'HR & Peruvian payroll', 'Tax engine', 'CFO Cockpit', 'Multi-currency', 'Drawback management'], es: ['Facturación electrónica SUNAT', 'ComEx y Landed Cost', 'Contabilidad PCGE/NIIF', 'RRHH y planilla peruana', 'Motor tributario', 'CFO Cockpit', 'Multi-moneda', 'Gestión Drawback'] } },
   { code: 'TPM360', name: 'TPM360', sub: { en: 'Total Productive Maintenance', es: 'Mantenimiento Productivo Total' }, desc: { en: 'Predictive maintenance with AI, equipment lifecycle management and mobile inspections.', es: 'Mantenimiento predictivo con IA, gestión del ciclo de vida de equipos e inspecciones móviles.' }, icon: '⚙️', color: B.blue, plans: [{ tier: 'starter', mo: 99, yr: 990, users: 5, loc: 1 }, { tier: 'professional', mo: 249, yr: 2490, users: 25, loc: 5 }, { tier: 'enterprise', mo: 499, yr: 4990, users: null, loc: null }], features: { en: ['Equipment lifecycle', 'Predictive AI', 'KPI dashboards', 'Mobile inspections', 'CMMS integration', 'Work orders'], es: ['Ciclo de vida equipos', 'IA predictiva', 'Dashboards KPIs', 'Inspecciones móviles', 'Integración CMMS', 'Órdenes de trabajo'] } },
   { code: 'MTP360', name: 'MTP360', sub: { en: 'Master Training Plan', es: 'Plan Maestro de Capacitación' }, desc: { en: 'Training and competency management for regulated industries with ICAM and BowTie methodologies.', es: 'Gestión de capacitación y competencias con metodologías ICAM y BowTie para industrias reguladas.' }, icon: '🎓', color: '#7c3aed', plans: [{ tier: 'starter', mo: 79, yr: 790, users: 10, loc: 1 }, { tier: 'professional', mo: 189, yr: 1890, users: 50, loc: 5 }, { tier: 'enterprise', mo: 399, yr: 3990, users: null, loc: null }], features: { en: ['Competency matrix', 'Training scheduling', 'Certification tracking', 'Compliance reports', 'E-learning', 'Gap analysis'], es: ['Matriz competencias', 'Programación capacitaciones', 'Seguimiento certificaciones', 'Reportes cumplimiento', 'E-learning', 'Análisis brechas'] } },
+  { code: 'PMO360', name: 'PMO360', sub: { en: 'PMO Value Delivery System', es: 'Sistema de Entrega de Valor PMO' }, desc: { en: 'Project portfolio management with value delivery tracking, resource optimization and real-time dashboards.', es: 'Gestión de portafolio de proyectos con seguimiento de entrega de valor, optimización de recursos y dashboards en tiempo real.' }, icon: '📋', color: '#2563eb', plans: [{ tier: 'starter', mo: 129, yr: 1290, users: 10, loc: 1 }, { tier: 'professional', mo: 299, yr: 2990, users: 30, loc: 5 }, { tier: 'enterprise', mo: 599, yr: 5990, users: null, loc: null }], features: { en: ['Project portfolio', 'Value delivery tracking', 'Resource optimization', 'Gantt & dashboards', 'Risk management', 'Stakeholder reports'], es: ['Portafolio de proyectos', 'Seguimiento entrega de valor', 'Optimización de recursos', 'Gantt y dashboards', 'Gestión de riesgos', 'Reportes stakeholders'] } },
+  { code: 'AGRO360', name: 'AGRO 360', sub: { en: 'Agroindustrial Management', es: 'Gestión Agroindustrial Integral' }, desc: { en: 'Complete agroindustrial ERP with crop traceability, harvest management, field IoT and SENASA compliance.', es: 'ERP agroindustrial completo con trazabilidad de cultivos, gestión de cosecha, IoT de campo y cumplimiento SENASA.' }, icon: '🌾', color: '#16a34a', plans: [{ tier: 'starter', mo: 149, yr: 1490, users: 10, loc: 1 }, { tier: 'professional', mo: 349, yr: 3490, users: 50, loc: 5 }, { tier: 'enterprise', mo: 699, yr: 6990, users: null, loc: null }], features: { en: ['Crop traceability', 'Harvest management', 'Field IoT sensors', 'SENASA compliance', 'Cost per hectare', 'Export certifications'], es: ['Trazabilidad de cultivos', 'Gestión de cosecha', 'Sensores IoT de campo', 'Cumplimiento SENASA', 'Costo por hectárea', 'Certificaciones de exportación'] } },
+  { code: 'FOOD360', name: 'FOOD 360', sub: { en: 'Food & Beverage ERP', es: 'ERP Alimentos y Bebidas' }, desc: { en: 'Integrated ERP for food industry with recipe costing, inventory, traceability and HACCP/BRC compliance.', es: 'ERP integral para industria alimentaria con costeo de recetas, inventario, trazabilidad y cumplimiento HACCP/BRC.' }, icon: '🍽️', color: '#ea580c', plans: [{ tier: 'starter', mo: 149, yr: 1490, users: 10, loc: 1 }, { tier: 'professional', mo: 349, yr: 3490, users: 50, loc: 5 }, { tier: 'enterprise', mo: 699, yr: 6990, users: null, loc: null }], features: { en: ['Recipe costing (BOM)', 'Lot traceability', 'HACCP/BRC compliance', 'Quality control', 'Production planning', 'Expiry management'], es: ['Costeo de recetas (escandallos)', 'Trazabilidad por lote', 'Cumplimiento HACCP/BRC', 'Control de calidad', 'Planificación producción', 'Gestión de vencimientos'] } },
+  { code: 'HOTEL360', name: 'HOTEL 360', sub: { en: 'Smart Hospitality ERP', es: 'ERP Hotelero Inteligente' }, desc: { en: 'Complete hotel management with PMS, revenue management, channel manager and guest experience AI.', es: 'Gestión hotelera completa con PMS, revenue management, channel manager e IA de experiencia del huésped.' }, icon: '🏨', color: '#0891b2', plans: [{ tier: 'starter', mo: 199, yr: 1990, users: 10, loc: 1 }, { tier: 'professional', mo: 449, yr: 4490, users: 30, loc: 3 }, { tier: 'enterprise', mo: 899, yr: 8990, users: null, loc: null }], features: { en: ['PMS & reservations', 'Revenue management', 'Channel manager', 'Guest experience AI', 'Housekeeping module', 'F&B integration'], es: ['PMS y reservas', 'Revenue management', 'Channel manager', 'IA experiencia huésped', 'Módulo housekeeping', 'Integración A&B'] } },
+  { code: 'SALUD360', name: 'SALUD 360', sub: { en: 'Clinical ERP with AI', es: 'ERP Clínico con IA' }, desc: { en: 'Healthcare management platform with AI-powered clinical records, appointment scheduling and MINSA compliance.', es: 'Plataforma de gestión de salud con historias clínicas potenciadas por IA, agenda de citas y cumplimiento MINSA.' }, icon: '🏥', color: '#dc2626', plans: [{ tier: 'starter', mo: 199, yr: 1990, users: 10, loc: 1 }, { tier: 'professional', mo: 449, yr: 4490, users: 50, loc: 5 }, { tier: 'enterprise', mo: 899, yr: 8990, users: null, loc: null }], features: { en: ['AI clinical records', 'Appointment scheduling', 'MINSA compliance', 'Lab integration', 'Pharmacy module', 'Telemedicine'], es: ['Historias clínicas con IA', 'Agenda de citas', 'Cumplimiento MINSA', 'Integración laboratorio', 'Módulo farmacia', 'Telemedicina'] } },
+  { code: 'CATASTRO360', name: 'CATASTRO 360', sub: { en: 'AI Cadastral Management', es: 'Gestión Catastral con IA' }, desc: { en: 'Cadastral management platform with AI-powered property valuation, GIS integration and tax assessment.', es: 'Plataforma de gestión catastral con valoración predial potenciada por IA, integración GIS y tributación.' }, icon: '🗺️', color: '#7c3aed', plans: [{ tier: 'starter', mo: 199, yr: 1990, users: 10, loc: 1 }, { tier: 'professional', mo: 449, yr: 4490, users: 30, loc: 5 }, { tier: 'enterprise', mo: 899, yr: 8990, users: null, loc: null }], features: { en: ['AI property valuation', 'GIS integration', 'Tax assessment', 'Property registry', 'Urban planning', 'Inspection module'], es: ['Valoración predial con IA', 'Integración GIS', 'Tributación predial', 'Registro de propiedades', 'Planificación urbana', 'Módulo de inspección'] } },
+  { code: 'FUA', name: 'Auditoría FUA', sub: { en: 'MINSA FUA Audit System', es: 'Sistema Auditoría FUA MINSA' }, desc: { en: 'Dual scanning audit system for MINSA FUA forms with AI-powered validation and compliance reporting.', es: 'Sistema de auditoría con escaneo dual para formatos FUA MINSA con validación por IA y reportes de cumplimiento.' }, icon: '📄', color: '#1a5276', plans: [{ tier: 'starter', mo: 99, yr: 990, users: 5, loc: 1 }, { tier: 'professional', mo: 249, yr: 2490, users: 20, loc: 5 }, { tier: 'enterprise', mo: 499, yr: 4990, users: null, loc: null }], features: { en: ['Dual MINSA scanning', 'AI form validation', 'Compliance reporting', 'Audit trail', 'Batch processing', 'Dashboard analytics'], es: ['Escaneo dual MINSA', 'Validación IA de formularios', 'Reportes de cumplimiento', 'Trazabilidad de auditoría', 'Procesamiento por lotes', 'Dashboard analítico'] } },
+  { code: 'MEDCONGRESS', name: 'MedCongress Pro', sub: { en: 'Medical Congress Manager', es: 'Gestor de Congresos Médicos' }, desc: { en: 'Complete platform for medical congress management with registration, QR accreditation and speaker coordination.', es: 'Plataforma completa para gestión de congresos médicos con registro, acreditación QR y coordinación de ponentes.' }, icon: '🎤', color: '#9333ea', plans: [{ tier: 'starter', mo: 99, yr: 990, users: 5, loc: 1 }, { tier: 'professional', mo: 249, yr: 2490, users: 30, loc: 5 }, { tier: 'enterprise', mo: 499, yr: 4990, users: null, loc: null }], features: { en: ['Event registration', 'QR accreditation', 'Speaker management', 'Session scheduling', 'Attendee analytics', 'Certificate generation'], es: ['Registro de eventos', 'Acreditación QR', 'Gestión de ponentes', 'Programación de sesiones', 'Analítica de asistentes', 'Generación de certificados'] } },
 ];
 
 const SERVICES = [
@@ -211,21 +219,26 @@ function ProductsPage() {
         <h2 style={{ fontSize: 36, fontWeight: 800, color: B.blue, marginBottom: 10, letterSpacing: '-0.02em' }}>{lang === 'es' ? 'Nuestros Productos' : 'Our Products'}</h2>
         <p style={{ fontSize: 15, color: B.textMuted }}>{lang === 'es' ? 'Plataformas empresariales diseñadas para la excelencia industrial' : 'Enterprise platforms designed for industrial excellence'}</p>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 }}>
-        {PRODUCTS.map(p => (
-          <div key={p.code} onClick={() => go('pricing')} style={{ ...card, padding: 28, cursor: 'pointer', transition: 'all 0.25s', borderLeft: `4px solid ${p.color}` }}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
+        {PRODUCTS.map(p => {
+          const productLinks = { SIG360: '/SumaERP/', ERP360: '/ERP360/', TPM360: '/TPM360/', MTP360: null, PMO360: '/PMO360/', AGRO360: '/AGRO360/', FOOD360: '/Food360/', HOTEL360: '/Hotel360/', SALUD360: '/Salud360/', CATASTRO360: '/CATASTRO360/', FUA: '/Fua/', MEDCONGRESS: '/gestoreventos/' };
+          const link = productLinks[p.code];
+          return (
+          <div key={p.code} onClick={() => link ? window.open(link, '_blank') : go('pricing')} style={{ ...card, padding: 24, cursor: 'pointer', transition: 'all 0.25s', borderLeft: `4px solid ${p.color}` }}
             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)'; }}
             onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'; }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-              <span style={{ fontSize: 32 }}>{p.icon}</span>
-              <div><h3 style={{ fontSize: 20, fontWeight: 800, color: B.blue }}>{p.name}</h3><p style={{ fontSize: 13, color: p.color, fontWeight: 600 }}>{p.sub[lang]}</p></div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+              <span style={{ fontSize: 28 }}>{p.icon}</span>
+              <div><h3 style={{ fontSize: 17, fontWeight: 800, color: B.blue }}>{p.name}</h3><p style={{ fontSize: 12, color: p.color, fontWeight: 600 }}>{p.sub[lang]}</p></div>
             </div>
-            <p style={{ fontSize: 14, color: B.textMuted, lineHeight: 1.6, marginBottom: 16 }}>{p.desc[lang]}</p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-              {(p.features[lang]).slice(0, 5).map((f, i) => <span key={i} style={{ fontSize: 11, color: B.textMuted, background: B.bg, border: `1px solid ${B.borderLight}`, borderRadius: 6, padding: '3px 8px' }}>{f}</span>)}
+            <p style={{ fontSize: 13, color: B.textMuted, lineHeight: 1.6, marginBottom: 14 }}>{p.desc[lang]}</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+              {(p.features[lang]).slice(0, 5).map((f, i) => <span key={i} style={{ fontSize: 10, color: B.textMuted, background: B.bg, border: `1px solid ${B.borderLight}`, borderRadius: 6, padding: '2px 7px' }}>{f}</span>)}
             </div>
+            {link && <div style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, fontWeight: 700, color: p.color }}>{lang === 'es' ? 'Ver demo' : 'View demo'} <span style={{ fontSize: 14 }}>→</span></div>}
           </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
@@ -711,6 +724,161 @@ function SpotifySection() {
   );
 }
 
+  );
+}
+
+function YouTubeSection() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeVideo, setActiveVideo] = useState(null);
+  const sectionRef = React.useRef(null);
+  const CHANNEL_URL = 'https://www.youtube.com/@Innovaqsolutions2026';
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setIsVisible(true); }, { threshold: 0.1 });
+    if (sectionRef.current) obs.observe(sectionRef.current);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const resp = await fetch('https://www.youtube.com/@Innovaqsolutions2026/videos');
+        const html = await resp.text();
+        const match = html.match(/var ytInitialData = ({.*?});<\/script>/s);
+        if (match) {
+          const data = JSON.parse(match[1]);
+          const tabs = data?.contents?.twoColumnBrowseResultsRenderer?.tabs || [];
+          const videosTab = tabs.find(t => t?.tabRenderer?.content?.richGridRenderer);
+          const items = videosTab?.tabRenderer?.content?.richGridRenderer?.contents || [];
+          const vids = items
+            .filter(i => i?.richItemRenderer?.content?.videoRenderer)
+            .map(i => {
+              const v = i.richItemRenderer.content.videoRenderer;
+              return {
+                id: v.videoId,
+                title: v.title?.runs?.[0]?.text || '',
+                thumb: v.thumbnail?.thumbnails?.pop()?.url || '',
+                views: v.viewCountText?.simpleText || v.viewCountText?.runs?.[0]?.text || '',
+                published: v.publishedTimeText?.simpleText || '',
+                duration: v.lengthText?.simpleText || '',
+              };
+            }).slice(0, 8);
+          setVideos(vids);
+          if (vids.length > 0) setActiveVideo(vids[0]);
+        }
+      } catch (e) {
+        console.log('YouTube fetch via scraping failed, using embed fallback');
+      }
+      setLoading(false);
+    };
+    fetchVideos();
+  }, []);
+
+  const ytSvg = "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z";
+
+  const feats = [
+    { d:'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z', t:'Tutoriales Prácticos', p:'Guías paso a paso sobre implementación ISO, uso de ERP y mejores prácticas industriales.' },
+    { d:'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z', t:'Innovación & Tendencias', p:'Análisis de tendencias en transformación digital, IA aplicada y gestión empresarial moderna.' },
+    { d:'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0', t:'Casos de Clientes', p:'Testimonios y casos reales de empresas que optimizaron sus operaciones con nuestras soluciones.' }
+  ];
+
+  return (
+    <section ref={sectionRef} style={{ background:'linear-gradient(135deg, #0f0f0f 0%, #1a0000 30%, #2d0a0a 60%, #0f0f0f 100%)', position:'relative', overflow:'hidden', padding:'80px 20px' }}>
+      <style>{`
+        @keyframes ytFloat{0%,100%{transform:translateY(0) scale(1);opacity:.25}50%{transform:translateY(-18px) scale(1.4);opacity:.5}}
+        @keyframes ytPulse{0%,100%{opacity:.6}50%{opacity:1}}
+        .yt-fc:hover{background:rgba(255,0,0,.06)!important;border-color:rgba(255,0,0,.25)!important;transform:translateX(8px)}
+        .yt-fc{transition:all .3s ease}
+        .yt-cta:hover{background:#cc0000!important;transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,0,0,.5)!important}
+        .yt-vid:hover{transform:scale(1.03);border-color:rgba(255,0,0,.4)!important}
+        .yt-vid{transition:all .3s ease;cursor:pointer}
+        @media(max-width:768px){.yt-grid{grid-template-columns:1fr!important}.yt-vids{grid-template-columns:repeat(2,1fr)!important}.yt-ttl{font-size:28px!important}}
+      `}</style>
+      {/* Background particles */}
+      <div style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}>
+        {[15,75,45,25,65,85].map((l,i)=>(<div key={i} style={{position:'absolute',width:4+i*1.1,height:4+i*1.1,background:'#FF0000',borderRadius:'50%',opacity:.12+i*.025,top:(12+i*14)+'%',left:l+'%',animation:'ytFloat '+(5+i*1.3)+'s infinite ease-in-out '+i*.5+'s'}}/>))}
+      </div>
+      <div style={{maxWidth:1200,margin:'0 auto',position:'relative',zIndex:2}}>
+        {/* Header */}
+        <div style={{textAlign:'center',marginBottom:50,opacity:isVisible?1:0,transform:isVisible?'translateY(0)':'translateY(30px)',transition:'all .8s ease'}}>
+          <div style={{display:'inline-flex',alignItems:'center',gap:12,background:'rgba(255,0,0,.08)',border:'1px solid rgba(255,0,0,.25)',borderRadius:50,padding:'8px 24px',marginBottom:24}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#FF0000"><path d={ytSvg}/></svg>
+            <span style={{color:'#FF0000',fontSize:14,fontWeight:600,letterSpacing:1,textTransform:'uppercase'}}>Canal de YouTube</span>
+          </div>
+          <h2 className="yt-ttl" style={{color:'#fff',fontSize:42,fontWeight:800,margin:'0 0 16px',lineHeight:1.2}}>Mira Nuestro <span style={{background:'linear-gradient(90deg,#FF0000,#ff4444)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>Canal</span></h2>
+          <p style={{color:'rgba(255,255,255,.6)',fontSize:18,maxWidth:600,margin:'0 auto',lineHeight:1.6}}>Videos sobre transformación digital, tutoriales de nuestras plataformas y contenido exclusivo para la industria.</p>
+        </div>
+
+        {/* Main content grid */}
+        <div className="yt-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:40,alignItems:'center',opacity:isVisible?1:0,transform:isVisible?'translateY(0)':'translateY(30px)',transition:'all .8s ease .2s'}}>
+          {/* Left: Video player */}
+          <div style={{position:'relative'}}>
+            <div style={{background:'rgba(255,255,255,.05)',borderRadius:20,padding:24,border:'1px solid rgba(255,0,0,.15)',backdropFilter:'blur(10px)'}}>
+              {activeVideo ? (
+                <div>
+                  <div style={{position:'relative',paddingBottom:'56.25%',borderRadius:12,overflow:'hidden',background:'#000'}}>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${activeVideo.id}?rel=0`}
+                      style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',border:'none',borderRadius:12}}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      loading="lazy"
+                    />
+                  </div>
+                  <div style={{marginTop:14}}>
+                    <h4 style={{color:'#fff',fontSize:15,fontWeight:700,lineHeight:1.4,marginBottom:6}}>{activeVideo.title}</h4>
+                    <div style={{display:'flex',gap:12,fontSize:12,color:'rgba(255,255,255,.45)'}}>
+                      {activeVideo.views && <span>{activeVideo.views}</span>}
+                      {activeVideo.published && <span>{activeVideo.published}</span>}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div style={{position:'relative',paddingBottom:'56.25%',borderRadius:12,overflow:'hidden',background:'#000'}}>
+                  <iframe
+                    src="https://www.youtube.com/embed?listType=user_uploads&list=Innovaqsolutions2026"
+                    style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',border:'none',borderRadius:12}}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                </div>
+              )}
+              {/* Video thumbnails scroll */}
+              {videos.length > 1 && (
+                <div style={{display:'flex',gap:8,marginTop:14,overflowX:'auto',paddingBottom:4}}>
+                  {videos.map((v,i) => (
+                    <div key={v.id} className="yt-vid" onClick={() => setActiveVideo(v)} style={{minWidth:120,borderRadius:8,overflow:'hidden',border:activeVideo?.id === v.id ? '2px solid #FF0000' : '2px solid rgba(255,255,255,.1)',position:'relative',flexShrink:0}}>
+                      <img src={v.thumb} alt={v.title} style={{width:120,height:68,objectFit:'cover',display:'block'}} />
+                      {v.duration && <span style={{position:'absolute',bottom:4,right:4,background:'rgba(0,0,0,.8)',color:'#fff',fontSize:10,padding:'1px 4px',borderRadius:3,fontWeight:600}}>{v.duration}</span>}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'80%',height:'80%',background:'radial-gradient(circle,rgba(255,0,0,.1) 0%,transparent 70%)',pointerEvents:'none',zIndex:-1,filter:'blur(40px)'}}/>
+          </div>
+          {/* Right: Features */}
+          <div style={{display:'flex',flexDirection:'column',gap:24}}>
+            {feats.map((f,i)=>(<div key={i} className="yt-fc" style={{display:'flex',alignItems:'flex-start',gap:16,background:'rgba(255,255,255,.03)',border:'1px solid rgba(255,255,255,.08)',borderRadius:16,padding:20,cursor:'default'}}><div style={{minWidth:48,height:48,background:'rgba(255,0,0,.12)',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center'}}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF0000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={f.d}/></svg></div><div><h4 style={{color:'#fff',fontSize:16,fontWeight:700,margin:'0 0 6px'}}>{f.t}</h4><p style={{color:'rgba(255,255,255,.5)',fontSize:14,margin:0,lineHeight:1.5}}>{f.p}</p></div></div>))}
+            <a href={CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="yt-cta" style={{display:'inline-flex',alignItems:'center',justifyContent:'center',gap:12,background:'#FF0000',color:'#fff',fontSize:16,fontWeight:700,padding:'16px 32px',borderRadius:50,textDecoration:'none',transition:'all .3s ease',marginTop:8,boxShadow:'0 4px 20px rgba(255,0,0,.35)'}}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d={ytSvg}/></svg>
+              Suscríbete al Canal
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+        {/* Play button animation */}
+        <div style={{display:'flex',justifyContent:'center',gap:6,marginTop:50,alignItems:'center',opacity:isVisible?1:0,transition:'opacity .8s ease .4s'}}>
+          {Array.from({length:7}).map((_,i)=>(<div key={i} style={{width:i===3?0:8,height:i===3?0:8,background:'#FF0000',borderRadius:i===3?'0':'50%',opacity:.3+i*.08,borderLeft:i===3?'14px solid #FF0000':'none',borderTop:i===3?'8px solid transparent':'none',borderBottom:i===3?'8px solid transparent':'none',margin:i===3?'0 8px':'0',animation:'ytPulse 2s infinite ease-in-out '+i*.2+'s'}}/>))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function WhatsAppFloat() {
   const [hover, setHover] = useState(false);
   const { lang } = useApp();
@@ -741,8 +909,8 @@ function WhatsAppFloat() {
 function Content() {
   const { page } = useApp();
   const P = {
-    home: <><Hero /><ProductsPage /><SpotifySection /><ServicesPage /><SectorsSection /><ISOSection /><CredsSection /><ContactPage /><Footer /></>,
-    products: <><ProductsPage /><SpotifySection /><Footer /></>,
+    home: <><Hero /><ProductsPage /><SpotifySection /><YouTubeSection /><ServicesPage /><SectorsSection /><ISOSection /><CredsSection /><ContactPage /><Footer /></>,
+    products: <><ProductsPage /><SpotifySection /><YouTubeSection /><Footer /></>,
     services: <><ServicesPage /><SectorsSection /><Footer /></>,
     pricing: <><Pricing /><ISOSection /><CredsSection /><Footer /></>,
     sectors: <><SectorsSection /><Footer /></>,
