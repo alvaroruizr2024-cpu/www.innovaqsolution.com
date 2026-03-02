@@ -730,7 +730,7 @@ function SpotifySection() {
 }
 
 function YouTubeSection() {
-  const { lang } = useContext(LangContext);
+  const { lang } = useContext(Ctx);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = React.useRef(null);
