@@ -730,154 +730,146 @@ function SpotifySection() {
 }
 
 function YouTubeSection() {
+  const { lang } = useContext(LangContext);
+  const [currentIdx, setCurrentIdx] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [activeVideo, setActiveVideo] = useState(null);
   const sectionRef = React.useRef(null);
-  const CHANNEL_URL = 'https://www.youtube.com/@Innovaqsolutions2026';
 
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setIsVisible(true); }, { threshold: 0.1 });
-    if (sectionRef.current) obs.observe(sectionRef.current);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const resp = await fetch('https://www.youtube.com/@Innovaqsolutions2026/videos');
-        const html = await resp.text();
-        const match = html.match(/var ytInitialData = ({.*?});<\/script>/s);
-        if (match) {
-          const data = JSON.parse(match[1]);
-          const tabs = data?.contents?.twoColumnBrowseResultsRenderer?.tabs || [];
-          const videosTab = tabs.find(t => t?.tabRenderer?.content?.richGridRenderer);
-          const items = videosTab?.tabRenderer?.content?.richGridRenderer?.contents || [];
-          const vids = items
-            .filter(i => i?.richItemRenderer?.content?.videoRenderer)
-            .map(i => {
-              const v = i.richItemRenderer.content.videoRenderer;
-              return {
-                id: v.videoId,
-                title: v.title?.runs?.[0]?.text || '',
-                thumb: v.thumbnail?.thumbnails?.pop()?.url || '',
-                views: v.viewCountText?.simpleText || v.viewCountText?.runs?.[0]?.text || '',
-                published: v.publishedTimeText?.simpleText || '',
-                duration: v.lengthText?.simpleText || '',
-              };
-            }).slice(0, 8);
-          setVideos(vids);
-          if (vids.length > 0) setActiveVideo(vids[0]);
-        }
-      } catch (e) {
-        console.log('YouTube fetch via scraping failed, using embed fallback');
-      }
-      setLoading(false);
-    };
-    fetchVideos();
-  }, []);
-
-  const ytSvg = "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z";
-
-  const feats = [
-    { d:'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z', t:'Tutoriales Prácticos', p:'Guías paso a paso sobre implementación ISO, uso de ERP y mejores prácticas industriales.' },
-    { d:'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z', t:'Innovación & Tendencias', p:'Análisis de tendencias en transformación digital, IA aplicada y gestión empresarial moderna.' },
-    { d:'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0', t:'Casos de Clientes', p:'Testimonios y casos reales de empresas que optimizaron sus operaciones con nuestras soluciones.' }
+  const YT_VIDEOS = [
+    { id: 'gLOilUpTnhw', title: 'Hotel 360: El Sistema Nervioso de la Hoteleria Moderna' },
+    { id: 'DniWsRLLaDk', title: 'Transforma tu Ciudad con CATASTRO 360' },
+    { id: 'aALCI773Kis', title: 'FOOD 360: La Revolucion Digital en la Industria Alimentaria' },
+    { id: 'nPmMWaVNxq4', title: 'Salud 360: Transformando la Gestion Hospitalaria con IA' },
+    { id: 'RX_DPtWXeuM', title: 'AGRO360: El Cerebro Digital que Revoluciona la Agroindustria' },
+    { id: 'oFsOL8Y_AvI', title: 'Optimiza la Gestion Integral de tu Empresa con ERP360' },
+    { id: '0kMUo7IUNQY', title: 'Conoce MedCongress Pro de Innovaq Solutions' },
+    { id: 'ljivGeJ0e8s', title: 'Transforma el Mantenimiento Industrial con TPM 360' },
+    { id: '_2uqj7mSino', title: 'SumaERP: El Cerebro Digital que Revolucionara tu Empresa' },
+    { id: 'fpWI4gqEarw', title: 'SIG360 Gestion Integrada' }
   ];
 
-  return (
-    <section ref={sectionRef} style={{ background:'linear-gradient(135deg, #0f0f0f 0%, #1a0000 30%, #2d0a0a 60%, #0f0f0f 100%)', position:'relative', overflow:'hidden', padding:'80px 20px' }}>
-      <style>{`
-        @keyframes ytFloat{0%,100%{transform:translateY(0) scale(1);opacity:.25}50%{transform:translateY(-18px) scale(1.4);opacity:.5}}
-        @keyframes ytPulse{0%,100%{opacity:.6}50%{opacity:1}}
-        .yt-fc:hover{background:rgba(255,0,0,.06)!important;border-color:rgba(255,0,0,.25)!important;transform:translateX(8px)}
-        .yt-fc{transition:all .3s ease}
-        .yt-cta:hover{background:#cc0000!important;transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,0,0,.5)!important}
-        .yt-vid:hover{transform:scale(1.03);border-color:rgba(255,0,0,.4)!important}
-        .yt-vid{transition:all .3s ease;cursor:pointer}
-        @media(max-width:768px){.yt-grid{grid-template-columns:1fr!important}.yt-vids{grid-template-columns:repeat(2,1fr)!important}.yt-ttl{font-size:28px!important}}
-      `}</style>
-      {/* Background particles */}
-      <div style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none'}}>
-        {[15,75,45,25,65,85].map((l,i)=>(<div key={i} style={{position:'absolute',width:4+i*1.1,height:4+i*1.1,background:'#FF0000',borderRadius:'50%',opacity:.12+i*.025,top:(12+i*14)+'%',left:l+'%',animation:'ytFloat '+(5+i*1.3)+'s infinite ease-in-out '+i*.5+'s'}}/>))}
-      </div>
-      <div style={{maxWidth:1200,margin:'0 auto',position:'relative',zIndex:2}}>
-        {/* Header */}
-        <div style={{textAlign:'center',marginBottom:50,opacity:isVisible?1:0,transform:isVisible?'translateY(0)':'translateY(30px)',transition:'all .8s ease'}}>
-          <div style={{display:'inline-flex',alignItems:'center',gap:12,background:'rgba(255,0,0,.08)',border:'1px solid rgba(255,0,0,.25)',borderRadius:50,padding:'8px 24px',marginBottom:24}}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#FF0000"><path d={ytSvg}/></svg>
-            <span style={{color:'#FF0000',fontSize:14,fontWeight:600,letterSpacing:1,textTransform:'uppercase'}}>Canal de YouTube</span>
-          </div>
-          <h2 className="yt-ttl" style={{color:'#fff',fontSize:42,fontWeight:800,margin:'0 0 16px',lineHeight:1.2}}>Mira Nuestro <span style={{background:'linear-gradient(90deg,#FF0000,#ff4444)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>Canal</span></h2>
-          <p style={{color:'rgba(255,255,255,.6)',fontSize:18,maxWidth:600,margin:'0 auto',lineHeight:1.6}}>Videos sobre transformación digital, tutoriales de nuestras plataformas y contenido exclusivo para la industria.</p>
-        </div>
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setIsVisible(true);
+    }, { threshold: 0.15 });
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
-        {/* Main content grid */}
-        <div className="yt-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:40,alignItems:'center',opacity:isVisible?1:0,transform:isVisible?'translateY(0)':'translateY(30px)',transition:'all .8s ease .2s'}}>
-          {/* Left: Video player */}
-          <div style={{position:'relative'}}>
-            <div style={{background:'rgba(255,255,255,.05)',borderRadius:20,padding:24,border:'1px solid rgba(255,0,0,.15)',backdropFilter:'blur(10px)'}}>
-              {activeVideo ? (
-                <div>
-                  <div style={{position:'relative',paddingBottom:'56.25%',borderRadius:12,overflow:'hidden',background:'#000'}}>
-                    <iframe
-                      src={`https://www.youtube.com/embed/${activeVideo.id}?rel=0`}
-                      style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',border:'none',borderRadius:12}}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      loading="lazy"
-                    />
-                  </div>
-                  <div style={{marginTop:14}}>
-                    <h4 style={{color:'#fff',fontSize:15,fontWeight:700,lineHeight:1.4,marginBottom:6}}>{activeVideo.title}</h4>
-                    <div style={{display:'flex',gap:12,fontSize:12,color:'rgba(255,255,255,.45)'}}>
-                      {activeVideo.views && <span>{activeVideo.views}</span>}
-                      {activeVideo.published && <span>{activeVideo.published}</span>}
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div style={{position:'relative',paddingBottom:'56.25%',borderRadius:12,overflow:'hidden',background:'#000'}}>
-                  <iframe
-                    src="https://www.youtube.com/embed?listType=user_uploads&list=Innovaqsolutions2026"
-                    style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',border:'none',borderRadius:12}}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    loading="lazy"
-                  />
-                </div>
-              )}
-              {/* Video thumbnails scroll */}
-              {videos.length > 1 && (
-                <div style={{display:'flex',gap:8,marginTop:14,overflowX:'auto',paddingBottom:4}}>
-                  {videos.map((v,i) => (
-                    <div key={v.id} className="yt-vid" onClick={() => setActiveVideo(v)} style={{minWidth:120,borderRadius:8,overflow:'hidden',border:activeVideo?.id === v.id ? '2px solid #FF0000' : '2px solid rgba(255,255,255,.1)',position:'relative',flexShrink:0}}>
-                      <img src={v.thumb} alt={v.title} style={{width:120,height:68,objectFit:'cover',display:'block'}} />
-                      {v.duration && <span style={{position:'absolute',bottom:4,right:4,background:'rgba(0,0,0,.8)',color:'#fff',fontSize:10,padding:'1px 4px',borderRadius:3,fontWeight:600}}>{v.duration}</span>}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'80%',height:'80%',background:'radial-gradient(circle,rgba(255,0,0,.1) 0%,transparent 70%)',pointerEvents:'none',zIndex:-1,filter:'blur(40px)'}}/>
-          </div>
-          {/* Right: Features */}
-          <div style={{display:'flex',flexDirection:'column',gap:24}}>
-            {feats.map((f,i)=>(<div key={i} className="yt-fc" style={{display:'flex',alignItems:'flex-start',gap:16,background:'rgba(255,255,255,.03)',border:'1px solid rgba(255,255,255,.08)',borderRadius:16,padding:20,cursor:'default'}}><div style={{minWidth:48,height:48,background:'rgba(255,0,0,.12)',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center'}}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF0000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={f.d}/></svg></div><div><h4 style={{color:'#fff',fontSize:16,fontWeight:700,margin:'0 0 6px'}}>{f.t}</h4><p style={{color:'rgba(255,255,255,.5)',fontSize:14,margin:0,lineHeight:1.5}}>{f.p}</p></div></div>))}
-            <a href={CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="yt-cta" style={{display:'inline-flex',alignItems:'center',justifyContent:'center',gap:12,background:'#FF0000',color:'#fff',fontSize:16,fontWeight:700,padding:'16px 32px',borderRadius:50,textDecoration:'none',transition:'all .3s ease',marginTop:8,boxShadow:'0 4px 20px rgba(255,0,0,.35)'}}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d={ytSvg}/></svg>
-              Suscríbete al Canal
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </div>
-        </div>
-        {/* Play button animation */}
-        <div style={{display:'flex',justifyContent:'center',gap:6,marginTop:50,alignItems:'center',opacity:isVisible?1:0,transition:'opacity .8s ease .4s'}}>
-          {Array.from({length:7}).map((_,i)=>(<div key={i} style={{width:i===3?0:8,height:i===3?0:8,background:'#FF0000',borderRadius:i===3?'0':'50%',opacity:.3+i*.08,borderLeft:i===3?'14px solid #FF0000':'none',borderTop:i===3?'8px solid transparent':'none',borderBottom:i===3?'8px solid transparent':'none',margin:i===3?'0 8px':'0',animation:'ytPulse 2s infinite ease-in-out '+i*.2+'s'}}/>))}
-        </div>
-      </div>
-    </section>
+  const goNext = () => setCurrentIdx(i => (i + 1) % YT_VIDEOS.length);
+  const goPrev = () => setCurrentIdx(i => (i - 1 + YT_VIDEOS.length) % YT_VIDEOS.length);
+  const video = YT_VIDEOS[currentIdx];
+
+  const t = {
+    heading: { en: 'Watch Our Channel', es: 'Mira Nuestro Canal' },
+    sub: { en: 'Tutorials, demos and success stories from INNOVAQ Solutions', es: 'Tutoriales, demos y casos de exito de INNOVAQ Solutions' },
+    subscribe: { en: 'Subscribe to Channel', es: 'Suscribete al Canal' },
+    prev: { en: 'Previous', es: 'Anterior' },
+    next: { en: 'Next', es: 'Siguiente' },
+    of: { en: 'of', es: 'de' }
+  };
+
+  const arrowBtn = (direction, onClick) => React.createElement('button', {
+    onClick,
+    'aria-label': direction === 'left' ? t.prev[lang] : t.next[lang],
+    style: {
+      position: 'absolute', top: '50%', [direction]: '-20px', transform: 'translateY(-50%)',
+      width: '48px', height: '48px', borderRadius: '50%', border: 'none',
+      background: 'rgba(255,255,255,0.95)', color: B.blue, fontSize: '22px', fontWeight: 'bold',
+      cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      boxShadow: '0 4px 15px rgba(0,0,0,0.3)', zIndex: 10, transition: 'all 0.3s'
+    }
+  }, direction === 'left' ? '\u276E' : '\u276F');
+
+  return React.createElement('section', {
+    ref: sectionRef,
+    'aria-label': t.heading[lang],
+    style: {
+      padding: '80px 20px',
+      background: 'linear-gradient(135deg, #0d1117 0%, #1a1a2e 50%, #16213e 100%)',
+      color: '#fff', position: 'relative', overflow: 'hidden',
+      opacity: isVisible ? 1 : 0, transform: isVisible ? 'none' : 'translateY(40px)',
+      transition: 'opacity 0.8s, transform 0.8s'
+    }
+  },
+    // Heading
+    React.createElement('div', { style: { textAlign: 'center', marginBottom: '50px', position: 'relative', zIndex: 2 } },
+      React.createElement('div', { style: { display: 'inline-flex', alignItems: 'center', gap: '12px', background: 'rgba(255,0,0,0.15)', padding: '8px 20px', borderRadius: '30px', marginBottom: '20px' } },
+        React.createElement('span', { style: { fontSize: '28px' } }, '\u25B6\uFE0F'),
+        React.createElement('span', { style: { color: '#ff4444', fontWeight: 600, fontSize: '14px', letterSpacing: '2px', textTransform: 'uppercase' } }, 'YouTube')
+      ),
+      React.createElement('h2', { style: { fontSize: 'clamp(28px,4vw,42px)', fontWeight: 800, margin: '0 0 12px' } }, t.heading[lang]),
+      React.createElement('p', { style: { color: 'rgba(255,255,255,0.7)', fontSize: '17px', maxWidth: '600px', margin: '0 auto' } }, t.sub[lang])
+    ),
+
+    // Video Player + Slider
+    React.createElement('div', { style: { maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 2 } },
+
+      // Main video embed
+      React.createElement('div', { style: { position: 'relative', paddingBottom: '56.25%', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.5)', marginBottom: '24px', background: '#000' } },
+        React.createElement('iframe', {
+          key: video.id,
+          src: 'ht' + 'tps://www.youtube-nocookie.com/embed/' + video.id + '?rel=0&modestbranding=1',
+          title: video.title,
+          style: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' },
+          allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',
+          allowFullScreen: true
+        })
+      ),
+
+      // Video title
+      React.createElement('h3', { style: { textAlign: 'center', fontSize: '20px', fontWeight: 600, margin: '0 0 20px', color: '#fff' } }, video.title),
+
+      // Navigation arrows + counter
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '30px' } },
+        React.createElement('button', {
+          onClick: goPrev,
+          style: { width: '48px', height: '48px', borderRadius: '50%', border: '2px solid rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.1)', color: '#fff', fontSize: '20px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.3s' }
+        }, '\u276E'),
+        React.createElement('span', { style: { color: 'rgba(255,255,255,0.8)', fontSize: '15px', fontWeight: 500 } },
+          (currentIdx + 1) + ' ' + t.of[lang] + ' ' + YT_VIDEOS.length
+        ),
+        React.createElement('button', {
+          onClick: goNext,
+          style: { width: '48px', height: '48px', borderRadius: '50%', border: '2px solid rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.1)', color: '#fff', fontSize: '20px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.3s' }
+        }, '\u276F')
+      ),
+
+      // Thumbnail strip (mini slider)
+      React.createElement('div', { style: { display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '30px' } },
+        YT_VIDEOS.map((v, i) => React.createElement('div', {
+          key: v.id,
+          onClick: () => setCurrentIdx(i),
+          style: {
+            width: '120px', height: '68px', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer',
+            border: i === currentIdx ? '3px solid #ff4444' : '3px solid transparent',
+            opacity: i === currentIdx ? 1 : 0.5, transition: 'all 0.3s',
+            backgroundImage: 'url(ht' + 'tps://img.youtube.com/vi/' + v.id + '/mqdefault.jpg)',
+            backgroundSize: 'cover', backgroundPosition: 'center',
+            transform: i === currentIdx ? 'scale(1.05)' : 'scale(1)'
+          }
+        }))
+      )
+    ),
+
+    // Subscribe button
+    React.createElement('div', { style: { textAlign: 'center', position: 'relative', zIndex: 2 } },
+      React.createElement('a', {
+        href: 'ht' + 'tps://www.youtube.com/@Innovaqsolutions2026?sub_confirmation=1',
+        target: '_blank', rel: 'noopener noreferrer',
+        style: {
+          display: 'inline-flex', alignItems: 'center', gap: '12px',
+          background: '#ff0000', color: '#fff', padding: '16px 40px',
+          borderRadius: '50px', fontSize: '17px', fontWeight: 700,
+          textDecoration: 'none', transition: 'all 0.3s',
+          boxShadow: '0 4px 20px rgba(255,0,0,0.4)'
+        }
+      },
+        React.createElement('span', { style: { fontSize: '22px' } }, '\u25B6\uFE0F'),
+        t.subscribe[lang],
+        React.createElement('span', null, ' \u2192')
+      )
+    )
   );
 }
 
