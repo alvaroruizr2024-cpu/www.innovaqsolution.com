@@ -221,10 +221,8 @@ function ProductsPage() {
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
         {PRODUCTS.map(p => {
-          const productLinks = { SIG360: '/SumaERP/', ERP360: '/ERP360/', TPM360: '/TPM360/', MTP360: null, PMO360: '/PMO360/', AGRO360: '/AGRO360/', FOOD360: '/Food360/', HOTEL360: '/Hotel360/', SALUD360: '/Salud360/', CATASTRO360: '/CATASTRO360/', FUA: '/Fua/', MEDCONGRESS: '/gestoreventos/' };
-          const link = productLinks[p.code];
           return (
-          <div key={p.code} onClick={() => link ? window.open(link, '_blank') : go('pricing')} style={{ ...card, padding: 24, cursor: 'pointer', transition: 'all 0.25s', borderLeft: `4px solid ${p.color}` }}
+              <div key={p.code} onClick={() => go('contact', { servicio: p.name + ' \u2014 ' + p.sub[lang] })} style={{ ...card, padding: 24, cursor: 'pointer', transition: 'all 0.25s', borderLeft: `4px solid ${p.color}` }}
             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)'; }}
             onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'; }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
@@ -235,7 +233,7 @@ function ProductsPage() {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
               {(p.features[lang]).slice(0, 5).map((f, i) => <span key={i} style={{ fontSize: 10, color: B.textMuted, background: B.bg, border: `1px solid ${B.borderLight}`, borderRadius: 6, padding: '2px 7px' }}>{f}</span>)}
             </div>
-            {link && <div style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, fontWeight: 700, color: p.color }}>{lang === 'es' ? 'Ver demo' : 'View demo'} <span style={{ fontSize: 14 }}>→</span></div>}
+            <div style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, fontWeight: 700, color: p.color }}>{lang === 'es' ? 'Solicitar Cotización' : 'Request Quote'} <span style={{ fontSize: 14 }}>→</span></div>
           </div>
           );
         })}
@@ -381,7 +379,9 @@ function ISOSection() {
 function ContactPage() {
   const { t, lang } = useApp();
   const [sent, setSent] = useState(false);
-  const [form, setForm] = useState({ nombre: '', empresa: '', email: '', servicio: 'SIG 360° — Sistema Integrado de Gestión', mensaje: '' });
+  const { pageData } = useApp();
+  const [form, setForm] = useState({ nombre: '', empresa: '', email: '', servicio: pageData?.servicio || 'SIG 360° — Sistema Integrado de Gestión', mensaje: '' });
+  useEffect(() => { if (pageData?.servicio) { setForm(prev => ({ ...prev, servicio: pageData.servicio })); } }, [pageData]);
   const u = (k, v) => setForm(p => ({ ...p, [k]: v }));
 
   // Calendar state
@@ -508,7 +508,24 @@ function ContactPage() {
               <div><label style={lbl}>{lang === 'es' ? 'EMAIL CORPORATIVO' : 'CORPORATE EMAIL'}</label><input type="email" value={form.email} onChange={e => u('email', e.target.value)} style={inp} placeholder="ejemplo@empresa.com" /></div>
               <div><label style={lbl}>{lang === 'es' ? 'SERVICIO DE INTERÉS' : 'SERVICE OF INTEREST'}</label>
                 <select value={form.servicio} onChange={e => u('servicio', e.target.value)} style={{ ...inp, cursor: 'pointer' }}>
-                  {['SIG 360° — Sistema Integrado de Gestión', 'ERP 360 (SumaERP)', 'TPM360 — Mantenimiento', 'MTP360 — Capacitación', 'Auditoría MINTRA / Ley 29783', 'Implementación ISO', 'Software a Medida', 'Automatización IA'].map(s => <option key={s} value={s}>{s}</option>)}
+                  {[
+                    'SIG 360° — Sistema Integrado de Gestión',
+                    'ERP 360 — SumaERP Planificación de Recursos',
+                    'TPM360 — Mantenimiento Productivo Total',
+                    'MTP360 — Plan Maestro de Capacitación',
+                    'PMO360 — Sistema de Entrega de Valor PMO',
+                    'AGRO 360 — Gestión Agroindustrial Integral',
+                    'FOOD 360 — ERP Alimentos y Bebidas',
+                    'HOTEL 360 — ERP Hotelero Inteligente',
+                    'SALUD 360 — ERP Clínico con IA',
+                    'CATASTRO 360 — Gestión Catastral con IA',
+                    'Auditoría FUA — Sistema Auditoría FUA MINSA',
+                    'MedCongress Pro — Gestor de Congresos Médicos',
+                    'Auditoría MINTRA / Ley 29783',
+                    'Implementación ISO',
+                    'Software a Medida',
+                    'Automatización IA'
+                  ].map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
               <div><label style={lbl}>{lang === 'es' ? 'MENSAJE' : 'MESSAGE'}</label><textarea rows={3} value={form.mensaje} onChange={e => u('mensaje', e.target.value)} style={{ ...inp, resize: 'vertical' }} placeholder={lang === 'es' ? 'Detalles de su requerimiento...' : 'Details of your requirement...'} /></div>
