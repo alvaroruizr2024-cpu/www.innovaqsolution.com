@@ -222,7 +222,7 @@ function ProductsPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
         {PRODUCTS.map(p => {
           return (
-              <div key={p.code} onClick={() => go('contact', { servicio: p.name + ' \u2014 ' + p.sub[lang] })} style={{ ...card, padding: 24, cursor: 'pointer', transition: 'all 0.25s', borderLeft: `4px solid ${p.color}` }}
+              <div key={p.code} onClick={() => go('contact', { servicio: p.code })} style={{ ...card, padding: 24, cursor: 'pointer', transition: 'all 0.25s', borderLeft: `4px solid ${p.color}` }}
             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)'; }}
             onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'; }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
@@ -380,7 +380,7 @@ function ContactPage() {
   const { t, lang } = useApp();
   const [sent, setSent] = useState(false);
   const { pageData } = useApp();
-  const [form, setForm] = useState({ nombre: '', empresa: '', email: '', servicio: pageData?.servicio || 'SIG 360° — Sistema Integrado de Gestión', mensaje: '' });
+  const [form, setForm] = useState({ nombre: '', empresa: '', email: '', servicio: pageData?.servicio || 'SIG360', mensaje: '' });
   useEffect(() => { if (pageData?.servicio) { setForm(prev => ({ ...prev, servicio: pageData.servicio })); } }, [pageData]);
   const u = (k, v) => setForm(p => ({ ...p, [k]: v }));
 
@@ -428,7 +428,8 @@ function ContactPage() {
   const handleSend = () => {
     const dateStr = selDate ? formatDate() : (lang === 'es' ? 'No seleccionada' : 'Not selected');
     const timeStr = selTime || (lang === 'es' ? 'No seleccionada' : 'Not selected');
-    const subject = encodeURIComponent(`Solicitud de Reunión: ${form.servicio} - ${form.empresa}`);
+    const servicioLabel = PRODUCTS.find(pr => pr.code === form.servicio)?.name || form.servicio;
+      const subject = encodeURIComponent(`Solicitud de Reunión: ${servicioLabel} - ${form.empresa}`);
     const body = encodeURIComponent(
       `Estimado equipo INNOVAQ Solutions,\n\n` +
       `Solicito agendar una reunión con los siguientes datos:\n\n` +
@@ -441,7 +442,7 @@ function ContactPage() {
       `══════════════════════════════\n` +
       `REUNIÓN AGENDADA\n` +
       `══════════════════════════════\n` +
-      `Servicio: ${form.servicio}\n` +
+      `Servicio: ${servicioLabel}\n` +
       `Fecha: ${dateStr}\n` +
       `Hora: ${timeStr} (GMT-5 Lima)\n` +
       `Duración: 60 minutos\n\n` +
@@ -508,24 +509,12 @@ function ContactPage() {
               <div><label style={lbl}>{lang === 'es' ? 'EMAIL CORPORATIVO' : 'CORPORATE EMAIL'}</label><input type="email" value={form.email} onChange={e => u('email', e.target.value)} style={inp} placeholder="ejemplo@empresa.com" /></div>
               <div><label style={lbl}>{lang === 'es' ? 'SERVICIO DE INTERÉS' : 'SERVICE OF INTEREST'}</label>
                 <select value={form.servicio} onChange={e => u('servicio', e.target.value)} style={{ ...inp, cursor: 'pointer' }}>
-                  {[
-                    'SIG 360° — Sistema Integrado de Gestión',
-                    'ERP 360 — SumaERP Planificación de Recursos',
-                    'TPM360 — Mantenimiento Productivo Total',
-                    'MTP360 — Plan Maestro de Capacitación',
-                    'PMO360 — Sistema de Entrega de Valor PMO',
-                    'AGRO 360 — Gestión Agroindustrial Integral',
-                    'FOOD 360 — ERP Alimentos y Bebidas',
-                    'HOTEL 360 — ERP Hotelero Inteligente',
-                    'SALUD 360 — ERP Clínico con IA',
-                    'CATASTRO 360 — Gestión Catastral con IA',
-                    'Auditoría FUA — Sistema Auditoría FUA MINSA',
-                    'MedCongress Pro — Gestor de Congresos Médicos',
-                    'Auditoría MINTRA / Ley 29783',
-                    'Implementación ISO',
-                    'Software a Medida',
-                    'Automatización IA'
-                  ].map(s => <option key={s} value={s}>{s}</option>)}
+                  {[...PRODUCTS.map(pr => ({ val: pr.code, label: pr.name + ' \u2014 ' + pr.sub[lang] })),
+                    { val: 'MINTRA', label: lang === 'es' ? 'Auditoría MINTRA / Ley 29783' : 'MINTRA Audit / Law 29783' },
+                    { val: 'ISO', label: lang === 'es' ? 'Implementación ISO' : 'ISO Implementation' },
+                    { val: 'SOFTWARE', label: lang === 'es' ? 'Software a Medida' : 'Custom Software' },
+                    { val: 'IA', label: lang === 'es' ? 'Automatización IA' : 'AI Automation' }
+                  ].map(s => <option key={s.val} value={s.val}>{s.label}</option>)}
                 </select>
               </div>
               <div><label style={lbl}>{lang === 'es' ? 'MENSAJE' : 'MESSAGE'}</label><textarea rows={3} value={form.mensaje} onChange={e => u('mensaje', e.target.value)} style={{ ...inp, resize: 'vertical' }} placeholder={lang === 'es' ? 'Detalles de su requerimiento...' : 'Details of your requirement...'} /></div>
