@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ERP360 — Flujos de Procesos Internos | INNOVAQ SOLUTIONS</title>
+<meta name="description" content="Mapa completo de flujos de procesos internos del ERP360 por tipo de operación: Ventas, Compras, Comercio Exterior, Producción, RRHH, Contabilidad y Finanzas.">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;font-family:'Segoe UI','SF Pro',system-ui,sans-serif;color:#e4e4ed;overflow-x:hidden}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#12121a}
+::-webkit-scrollbar-thumb{background:#2a2a3a;border-radius:3px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+const FLOWS = {
+  ventas: {
+    title: "CICLO DE VENTAS",
+    icon: "💰",
+    color: "#0EA5E9",
+    bg: "#0C4A6E",
+    steps: [
+      { id: "V1", label: "Cotización", desc: "Registro de cotización al cliente con productos, cantidades, precios unitarios y condiciones comerciales", actor: "Vendedor", module: "Ventas SIRE" },
+      { id: "V2", label: "Orden de Venta", desc: "Aprobación de cotización → generación de OV con reserva de stock en Almacén MRP II", actor: "Jefe Comercial", module: "Ventas SIRE" },
+      { id: "V3", label: "Despacho", desc: "Picking del almacén, generación de guía de remisión, actualización de Kárdex (salida)", actor: "Almacenero", module: "Almacén MRP II" },
+      { id: "V4", label: "Facturación Electrónica", desc: "Emisión de factura/boleta XML UBL 2.1. Series E001/B001. Cálculo automático IGV 18%. Envío OSE→SUNAT", actor: "Facturador", module: "Ventas SIRE" },
+      { id: "V5", label: "CDR SUNAT", desc: "Recepción CDR (Constancia de Recepción): Aceptado/Rechazado/En proceso. Reenvío automático si rechazado", actor: "Sistema", module: "Ventas SIRE" },
+      { id: "V6", label: "Registro Ventas PLE", desc: "Generación automática del Registro de Ventas formato TXT PLE conforme Res. 112-2021/SUNAT", actor: "Sistema", module: "Contabilidad" },
+      { id: "V7", label: "Asiento Contable", desc: "12 Cuentas por Cobrar (DEBE) → 40 IGV por Pagar + 70 Ventas (HABER). Asiento automático", actor: "Sistema", module: "Contabilidad" },
+      { id: "V8", label: "Cuenta por Cobrar", desc: "Registro en CxC con scoring de cliente, antigüedad de deuda, y proyección en Cashflow 360", actor: "Sistema", module: "Finanzas" },
+      { id: "V9", label: "Cobranza", desc: "Seguimiento de cobranza, conciliación bancaria, registro de pago parcial/total", actor: "Tesorería", module: "Finanzas" },
+      { id: "V10", label: "Margen Bruto", desc: "Cálculo de margen por producto: Precio Venta - Costo Producción → alimenta KPIs Dashboard", actor: "Sistema", module: "Costos Producción" },
+    ],
+    integrations: [
+      "Ventas → Almacén: Reserva stock en OV, salida Kárdex en despacho",
+      "Ventas → Contabilidad: Asientos automáticos de venta + IGV",
+      "Ventas → Finanzas: CxC en Cashflow 360, scoring cliente",
+      "Ventas → Costos: Margen bruto por producto en cierre mensual",
+      "Ventas → SUNAT: XML UBL 2.1 → CDR → Registro Ventas PLE",
+    ]
+  },
+  compras: {
+    title: "CICLO DE COMPRAS",
+    icon: "📦",
+    color: "#F59E0B",
+    bg: "#78350F",
+    steps: [
+      { id: "C1", label: "Requisición", desc: "Solicitud de materiales desde Almacén MRP (quiebre de stock) o Producción (BOM). Flujo: Borrador → Enviada → Aprobada", actor: "Solicitante", module: "Almacén MRP II" },
+      { id: "C2", label: "Orden de Compra", desc: "Generación de OC con selección de proveedor, Incoterm (CIF/FOB/DDP/EXW), moneda, condición de pago", actor: "Comprador", module: "Compras SIRE" },
+      { id: "C3", label: "Aprobación Multinivel", desc: "Workflow de aprobación según monto: Nivel 1 (< S/5,000) → Nivel 2 (< S/50,000) → Nivel 3 (Gerencia)", actor: "Aprobadores", module: "Compras SIRE" },
+      { id: "C4", label: "Recepción + PPI", desc: "Ingreso físico al almacén. Plan de Puntos de Inspección: Estado cuarentena → Inspección calidad → Aprobado/Rechazado", actor: "Almacenero + QC", module: "Almacén MRP II" },
+      { id: "C5", label: "Kárdex Entrada", desc: "Registro entrada Kárdex SUNAT 13.1. Promedio ponderado actualizado. Trazabilidad documental OC→GR→Factura", actor: "Sistema", module: "Almacén MRP II" },
+      { id: "C6", label: "Recepción Factura UBL", desc: "Portal proveedores: Recepción XML UBL 2.1 → Validación estructura → Verificación RUC SUNAT → Pre-asiento automático", actor: "Sistema", module: "Compras SIRE" },
+      { id: "C7", label: "Detracciones SPOT", desc: "Cálculo automático según catálogo SUNAT: % detracción por bien/servicio. Generación constancia depósito Banco Nación", actor: "Sistema", module: "Compras SIRE" },
+      { id: "C8", label: "Conciliación SIRE", desc: "Cruce ERP vs SUNAT: Matched / Dif. Monto / Falta ERP / Falta SUNAT / Duplicado. Acciones correctivas", actor: "Contador", module: "Contabilidad" },
+      { id: "C9", label: "Asiento Contable", desc: "60 Compras (DEBE) + 40 IGV Crédito Fiscal (DEBE) → 42 CxP (HABER). Retenciones 3%/6% y percepciones 2%", actor: "Sistema", module: "Contabilidad" },
+      { id: "C10", label: "Cuenta por Pagar", desc: "Registro CxP en Finanzas. Proyección de egresos en Cashflow 360. Compromiso fijo si es recurrente", actor: "Sistema", module: "Finanzas" },
+      { id: "C11", label: "Varianza Precio", desc: "Compras → Costos: Varianza precio material = Precio Real - Precio Estándar. Alimenta motor de desviaciones", actor: "Sistema", module: "Costos Producción" },
+    ],
+    integrations: [
+      "Almacén → Compras: Requisición automática por quiebre MRP",
+      "Compras → Almacén: Recepción + PPI + Kárdex entrada",
+      "Compras → Contabilidad: Asientos compra + crédito fiscal + SIRE",
+      "Compras → Finanzas: CxP en Cashflow, detracciones",
+      "Compras → Costos: Varianza precio material por OC",
+      "Compras → ComEx: Integración con DUA/DAM si importación",
+    ]
+  },
+  comex: {
+    title: "COMERCIO EXTERIOR",
+    icon: "🚢",
+    color: "#8B5CF6",
+    bg: "#4C1D95",
+    steps: [
+      { id: "X1", label: "Carpeta de Importación", desc: "Creación de carpeta con datos: proveedor extranjero, Incoterm, producto, país origen, agente de aduanas", actor: "Analista ComEx", module: "Comercio Exterior" },
+      { id: "X2", label: "Orden de Compra Internacional", desc: "OC en USD/EUR con Incoterm seleccionado. Tipo de cambio SUNAT del día. Cálculo FOB base", actor: "Comprador", module: "Compras SIRE" },
+      { id: "X3", label: "Tracking Embarque", desc: "Seguimiento B/L (Bill of Lading), contenedor, naviera, puerto embarque/destino, ETA estimado", actor: "Analista ComEx", module: "Comercio Exterior" },
+      { id: "X4", label: "DUA/DAM", desc: "Registro Declaración Única de Aduanas: partida arancelaria, ad valorem, ISC, IPM, derechos específicos", actor: "Agente Aduanas", module: "Comercio Exterior" },
+      { id: "X5", label: "Landed Cost", desc: "Cálculo costo total: FOB + Flete + Seguro + Ad Valorem + ISC + IPM + Gastos locales. Prorrateo por driver (peso/valor/unidades)", actor: "Sistema", module: "Comercio Exterior" },
+      { id: "X6", label: "Despacho Aduanero", desc: "Liquidación DUA → Ingreso mercadería a almacén → Kárdex entrada con costo CIF landed", actor: "Almacenero", module: "Almacén MRP II" },
+      { id: "X7", label: "Drawback (Exportación)", desc: "Cálculo restitución 3% FOB exportado. Algoritmo FIFO insumos. Explosión BOM con scrap rate. Validación regla 50% CIF/FOB", actor: "Sistema", module: "Comercio Exterior" },
+      { id: "X8", label: "Asiento ComEx", desc: "28 Existencias (DEBE) → 42 CxP Proveedor Exterior + 40 Tributos Aduaneros (HABER). Diferencia de cambio", actor: "Sistema", module: "Contabilidad" },
+      { id: "X9", label: "Obligaciones USD", desc: "CxP en moneda extranjera → Finanzas. Proyección egresos USD. Diferencia de cambio mensual", actor: "Sistema", module: "Finanzas" },
+    ],
+    integrations: [
+      "ComEx → Compras: Costos CIF landed por despacho aduanero",
+      "ComEx → Almacén: Ingreso mercadería con costo landed",
+      "ComEx → Contabilidad: Asientos de importación + tributos",
+      "ComEx → Finanzas: Obligaciones USD, diferencia de cambio",
+      "ComEx → Costos: Varianza precio importado vs estándar",
+    ]
+  },
+  produccion: {
+    title: "CICLO DE PRODUCCIÓN Y COSTOS",
+    icon: "🏭",
+    color: "#EF4444",
+    bg: "#7F1D1D",
+    steps: [
+      { id: "P1", label: "Plan Maestro (MPS)", desc: "Cronograma de producción por semana/mes. Vista Gantt con ruta crítica. Partidas planificadas por producto", actor: "Planner", module: "Almacén MRP II" },
+      { id: "P2", label: "Explosión MRP", desc: "BOM multinivel → Necesidades netas = Demanda bruta - Stock disponible - En tránsito. Generación requisiciones automáticas", actor: "Sistema", module: "Almacén MRP II" },
+      { id: "P3", label: "Orden de Producción", desc: "Apertura OP con BOM + Routing: centros de trabajo, tiempos estándar setup/ejecución, recursos asignados", actor: "Jefe Producción", module: "Costos Producción" },
+      { id: "P4", label: "Consumo Materiales", desc: "Vale de salida almacén → Kárdex salida. Consumo real vs teórico BOM. Control de mermas (normal/anormal/eficiente)", actor: "Operario", module: "Almacén MRP II" },
+      { id: "P5", label: "Mano de Obra Directa", desc: "RRHH → Costos: Tasa hora M.O. directa = (Sueldo + EsSalud + SCTR + Gratif + CTS) / Horas productivas", actor: "Sistema", module: "RRHH / Costos" },
+      { id: "P6", label: "CIF (Costos Indirectos)", desc: "Asignación de costos indirectos: depreciación equipos, energía, mantenimiento. Prorrateo multi-driver", actor: "Sistema", module: "Costos Producción" },
+      { id: "P7", label: "Motor de Desviaciones", desc: "Costo Real vs Estándar → Varianza. Umbrales: WARNING (±5%) → CRITICAL (±10%) → BLOCK (±20%). Alertas automáticas", actor: "Sistema", module: "Costos Producción" },
+      { id: "P8", label: "Costo de No Calidad", desc: "PPI rechazado → Segregación automática CoNQ: scrap, retrabajo, garantías. KPI CoNQ% sobre costo total", actor: "Sistema", module: "Costos Producción" },
+      { id: "P9", label: "Simulador What-If", desc: "Análisis de escenarios: Variable única, multivariable, Monte Carlo. Impacto en margen antes de decisión", actor: "Gerente", module: "Costos Producción" },
+      { id: "P10", label: "Cierre Mensual Costos", desc: "Liquidación OP → Asientos de varianza → Actualización KPIs: CVI, CoNQ%, OEE-Adjusted Cost, Gross Margin", actor: "Controller", module: "Costos / Contabilidad" },
+    ],
+    integrations: [
+      "Almacén → Costos: Consumos reales por vale de salida",
+      "RRHH → Costos: Tasa hora M.O. directa por planilla",
+      "Costos → Contabilidad: Asientos de varianza en desviación",
+      "Costos → Finanzas: Proyección flujo caja por actualización",
+      "Costos → Dashboard: KPIs ejecutivos CVI, CoNQ%, OEE",
+    ]
+  },
+  rrhh: {
+    title: "CICLO DE RRHH Y PLANILLAS",
+    icon: "👥",
+    color: "#10B981",
+    bg: "#064E3B",
+    steps: [
+      { id: "H1", label: "Alta de Trabajador", desc: "Registro en expediente digital: datos personales, contrato, régimen laboral (general/MYPE/agrario), AFP/ONP elegida", actor: "RRHH", module: "RRHH Planillas" },
+      { id: "H2", label: "Control Asistencia GPS", desc: "Marcación diaria con geolocalización. Geocercas por sede. Cálculo automático: tardanzas, horas extras, descanso médico", actor: "Trabajador", module: "RRHH Planillas" },
+      { id: "H3", label: "Cálculo Planilla Mensual", desc: "Remuneración bruta - Descuentos (ONP 13% ó AFP fondo+seguro+comisión) - IR 5ta categoría - Judiciales = Neto", actor: "Sistema", module: "RRHH Planillas" },
+      { id: "H4", label: "Aportes Patronales", desc: "EsSalud 9%, SCTR (según actividad), gratificaciones provisión mensual 1/6, CTS provisión 1/6", actor: "Sistema", module: "RRHH Planillas" },
+      { id: "H5", label: "PLAME", desc: "Generación archivos .rem (remuneraciones), .jor (jornada), .snl (subsidios) para importación en PDT PLAME SUNAT", actor: "Sistema", module: "RRHH Planillas" },
+      { id: "H6", label: "Boleta de Pago", desc: "Generación PDF boleta de pago por trabajador con detalle de ingresos, descuentos, aportes y neto", actor: "Sistema", module: "RRHH Planillas" },
+      { id: "H7", label: "Asiento de Planilla", desc: "62 Cargas Personal (DEBE) + 64 Tributos (DEBE) → 40 Tributos por Pagar + 41 Remuneraciones por Pagar (HABER)", actor: "Sistema", module: "Contabilidad" },
+      { id: "H8", label: "Tasa Hora M.O.", desc: "Costo total trabajador / Horas productivas = Tasa hora. Se envía a Costos de Producción como M.O. directa", actor: "Sistema", module: "Costos Producción" },
+      { id: "H9", label: "CTS Semestral", desc: "Cálculo CTS mayo y noviembre. Depósito en banco del trabajador. Carta CTS. Bonificación extraordinaria 9%", actor: "Sistema", module: "RRHH Planillas" },
+      { id: "H10", label: "Vacaciones / Liquidación", desc: "Control de períodos, acumulación, vacaciones truncas, doble vacación por no goce. Liquidación de beneficios", actor: "RRHH", module: "RRHH Planillas" },
+    ],
+    integrations: [
+      "RRHH → Contabilidad: Asientos de planilla aprobada",
+      "RRHH → Costos: Tasa hora M.O. directa por cálculo planilla",
+      "RRHH → Finanzas: Obligaciones laborales en Cashflow",
+      "RRHH → SUNAT: PLAME mensual, T-Registro",
+    ]
+  },
+  contabilidad: {
+    title: "CICLO CONTABLE Y TRIBUTARIO",
+    icon: "📊",
+    color: "#F97316",
+    bg: "#7C2D12",
+    steps: [
+      { id: "A1", label: "Recepción Asientos", desc: "Asientos automáticos desde: Ventas (facturas), Compras (OC/facturas), RRHH (planilla), Costos (varianzas), ComEx (importaciones)", actor: "Sistema", module: "Contabilidad" },
+      { id: "A2", label: "Plan de Cuentas PCGE", desc: "Árbol interactivo N-niveles del Plan Contable General Empresarial. Mapeo NIIF/NIC. Saldos en tiempo real por cuenta", actor: "Contador", module: "Contabilidad" },
+      { id: "A3", label: "Motor de Impuestos", desc: "Simulador: IGV débito vs crédito fiscal, detracciones SPOT (catálogo completo), retenciones 3%/6%, percepciones 2%", actor: "Contador", module: "Contabilidad" },
+      { id: "A4", label: "Conciliación SIRE", desc: "Descarga automática Registro SUNAT → Cruce con ERP: Matched / Dif. Monto / Falta ERP / Falta SUNAT / Duplicado", actor: "Contador", module: "Contabilidad" },
+      { id: "A5", label: "Auditor Shadow IA", desc: "Alertas automáticas: RUC No Habido, bancarización >S/2,000, gastos representación >40 UIT, exceso boletas, ratios anómalos", actor: "IA Claude", module: "Contabilidad" },
+      { id: "A6", label: "Costos Analíticos", desc: "Centros de costo con ejecución presupuestaria. Motor prorrateo: directo, proporcional, escalonado con drivers configurables", actor: "Controller", module: "Contabilidad" },
+      { id: "A7", label: "Cierre Mensual", desc: "Ajustes de cierre: tipo de cambio, provisiones, depreciación, amortización. Balance de comprobación", actor: "Contador", module: "Contabilidad" },
+      { id: "A8", label: "PLE SUNAT", desc: "Generación Libros Electrónicos TXT: Diario (5.1), Mayor (6.1), Registro Ventas (14.1), Registro Compras (8.1)", actor: "Sistema", module: "Contabilidad" },
+      { id: "A9", label: "PDT 621", desc: "Declaración mensual IGV-Renta: IGV por pagar, pagos a cuenta IR, coeficiente/porcentaje, créditos", actor: "Contador", module: "Contabilidad" },
+      { id: "A10", label: "Estados Financieros", desc: "Balance General, Estado de Resultados, Flujo de Efectivo, Cambios en Patrimonio. Reportes gerenciales", actor: "Contador", module: "Contabilidad / Dashboard" },
+    ],
+    integrations: [
+      "Todos los módulos → Contabilidad: Asientos automáticos",
+      "Contabilidad → SUNAT: PLE, PDT 621, PLAME",
+      "Contabilidad → Dashboard: KPIs financieros y tributarios",
+      "Contabilidad → Finanzas: Saldos para proyección cashflow",
+    ]
+  },
+  finanzas: {
+    title: "CICLO FINANCIERO",
+    icon: "💎",
+    color: "#06B6D4",
+    bg: "#164E63",
+    steps: [
+      { id: "F1", label: "Cashflow 360", desc: "Proyección flujo de caja 30/60/90 días. Ingresos (CxC) vs Egresos (CxP + planilla + impuestos + compromisos fijos)", actor: "CFO", module: "Finanzas" },
+      { id: "F2", label: "Bandas de Confianza", desc: "3 escenarios: Optimista (90% cobranza), Probable (75%), Pesimista (50%). Gráfico con bandas de confianza visual", actor: "Sistema", module: "Finanzas" },
+      { id: "F3", label: "Scoring Clientes", desc: "Evaluación riesgo crediticio: historial pagos, antigüedad deuda, monto promedio, frecuencia. Score A/B/C/D", actor: "Sistema", module: "Finanzas" },
+      { id: "F4", label: "Conciliación Bancaria", desc: "Importar extracto (OFX/MT940/CSV) → Matching automático con asientos contables → Partidas pendientes", actor: "Tesorería", module: "Finanzas" },
+      { id: "F5", label: "Compromisos Fijos", desc: "Registro obligaciones recurrentes: alquiler, servicios, cuotas préstamo, leasing. Proyección automática en cashflow", actor: "Tesorería", module: "Finanzas" },
+      { id: "F6", label: "Calendario Tributario", desc: "Vencimientos automáticos por RUC: PDT 621, PLAME, detracciones SPOT, CTS, gratificaciones. Alertas anticipadas", actor: "Sistema", module: "Dashboard" },
+    ],
+    integrations: [
+      "Ventas → Finanzas: CxC para proyección ingresos",
+      "Compras → Finanzas: CxP para proyección egresos",
+      "RRHH → Finanzas: Obligaciones laborales mensuales",
+      "ComEx → Finanzas: Obligaciones USD, diferencia cambio",
+      "Costos → Finanzas: Actualización proyecciones por varianza",
+    ]
+  },
+};
+
+const COLORS = {
+  bg: "#0a0a0f",
+  surface: "#12121a",
+  card: "#1a1a25",
+  border: "#2a2a3a",
+  text: "#e4e4ed",
+  dim: "#6b6b80",
+  accent: "#3b82f6",
+};
+
+function ERP360Flows() {
+  const [activeFlow, setActiveFlow] = useState("ventas");
+  const [expandedStep, setExpandedStep] = useState(null);
+  const [showIntegrations, setShowIntegrations] = useState(false);
+  const flow = FLOWS[activeFlow];
+
+  return (
+    <div style={{ background: COLORS.bg, minHeight: "100vh", fontFamily: "'Segoe UI','SF Pro',system-ui,sans-serif", color: COLORS.text }}>
+      {/* Header */}
+      <div style={{ background: "linear-gradient(135deg, #0D2137 0%, #1a3a5c 100%)", padding: "20px 24px", borderBottom: `1px solid ${COLORS.border}` }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 4 }}>
+          <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg,#3b82f6,#06b6d4)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 800, color: "#fff" }}>E</div>
+          <div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: "#fff", letterSpacing: -0.5 }}>ERP360 — Flujos de Procesos Internos</div>
+            <div style={{ fontSize: 11, color: "#8899aa" }}>INNOVAQ SOLUTIONS S.A.C. • Mapa completo de operaciones por tipo</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation Tabs */}
+      <div style={{ display: "flex", gap: 4, padding: "12px 16px", overflowX: "auto", borderBottom: `1px solid ${COLORS.border}`, background: COLORS.surface }}>
+        {Object.entries(FLOWS).map(([key, f]) => (
+          <button key={key} onClick={() => { setActiveFlow(key); setExpandedStep(null); setShowIntegrations(false); }}
+            style={{
+              padding: "8px 16px", borderRadius: 8, border: activeFlow === key ? `2px solid ${f.color}` : `1px solid ${COLORS.border}`,
+              background: activeFlow === key ? f.bg : "transparent", color: activeFlow === key ? f.color : COLORS.dim,
+              cursor: "pointer", fontSize: 12, fontWeight: 600, whiteSpace: "nowrap", transition: "all 0.2s",
+              display: "flex", alignItems: "center", gap: 6
+            }}>
+            <span>{f.icon}</span> {f.title}
+          </button>
+        ))}
+      </div>
+
+      {/* Content */}
+      <div style={{ padding: "20px 16px", maxWidth: 900, margin: "0 auto" }}>
+        {/* Flow Header */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ width: 48, height: 48, borderRadius: 14, background: flow.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, border: `2px solid ${flow.color}40` }}>{flow.icon}</div>
+            <div>
+              <div style={{ fontSize: 20, fontWeight: 700, color: flow.color }}>{flow.title}</div>
+              <div style={{ fontSize: 12, color: COLORS.dim }}>{flow.steps.length} pasos • {flow.integrations.length} integraciones cross-módulo</div>
+            </div>
+          </div>
+          <button onClick={() => setShowIntegrations(!showIntegrations)}
+            style={{ padding: "8px 14px", borderRadius: 8, border: `1px solid ${flow.color}50`, background: showIntegrations ? flow.bg : "transparent", color: flow.color, cursor: "pointer", fontSize: 11, fontWeight: 600 }}>
+            {showIntegrations ? "← Ver Flujo" : "Ver Integraciones →"}
+          </button>
+        </div>
+
+        {showIntegrations ? (
+          /* Integrations View */
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <div style={{ fontSize: 14, fontWeight: 600, color: flow.color, marginBottom: 4 }}>Integraciones Cross-Módulo</div>
+            {flow.integrations.map((int, i) => {
+              const [from, detail] = int.split(": ");
+              return (
+                <div key={i} style={{ padding: "14px 18px", borderRadius: 12, background: COLORS.card, border: `1px solid ${COLORS.border}`, display: "flex", alignItems: "flex-start", gap: 12 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: 8, background: `${flow.color}20`, color: flow.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700, flexShrink: 0 }}>⟷</div>
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: flow.color, marginBottom: 2 }}>{from}</div>
+                    <div style={{ fontSize: 12, color: COLORS.dim, lineHeight: 1.5 }}>{detail}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          /* Flow Steps */
+          <div style={{ position: "relative" }}>
+            {/* Vertical Line */}
+            <div style={{ position: "absolute", left: 19, top: 24, bottom: 24, width: 2, background: `linear-gradient(to bottom, ${flow.color}60, ${flow.color}10)`, borderRadius: 1 }} />
+
+            {flow.steps.map((step, i) => {
+              const isExpanded = expandedStep === step.id;
+              return (
+                <div key={step.id} style={{ position: "relative", marginBottom: 6, paddingLeft: 48 }}
+                  onClick={() => setExpandedStep(isExpanded ? null : step.id)}>
+                  {/* Circle */}
+                  <div style={{
+                    position: "absolute", left: 8, top: 14, width: 24, height: 24, borderRadius: "50%",
+                    background: isExpanded ? flow.color : COLORS.card, border: `2px solid ${flow.color}`,
+                    display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700,
+                    color: isExpanded ? "#fff" : flow.color, zIndex: 1, transition: "all 0.2s"
+                  }}>{i + 1}</div>
+
+                  {/* Card */}
+                  <div style={{
+                    padding: isExpanded ? "14px 16px" : "10px 16px", borderRadius: 12,
+                    background: isExpanded ? COLORS.card : "transparent", border: isExpanded ? `1px solid ${flow.color}30` : `1px solid transparent`,
+                    cursor: "pointer", transition: "all 0.2s"
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <span style={{ fontSize: 13, fontWeight: 700, color: isExpanded ? flow.color : COLORS.text }}>{step.label}</span>
+                        <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: `${flow.color}15`, color: flow.color, fontWeight: 600 }}>{step.module}</span>
+                      </div>
+                      <span style={{ fontSize: 10, color: COLORS.dim, transform: isExpanded ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.2s" }}>▼</span>
+                    </div>
+
+                    {isExpanded && (
+                      <div style={{ marginTop: 10 }}>
+                        <div style={{ fontSize: 12, color: COLORS.dim, lineHeight: 1.7, marginBottom: 10 }}>{step.desc}</div>
+                        <div style={{ display: "flex", gap: 12 }}>
+                          <div style={{ fontSize: 10, color: COLORS.dim }}>
+                            <span style={{ fontWeight: 600, color: flow.color }}>Actor:</span> {step.actor}
+                          </div>
+                          <div style={{ fontSize: 10, color: COLORS.dim }}>
+                            <span style={{ fontWeight: 600, color: flow.color }}>Módulo:</span> {step.module}
+                          </div>
+                        </div>
+                        {i < flow.steps.length - 1 && (
+                          <div style={{ marginTop: 8, fontSize: 10, color: `${flow.color}90`, fontWeight: 600 }}>
+                            ↓ Dispara: {flow.steps[i + 1].label}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Summary Stats */}
+        <div style={{ marginTop: 24, padding: "16px 20px", borderRadius: 14, background: COLORS.card, border: `1px solid ${COLORS.border}` }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: COLORS.dim, marginBottom: 12, textTransform: "uppercase", letterSpacing: 1 }}>Resumen del Flujo</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+            {[
+              { label: "Pasos", value: flow.steps.length, color: flow.color },
+              { label: "Módulos", value: [...new Set(flow.steps.map(s => s.module))].length, color: "#10b981" },
+              { label: "Actores", value: [...new Set(flow.steps.map(s => s.actor))].length, color: "#f59e0b" },
+              { label: "Integraciones", value: flow.integrations.length, color: "#8b5cf6" },
+            ].map((s, i) => (
+              <div key={i} style={{ textAlign: "center" }}>
+                <div style={{ fontSize: 24, fontWeight: 800, color: s.color }}>{s.value}</div>
+                <div style={{ fontSize: 10, color: COLORS.dim }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Cross-flow map */}
+        <div style={{ marginTop: 16, padding: "16px 20px", borderRadius: 14, background: COLORS.surface, border: `1px solid ${COLORS.border}` }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: COLORS.dim, marginBottom: 10, textTransform: "uppercase", letterSpacing: 1 }}>Mapa de Integración Global</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+            {[
+              { from: "Ventas", to: "Contabilidad", data: "Asientos venta + IGV", trigger: "Factura emitida" },
+              { from: "Ventas", to: "Costos", data: "Margen bruto producto", trigger: "Cierre mensual" },
+              { from: "Compras", to: "Almacén", data: "Órdenes de ingreso", trigger: "Recepción O/C" },
+              { from: "Compras", to: "Costos", data: "Varianza precio", trigger: "Liquidación DUA" },
+              { from: "Almacén", to: "Contabilidad", data: "Kárdex valorizado", trigger: "Cierre mensual" },
+              { from: "Almacén", to: "Costos", data: "Consumos reales", trigger: "Vale de salida" },
+              { from: "RRHH", to: "Costos", data: "Tasa hora M.O.", trigger: "Planilla aprobada" },
+              { from: "RRHH", to: "Contabilidad", data: "Asientos planilla", trigger: "Planilla aprobada" },
+              { from: "Costos", to: "Contabilidad", data: "Asientos varianza", trigger: "Desviación detectada" },
+              { from: "Costos", to: "Finanzas", data: "Proyección cashflow", trigger: "Actualización costos" },
+              { from: "ComEx", to: "Compras", data: "Costos CIF landed", trigger: "Despacho aduanero" },
+              { from: "ComEx", to: "Finanzas", data: "Obligaciones USD", trigger: "Emisión DUA" },
+            ].map((r, i) => (
+              <div key={i} style={{ padding: "8px 10px", borderRadius: 8, background: COLORS.card, border: `1px solid ${COLORS.border}`, fontSize: 10, lineHeight: 1.5 }}>
+                <span style={{ fontWeight: 700, color: "#3b82f6" }}>{r.from}</span>
+                <span style={{ color: COLORS.dim }}> → </span>
+                <span style={{ fontWeight: 700, color: "#10b981" }}>{r.to}</span>
+                <span style={{ color: COLORS.dim }}> : {r.data}</span>
+                <div style={{ color: "#6b6b80", fontStyle: "italic" }}>Dispara: {r.trigger}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(ERP360Flows));
+</script>
+</body>
+</html>
