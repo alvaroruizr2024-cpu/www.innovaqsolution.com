@@ -893,6 +893,177 @@ function YouTubeSection() {
   );
 }
 
+// ─── CHATBOT CON AUTO-SEND DE BROCHURES ───────────────────────────────────────
+const BROCHURE_BASE = 'https://raw.githubusercontent.com/alvaroruizr2024-cpu/www.innovaqsolution.com/main/brochures/';
+const BROCHURE_MAP = [
+  { keys: ['catastro','municipal','predio','gis','terreno','lote'], file: 'CATASTRO_360_IA.pdf', name: 'CATASTRO 360° IA', icon: '🗺️' },
+  { keys: ['alimento','food','haccp','brc','inocuidad','restaurante','panaderia','panadería'], file: 'FOOD_360.pdf', name: 'FOOD 360', icon: '🍽️' },
+  { keys: ['salud','hospital','clinica','clínica','medic','fua','minsa','paciente','hce'], file: 'SALUD_360.pdf', name: 'SALUD 360', icon: '🏥' },
+  { keys: ['congreso','evento','conferencia','medcongress','ponente','asistente'], file: 'MedCongress_Pro.pdf', name: 'MedCongress Pro', icon: '🎤' },
+  { keys: ['catalogo','catálogo','brochure','portafolio','productos','todos'], file: 'Innovaq_Global.pdf', name: 'Catálogo Global INNOVAQ', icon: '📚' },
+  { keys: ['sig','iso','calidad','seguridad','ambiente','ohsas','ohse','ssoma','29783','9001','14001','45001'], file: 'SIG_360.pdf', name: 'SIG 360°', icon: '🛡️' },
+  { keys: ['erp','suma','sumaerp','contabilidad','sunat','sire','comex','factura','igv'], file: 'SumaERP_ERP360.pdf', name: 'SumaERP / ERP 360', icon: '🧩' },
+  { keys: ['pmo','proyecto','pmbok','agile','gantt','scrum','portafolio','kpi'], file: 'PMO360.pdf', name: 'PMO360', icon: '📊' },
+  { keys: ['agro','campo','cosecha','cultivo','fundo','granja','agricola','agrícola','exportacion','exportación','fruta'], file: 'AGRO360.pdf', name: 'AGRO360', icon: '🌱' },
+  { keys: ['hotel','hostal','hospedaje','pms','reserva','recepcion','recepción','habitacion','habitación'], file: 'HOTEL360.pdf', name: 'HOTEL 360', icon: '🏨' },
+  { keys: ['tpm','mantenimiento','maquinaria','equipo','preventivo','predictivo','oee'], file: 'TPM360.pdf', name: 'TPM360', icon: '⚙️' },
+];
+
+const BOT_GREETINGS_ES = [
+  '¡Hola! Soy el asistente de INNOVAQ Solutions 🤖\n¿En qué sector opera tu empresa? Puedo enviarte el brochure del producto ideal.',
+  '¡Bienvenido! ¿Buscas información sobre algún producto específico?\nEscribe palabras como: **ERP, SIG, AGRO, HOTEL, SALUD, PMO, TPM, CATASTRO...**',
+];
+const BOT_GREETINGS_EN = [
+  'Hi! I\'m the INNOVAQ Solutions assistant 🤖\nWhat industry does your company operate in? I can send you the ideal product brochure.',
+  'Welcome! Looking for info on a specific product?\nType keywords like: **ERP, SIG, AGRO, HOTEL, HEALTH, PMO, TPM, CADASTRAL...**',
+];
+
+function detectBrochure(text) {
+  const t = text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  for (const b of BROCHURE_MAP) {
+    if (b.keys.some(k => t.includes(k))) return b;
+  }
+  return null;
+}
+
+function ChatBot() {
+  const { lang } = useApp();
+  const [open, setOpen] = useState(false);
+  const [msgs, setMsgs] = useState([]);
+  const [input, setInput] = useState('');
+  const [unread, setUnread] = useState(1);
+  const endRef = React.useRef(null);
+  const es = lang === 'es';
+
+  useEffect(() => {
+    if (open && msgs.length === 0) {
+      const greet = es ? BOT_GREETINGS_ES[0] : BOT_GREETINGS_EN[0];
+      setMsgs([{ from: 'bot', text: greet, ts: Date.now() }]);
+      setUnread(0);
+    }
+    if (open) setUnread(0);
+  }, [open]);
+
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [msgs]);
+
+  const send = () => {
+    const txt = input.trim();
+    if (!txt) return;
+    setInput('');
+    const userMsg = { from: 'user', text: txt, ts: Date.now() };
+    const newMsgs = [...msgs, userMsg];
+    setMsgs(newMsgs);
+
+    setTimeout(() => {
+      const match = detectBrochure(txt);
+      let botReply;
+      if (match) {
+        const url = BROCHURE_BASE + match.file;
+        botReply = {
+          from: 'bot',
+          text: es
+            ? `${match.icon} ¡Perfecto! Aquí está el brochure de **${match.name}**:`
+            : `${match.icon} Great! Here's the **${match.name}** brochure:`,
+          brochure: { name: match.name, url, icon: match.icon },
+          ts: Date.now()
+        };
+      } else {
+        botReply = {
+          from: 'bot',
+          text: es
+            ? `No encontré un producto exacto para tu búsqueda. 🤔\nPuedes escribir: **ERP, SIG, AGRO, HOTEL, SALUD, PMO, TPM, CATASTRO, FOOD, CONGRESO**\n\nO contáctanos directo por WhatsApp 👇`
+            : `I couldn't find an exact match. 🤔\nTry: **ERP, SIG, AGRO, HOTEL, HEALTH, PMO, TPM, CADASTRAL, FOOD, CONGRESS**\n\nOr contact us on WhatsApp 👇`,
+          whatsapp: true,
+          ts: Date.now()
+        };
+      }
+      setMsgs(prev => [...prev, botReply]);
+    }, 600);
+  };
+
+  const formatText = (text) => {
+    return text.split('\n').map((line, i) => (
+      <React.Fragment key={i}>
+        {line.split(/\*\*(.*?)\*\*/g).map((part, j) =>
+          j % 2 === 1 ? <strong key={j}>{part}</strong> : part
+        )}
+        {i < text.split('\n').length - 1 && <br />}
+      </React.Fragment>
+    ));
+  };
+
+  return (
+    <>
+      {/* Toggle button */}
+      <div onClick={() => setOpen(o => !o)} style={{ position:'fixed', bottom:100, right:28, zIndex:300, width:56, height:56, borderRadius:'50%', background:'linear-gradient(135deg,#003366,#0066cc)', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', boxShadow:'0 4px 18px rgba(0,51,102,0.45)', transition:'transform 0.2s' }}
+        onMouseEnter={e=>e.currentTarget.style.transform='scale(1.1)'} onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}>
+        {open ? <span style={{color:'#fff',fontSize:22}}>✕</span> : <span style={{fontSize:26}}>🤖</span>}
+        {!open && unread > 0 && <div style={{position:'absolute',top:0,right:0,width:18,height:18,borderRadius:'50%',background:'#f64c4c',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:700,color:'#fff',border:'2px solid #fff'}}>{unread}</div>}
+      </div>
+
+      {/* Chat window */}
+      {open && (
+        <div style={{ position:'fixed', bottom:170, right:28, zIndex:300, width:340, maxHeight:480, borderRadius:18, background:'#fff', boxShadow:'0 8px 40px rgba(0,0,0,0.18)', display:'flex', flexDirection:'column', fontFamily:"'DM Sans',sans-serif", overflow:'hidden', animation:'slideIn 0.25s ease' }}>
+          {/* Header */}
+          <div style={{ background:'linear-gradient(135deg,#003366,#0066cc)', padding:'14px 18px', display:'flex', alignItems:'center', gap:10 }}>
+            <div style={{width:38,height:38,borderRadius:'50%',background:'rgba(255,255,255,0.15)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20}}>🤖</div>
+            <div>
+              <div style={{color:'#fff',fontWeight:700,fontSize:14}}>INNOVAQ Assistant</div>
+              <div style={{color:'rgba(255,255,255,0.75)',fontSize:11,display:'flex',alignItems:'center',gap:4}}>
+                <div style={{width:7,height:7,borderRadius:'50%',background:'#4ade80'}}></div>
+                {es ? 'En línea · Responde al instante' : 'Online · Instant replies'}
+              </div>
+            </div>
+          </div>
+
+          {/* Messages */}
+          <div style={{ flex:1, overflowY:'auto', padding:'14px 14px 8px', display:'flex', flexDirection:'column', gap:10, background:'#f8fafd' }}>
+            {msgs.map((m, i) => (
+              <div key={i} style={{ display:'flex', flexDirection:'column', alignItems: m.from==='user' ? 'flex-end' : 'flex-start' }}>
+                <div style={{ maxWidth:'82%', padding:'9px 13px', borderRadius: m.from==='user' ? '14px 14px 3px 14px' : '14px 14px 14px 3px', background: m.from==='user' ? 'linear-gradient(135deg,#003366,#0066cc)' : '#fff', color: m.from==='user' ? '#fff' : '#1a2340', fontSize:13, lineHeight:1.5, boxShadow:'0 2px 8px rgba(0,0,0,0.08)' }}>
+                  {formatText(m.text)}
+                </div>
+                {m.brochure && (
+                  <a href={m.brochure.url} target="_blank" rel="noopener noreferrer" style={{ marginTop:6, display:'flex', alignItems:'center', gap:8, background:'#fff', border:'1.5px solid #0066cc', borderRadius:10, padding:'8px 13px', textDecoration:'none', color:'#003366', fontSize:12, fontWeight:600, boxShadow:'0 2px 8px rgba(0,102,204,0.1)', transition:'all 0.2s', maxWidth:'82%' }}
+                    onMouseEnter={e=>{e.currentTarget.style.background='#e8f0fe';}} onMouseLeave={e=>{e.currentTarget.style.background='#fff';}}>
+                    <span style={{fontSize:20}}>{m.brochure.icon}</span>
+                    <div>
+                      <div>{m.brochure.name}</div>
+                      <div style={{fontSize:10,color:'#666',fontWeight:400}}>{es ? '📄 Ver / Descargar PDF' : '📄 View / Download PDF'}</div>
+                    </div>
+                    <span style={{marginLeft:'auto',color:'#0066cc',fontSize:16}}>↗</span>
+                  </a>
+                )}
+                {m.whatsapp && (
+                  <a href="https://wa.me/51900801059" target="_blank" rel="noopener noreferrer" style={{ marginTop:6, display:'flex', alignItems:'center', gap:8, background:'#25D366', borderRadius:10, padding:'8px 13px', textDecoration:'none', color:'#fff', fontSize:12, fontWeight:600, maxWidth:'82%' }}>
+                    <span style={{fontSize:18}}>💬</span> WhatsApp +51 900 801 059
+                  </a>
+                )}
+              </div>
+            ))}
+            <div ref={endRef} />
+          </div>
+
+          {/* Input */}
+          <div style={{ padding:'10px 12px', borderTop:'1px solid #e8edf5', background:'#fff', display:'flex', gap:8 }}>
+            <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==='Enter'&&send()}
+              placeholder={es ? 'Escribe ERP, AGRO, HOTEL...' : 'Type ERP, AGRO, HOTEL...'}
+              style={{ flex:1, padding:'9px 13px', borderRadius:10, border:'1.5px solid #dde3ef', fontSize:13, outline:'none', fontFamily:"'DM Sans',sans-serif", color:'#1a2340' }} />
+            <button onClick={send} style={{ padding:'9px 14px', borderRadius:10, background:'linear-gradient(135deg,#003366,#0066cc)', color:'#fff', border:'none', cursor:'pointer', fontSize:16, fontWeight:700 }}>➤</button>
+          </div>
+
+          {/* Footer */}
+          <div style={{padding:'6px 14px 10px',background:'#fff',textAlign:'center',fontSize:10,color:'#aaa'}}>
+            {es ? '🔒 Powered by INNOVAQ Solutions' : '🔒 Powered by INNOVAQ Solutions'}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
 function WhatsAppFloat() {
   const [hover, setHover] = useState(false);
   const { lang } = useApp();
@@ -943,6 +1114,7 @@ function App() {
         <Header />
         <Content />
         <CookieBanner />
+        <ChatBot />
         <WhatsAppFloat />
       </div>
     </Provider>
