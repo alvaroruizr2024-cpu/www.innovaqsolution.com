@@ -295,7 +295,17 @@ function Pricing() {
     <section style={{ padding: '64px 20px 80px', maxWidth: 1100, margin: '0 auto' }}>
       <div style={{ textAlign: 'center', marginBottom: 40 }}>
         <h2 style={{ fontSize: 36, fontWeight: 800, color: B.blue, marginBottom: 10 }}>{t('pricing.title')}</h2>
+        <div style={{ display: 'inline-block', background: 'linear-gradient(135deg, #f59e0b22, #ef444422)', border: '1px solid #f59e0b44', borderRadius: 20, padding: '6px 16px', marginBottom: 10 }}>
+          <span style={{ fontSize: 13, fontWeight: 600 }}>🎉 {lang === 'es' ? 'Usa código INNOVAQ30 → 30% OFF primeros 3 meses' : 'Use code INNOVAQ30 → 30% OFF first 3 months'}</span>
+        </div>
+        <h2 style={{ display: 'none' }}>{}</h2>
         <p style={{ fontSize: 15, color: B.textMuted, maxWidth: 520, margin: '0 auto' }}>{t('pricing.sub')}</p>
+        <div style={{ display: 'flex', gap: 16, justifyContent: 'center', alignItems: 'center', marginTop: 12, opacity: 0.7 }}>
+          <span style={{ fontSize: 12, color: B.textM }}>🔒 {lang === 'es' ? 'Pago seguro con' : 'Secure payment by'}</span>
+          <svg width="50" height="20" viewBox="0 0 50 20"><text x="0" y="15" fill={B.textM} fontSize="14" fontWeight="700" fontFamily="sans-serif">Stripe</text></svg>
+          <span style={{ fontSize: 12, color: B.textM }}>| 💳 Visa, Mastercard, AMEX</span>
+        </div>
+        <p style={{ display: 'none' }}>{}</p>
       </div>
       {/* Product tabs */}
       <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 24, flexWrap: 'wrap' }}>
@@ -331,7 +341,17 @@ function Pricing() {
                 <span style={{ fontSize: 14, color: B.textLight }}>/{lang === 'es' ? 'mes' : 'mo'}</span>
                 {billing === 'annual' && <div style={{ fontSize: 12, color: B.textLight, marginTop: 2 }}>{fmt(plan.yr)}/{lang === 'es' ? 'año' : 'yr'}</div>}
               </div>
-              <button onClick={() => go('contact')} style={{ width: '100%', ...(pop ? btnP : btnO), padding: '11px 0', fontSize: 14, borderRadius: 10 }}>
+              <button onClick={() => {
+                if (plan.tier === 'enterprise') { go('contact'); }
+                else {
+                  const links = {
+                    starter: { monthly: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00', annual: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00' },
+                    professional: { monthly: 'https://buy.stripe.com/test_fZudR96WLfLH0RT5cG57W01', annual: 'https://buy.stripe.com/test_fZudR96WLfLH0RT5cG57W01' },
+                  };
+                  const url = links[plan.tier] && links[plan.tier][billing === 'annual' ? 'annual' : 'monthly'];
+                  if (url) window.open(url, '_blank');
+                }
+              }} style={{ width: '100%', ...(pop ? btnP : btnO), padding: '11px 0', fontSize: 14, borderRadius: 10, cursor: 'pointer' }}>
                 {plan.tier === 'enterprise' ? t('pricing.contact') : t('pricing.subscribe')}
               </button>
               <div style={{ marginTop: 20, paddingTop: 16, borderTop: `1px solid ${B.borderLight}` }}>
