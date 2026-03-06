@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INNOVAQ × ElevenLabs Campaign Studio</title>
+    <meta name="description" content="Sistema de producción de campañas INNOVAQ con ElevenLabs - 20 posts, imágenes, videos y voiceovers">
+    <meta property="og:title" content="INNOVAQ × ElevenLabs Campaign Studio">
+    <meta property="og:description" content="20 publicaciones con prompts para ElevenLabs Image & Video">
+    <link rel="icon" type="image/x-icon" href="/1000608638.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; background: #08080f; }
+        pre { font-family: 'DM Sans', system-ui, sans-serif; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a14; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        a { transition: opacity 0.15s; }
+        a:hover { opacity: 0.85; }
+        @media (max-width: 900px) {
+            .main-grid { grid-template-columns: 1fr !important; }
+            .sticky-panel { position: relative !important; top: 0 !important; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+const { useState, useEffect } = React;
+
+// ═══════════════════════════════════════════════════════════════
+// INNOVAQ × ELEVENLABS CAMPAIGN PRODUCTION SYSTEM
+// 20 posts · Branded image prompts · Video prompts · Voice scripts
+// ═══════════════════════════════════════════════════════════════
+
+const B = {
+  blue: '#126695', orange: '#F1912B', green: '#7AB648',
+  blueDark: '#0d4a6e', red: '#dc2626', purple: '#7c3aed', teal: '#0891b2',
+};
+
+const PLATFORMS = {
+  linkedin: { name: 'LinkedIn', icon: '💼', color: '#0077B5' },
+  instagram: { name: 'Instagram', icon: '📸', color: '#E4405F' },
+  facebook: { name: 'Facebook', icon: '📘', color: '#1877F2' },
+  tiktok: { name: 'TikTok', icon: '🎵', color: '#FF0050' },
+};
+
+// ═══════════════════════════════════════════════════════════════
+// COMPLETE CAMPAIGN DATA: 20 posts with ElevenLabs prompts
+// ═══════════════════════════════════════════════════════════════
+const POSTS = [
+  // ─── LINKEDIN (5) ───
+  {
+    id: 'LI-01', platform: 'linkedin', palanca: 'P2 — Precio de Lanzamiento',
+    title: '🚀 Lanzamiento INNOVAQ Suite',
+    text: `🚀🔥 ¡PRECIO DE LANZAMIENTO! 🔥🚀
+
+Después de 19 años en minería, construcción y energía, hoy lanzamos algo que el mercado peruano necesitaba:
+
+📊 11 productos ERP especializados
+💰 Hasta 50% MENOS que la competencia
+⏱️ 30 días de prueba GRATIS
+🏢 Plan MYPE desde S/70/mes
+
+¿Cuánto pagan las empresas peruanas por SAP, Oracle o Odoo?
+➡️ Miles de dólares mensuales.
+
+¿Cuánto cuesta INNOVAQ?
+➡️ Desde $19/mes. Sí, leíste bien. 🤯
+
+Pero este precio tiene FECHA LÍMITE ⏳
+Solo hasta Abril 2026.
+
+🛡️ SIG 360° — 4 normas ISO en 1 plataforma
+📊 ERP 360 — Facturación SUNAT + ComEx + RRHH
+⚙️ TPM360 — Mantenimiento predictivo con IA
+🌾 AGRO 360 — Trazabilidad campo a exportación
+🏨 HOTEL 360 — PMS + Revenue Management + IA
+🏥 SALUD 360 — Historia clínica con IA + MINSA
+
+👉 www.innovaqsolution.com/global
+
+#TransformaciónDigital #ERPPerú #INNOVAQ #MYPE #Industria40 #SoftwarePeruano`,
+    elevenImage: {
+      model: 'Flux Kontext Pro',
+      prompt: `Professional corporate tech announcement graphic. Deep navy blue gradient background (#0d4a6e to #126695). Large bold white text "PRECIO DE LANZAMIENTO" with glowing orange accent (#F1912B). Digital countdown timer showing "55:23:47:59" in a sleek glass-morphism box. Floating holographic icons of factory, hospital, hotel, farm. Bottom banner: "Desde $19/mes · 30 días GRATIS" in green (#7AB648). Small white logo text "INNOVAQ" top-left corner. Clean, modern, corporate SaaS aesthetic. 1080x1080 square format.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+  {
+    id: 'LI-02', platform: 'linkedin', palanca: 'P7 — Precio Gobierno',
+    title: '🏛️ Sector Público & Municipalidades',
+    text: `🏛️ ATENCIÓN: Municipalidades, Gobiernos Regionales y entidades del Estado 🇵🇪
+
+¿Sabías que el Perú tiene 1,874 municipalidades y la mayoría gestiona su catastro... en Excel? 📋
+
+Hoy eso cambia. 💪
+
+🗺️ CATASTRO 360 — Gestión catastral con IA
+✅ Integración GIS (ArcGIS Online)
+✅ Valoración predial automática con IA
+✅ Tributación predial digital
+✅ Inspección móvil en campo
+
+💰 PRECIO GOBIERNO: -35% sobre tarifa regular
+📋 Compatible con procesos de contratación estatal
+🔒 Cumplimiento de seguridad nivel gobierno
+
+👉 Cotización gobierno: contacto@innovaqsolution.com
+📞 +51 900 801 059
+
+#GobiernoDigital #Catastro #MunicipalidadesPerú #INNOVAQ #TransformaciónDigital`,
+    elevenImage: {
+      model: 'Seedream 4',
+      prompt: `Professional government technology infographic. Split composition: left side shows an old-fashioned desk with paper files and Excel spreadsheet on monitor (labeled "ANTES"), right side shows modern GIS map interface with colorful cadastral zones glowing on a tablet (labeled "DESPUÉS"). Color scheme: deep blue (#0d4a6e) and institutional green (#7AB648). Large text "-35% PRECIO GOBIERNO" in bold white with green badge. Peruvian flag ribbon accent at top. Bottom text "1,874 municipalidades · CATASTRO 360". Clean government-grade corporate look. 1080x1080 square.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+  {
+    id: 'LI-03', platform: 'linkedin', palanca: 'P5 — Programa Referidos B2B',
+    title: '🤝 Programa de Referidos CIP',
+    text: `🤝 INGENIEROS: Ganen dinero recomendando tecnología 💵
+
+Como Ingeniero Industrial CIP 210152, sé lo difícil que es encontrar software que REALMENTE funcione en operaciones industriales peruanas.
+
+Por eso creamos el Programa de Referidos INNOVAQ 🎯
+
+📌 ¿Cómo funciona?
+1️⃣ Recomiendas INNOVAQ a una empresa
+2️⃣ Ellos se suscriben a cualquier producto
+3️⃣ TÚ recibes el 20% de su primer año 💰
+
+📊 Ejemplo real:
+→ Refieres una minera que contrata SIG 360° Professional ($179/mo)
+→ Facturación anual: $2,148
+→ TU COMISIÓN: $429.60 🎉
+
+✅ Sin inversión · ✅ Sin riesgo · ✅ Sin límite
+
+🔗 Regístrate: www.innovaqsolution.com/global
+
+#IngenierosPerú #CIP #IngresosPasivos #Referidos #INNOVAQ`,
+    elevenImage: {
+      model: 'Flux Kontext Pro',
+      prompt: `Vibrant referral program graphic. Dark blue gradient background. Center: large "20%" text in bright orange (#F1912B) with glow effect. Below it: "COMISIÓN POR REFERIDO". Circular flow diagram showing 3 steps: person icon → handshake → money bag, connected by dotted orange arrows. Calculator showing "$429.60" in green (#7AB648). Professional engineering theme: hard hat icon, CIP badge. Bottom: "Programa Referidos INNOVAQ" in white. Modern fintech/SaaS design aesthetic. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+  {
+    id: 'LI-04', platform: 'linkedin', palanca: 'P3 — Bundle Agroindustrial',
+    title: '🌾 Bundle Agroindustrial',
+    text: `🌾🏭 AGROINDUSTRIA PERUANA: El bundle que lo cambia todo 📦
+
+Exportas arándanos, espárragos, paltas o uvas?
+Procesas alimentos y necesitas HACCP/BRC?
+
+📦 BUNDLE AGROINDUSTRIAL INNOVAQ:
+🌾 AGRO 360 — Trazabilidad de campo a contenedor
+🍽️ FOOD 360 — Costeo de recetas + HACCP/BRC
+📊 ERP 360 — Facturación SUNAT + ComEx + Drawback
+⚙️ TPM360 — Mantenimiento de planta y maquinaria
+
+💰 Por separado: $636/mo
+📦 BUNDLE: $449/mo (ahorro de 29%) ✅
+
++ 30 días de prueba GRATIS ⏱️
++ Soporte L1/L2/L3 en español 🇵🇪
+
+📍 La Libertad · Ica · Lambayeque · Piura · Arequipa
+
+👉 www.innovaqsolution.com/global
+📞 WhatsApp: +51 900 801 059
+
+#Agroindustria #ExportacionesPeru #HACCP #INNOVAQ`,
+    elevenImage: {
+      model: 'Seedream 4',
+      prompt: `Agribusiness technology bundle promotion. Rich green (#16a34a) to deep blue (#0d4a6e) gradient. Top: aerial photo style view of agricultural fields with geometric patterns. Center: 4 product boxes stacked/overlapping like a software bundle package: "AGRO 360", "FOOD 360", "ERP 360", "TPM360" each with distinct icon. Large price comparison: "$636" crossed out in red, "$449/mo" in bold green with "AHORRO 29%" badge. Fresh produce silhouettes (blueberries, asparagus, avocado) along edges. Text "BUNDLE AGROINDUSTRIAL" at top. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+  {
+    id: 'LI-05', platform: 'linkedin', palanca: 'P10 — Implementación',
+    title: '🔑 Implementación Llave en Mano',
+    text: `⚡ "No tenemos equipo técnico para implementar un ERP" ⚡
+
+Esa frase la escucho TODOS los días. Y es la razón #1 por la que las MYPE no digitalizan. 😓
+
+📋 IMPLEMENTACIÓN LLAVE EN MANO 🔑
+
+✅ Diagnóstico inicial (2-4 horas)
+✅ Configuración completa del sistema
+✅ Migración de datos existentes
+✅ Capacitación presencial o virtual
+✅ Soporte post-implementación 60 días
+✅ Manuales personalizados
+
+💰 Inversión:
+→ MYPE (1-3 usuarios): desde S/800
+→ Mediana (4-15 usuarios): desde S/2,500
+→ Grande (16+ usuarios): desde S/6,000
+
+🎯 ROI promedio: 4-6 meses
+
+📞 Agenda tu diagnóstico GRATIS:
+📧 contacto@innovaqsolution.com · 📱 +51 900 801 059
+
+#Implementación #ERP #MYPE #DigitalizaciónPerú #INNOVAQ`,
+    elevenImage: {
+      model: 'Flux Kontext Pro',
+      prompt: `Implementation service infographic. Clean white background with blue (#126695) accents. Center: large golden key icon with digital circuit pattern inside it. 5-step vertical timeline on left side: "Diagnóstico → Configuración → Migración → Capacitación → Soporte", each with small icon. Right side: pricing tiers in clean cards "MYPE S/800", "Mediana S/2,500", "Grande S/6,000". Green ROI badge: "ROI 4-6 meses". Top text "IMPLEMENTACIÓN LLAVE EN MANO" in bold navy. INNOVAQ branding bottom. Professional consulting firm aesthetic. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+
+  // ─── INSTAGRAM (5) ───
+  {
+    id: 'IG-01', platform: 'instagram', palanca: 'P2 — Countdown',
+    title: '⏳ Countdown de Lanzamiento',
+    text: `⏳🔥 CUENTA REGRESIVA 🔥⏳
+
+El reloj corre y el precio de lanzamiento de INNOVAQ se acaba en semanas... ⏰
+
+📊 11 ERPs especializados
+💰 Desde $19/mes (S/70/mes)
+⏱️ 30 días GRATIS
+🎯 Sin contratos anuales obligatorios
+
+¿Para quién es INNOVAQ? 🤔
+
+🏗️ Constructoras que pagan fortunas por SAP
+⛏️ Mineras que necesitan ISO integrado
+🌾 Agroindustriales que exportan sin trazabilidad
+🏨 Hoteles que usan 5 sistemas diferentes
+🏥 Clínicas que no cumplen MINSA al 100%
+
+TODO en UNA plataforma. Hecho en Perú 🇵🇪
+
+⬇️ Link en bio · 📞 +51 900 801 059
+
+#INNOVAQ #ERPPerú #SoftwarePeruano #MYPE #PrecioLanzamiento #TechPerú`,
+    elevenImage: {
+      model: 'Seedream 4',
+      prompt: `Dramatic countdown timer announcement. Black background with fiery orange (#F1912B) glow. Center: massive digital countdown display "55 : 23 : 47 : 59" in white LED-style numbers with labels "DÍAS HORAS MIN SEG" below. Fire/spark particles around timer. Top: "PRECIO DE LANZAMIENTO" in bold uppercase white with fire emoji effects. Below timer: "Desde $19/mes · 11 ERPs" in glowing green (#7AB648). Subtle tech circuit pattern overlay. Bottom: "INNOVAQ" logo with Peruvian flag accent. Instagram-optimized square, attention-grabbing urgency design. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+  {
+    id: 'IG-02', platform: 'instagram', palanca: 'P3 — Bundle Hotel',
+    title: '🏨 Bundle Hotel Inteligente',
+    text: `🏨✨ HOTELEROS: Dejen de usar 5 apps diferentes ✨🏨
+
+PMS por un lado... 📋
+Contabilidad por otro... 📊
+Revenue en Excel... 😱
+
+📦 BUNDLE HOTEL INTELIGENTE:
+🏨 HOTEL 360 — PMS + Channel Manager + IA
+📊 ERP 360 — Facturación SUNAT + Contabilidad
+🎓 MTP360 — Capacitación del personal
+⚙️ TPM360 — Mantenimiento del hotel
+
+💰 Todo junto: $449/mo (ahorro 30%) ✅
+
+🎁 30 días GRATIS + Migración + Capacitación
+
+📍 Lima · Cusco · Arequipa · Trujillo
+
+⬇️ Demo GRATIS en link de bio · 📞 +51 900 801 059
+
+#Hotelería #HotelPerú #PMS #INNOVAQ #TurismoPerú`,
+    elevenImage: {
+      model: 'Flux Kontext Pro',
+      prompt: `Luxury hotel technology bundle graphic. Elegant teal (#0891b2) to deep navy gradient. Top half: beautiful modern hotel lobby interior with warm lighting, glass and wood. Center overlay: 4 floating glass cards showing "HOTEL 360", "ERP 360", "MTP360", "TPM360" with icons, connected by thin light lines. Large text "BUNDLE HOTEL INTELIGENTE" in elegant white serif font. Price: "$449/mo" with "AHORRO 30%" in gold badge. Subtle Peruvian cities listed: "Lima · Cusco · Arequipa · Trujillo". Premium hospitality meets tech aesthetic. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+  {
+    id: 'IG-03', platform: 'instagram', palanca: 'P11 — Marketplace',
+    title: '🧩 Marketplace Add-ons',
+    text: `🧩 PERSONALIZA tu ERP al máximo 🧩
+
+¿Sabías que INNOVAQ tiene un Marketplace de Add-ons? 🛒
+
+🤖 Shadow Auditor AI — S/150/mes
+📡 IoT Connector — S/200/mes
+📱 App Móvil White-Label — S/250/mes
+📊 BI Dashboard Pro — S/180/mes
+🌐 Multi-idioma Pack — S/100/mes
+💳 Pasarela de Pagos — S/120/mes
+🔗 API Premium — S/200/mes
+
+💡 +20-40% más valor sobre tu plan base
+
+⬇️ Link en bio
+
+#INNOVAQ #Marketplace #AddOns #ERP #SoftwarePeruano #IA`,
+    elevenImage: {
+      model: 'Seedream 4',
+      prompt: `App marketplace grid layout. Deep purple (#7c3aed) to dark blue gradient background. Center: 3x3 grid of floating glass-morphism addon cards, each with a glowing icon and label: AI brain, IoT antenna, mobile phone, chart dashboard, globe, credit card, API brackets. Each card has a small price tag. Top: "MARKETPLACE ADD-ONS" in bold white. Puzzle piece icons connecting the cards. Bottom accent: "+20-40% más valor" in green glow. Modern SaaS marketplace aesthetic like Shopify or Salesforce app store. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+  {
+    id: 'IG-04', platform: 'instagram', palanca: 'P2 — Comparación',
+    title: '💸 INNOVAQ vs Competencia',
+    text: `💸 COMPARACIÓN BRUTAL 💸
+
+📊 SAP Business One: $3,000-$10,000/mes 😱
+📊 Oracle NetSuite: $999-$5,000/mes 😰
+📊 Odoo Enterprise: $300-$1,500/mes 🤔
+📊 INNOVAQ ERP 360: $39-$499/mes 🤩🇵🇪
+
+DIFERENCIAS:
+✅ Facturación SUNAT nativa (no addon)
+✅ Planilla peruana (no genérica)
+✅ Soporte en español L1/L2/L3
+✅ 30 días GRATIS
+✅ Plan MYPE desde S/70/mes
+
+¿Por qué pagar más por menos? 🤷‍♂️
+
+⬇️ Link en bio · 📞 +51 900 801 059
+
+#ERP #SAP #Oracle #Odoo #INNOVAQ #SoftwarePeruano #MYPE`,
+    elevenImage: {
+      model: 'Flux Kontext Pro',
+      prompt: `Price comparison infographic. Clean dark background. Left side: tall red bars with competitor logos in silhouette style labeled "SAP $10,000", "Oracle $5,000", "Odoo $1,500" in descending height, all looking expensive with red/gray tones. Right side: small bright green (#7AB648) bar labeled "INNOVAQ $39" with a spotlight/glow effect and golden star. Dramatic scale difference emphasized. Large text "¿POR QUÉ PAGAR MÁS?" at top. Checkmarks in green for "SUNAT ✓ Planilla ✓ Soporte español ✓". Bar chart comparison style, data-driven and clean. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+  {
+    id: 'IG-05', platform: 'instagram', palanca: 'P5 — Credenciales',
+    title: '🛡️ Fundador INNOVAQ',
+    text: `🛡️ ¿QUIÉN ESTÁ DETRÁS DE INNOVAQ? 🛡️
+
+No somos una startup de garaje. 🚫
+Somos 19 años de experiencia industrial. 💪
+
+👤 Alvaro Ruiz Reyna
+🎓 Ingeniero Industrial CIP 210152
+🎓 MBA — Universidad Europea de Madrid
+
+📋 CERTIFICACIONES:
+✅ Lead Auditor ISO 9001
+✅ Lead Auditor ISO 14001
+✅ Lead Auditor ISO 45001
+✅ Lead Auditor ISO 37001
+
+⛏️ +500 horas auditoría · 🌍 Alianzas internacionales
+
+⬇️ www.innovaqsolution.com/global
+
+#IngenieríaIndustrial #ISO #AuditorLíder #INNOVAQ #CIP`,
+    elevenImage: {
+      model: 'Seedream 4',
+      prompt: `Professional founder credentials graphic. Deep navy blue (#0d4a6e) background with subtle geometric pattern. Center-left: professional silhouette placeholder with name "ALVARO RUIZ REYNA" in bold white below it. Right side: 4 horizontal certification badges in a column, each a different color: "ISO 9001" blue, "ISO 14001" green, "ISO 45001" orange, "ISO 37001" purple — each with "LEAD AUDITOR" label. Top: "19 AÑOS DE EXPERIENCIA" with golden accent. Bottom credentials: "CIP 210152 · MBA · +500h Auditoría". Shield/badge icon motif. Executive LinkedIn-style professional design. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+
+  // ─── FACEBOOK (5) ───
+  {
+    id: 'FB-01', platform: 'facebook', palanca: 'P2 — Lanzamiento',
+    title: '🎉 Lanzamiento Oficial',
+    text: `🎉🎉🎉 ¡HOY ES EL DÍA! 🎉🎉🎉
+
+INNOVAQ Solutions lanza oficialmente su plataforma de 11 ERPs para empresas peruanas. 🇵🇪🚀
+
+⏱️ 30 DÍAS GRATIS — sin tarjeta
+💰 PRECIO DE LANZAMIENTO — hasta 50% menos
+🏢 PLAN MYPE — desde S/70/mes
+
+🛡️ 4 normas ISO en 1 plataforma
+📊 Facturación SUNAT electrónica
+🌾 Trazabilidad campo a contenedor
+🏨 Hotel con IA
+🏥 MINSA digital
+🗺️ Catastro con GIS
+⚙️ Mantenimiento predictivo
+
+TODO peruano. 🇵🇪
+
+👉 www.innovaqsolution.com/global
+📞 +51 900 801 059
+
+¡Comparte con ese amigo empresario que lo necesita! 🤝
+Dale LIKE si apoyas el software peruano 👍🇵🇪`,
+    elevenImage: {
+      model: 'Flux Kontext Pro',
+      prompt: `Grand launch celebration graphic. Blue (#126695) to orange (#F1912B) diagonal gradient with confetti particles. Center: "¡LANZAMIENTO OFICIAL!" in massive bold white text with gold outline glow. Below: "11 ERPs · 30 días GRATIS" in clean white. 11 small product icons arranged in an arc: shield, chart, gear, graduation cap, clipboard, wheat, fork, hotel, hospital, map, microphone. Peruvian flag ribbon accent. Confetti, sparkles, and celebration elements. "INNOVAQ SOLUTIONS" logo prominent. Festive but professional. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+  {
+    id: 'FB-02', platform: 'facebook', palanca: 'P7 — MYPE',
+    title: '🏪 Plan MYPE — S/70/mes',
+    text: `🏪 EMPRESARIOS MYPE: ESTO ES PARA USTEDES 🏪
+
+📊 PLAN MYPE INNOVAQ:
+💰 Desde S/70/mes
+👥 2-5 usuarios incluidos
+⏱️ 30 días GRATIS
+
+✅ Todas las funcionalidades
+✅ Soporte 24/7 en español
+✅ Actualizaciones automáticas
+
+🍽️ Restaurantes → FOOD 360 S/107/mes
+🏨 Hostales → HOTEL 360 S/144/mes
+🌾 Agricultores → AGRO 360 S/107/mes
+💊 Consultorios → SALUD 360 S/144/mes
+🏗️ Contratistas → SIG 360° S/107/mes
+
+👉 www.innovaqsolution.com/global
+📞 +51 900 801 059
+
+Etiqueta a un empresario MYPE que necesita ver esto 👇🏽`,
+    elevenImage: {
+      model: 'Seedream 4',
+      prompt: `MYPE small business empowerment graphic. Warm green (#7AB648) to blue (#126695) gradient. Center: large bold "S/70" in massive white numbers with "/MES" smaller. Subtitle "PLAN MYPE" in green badge. 5 small business vignettes arranged around: restaurant storefront, small hotel, farm field, medical clinic, construction site — each as a simple icon with its price tag. Peruvian sol coin icon. Text "Software empresarial para TODOS" at bottom. Warm, accessible, welcoming design — not corporate, more community/empowerment focused. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+  {
+    id: 'FB-03', platform: 'facebook', palanca: 'P3 — Bundle Salud',
+    title: '🏥 Bundle Sector Salud',
+    text: `🏥💉 CLÍNICAS Y CENTROS DE SALUD 💉🏥
+
+¿Tu clínica todavía usa historias clínicas en papel? 📝
+
+📦 BUNDLE SALUD INNOVAQ:
+🏥 SALUD 360 — Historia clínica con IA + Telemedicina
+📊 ERP 360 — Facturación + Contabilidad + RRHH
+🎓 MTP360 — Capacitación personal médico
+📋 PMO360 — Gestión de proyectos de salud
+
+💰 BUNDLE: $449/mo (ahorro 32%)
+
+✅ Cumplimiento MINSA 100%
+✅ Historia clínica electrónica con IA
+✅ Telemedicina integrada
+✅ Facturación SUNAT automática
+
+👉 Demo GRATIS: www.innovaqsolution.com/global
+📞 +51 900 801 059
+
+#Salud #ClínicasPerú #MINSA #INNOVAQ #SaludDigital`,
+    elevenImage: {
+      model: 'Flux Kontext Pro',
+      prompt: `Healthcare technology bundle graphic. Clean white background with red (#dc2626) and blue (#126695) accents. Top: digital heart pulse line transitioning into a circuit board pattern. Center: 4 stacked medical software cards: "SALUD 360" with heart icon, "ERP 360" with chart, "MTP360" with graduation cap, "PMO360" with clipboard. Price "$449/mo" with "AHORRO 32%" in red badge. Medical cross symbol, stethoscope subtle accent. "CUMPLIMIENTO MINSA 100%" green checkmark seal. Clinical, trustworthy, modern telemedicine aesthetic. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+  {
+    id: 'FB-04', platform: 'facebook', palanca: 'P5 — Concurso Referidos',
+    title: '🏆 Concurso Refiere y Gana',
+    text: `🏆🎁 CONCURSO: REFIERE Y GANA 🎁🏆
+
+💵 GANA el 20% del primer año del referido.
+
+🥇 TOP REFERIDOR del mes: Bono extra de $500 USD 🤑
+
+📌 ¿Cómo?
+1️⃣ Comparte este post 📤
+2️⃣ Tu referido nos contacta mencionando TU nombre 📞
+3️⃣ Si se suscribe, cobras 💰
+
+📊 Ganancias posibles:
+→ 1 referido MYPE = ~$95/año
+→ 1 referido Professional = ~$430/año
+→ 5 referidos/año = +$2,000 💰💰
+
+✅ Sin inversión · ✅ Sin límite · ✅ Pago mensual
+
+📧 referidos@innovaqsolution.com · 📞 +51 900 801 059
+
+¡ETIQUETA a 3 amigos empresarios! 👇🏽👇🏽👇🏽`,
+    elevenImage: {
+      model: 'Seedream 4',
+      prompt: `Contest/giveaway style graphic. Bright orange (#F1912B) to gold gradient with sparkle effects. Center: trophy icon with "$500" on it, glowing. Large text "REFIERE Y GANA" in bold white with shadow. "20% COMISIÓN" in a circular green badge. 3-step flow at bottom: share icon → handshake → money stack, with numbered circles "1 2 3". Floating dollar bills and coin elements. Prize callout: "BONO $500 TOP REFERIDOR". Exciting, contest/gameshow aesthetic with professional edge. Facebook engagement-optimized. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+  {
+    id: 'FB-05', platform: 'facebook', palanca: 'P10 — Before/After',
+    title: '📊 Antes vs Después',
+    text: `📊 ANTES vs DESPUÉS de INNOVAQ 📊
+
+ANTES ❌:
+😓 5 hojas Excel
+📝 Facturas manuales
+⏰ 3 horas diarias en reportes
+💸 Multas SUNAFIL
+
+DESPUÉS ✅:
+🤖 Dashboard tiempo real
+📄 Facturación automática
+⏱️ Reportes en 5 minutos
+🛡️ 4 ISOs en 1 plataforma
+
+📈 RESULTADOS:
+→ -65% tiempo administrativo
+→ -40% costos operativos
+→ 0 multas en 12 meses
+→ +30% productividad
+
+💰 Desde S/70/mes · 🔑 Implementación desde S/800
+
+👉 www.innovaqsolution.com/global
+📞 +51 900 801 059
+
+¿Quieres estos resultados? Dale LIKE ❤️`,
+    elevenImage: {
+      model: 'Flux Kontext Pro',
+      prompt: `Before and after split comparison. Left half "ANTES" in red tint: chaotic desk with papers, multiple Excel windows overlapping, stressed icon, clock showing late hour, red X marks. Right half "DESPUÉS" in green (#7AB648) tint: clean modern dashboard on screen, single app, green checkmarks, happy icon, clock showing early. Center dividing line with lightning bolt. Bottom stats: "-65% tiempo · -40% costos · +30% productividad" in bold. "INNOVAQ" logo bottom center. Compelling transformation visual. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: null,
+    videoPrompt: null,
+  },
+
+  // ─── TIKTOK (5) — with VIDEO + VOICE ───
+  {
+    id: 'TK-01', platform: 'tiktok', palanca: 'P2 — Price Shock',
+    title: '🤯 SAP vs INNOVAQ',
+    text: `🤯💸 ¿$10,000/mes por un ERP? ESTÁS LOCO 💸🤯
+
+💰 SAP: $10,000/mes
+💰 Oracle: $5,000/mes
+💰 Odoo: $1,500/mes
+💰 INNOVAQ: $39/mes 🇵🇪🔥
+
+Con facturación SUNAT ✅
+Con planilla peruana ✅
+Con 30 días GRATIS ✅
+
+¿Por qué? Hecho POR peruanos PARA peruanos 🇵🇪💪
+
+Link en bio 👆
+#ERPPerú #SAP #SoftwarePeruano #MYPE #INNOVAQ`,
+    elevenImage: {
+      model: 'Seedream 4',
+      prompt: `Shocking price reveal thumbnail for TikTok. Black background with red dramatic lighting. Left: large "$10,000" in red with fire effect and "SAP" label, looking menacing. Right: "$39" in bright green with golden glow and "INNOVAQ" label, looking heroic. VS symbol in center with electric sparks. Shocked face emoji at top. Text "¿ESTÁS LOCO?" in bold white. TikTok style bold, attention-grabbing, meme-worthy aesthetic. Vertical 9:16 format thumbnail feel adapted to 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: `¿Sabías que las empresas peruanas pagan DIEZ MIL DÓLARES al mes por un ERP? ... Yo tengo uno por treinta y nueve. Soy Alvaro Ruiz, Ingeniero Industrial con 19 años en minería y construcción. Creé INNOVAQ porque estaba HARTO de ver empresas peruanas pagando fortunas por software genérico que ni siquiera factura con SUNAT. Mira: 11 ERPs especializados. Desde 39 dólares al mes. Con facturación electrónica SUNAT, planilla peruana, ISO integrado. TODO. El precio de lanzamiento se acaba en semanas. Link en mi bio. Treinta días gratis, sin tarjeta.`,
+    videoPrompt: {
+      model: 'Google Veo 3.1',
+      prompt: `Corporate tech comparison video. Start with dramatic zoom into a computer screen showing an expensive ERP invoice of $10,000. Screen shatters/glitch transition. Cut to a clean, modern dashboard interface labeled "INNOVAQ" showing $39/month. Professional Latin American man (30s-40s) in business casual presenting confidently to camera in a modern office. Countdown timer overlay. Smooth corporate transitions with blue (#126695) and orange (#F1912B) color grading. TikTok vertical format 9:16. 15 seconds.`,
+      duration: '15s',
+      aspect: '9:16',
+    },
+  },
+  {
+    id: 'TK-02', platform: 'tiktok', palanca: 'P7 — Plan MYPE',
+    title: '🏪 ERP del Pueblo — S/70',
+    text: `🏪🇵🇪 EL ERP DEL PUEBLO 🇵🇪🏪
+
+POV: Tu mamá tiene un restaurante y lleva cuentas en cuaderno 📓
+
+"Mamá, ya existe un sistema por S/70 al mes"
+"¿Y eso qué hace hijo?"
+"TODO, mamá. TODO." 😂💪
+
+📊 Facturación electrónica
+📦 Control de inventario
+👥 Planilla
+📱 Desde el celular
+
+PLAN MYPE desde S/70/mes 🔥
+
+Etiquétala 👇😂
+
+#MYPE #EmprendedorPeruano #INNOVAQ #SoftwarePeruano #S70`,
+    elevenImage: {
+      model: 'Flux Kontext Pro',
+      prompt: `Warm, relatable small business graphic. Cozy restaurant/shop interior background with warm lighting. Center: large "S/70" price in friendly rounded bold white font with "/MES" subtitle. Peruvian flag colors ribbon. Notebook crossed out (old way) next to a glowing phone showing a clean app dashboard (new way). Text "EL ERP DEL PUEBLO" in playful but professional font. Heart and Peruvian flag emojis. Warm, community-feel, accessible, not corporate. TikTok thumbnail style. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: `POV: Le dices a tu mamá que existe un sistema para su negocio por setenta soles al mes. "Mamá, ¿todavía llevas las cuentas del restaurante en cuaderno?" "¿Y qué quieres que use, hijo?" "Un ERP, mamá" "¿Un qué?" "Un sistema que factura, controla inventario, maneja a tus empleados, todo desde el celular, por setenta soles al mes" "¿Setenta soles? ¿Y funciona?" "Mamá, tiene hasta inteligencia artificial". Plan MYPE INNOVAQ. Setenta soles al mes. Link en bio. Etiqueta a tu mamá emprendedora.`,
+    videoPrompt: {
+      model: 'Kling 2.5',
+      prompt: `Warm comedic POV-style TikTok. A young professional man talking to camera with animated expressions, simulating a conversation with his mom about technology. Small restaurant/shop background with warm golden lighting. Shows phone screen with clean app interface. Text overlays appearing: "S/70/mes", "TODO incluido". Wholesome, relatable, Latin American family vibe. Vertical 9:16. 15 seconds.`,
+      duration: '15s',
+      aspect: '9:16',
+    },
+  },
+  {
+    id: 'TK-03', platform: 'tiktok', palanca: 'P3 — Sin vs Con ERP',
+    title: '⏰ Un día SIN vs CON ERP',
+    text: `⏰ 6AM: Un día SIN ERP vs CON ERP ⏰
+
+SIN INNOVAQ 😓:
+6am — 5 Excel · 8am — Llamar almacén
+10am — Pelear con SUNAT · 12pm — Planilla manual
+3pm — Reporte en Word · 6pm — Seguir ahí 😭
+
+CON INNOVAQ 😎:
+6am — 1 dashboard · 6:05am — Todo listo ✅
+6:10am — Café ☕
+
+📊 Desde S/70/mes · ⏱️ 30 días GRATIS
+
+#Productividad #ERP #INNOVAQ #TiempoEsDinero #Peru`,
+    elevenImage: {
+      model: 'Seedream 4',
+      prompt: `Split screen day comparison graphic. Left half "SIN ERP" in gray/red tones: chaotic timeline showing 6am-6pm with stress icons at each hour — multiple screens, phone ringing, calculator, angry SUNAT form, exhausted person at 6pm. Right half "CON ERP" in blue/green bright tones: timeline showing 6am clean dashboard, 6:05 checkmark, 6:10 coffee cup — rest of day is bright and productive. Clock/timeline visual dividing the two sides. Text "¿CUÁNTO TIEMPO PIERDES?" at top. Bold, TikTok infographic style. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: `Así se ve un día en una empresa peruana SIN un ERP. Seis de la mañana: abro cinco archivos Excel. Ocho de la mañana: llamo al almacén "¿cuánto hay en stock?" Diez de la mañana: peleo con la SUNAT porque la factura salió mal. Doce del día: calculo la planilla a mano en otro Excel. Tres de la tarde: hago el reporte mensual en Word copiando y pegando. Seis de la tarde: sigo en la oficina. AHORA CON INNOVAQ: Seis de la mañana: abro UN dashboard. Seis y cinco: todo listo. Seis y diez: café. Treinta días gratis. Desde setenta soles al mes. Link en bio.`,
+    videoPrompt: {
+      model: 'Google Veo 3.1',
+      prompt: `Day-in-the-life comparison video. Split screen or sequential: LEFT/FIRST: chaotic office, person juggling multiple Excel windows, phone ringing, papers flying, frustrated expressions, clock fast-forwarding from 6am to 6pm. RIGHT/AFTER: Same person, clean desk, one sleek dashboard on screen, calm confidence, clock showing 6:10am with coffee in hand. Dramatic music shift from stressful to triumphant. Corporate blue and orange color grading. Vertical 9:16. 15 seconds.`,
+      duration: '15s',
+      aspect: '9:16',
+    },
+  },
+  {
+    id: 'TK-04', platform: 'tiktok', palanca: 'P5 — Gana Dinero',
+    title: '💰 Gana $2,000/año refiriendo',
+    text: `💰 GANA DINERO RECOMENDANDO SOFTWARE 💰
+
+"¿Cómo gano sin invertir?"
+"¿Ingresos pasivos reales?"
+
+✅ Programa de Referidos INNOVAQ:
+1️⃣ Recomiendas → 2️⃣ Se suscriben → 3️⃣ Cobras 20%
+
+📊 5 referidos Professional = +$2,000/año 🤑
+
+Sin inversión ✅ Sin experiencia ✅ Sin límite ✅
+
+📧 referidos@innovaqsolution.com
+
+#IngresoPasivo #GanarDinero #Referidos #INNOVAQ #Peru`,
+    elevenImage: {
+      model: 'Flux Kontext Pro',
+      prompt: `Money-making opportunity thumbnail. Dark green to black gradient with gold accents. Center: stack of dollar bills with "20%" in bold gold floating above. Calculator showing "$2,150" in bright green LED. 3-step arrow flow: person → handshake → money bag. Text "GANA $2,000/AÑO" in massive bold white with gold glow. "SIN INVERSIÓN" badge in green. Money rain particles effect. TikTok financial content style — attention-grabbing, aspirational. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: `Voy a enseñarte cómo ganar dos mil dólares al año sin invertir un sol. Y es cien por ciento legal. INNOVAQ Solutions tiene un programa de referidos donde tú ganas el veinte por ciento de lo que paga cualquier empresa que recomiendes. Si refieres cinco empresas que contratan el plan Profesional, son cuatrocientos treinta dólares por cada una. Cinco por cuatrocientos treinta: dos mil ciento cincuenta dólares al año. Sin invertir. Sin vender. Solo recomendando. Link en bio para registrarte. Empieza a ganar HOY.`,
+    videoPrompt: {
+      model: 'Kling 2.5',
+      prompt: `Financial tip TikTok style. Professional man speaking directly to camera with confident energy. Calculator app shown on phone screen with numbers being typed. Dollar amount "$2,150" appearing as bold text overlay. Simple 3-step animated graphic: recommend → subscribe → earn. Green money-themed lighting and effects. Aspirational but trustworthy tone. Vertical 9:16. 15 seconds.`,
+      duration: '15s',
+      aspect: '9:16',
+    },
+  },
+  {
+    id: 'TK-05', platform: 'tiktok', palanca: 'P10 — 19 Años',
+    title: '🛡️ 19 Años para crear esto',
+    text: `🛡️ 19 AÑOS PARA CREAR ESTO 🛡️
+
+Con 19 años en minería ⛏️
+Con 500+ horas de auditoría 📋
+Con 4 certificaciones ISO 🛡️
+Con un MBA 🎓
+
+Construí el software que la industria peruana necesitaba. 🇵🇪
+
+No es un proyecto de fin de semana.
+Es INNOVAQ. 💪
+
+11 ERPs. Hecho en Perú. Para Perú.
+
+📞 +51 900 801 059
+
+#IngenieríaIndustrial #ISO #INNOVAQ #SoftwarePeruano #19Años`,
+    elevenImage: {
+      model: 'Seedream 4',
+      prompt: `Inspirational founder story thumbnail. Cinematic deep navy (#0d4a6e) background with dramatic orange (#F1912B) side lighting. Center: "19 AÑOS" in massive bold white numbers with subtle glow. Below: timeline starting from 2007 to 2026 with small milestones. 4 ISO certification shields arranged at bottom. Engineering hard hat and laptop icons. Text "DE EXPERIENCIA A INNOVACIÓN" in elegant white. Peruvian flag subtle accent. Motivational, TED-talk-poster aesthetic. 1080x1080.`,
+      aspect: '1:1',
+    },
+    voiceScript: `Me tomó diecinueve años construir esto. Soy Alvaro Ruiz. Ingeniero Industrial. Auditor Líder de cuatro normas ISO. MBA. Diecinueve años en minería, construcción y energía. Quinientas horas de auditoría. He visto empresas peruanas sufrir con software que no entiende la realidad peruana. SUNAT, SUNAFIL, planilla peruana, Drawback, IPERC. Por eso creé INNOVAQ: once productos especializados. Hecho en Perú. Para empresas peruanas. Desde treinta y nueve dólares al mes. Treinta días gratis. Sin excusas. Link en bio.`,
+    videoPrompt: {
+      model: 'Google Veo 3.1',
+      prompt: `Cinematic founder storytelling video. Professional Latin American man (40s) in business attire looking directly at camera with serious, confident expression. Background transitions: mining site → construction site → modern office → laptop showing INNOVAQ dashboard. ISO certificates briefly shown. Dramatic cinematic lighting with blue and orange tones. Inspirational music building. Text overlay "19 AÑOS" appearing with impact. Vertical 9:16. 15 seconds.`,
+      duration: '15s',
+      aspect: '9:16',
+    },
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// BRANDED IMAGE PREVIEW (improved with more detail)
+// ═══════════════════════════════════════════════════════════════
+function ImagePreview({ post }) {
+  const colors = post.elevenImage.prompt.includes('#F1912B') ? [B.orange, B.blue] :
+    post.elevenImage.prompt.includes('#7AB648') ? [B.green, B.blue] :
+    post.elevenImage.prompt.includes('#dc2626') ? [B.red, B.blue] :
+    post.elevenImage.prompt.includes('#7c3aed') ? [B.purple, B.blue] :
+    [B.blue, B.orange];
+
+  return (
+    <div style={{
+      width: '100%', aspectRatio: '1/1', borderRadius: 12, position: 'relative', overflow: 'hidden',
+      background: `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%)`,
+    }}>
+      <div style={{ position: 'absolute', inset: 0, opacity: 0.06 }}>
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div key={i} style={{
+            position: 'absolute', width: 40 + i * 25, height: 40 + i * 25,
+            border: '1.5px solid #fff', borderRadius: i % 2 === 0 ? '50%' : 6,
+            top: `${5 + i * 10}%`, left: `${55 + i * 4}%`, transform: `rotate(${i * 20}deg)`,
+          }} />
+        ))}
+      </div>
+      <div style={{ position: 'absolute', top: 12, left: 14, display: 'flex', alignItems: 'center', gap: 5 }}>
+        <div style={{ width: 22, height: 22, borderRadius: 5, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 900, color: '#fff' }}>I</div>
+        <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: 9, fontWeight: 700, letterSpacing: '0.05em' }}>INNOVAQ</span>
+      </div>
+      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
+        <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.95)', fontWeight: 800, lineHeight: 1.2 }}>{post.title.replace(/[^\w\sáéíóúñÁÉÍÓÚÑ—·]/g, '').trim()}</div>
+        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.6)', marginTop: 4 }}>Generado con ElevenLabs</div>
+      </div>
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 20, background: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 7, fontWeight: 600 }}>PREVIEW — Generar en ElevenLabs Image & Video</span>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PROMPT BOX (copyable)
+// ═══════════════════════════════════════════════════════════════
+function PromptBox({ label, icon, color, text, model }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); };
+
+  return (
+    <div style={{ background: '#12121e', borderRadius: 10, border: `1px solid ${color}33`, overflow: 'hidden', marginBottom: 10 }}>
+      <div style={{ padding: '8px 12px', borderBottom: `1px solid ${color}22`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span>{icon}</span>
+          <span style={{ color, fontSize: 11, fontWeight: 700 }}>{label}</span>
+          {model && <span style={{ color: '#555', fontSize: 9, background: '#1a1a2e', padding: '2px 6px', borderRadius: 4 }}>{model}</span>}
+        </div>
+        <button onClick={copy} style={{
+          background: copied ? '#7AB648' : `${color}22`, border: `1px solid ${color}44`, borderRadius: 6,
+          padding: '4px 10px', color: copied ? '#fff' : color, fontSize: 10, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
+        }}>
+          {copied ? '✅ Copiado' : '📋 Copiar'}
+        </button>
+      </div>
+      <div style={{ padding: '10px 12px', maxHeight: 140, overflowY: 'auto' }}>
+        <pre style={{ color: '#bbb', fontSize: 11, lineHeight: 1.5, fontFamily: "'SF Mono', monospace", whiteSpace: 'pre-wrap', wordBreak: 'break-word', margin: 0 }}>{text}</pre>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MAIN APP
+// ═══════════════════════════════════════════════════════════════
+function ElevenLabsStudio() {
+  const [platform, setPlatform] = useState('linkedin');
+  const [postIdx, setPostIdx] = useState(0);
+  const [copiedText, setCopiedText] = useState(null);
+
+  const filtered = POSTS.filter(p => p.platform === platform);
+  const current = filtered[postIdx] || filtered[0];
+
+  useEffect(() => { setPostIdx(0); }, [platform]);
+
+  const copyPostText = () => {
+    navigator.clipboard.writeText(current.text);
+    setCopiedText(current.id);
+    setTimeout(() => setCopiedText(null), 2000);
+  };
+
+  return (
+    <div style={{ minHeight: '100vh', background: '#08080f', fontFamily: "'Segoe UI', system-ui, sans-serif", color: '#ddd' }}>
+      {/* Header */}
+      <div style={{ background: 'linear-gradient(135deg, #0d4a6e, #126695 50%, #F1912B)', padding: '22px 20px 16px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ width: 32, height: 32, borderRadius: 7, background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 900, color: '#fff' }}>I</div>
+            <div>
+              <div style={{ color: '#fff', fontWeight: 800, fontSize: 17 }}>INNOVAQ × ElevenLabs Studio</div>
+              <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 11 }}>20 posts · 20 imágenes · 5 videos · 5 voiceovers · Prompts listos para producción</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Platform tabs */}
+      <div style={{ background: '#0e0e1a', borderBottom: '1px solid #1a1a2e', padding: '0 20px', position: 'sticky', top: 0, zIndex: 10 }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 0 }}>
+          {Object.entries(PLATFORMS).map(([k, p]) => {
+            const cnt = POSTS.filter(x => x.platform === k).length;
+            const vids = POSTS.filter(x => x.platform === k && x.videoPrompt).length;
+            return (
+              <button key={k} onClick={() => setPlatform(k)} style={{
+                background: 'transparent', border: 'none', borderBottom: platform === k ? `3px solid ${p.color}` : '3px solid transparent',
+                padding: '12px 18px', cursor: 'pointer', color: platform === k ? '#fff' : '#555', fontSize: 13, fontWeight: 700,
+                fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 5,
+              }}>
+                {p.icon} {p.name}
+                <span style={{ background: platform === k ? p.color : '#222', color: '#fff', fontSize: 9, fontWeight: 800, padding: '1px 6px', borderRadius: 8 }}>{cnt}</span>
+                {vids > 0 && <span style={{ background: '#FF0050', color: '#fff', fontSize: 8, fontWeight: 800, padding: '1px 5px', borderRadius: 8 }}>🎬{vids}</span>}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 20px 60px' }}>
+        {/* Post selector */}
+        <div style={{ display: 'flex', gap: 6, marginBottom: 20, flexWrap: 'wrap' }}>
+          {filtered.map((p, i) => (
+            <button key={p.id} onClick={() => setPostIdx(i)} style={{
+              background: postIdx === i ? PLATFORMS[platform].color : '#14142a', border: `1px solid ${postIdx === i ? PLATFORMS[platform].color : '#252540'}`,
+              borderRadius: 8, padding: '8px 14px', cursor: 'pointer', color: '#fff', fontSize: 11, fontWeight: 700, fontFamily: 'inherit',
+              display: 'flex', flexDirection: 'column', gap: 2, minWidth: 150, textAlign: 'left',
+            }}>
+              <span style={{ opacity: 0.6, fontSize: 9 }}>{p.id} · {p.palanca}</span>
+              <span>{p.title}</span>
+              <div style={{ display: 'flex', gap: 3, marginTop: 2 }}>
+                <span style={{ fontSize: 8, background: 'rgba(255,255,255,0.1)', padding: '1px 4px', borderRadius: 3 }}>📷 IMG</span>
+                {p.voiceScript && <span style={{ fontSize: 8, background: 'rgba(255,0,80,0.2)', padding: '1px 4px', borderRadius: 3 }}>🎤 VOZ</span>}
+                {p.videoPrompt && <span style={{ fontSize: 8, background: 'rgba(0,242,234,0.2)', padding: '1px 4px', borderRadius: 3 }}>🎬 VID</span>}
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {current && (
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 20, alignItems: 'start' }}>
+            {/* LEFT: Post + Prompts */}
+            <div>
+              {/* Post text */}
+              <div style={{ background: '#14142a', borderRadius: 12, border: '1px solid #252540', marginBottom: 16, overflow: 'hidden' }}>
+                <div style={{ padding: '12px 16px', borderBottom: '1px solid #1e1e35', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div style={{ width: 34, height: 34, borderRadius: platform === 'linkedin' ? 6 : 17, background: `linear-gradient(135deg, ${B.blue}, ${B.orange})`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 900, color: '#fff' }}>AR</div>
+                    <div>
+                      <div style={{ color: '#fff', fontSize: 13, fontWeight: 700 }}>Alvaro Ruiz Reyna</div>
+                      <div style={{ color: '#555', fontSize: 10 }}>Founder & GM · INNOVAQ Solutions</div>
+                    </div>
+                  </div>
+                  <button onClick={copyPostText} style={{
+                    background: copiedText === current.id ? '#7AB648' : '#252540', border: 'none', borderRadius: 6,
+                    padding: '6px 12px', color: '#fff', fontSize: 11, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
+                  }}>
+                    {copiedText === current.id ? '✅ ¡Copiado!' : '📋 Copiar post'}
+                  </button>
+                </div>
+                <div style={{ padding: '14px 16px', maxHeight: 350, overflowY: 'auto' }}>
+                  <pre style={{ color: '#ddd', fontSize: 12.5, lineHeight: 1.6, fontFamily: "'Segoe UI', sans-serif", whiteSpace: 'pre-wrap', wordBreak: 'break-word', margin: 0 }}>{current.text}</pre>
+                </div>
+              </div>
+
+              {/* ELEVENLABS PROMPTS */}
+              <div style={{ color: '#666', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span>🎨 PROMPTS PARA ELEVENLABS</span>
+                <a href="https://elevenlabs.io/app/image-video" target="_blank" rel="noopener noreferrer" style={{ color: PLATFORMS[platform].color, textDecoration: 'none', fontSize: 10, background: `${PLATFORMS[platform].color}15`, padding: '2px 8px', borderRadius: 4, border: `1px solid ${PLATFORMS[platform].color}33` }}>
+                  Abrir ElevenLabs →
+                </a>
+              </div>
+
+              {/* Image prompt */}
+              <PromptBox
+                label="IMAGEN"
+                icon="🖼️"
+                color="#F1912B"
+                model={current.elevenImage.model}
+                text={current.elevenImage.prompt}
+              />
+
+              {/* Voice script (TikTok only) */}
+              {current.voiceScript && (
+                <PromptBox
+                  label="VOZ (TTS con tu voz clonada)"
+                  icon="🎤"
+                  color="#FF0050"
+                  model="Eleven v3 · Tu Voice Clone"
+                  text={current.voiceScript}
+                />
+              )}
+
+              {/* Video prompt (TikTok only) */}
+              {current.videoPrompt && (
+                <PromptBox
+                  label="VIDEO"
+                  icon="🎬"
+                  color="#00F2EA"
+                  model={current.videoPrompt.model}
+                  text={`[${current.videoPrompt.duration} · ${current.videoPrompt.aspect}]\n\n${current.videoPrompt.prompt}`}
+                />
+              )}
+
+              {/* Workflow guide */}
+              {current.videoPrompt && (
+                <div style={{ background: '#14142a', borderRadius: 10, border: '1px solid #252540', padding: 14, marginTop: 10 }}>
+                  <div style={{ color: '#F1912B', fontSize: 11, fontWeight: 700, marginBottom: 8 }}>📋 FLUJO DE PRODUCCIÓN EN ELEVENLABS:</div>
+                  <div style={{ color: '#999', fontSize: 11, lineHeight: 1.7 }}>
+                    <strong style={{ color: '#fff' }}>1.</strong> Ir a <strong style={{ color: '#00F2EA' }}>Image & Video</strong> → pegar prompt de imagen → generar con {current.elevenImage.model}<br/>
+                    <strong style={{ color: '#fff' }}>2.</strong> Con la imagen generada → seleccionar <strong style={{ color: '#00F2EA' }}>Generate Video</strong> → usar como Start Frame<br/>
+                    <strong style={{ color: '#fff' }}>3.</strong> Pegar prompt de video → modelo {current.videoPrompt.model} → generar clip {current.videoPrompt.duration}<br/>
+                    <strong style={{ color: '#fff' }}>4.</strong> Click <strong style={{ color: '#FF0050' }}>Export to Studio</strong><br/>
+                    <strong style={{ color: '#fff' }}>5.</strong> En Studio → agregar <strong style={{ color: '#FF0050' }}>tu voz clonada</strong> → pegar script de voz<br/>
+                    <strong style={{ color: '#fff' }}>6.</strong> Activar <strong style={{ color: '#7AB648' }}>LipSync</strong> + Auto-captions → Exportar MP4
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* RIGHT: Image preview + Stats */}
+            <div style={{ position: 'sticky', top: 70 }}>
+              <div style={{ color: '#555', fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', marginBottom: 8 }}>📷 PREVIEW DE IMAGEN</div>
+              <ImagePreview post={current} />
+
+              <div style={{ marginTop: 12, background: '#14142a', borderRadius: 10, border: '1px solid #252540', padding: 12 }}>
+                <div style={{ color: '#888', fontSize: 10, marginBottom: 6 }}>
+                  <strong style={{ color: '#fff' }}>Modelo:</strong> {current.elevenImage.model} · <strong style={{ color: '#fff' }}>Formato:</strong> 1080×1080 PNG
+                </div>
+                {current.videoPrompt && (
+                  <div style={{ color: '#888', fontSize: 10, marginBottom: 6 }}>
+                    <strong style={{ color: '#00F2EA' }}>Video:</strong> {current.videoPrompt.model} · {current.videoPrompt.duration} · {current.videoPrompt.aspect}
+                  </div>
+                )}
+                {current.voiceScript && (
+                  <div style={{ color: '#888', fontSize: 10 }}>
+                    <strong style={{ color: '#FF0050' }}>Voz:</strong> Eleven v3 · Tu Voice Clone · LipSync activado
+                  </div>
+                )}
+              </div>
+
+              {/* Campaign summary */}
+              <div style={{ marginTop: 12, background: '#14142a', borderRadius: 10, border: '1px solid #252540', padding: 12 }}>
+                <div style={{ color: '#555', fontSize: 9, fontWeight: 700, letterSpacing: '0.06em', marginBottom: 8 }}>📊 RESUMEN PRODUCCIÓN</div>
+                {Object.entries(PLATFORMS).map(([k, p]) => {
+                  const cnt = POSTS.filter(x => x.platform === k).length;
+                  const imgs = cnt;
+                  const vids = POSTS.filter(x => x.platform === k && x.videoPrompt).length;
+                  const voice = POSTS.filter(x => x.platform === k && x.voiceScript).length;
+                  return (
+                    <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', borderBottom: '1px solid #1a1a2e', fontSize: 11 }}>
+                      <span style={{ color: '#888' }}>{p.icon} {p.name}</span>
+                      <span style={{ color: '#fff', fontWeight: 600 }}>{imgs}📷 {vids > 0 ? `${vids}🎬 ${voice}🎤` : ''}</span>
+                    </div>
+                  );
+                })}
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0 0', marginTop: 4, borderTop: '1px solid #333', fontSize: 12 }}>
+                  <span style={{ color: B.orange, fontWeight: 700 }}>TOTAL</span>
+                  <span style={{ color: '#fff', fontWeight: 800 }}>20📷 5🎬 5🎤</span>
+                </div>
+              </div>
+
+              {/* Quick links */}
+              <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {[
+                  { label: 'ElevenLabs Image & Video', url: 'https://elevenlabs.io/app/image-video', color: '#F1912B' },
+                  { label: 'ElevenLabs Studio', url: 'https://elevenlabs.io/app/studio', color: '#00F2EA' },
+                  { label: 'ElevenLabs Voice Clone', url: 'https://elevenlabs.io/app/voice-lab', color: '#FF0050' },
+                ].map(link => (
+                  <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer" style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                    background: `${link.color}15`, border: `1px solid ${link.color}33`, borderRadius: 8,
+                    padding: '8px 14px', color: link.color, fontSize: 11, fontWeight: 700, textDecoration: 'none',
+                  }}>
+                    {link.label} ↗
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(ElevenLabsStudio));
+    </script>
+</body>
+</html>
