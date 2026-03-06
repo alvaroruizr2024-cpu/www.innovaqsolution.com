@@ -38,17 +38,17 @@ const B = {
 // DATA
 // ═══════════════════════════════════════════════════════════════
 const PRODUCTS = [
-  { code: 'SIG360', name: 'SIG 360°', sub: { en: 'Integrated Management System', es: 'Sistema Integrado de Gestión' }, desc: { en: 'ISO 9001, 14001, 45001, 37001 unified under Annex SL. The only platform in Peru integrating 4 standards.', es: 'ISO 9001, 14001, 45001, 37001 unificados bajo Annex SL. Única plataforma en Perú que integra 4 normas.' }, icon: '🛡️', color: B.green, plans: [{ tier: 'starter', mo: 149, yr: 1490, users: 10, loc: 1 }, { tier: 'professional', mo: 349, yr: 3490, users: 50, loc: 5 }, { tier: 'enterprise', mo: 699, yr: 6990, users: null, loc: null }], features: { en: ['Multi-standard ISO compliance', 'Document control', 'Audit management', 'IPERC Dynamic', 'Non-conformity tracking', 'Risk assessment Bow-Tie', 'Management review', 'Compliance channel E2EE', '84+ ISO templates'], es: ['Cumplimiento multi-norma ISO', 'Control documentario', 'Gestión auditorías', 'IPERC Dinámica', 'No conformidades', 'Evaluación riesgos Bow-Tie', 'Revisión por la dirección', 'Canal de denuncias E2EE', '84+ plantillas ISO'] } },
-  { code: 'ERP360', name: 'ERP 360', sub: { en: 'Enterprise Resource Planning', es: 'SumaERP — Planificación de Recursos' }, desc: { en: 'Complete ERP with SUNAT e-invoicing, foreign trade with Landed Cost, Peruvian HR and CFO Cockpit.', es: 'ERP completo con facturación SUNAT, ComEx con Landed Cost, RRHH peruano y CFO Cockpit.' }, icon: '📊', color: B.orange, plans: [{ tier: 'starter', mo: 199, yr: 1990, users: 15, loc: 1 }, { tier: 'professional', mo: 499, yr: 4990, users: 50, loc: 5 }, { tier: 'enterprise', mo: 999, yr: 9990, users: null, loc: null }], features: { en: ['SUNAT e-invoicing', 'Foreign trade & Landed Cost', 'Accounting PCGE/IFRS', 'HR & Peruvian payroll', 'Tax engine', 'CFO Cockpit', 'Multi-currency', 'Drawback management'], es: ['Facturación electrónica SUNAT', 'ComEx y Landed Cost', 'Contabilidad PCGE/NIIF', 'RRHH y planilla peruana', 'Motor tributario', 'CFO Cockpit', 'Multi-moneda', 'Gestión Drawback'] } },
-  { code: 'TPM360', name: 'TPM360', sub: { en: 'Total Productive Maintenance', es: 'Mantenimiento Productivo Total' }, desc: { en: 'Predictive maintenance with AI, equipment lifecycle management and mobile inspections.', es: 'Mantenimiento predictivo con IA, gestión del ciclo de vida de equipos e inspecciones móviles.' }, icon: '⚙️', color: B.blue, plans: [{ tier: 'starter', mo: 99, yr: 990, users: 5, loc: 1 }, { tier: 'professional', mo: 249, yr: 2490, users: 25, loc: 5 }, { tier: 'enterprise', mo: 499, yr: 4990, users: null, loc: null }], features: { en: ['Equipment lifecycle', 'Predictive AI', 'KPI dashboards', 'Mobile inspections', 'CMMS integration', 'Work orders'], es: ['Ciclo de vida equipos', 'IA predictiva', 'Dashboards KPIs', 'Inspecciones móviles', 'Integración CMMS', 'Órdenes de trabajo'] } },
-  { code: 'MTP360', name: 'MTP360', sub: { en: 'Master Training Plan', es: 'Plan Maestro de Capacitación' }, desc: { en: 'Training and competency management for regulated industries with ICAM and BowTie methodologies.', es: 'Gestión de capacitación y competencias con metodologías ICAM y BowTie para industrias reguladas.' }, icon: '🎓', color: '#7c3aed', plans: [{ tier: 'starter', mo: 79, yr: 790, users: 10, loc: 1 }, { tier: 'professional', mo: 189, yr: 1890, users: 50, loc: 5 }, { tier: 'enterprise', mo: 399, yr: 3990, users: null, loc: null }], features: { en: ['Competency matrix', 'Training scheduling', 'Certification tracking', 'Compliance reports', 'E-learning', 'Gap analysis'], es: ['Matriz competencias', 'Programación capacitaciones', 'Seguimiento certificaciones', 'Reportes cumplimiento', 'E-learning', 'Análisis brechas'] } },
-  { code: 'PMO360', name: 'PMO360', sub: { en: 'PMO Value Delivery System', es: 'Sistema de Entrega de Valor PMO' }, desc: { en: 'Project portfolio management with value delivery tracking, resource optimization and real-time dashboards.', es: 'Gestión de portafolio de proyectos con seguimiento de entrega de valor, optimización de recursos y dashboards en tiempo real.' }, icon: '📋', color: '#2563eb', plans: [{ tier: 'starter', mo: 129, yr: 1290, users: 10, loc: 1 }, { tier: 'professional', mo: 299, yr: 2990, users: 30, loc: 5 }, { tier: 'enterprise', mo: 599, yr: 5990, users: null, loc: null }], features: { en: ['Project portfolio', 'Value delivery tracking', 'Resource optimization', 'Gantt & dashboards', 'Risk management', 'Stakeholder reports'], es: ['Portafolio de proyectos', 'Seguimiento entrega de valor', 'Optimización de recursos', 'Gantt y dashboards', 'Gestión de riesgos', 'Reportes stakeholders'] } },
-  { code: 'AGRO360', name: 'AGRO 360', sub: { en: 'Agroindustrial Management', es: 'Gestión Agroindustrial Integral' }, desc: { en: 'Complete agroindustrial ERP with crop traceability, harvest management, field IoT and SENASA compliance.', es: 'ERP agroindustrial completo con trazabilidad de cultivos, gestión de cosecha, IoT de campo y cumplimiento SENASA.' }, icon: '🌾', color: '#16a34a', plans: [{ tier: 'starter', mo: 149, yr: 1490, users: 10, loc: 1 }, { tier: 'professional', mo: 349, yr: 3490, users: 50, loc: 5 }, { tier: 'enterprise', mo: 699, yr: 6990, users: null, loc: null }], features: { en: ['Crop traceability', 'Harvest management', 'Field IoT sensors', 'SENASA compliance', 'Cost per hectare', 'Export certifications'], es: ['Trazabilidad de cultivos', 'Gestión de cosecha', 'Sensores IoT de campo', 'Cumplimiento SENASA', 'Costo por hectárea', 'Certificaciones de exportación'] } },
-  { code: 'FOOD360', name: 'FOOD 360', sub: { en: 'Food & Beverage ERP', es: 'ERP Alimentos y Bebidas' }, desc: { en: 'Integrated ERP for food industry with recipe costing, inventory, traceability and HACCP/BRC compliance.', es: 'ERP integral para industria alimentaria con costeo de recetas, inventario, trazabilidad y cumplimiento HACCP/BRC.' }, icon: '🍽️', color: '#ea580c', plans: [{ tier: 'starter', mo: 149, yr: 1490, users: 10, loc: 1 }, { tier: 'professional', mo: 349, yr: 3490, users: 50, loc: 5 }, { tier: 'enterprise', mo: 699, yr: 6990, users: null, loc: null }], features: { en: ['Recipe costing (BOM)', 'Lot traceability', 'HACCP/BRC compliance', 'Quality control', 'Production planning', 'Expiry management'], es: ['Costeo de recetas (escandallos)', 'Trazabilidad por lote', 'Cumplimiento HACCP/BRC', 'Control de calidad', 'Planificación producción', 'Gestión de vencimientos'] } },
-  { code: 'HOTEL360', name: 'HOTEL 360', sub: { en: 'Smart Hospitality ERP', es: 'ERP Hotelero Inteligente' }, desc: { en: 'Complete hotel management with PMS, revenue management, channel manager and guest experience AI.', es: 'Gestión hotelera completa con PMS, revenue management, channel manager e IA de experiencia del huésped.' }, icon: '🏨', color: '#0891b2', plans: [{ tier: 'starter', mo: 199, yr: 1990, users: 10, loc: 1 }, { tier: 'professional', mo: 449, yr: 4490, users: 30, loc: 3 }, { tier: 'enterprise', mo: 899, yr: 8990, users: null, loc: null }], features: { en: ['PMS & reservations', 'Revenue management', 'Channel manager', 'Guest experience AI', 'Housekeeping module', 'F&B integration'], es: ['PMS y reservas', 'Revenue management', 'Channel manager', 'IA experiencia huésped', 'Módulo housekeeping', 'Integración A&B'] } },
-  { code: 'SALUD360', name: 'SALUD 360', sub: { en: 'Clinical ERP with AI', es: 'ERP Clínico con IA' }, desc: { en: 'Healthcare management platform with AI-powered clinical records, appointment scheduling and MINSA compliance.', es: 'Plataforma de gestión de salud con historias clínicas potenciadas por IA, agenda de citas y cumplimiento MINSA.' }, icon: '🏥', color: '#dc2626', plans: [{ tier: 'starter', mo: 199, yr: 1990, users: 10, loc: 1 }, { tier: 'professional', mo: 449, yr: 4490, users: 50, loc: 5 }, { tier: 'enterprise', mo: 899, yr: 8990, users: null, loc: null }], features: { en: ['AI clinical records', 'Appointment scheduling', 'MINSA compliance', 'Lab integration', 'Pharmacy module', 'Telemedicine'], es: ['Historias clínicas con IA', 'Agenda de citas', 'Cumplimiento MINSA', 'Integración laboratorio', 'Módulo farmacia', 'Telemedicina'] } },
-  { code: 'CATASTRO360', name: 'CATASTRO 360', sub: { en: 'AI Cadastral Management', es: 'Gestión Catastral con IA' }, desc: { en: 'Cadastral management platform with AI-powered property valuation, GIS integration and tax assessment.', es: 'Plataforma de gestión catastral con valoración predial potenciada por IA, integración GIS y tributación.' }, icon: '🗺️', color: '#7c3aed', plans: [{ tier: 'starter', mo: 199, yr: 1990, users: 10, loc: 1 }, { tier: 'professional', mo: 449, yr: 4490, users: 30, loc: 5 }, { tier: 'enterprise', mo: 899, yr: 8990, users: null, loc: null }], features: { en: ['AI property valuation', 'GIS integration', 'Tax assessment', 'Property registry', 'Urban planning', 'Inspection module'], es: ['Valoración predial con IA', 'Integración GIS', 'Tributación predial', 'Registro de propiedades', 'Planificación urbana', 'Módulo de inspección'] } },
-  { code: 'MEDCONGRESS', name: 'MedCongress Pro', sub: { en: 'Medical Congress Manager', es: 'Gestor de Congresos Médicos' }, desc: { en: 'Complete platform for medical congress management with registration, QR accreditation and speaker coordination.', es: 'Plataforma completa para gestión de congresos médicos con registro, acreditación QR y coordinación de ponentes.' }, icon: '🎤', color: '#9333ea', plans: [{ tier: 'starter', mo: 99, yr: 990, users: 5, loc: 1 }, { tier: 'professional', mo: 249, yr: 2490, users: 30, loc: 5 }, { tier: 'enterprise', mo: 499, yr: 4990, users: null, loc: null }], features: { en: ['Event registration', 'QR accreditation', 'Speaker management', 'Session scheduling', 'Attendee analytics', 'Certificate generation'], es: ['Registro de eventos', 'Acreditación QR', 'Gestión de ponentes', 'Programación de sesiones', 'Analítica de asistentes', 'Generación de certificados'] } },
+  { code: 'SIG360', name: 'SIG 360°', sub: { en: 'Integrated Management System', es: 'Sistema Integrado de Gestión' }, desc: { en: 'ISO 9001, 14001, 45001, 37001 unified under Annex SL. The only platform in Peru integrating 4 standards.', es: 'ISO 9001, 14001, 45001, 37001 unificados bajo Annex SL. Única plataforma en Perú que integra 4 normas.' }, icon: '🛡️', color: B.green, plans: [{ tier: 'mype', mo: 29, yr: 290, users: 3, loc: 1 }, { tier: 'starter', mo: 79, yr: 790, users: 10, loc: 1 }, { tier: 'professional', mo: 179, yr: 1790, users: 50, loc: 5 }, { tier: 'enterprise', mo: 349, yr: 3490, users: null, loc: null }], features: { en: ['Multi-standard ISO compliance', 'Document control', 'Audit management', 'IPERC Dynamic', 'Non-conformity tracking', 'Risk assessment Bow-Tie', 'Management review', 'Compliance channel E2EE', '84+ ISO templates'], es: ['Cumplimiento multi-norma ISO', 'Control documentario', 'Gestión auditorías', 'IPERC Dinámica', 'No conformidades', 'Evaluación riesgos Bow-Tie', 'Revisión por la dirección', 'Canal de denuncias E2EE', '84+ plantillas ISO'] } },
+  { code: 'ERP360', name: 'ERP 360', sub: { en: 'Enterprise Resource Planning', es: 'SumaERP — Planificación de Recursos' }, desc: { en: 'Complete ERP with SUNAT e-invoicing, foreign trade with Landed Cost, Peruvian HR and CFO Cockpit.', es: 'ERP completo con facturación SUNAT, ComEx con Landed Cost, RRHH peruano y CFO Cockpit.' }, icon: '📊', color: B.orange, plans: [{ tier: 'mype', mo: 39, yr: 390, users: 5, loc: 1 }, { tier: 'starter', mo: 99, yr: 990, users: 15, loc: 1 }, { tier: 'professional', mo: 249, yr: 2490, users: 50, loc: 5 }, { tier: 'enterprise', mo: 499, yr: 4990, users: null, loc: null }], features: { en: ['SUNAT e-invoicing', 'Foreign trade & Landed Cost', 'Accounting PCGE/IFRS', 'HR & Peruvian payroll', 'Tax engine', 'CFO Cockpit', 'Multi-currency', 'Drawback management'], es: ['Facturación electrónica SUNAT', 'ComEx y Landed Cost', 'Contabilidad PCGE/NIIF', 'RRHH y planilla peruana', 'Motor tributario', 'CFO Cockpit', 'Multi-moneda', 'Gestión Drawback'] } },
+  { code: 'TPM360', name: 'TPM360', sub: { en: 'Total Productive Maintenance', es: 'Mantenimiento Productivo Total' }, desc: { en: 'Predictive maintenance with AI, equipment lifecycle management and mobile inspections.', es: 'Mantenimiento predictivo con IA, gestión del ciclo de vida de equipos e inspecciones móviles.' }, icon: '⚙️', color: B.blue, plans: [{ tier: 'mype', mo: 19, yr: 190, users: 2, loc: 1 }, { tier: 'starter', mo: 49, yr: 490, users: 5, loc: 1 }, { tier: 'professional', mo: 129, yr: 1290, users: 25, loc: 5 }, { tier: 'enterprise', mo: 249, yr: 2490, users: null, loc: null }], features: { en: ['Equipment lifecycle', 'Predictive AI', 'KPI dashboards', 'Mobile inspections', 'CMMS integration', 'Work orders'], es: ['Ciclo de vida equipos', 'IA predictiva', 'Dashboards KPIs', 'Inspecciones móviles', 'Integración CMMS', 'Órdenes de trabajo'] } },
+  { code: 'MTP360', name: 'MTP360', sub: { en: 'Master Training Plan', es: 'Plan Maestro de Capacitación' }, desc: { en: 'Training and competency management for regulated industries with ICAM and BowTie methodologies.', es: 'Gestión de capacitación y competencias con metodologías ICAM y BowTie para industrias reguladas.' }, icon: '🎓', color: '#7c3aed', plans: [{ tier: 'mype', mo: 19, yr: 190, users: 3, loc: 1 }, { tier: 'starter', mo: 39, yr: 390, users: 10, loc: 1 }, { tier: 'professional', mo: 99, yr: 990, users: 50, loc: 5 }, { tier: 'enterprise', mo: 199, yr: 1990, users: null, loc: null }], features: { en: ['Competency matrix', 'Training scheduling', 'Certification tracking', 'Compliance reports', 'E-learning', 'Gap analysis'], es: ['Matriz competencias', 'Programación capacitaciones', 'Seguimiento certificaciones', 'Reportes cumplimiento', 'E-learning', 'Análisis brechas'] } },
+  { code: 'PMO360', name: 'PMO360', sub: { en: 'PMO Value Delivery System', es: 'Sistema de Entrega de Valor PMO' }, desc: { en: 'Project portfolio management with value delivery tracking, resource optimization and real-time dashboards.', es: 'Gestión de portafolio de proyectos con seguimiento de entrega de valor, optimización de recursos y dashboards en tiempo real.' }, icon: '📋', color: '#2563eb', plans: [{ tier: 'mype', mo: 29, yr: 290, users: 3, loc: 1 }, { tier: 'starter', mo: 69, yr: 690, users: 10, loc: 1 }, { tier: 'professional', mo: 149, yr: 1490, users: 30, loc: 5 }, { tier: 'enterprise', mo: 299, yr: 2990, users: null, loc: null }], features: { en: ['Project portfolio', 'Value delivery tracking', 'Resource optimization', 'Gantt & dashboards', 'Risk management', 'Stakeholder reports'], es: ['Portafolio de proyectos', 'Seguimiento entrega de valor', 'Optimización de recursos', 'Gantt y dashboards', 'Gestión de riesgos', 'Reportes stakeholders'] } },
+  { code: 'AGRO360', name: 'AGRO 360', sub: { en: 'Agroindustrial Management', es: 'Gestión Agroindustrial Integral' }, desc: { en: 'Complete agroindustrial ERP with crop traceability, harvest management, field IoT and SENASA compliance.', es: 'ERP agroindustrial completo con trazabilidad de cultivos, gestión de cosecha, IoT de campo y cumplimiento SENASA.' }, icon: '🌾', color: '#16a34a', plans: [{ tier: 'mype', mo: 29, yr: 290, users: 3, loc: 1 }, { tier: 'starter', mo: 79, yr: 790, users: 10, loc: 1 }, { tier: 'professional', mo: 179, yr: 1790, users: 50, loc: 5 }, { tier: 'enterprise', mo: 349, yr: 3490, users: null, loc: null }], features: { en: ['Crop traceability', 'Harvest management', 'Field IoT sensors', 'SENASA compliance', 'Cost per hectare', 'Export certifications'], es: ['Trazabilidad de cultivos', 'Gestión de cosecha', 'Sensores IoT de campo', 'Cumplimiento SENASA', 'Costo por hectárea', 'Certificaciones de exportación'] } },
+  { code: 'FOOD360', name: 'FOOD 360', sub: { en: 'Food & Beverage ERP', es: 'ERP Alimentos y Bebidas' }, desc: { en: 'Integrated ERP for food industry with recipe costing, inventory, traceability and HACCP/BRC compliance.', es: 'ERP integral para industria alimentaria con costeo de recetas, inventario, trazabilidad y cumplimiento HACCP/BRC.' }, icon: '🍽️', color: '#ea580c', plans: [{ tier: 'mype', mo: 29, yr: 290, users: 3, loc: 1 }, { tier: 'starter', mo: 79, yr: 790, users: 10, loc: 1 }, { tier: 'professional', mo: 179, yr: 1790, users: 50, loc: 5 }, { tier: 'enterprise', mo: 349, yr: 3490, users: null, loc: null }], features: { en: ['Recipe costing (BOM)', 'Lot traceability', 'HACCP/BRC compliance', 'Quality control', 'Production planning', 'Expiry management'], es: ['Costeo de recetas (escandallos)', 'Trazabilidad por lote', 'Cumplimiento HACCP/BRC', 'Control de calidad', 'Planificación producción', 'Gestión de vencimientos'] } },
+  { code: 'HOTEL360', name: 'HOTEL 360', sub: { en: 'Smart Hospitality ERP', es: 'ERP Hotelero Inteligente' }, desc: { en: 'Complete hotel management with PMS, revenue management, channel manager and guest experience AI.', es: 'Gestión hotelera completa con PMS, revenue management, channel manager e IA de experiencia del huésped.' }, icon: '🏨', color: '#0891b2', plans: [{ tier: 'mype', mo: 39, yr: 390, users: 3, loc: 1 }, { tier: 'starter', mo: 99, yr: 990, users: 10, loc: 1 }, { tier: 'professional', mo: 229, yr: 2290, users: 30, loc: 3 }, { tier: 'enterprise', mo: 449, yr: 4490, users: null, loc: null }], features: { en: ['PMS & reservations', 'Revenue management', 'Channel manager', 'Guest experience AI', 'Housekeeping module', 'F&B integration'], es: ['PMS y reservas', 'Revenue management', 'Channel manager', 'IA experiencia huésped', 'Módulo housekeeping', 'Integración A&B'] } },
+  { code: 'SALUD360', name: 'SALUD 360', sub: { en: 'Clinical ERP with AI', es: 'ERP Clínico con IA' }, desc: { en: 'Healthcare management platform with AI-powered clinical records, appointment scheduling and MINSA compliance.', es: 'Plataforma de gestión de salud con historias clínicas potenciadas por IA, agenda de citas y cumplimiento MINSA.' }, icon: '🏥', color: '#dc2626', plans: [{ tier: 'mype', mo: 39, yr: 390, users: 3, loc: 1 }, { tier: 'starter', mo: 99, yr: 990, users: 10, loc: 1 }, { tier: 'professional', mo: 229, yr: 2290, users: 50, loc: 5 }, { tier: 'enterprise', mo: 449, yr: 4490, users: null, loc: null }], features: { en: ['AI clinical records', 'Appointment scheduling', 'MINSA compliance', 'Lab integration', 'Pharmacy module', 'Telemedicine'], es: ['Historias clínicas con IA', 'Agenda de citas', 'Cumplimiento MINSA', 'Integración laboratorio', 'Módulo farmacia', 'Telemedicina'] } },
+  { code: 'CATASTRO360', name: 'CATASTRO 360', sub: { en: 'AI Cadastral Management', es: 'Gestión Catastral con IA' }, desc: { en: 'Cadastral management platform with AI-powered property valuation, GIS integration and tax assessment.', es: 'Plataforma de gestión catastral con valoración predial potenciada por IA, integración GIS y tributación.' }, icon: '🗺️', color: '#7c3aed', plans: [{ tier: 'mype', mo: 39, yr: 390, users: 3, loc: 1 }, { tier: 'starter', mo: 99, yr: 990, users: 10, loc: 1 }, { tier: 'professional', mo: 229, yr: 2290, users: 30, loc: 5 }, { tier: 'enterprise', mo: 449, yr: 4490, users: null, loc: null }], features: { en: ['AI property valuation', 'GIS integration', 'Tax assessment', 'Property registry', 'Urban planning', 'Inspection module'], es: ['Valoración predial con IA', 'Integración GIS', 'Tributación predial', 'Registro de propiedades', 'Planificación urbana', 'Módulo de inspección'] } },
+  { code: 'MEDCONGRESS', name: 'MedCongress Pro', sub: { en: 'Medical Congress Manager', es: 'Gestor de Congresos Médicos' }, desc: { en: 'Complete platform for medical congress management with registration, QR accreditation and speaker coordination.', es: 'Plataforma completa para gestión de congresos médicos con registro, acreditación QR y coordinación de ponentes.' }, icon: '🎤', color: '#9333ea', plans: [{ tier: 'mype', mo: 19, yr: 190, users: 2, loc: 1 }, { tier: 'starter', mo: 49, yr: 490, users: 5, loc: 1 }, { tier: 'professional', mo: 129, yr: 1290, users: 30, loc: 5 }, { tier: 'enterprise', mo: 249, yr: 2490, users: null, loc: null }], features: { en: ['Event registration', 'QR accreditation', 'Speaker management', 'Session scheduling', 'Attendee analytics', 'Certificate generation'], es: ['Registro de eventos', 'Acreditación QR', 'Gestión de ponentes', 'Programación de sesiones', 'Analítica de asistentes', 'Generación de certificados'] } },
 ];
 
 const SERVICES = [
@@ -71,7 +71,7 @@ const SECTORS = [
 
 const CURRENCIES = {
   USD: { symbol: '$', rate: 1, locale: 'en-US', flag: '🇺🇸' }, EUR: { symbol: '€', rate: 0.92, locale: 'de-DE', flag: '🇪🇺' },
-  PEN: { symbol: 'S/', rate: 3.72, locale: 'es-PE', flag: '🇵🇪' }, GBP: { symbol: '£', rate: 0.79, locale: 'en-GB', flag: '🇬🇧' },
+  PEN: { symbol: 'S/', rate: 3.70, locale: 'es-PE', flag: '🇵🇪' }, GBP: { symbol: '£', rate: 0.79, locale: 'en-GB', flag: '🇬🇧' },
   MXN: { symbol: 'MX$', rate: 17.15, locale: 'es-MX', flag: '🇲🇽' }, BRL: { symbol: 'R$', rate: 4.97, locale: 'pt-BR', flag: '🇧🇷' },
   CLP: { symbol: 'CLP', rate: 890, locale: 'es-CL', flag: '🇨🇱', dec: 0 }, COP: { symbol: 'COP', rate: 3950, locale: 'es-CO', flag: '🇨🇴', dec: 0 },
 };
@@ -82,7 +82,7 @@ const T = {
     hero: { badge: 'Digital Transformation for Global Industry', title1: 'Elevating Standards in', title2: 'Safety, Quality &', title3: 'Regulatory Compliance', desc: 'Integrated solutions in SIG 360, ERP 360, Specialized Training, MINTRA Audits and ISO Implementation for Mining, Construction and Energy sectors.', cta: 'Request a Demo', cta2: 'View Products', stats: [['19+', 'Years Experience'], ['500+', 'Audit Hours'], ['4', 'ISO Standards'], ['70%', 'Cost Savings']] },
     services: { title: 'Our Services', sub: 'Comprehensive solutions for industrial excellence and regulatory compliance', more: 'Learn more' },
     sectors: { title: 'Industries We Serve', sub: '12+ sectors with specialized solutions adapted to each industry' },
-    pricing: { title: 'Plans & Pricing', sub: 'All plans include 14-day free trial. Up to 70% more affordable than international platforms.', mo: 'Monthly', yr: 'Annual', save: '20% OFF', subscribe: 'Start Trial', contact: 'Contact Sales', starter: 'Starter', professional: 'Professional', enterprise: 'Enterprise', users: 'users', loc: 'sites', unlim: 'Unlimited', popular: 'MOST POPULAR', tax: 'Prices in {{c}}. Taxes may apply.', all: 'All plans include:', incl: ['24/7 Support', 'SSL Security', 'Auto Updates', 'API Access', '99.9% SLA', 'Onboarding'] },
+    pricing: { title: 'Plans & Pricing', sub: 'All plans include 30-day free trial. MYPE Plan from $19/mo. Up to 70% more affordable than international platforms.', mo: 'Monthly', yr: 'Annual', save: '20% OFF', subscribe: 'Start Trial', contact: 'Contact Sales', mype: 'MYPE', starter: 'Starter', professional: 'Professional', enterprise: 'Enterprise', users: 'users', loc: 'sites', unlim: 'Unlimited', popular: 'MOST POPULAR', tax: 'Prices in {{c}}. Taxes may apply.', all: 'All plans include:', incl: ['24/7 Support', 'SSL Security', 'Auto Updates', 'API Access', '99.9% SLA', 'Onboarding'] },
     iso: { title: 'Integrated ISO Standards', sub: '4 standards. 1 platform. Native Annex SL integration — unique in Peru.' },
     certs: { title: 'Our Credentials', sub: 'ISO Lead Auditor · Licensed Industrial Engineer CIP 210152 · MBA' },
     contact: { title: 'Request a Demo', sub: 'Our technical team will contact you within 24 hours.', name: 'Full Name', company: 'Company', email: 'Email', service: 'Service of Interest', msg: 'Message', send: 'Send Request', phone: 'Phone' },
@@ -94,7 +94,7 @@ const T = {
     hero: { badge: 'Transformación Digital para la Industria', title1: 'Elevando Estándares en', title2: 'Seguridad, Calidad y', title3: 'Cumplimiento Normativo', desc: 'Soluciones integrales en SIG 360, ERP 360, Capacitación Especializada, Auditoría MINTRA e Implementación ISO para Minería, Construcción y Energía.', cta: 'Solicitar Demo', cta2: 'Ver Productos', stats: [['19+', 'Años Experiencia'], ['500+', 'Horas Auditoría'], ['4', 'Normas ISO'], ['70%', 'Ahorro vs Int.']] },
     services: { title: 'Nuestros Servicios', sub: 'Soluciones integrales para la excelencia industrial y cumplimiento normativo', more: 'Más información' },
     sectors: { title: 'Sectores que Atendemos', sub: '12+ sectores con soluciones especializadas adaptadas a cada industria' },
-    pricing: { title: 'Planes y Precios', sub: 'Todos incluyen prueba de 14 días. Hasta 70% más económico que plataformas internacionales.', mo: 'Mensual', yr: 'Anual', save: '20% DESC.', subscribe: 'Iniciar Prueba', contact: 'Contactar Ventas', starter: 'Inicial', professional: 'Profesional', enterprise: 'Empresarial', users: 'usuarios', loc: 'sedes', unlim: 'Ilimitado', popular: 'MÁS POPULAR', tax: 'Precios en {{c}}. Impuestos pueden aplicar.', all: 'Todos los planes incluyen:', incl: ['Soporte 24/7', 'Seguridad SSL', 'Actualizaciones', 'Acceso API', 'SLA 99.9%', 'Onboarding'] },
+    pricing: { title: 'Planes y Precios', sub: 'Todos incluyen prueba de 30 días. Plan MYPE desde S/70/mes. Hasta 70% más económico que plataformas internacionales.', mo: 'Mensual', yr: 'Anual', save: '20% DESC.', subscribe: 'Iniciar Prueba', contact: 'Contactar Ventas', mype: 'MYPE', starter: 'Inicial', professional: 'Profesional', enterprise: 'Empresarial', users: 'usuarios', loc: 'sedes', unlim: 'Ilimitado', popular: 'MÁS POPULAR', tax: 'Precios en {{c}}. Impuestos pueden aplicar.', all: 'Todos los planes incluyen:', incl: ['Soporte 24/7', 'Seguridad SSL', 'Actualizaciones', 'Acceso API', 'SLA 99.9%', 'Onboarding'] },
     iso: { title: 'Normas ISO Integradas', sub: '4 normas. 1 plataforma. Integración nativa Annex SL — único en Perú.' },
     certs: { title: 'Nuestras Credenciales', sub: 'Auditor Líder ISO · Ingeniero Industrial CIP 210152 · MBA' },
     contact: { title: 'Solicitar una Demo', sub: 'Nuestro equipo técnico lo contactará en 24 horas.', name: 'Nombre Completo', company: 'Empresa', email: 'Correo', service: 'Servicio de Interés', msg: 'Mensaje', send: 'Enviar Solicitud', phone: 'Teléfono' },
@@ -285,6 +285,64 @@ function SectorsSection() {
   );
 }
 
+
+// ═══════════════════════════════════════════════════════════════
+// LAUNCH COUNTDOWN (P2 Strategy)
+// ═══════════════════════════════════════════════════════════════
+const LAUNCH_END = new Date('2026-04-30T23:59:59');
+
+function LaunchCountdown() {
+  const { lang } = useApp();
+  const [time, setTime] = useState({ d: 0, h: 0, m: 0, s: 0 });
+  const [expired, setExpired] = useState(false);
+
+  useEffect(() => {
+    const tick = () => {
+      const now = new Date();
+      const diff = LAUNCH_END - now;
+      if (diff <= 0) { setExpired(true); return; }
+      setTime({
+        d: Math.floor(diff / 86400000),
+        h: Math.floor((diff % 86400000) / 3600000),
+        m: Math.floor((diff % 3600000) / 60000),
+        s: Math.floor((diff % 60000) / 1000)
+      });
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  if (expired) return null;
+
+  const labels = lang === 'es' 
+    ? { title: 'PRECIO DE LANZAMIENTO', sub: 'Precios exclusivos por tiempo limitado', d: 'Días', h: 'Horas', m: 'Min', s: 'Seg' }
+    : { title: 'LAUNCH PRICING', sub: 'Exclusive limited-time prices', d: 'Days', h: 'Hours', m: 'Min', s: 'Sec' };
+
+  const boxStyle = { background: 'rgba(255,255,255,0.15)', borderRadius: 10, padding: '10px 14px', minWidth: 68, textAlign: 'center', backdropFilter: 'blur(4px)' };
+
+  return (
+    <div style={{ background: 'linear-gradient(135deg, #0d4a6e 0%, #126695 40%, #F1912B 100%)', padding: '18px 20px', textAlign: 'center' }}>
+      <div style={{ maxWidth: 700, margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 6 }}>
+          <span style={{ fontSize: 18 }}>🔥</span>
+          <span style={{ color: '#fff', fontWeight: 800, fontSize: 16, letterSpacing: '0.08em' }}>{labels.title}</span>
+          <span style={{ fontSize: 18 }}>🔥</span>
+        </div>
+        <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 13, marginBottom: 14 }}>{labels.sub}</p>
+        <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
+          {[['d', time.d], ['h', time.h], ['m', time.m], ['s', time.s]].map(([k, v]) => (
+            <div key={k} style={boxStyle}>
+              <div style={{ color: '#fff', fontSize: 26, fontWeight: 800, fontFamily: "'Space Mono',monospace", lineHeight: 1.1 }}>{String(v).padStart(2, '0')}</div>
+              <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: 10, fontWeight: 600, marginTop: 2 }}>{labels[k]}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Pricing() {
   const { lang, currency, t, fmt, go } = useApp();
   const [billing, setBilling] = useState('annual');
@@ -296,7 +354,7 @@ function Pricing() {
       <div style={{ textAlign: 'center', marginBottom: 40 }}>
         <h2 style={{ fontSize: 36, fontWeight: 800, color: B.blue, marginBottom: 10 }}>{t('pricing.title')}</h2>
         <div style={{ display: 'inline-block', background: 'linear-gradient(135deg, #f59e0b22, #ef444422)', border: '1px solid #f59e0b44', borderRadius: 20, padding: '6px 16px', marginBottom: 10 }}>
-          <span style={{ fontSize: 13, fontWeight: 600 }}>🎉 {lang === 'es' ? 'Usa código INNOVAQ30 → 30% OFF primeros 3 meses' : 'Use code INNOVAQ30 → 30% OFF first 3 months'}</span>
+          <span style={{ fontSize: 13, fontWeight: 600 }}>🎉 {lang === 'es' ? 'Precio de lanzamiento + 30 días gratis · Oferta válida hasta Abril 2026' : 'Launch pricing + 30 days free · Valid through April 2026'}</span>
         </div>
         <h2 style={{ display: 'none' }}>{}</h2>
         <p style={{ fontSize: 15, color: B.textMuted, maxWidth: 520, margin: '0 auto' }}>{t('pricing.sub')}</p>
@@ -325,15 +383,17 @@ function Pricing() {
         </div>
       </div>
       {/* Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18, maxWidth: 980, margin: '0 auto' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, maxWidth: 1100, margin: '0 auto' }}>
         {product?.plans.map(plan => {
           const price = billing === 'annual' ? plan.yr / 12 : plan.mo;
           const pop = plan.tier === 'professional';
+              const isMype = plan.tier === 'mype';
           return (
             <div key={plan.tier} style={{ ...card, padding: '30px 24px', position: 'relative', borderColor: pop ? B.orange : B.border, borderWidth: pop ? 2 : 1, transition: 'all 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.08)'; }}
               onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'; }}>
               {pop && <div style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', background: B.orange, color: '#fff', padding: '4px 16px', borderRadius: 100, fontSize: 10, fontWeight: 800, letterSpacing: '0.06em' }}>{t('pricing.popular')}</div>}
+              {isMype && <div style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', background: B.green, color: '#fff', padding: '4px 16px', borderRadius: 100, fontSize: 10, fontWeight: 800, letterSpacing: '0.06em' }}>MYPE</div>}
               <h3 style={{ fontSize: 20, fontWeight: 800, color: B.blue, marginBottom: 4 }}>{t(`pricing.${plan.tier}`)}</h3>
               <p style={{ fontSize: 12, color: B.textLight, marginBottom: 18 }}>{plan.users || t('pricing.unlim')} {t('pricing.users')} · {plan.loc || t('pricing.unlim')} {t('pricing.loc')}</p>
               <div style={{ marginBottom: 22 }}>
@@ -345,6 +405,7 @@ function Pricing() {
                 if (plan.tier === 'enterprise') { go('contact'); }
                 else {
                   const links = {
+                    mype: { monthly: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00', annual: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00' },
                     starter: { monthly: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00', annual: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00' },
                     professional: { monthly: 'https://buy.stripe.com/test_fZudR96WLfLH0RT5cG57W01', annual: 'https://buy.stripe.com/test_fZudR96WLfLH0RT5cG57W01' },
                   };
@@ -1094,10 +1155,10 @@ function WhatsAppFloat() {
 function Content() {
   const { page } = useApp();
   const P = {
-    home: <><Hero /><ProductsPage /><SpotifySection /><YouTubeSection /><ServicesPage /><SectorsSection /><ISOSection /><CredsSection /><ContactPage /><Footer /></>,
+    home: <><Hero /><ProductsPage /><SpotifySection /><YouTubeSection /><ServicesPage /><SectorsSection /><LaunchCountdown /><Pricing /><ISOSection /><CredsSection /><ContactPage /><Footer /></>,
     products: <><ProductsPage /><SpotifySection /><YouTubeSection /><Footer /></>,
     services: <><ServicesPage /><SectorsSection /><Footer /></>,
-    pricing: <><Pricing /><ISOSection /><CredsSection /><Footer /></>,
+    pricing: <><LaunchCountdown /><Pricing /><ISOSection /><CredsSection /><Footer /></>,
     sectors: <><SectorsSection /><Footer /></>,
     contact: <><ContactPage /><Footer /></>,
   };
