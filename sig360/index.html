@@ -3,42 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SIG Construcción 360 v7.0 Enterprise | INNOVAQ SOLUTIONS</title>
-  <meta name="description" content="Sistema Integrado de Gestión ISO 9001 · 14001 · 45001 · 37001 para el sector construcción">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232d7ff9'/><text x='16' y='22' font-size='16' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>S</text></svg>">
-  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.8.1/prop-types.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.12.7/Recharts.min.js"></script>
+  <title>SIG 360° v8.0 Enterprise | INNOVAQ SOLUTIONS</title>
+  <meta name="description" content="Sistema Integrado de Gestión ISO 9001, 14001, 45001, 37001 para el sector construcción. Plataforma SaaS por INNOVAQ SOLUTIONS SAC.">
+  <meta property="og:title" content="SIG 360° Enterprise - Sistema Integrado de Gestión ISO">
+  <meta property="og:description" content="4 normas ISO integradas para construcción. Dashboards, IPERC, Auditorías IA, Control Documental.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.innovaqsolution.com/sig360/">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif; background: #06090f; color: #e4ecf7; overflow: hidden; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+    body { background: #0a0f1a; color: #e2e8f0; overflow: hidden; }
     #root { width: 100vw; height: 100vh; }
-    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
-    .typing span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #2d7ff9; margin: 0 2px; animation: pulse 1.2s infinite; }
-    .typing span:nth-child(2) { animation-delay: 0.2s; }
-    .typing span:nth-child(3) { animation-delay: 0.4s; }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0c1220; }
-    ::-webkit-scrollbar-thumb { background: #1a2744; border-radius: 3px; }
-    input, select, textarea { font-family: inherit; }
-    @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    .slide-in { animation: slideIn 0.25s ease-out; }
+    input, select, textarea, button { font-family: inherit; }
+    /* Loading screen */
+    .loading-screen { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; gap: 16px; }
+    .loading-bar { width: 200px; height: 3px; background: #1e293b; border-radius: 2px; overflow: hidden; }
+    .loading-bar-fill { width: 60%; height: 100%; background: linear-gradient(90deg, #3b82f6, #06d6a0); animation: loading 1.5s ease-in-out infinite; }
+    @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
   </style>
+  <script type="module" crossorigin src="/sig360/assets/index-DVzqVdw8.js"></script>
+  <link rel="modulepreload" crossorigin href="/sig360/assets/charts-Bj6Eoixh.js">
 </head>
 <body>
   <div id="root">
-    <div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px">
-      <div style="font-size:48px">🏗️</div>
-      <div style="font-size:14px;color:#8da0bc">Cargando SIG 360 v7.0 Enterprise...</div>
-      <div style="width:200px;height:3px;background:#1a2744;border-radius:2px;overflow:hidden">
-        <div style="width:60%;height:100%;background:linear-gradient(90deg,#2d7ff9,#00d4ff);animation:loading 1.5s ease-in-out infinite"></div>
-      </div>
+    <div class="loading-screen">
+      <div style="font-size: 32px;">🏗️</div>
+      <div style="font-size: 13px; color: #94a3b8; letter-spacing: 0.5px;">SIG 360° v8.0 Enterprise</div>
+      <div class="loading-bar"><div class="loading-bar-fill"></div></div>
     </div>
   </div>
-  <script src="sig360-app.js"></script>
-  <script>
-    ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(SIGConstruccion360));
-  </script>
 </body>
 </html>
