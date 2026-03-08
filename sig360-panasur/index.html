@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIG 360° | TOURS PANASUR E.I.R.L.</title>
+  <meta name="description" content="Sistema Integrado de Gestión ISO 9001, 14001, 45001 — Tours Panasur E.I.R.L. Transporte de Carga y Obras de Ingeniería. Powered by INNOVAQ SOLUTIONS.">
+  <meta property="og:title" content="SIG 360° — Tours Panasur">
+  <meta property="og:description" content="SIG ISO 9001 + 14001 + 45001 para Transporte de Carga y Obras de Ingeniería.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.innovaqsolution.com/sig360-panasur/">
+  <meta name="theme-color" content="#1a6b4e">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+    body { background: #0a0f1a; color: #e2e8f0; overflow: hidden; }
+    #root { width: 100vw; height: 100vh; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    .slide-in { animation: slideIn 0.25s ease-out; }
+    input, select, textarea, button { font-family: inherit; }
+    /* Loading screen */
+    .loading-screen { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; gap: 16px; }
+    .loading-bar { width: 200px; height: 3px; background: #1e293b; border-radius: 2px; overflow: hidden; }
+    .loading-bar-fill { width: 60%; height: 100%; background: linear-gradient(90deg, #3b82f6, #06d6a0); animation: loading 1.5s ease-in-out infinite; }
+    @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
+  </style>
+  <script type="module" crossorigin src="/sig360-panasur/assets/index-ZWR_4etc.js"></script>
+  <link rel="modulepreload" crossorigin href="/sig360-panasur/assets/charts-Bj6Eoixh.js">
+</head>
+<body>
+  <div id="root">
+    <div class="loading-screen">
+      <div style="font-size: 32px;">🚛</div>
+      <div style="font-size: 13px; color: #94a3b8; letter-spacing: 0.5px;">TOURS PANASUR — SIG 360°</div>
+      <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+    </div>
+  </div>
+</body>
+</html>
