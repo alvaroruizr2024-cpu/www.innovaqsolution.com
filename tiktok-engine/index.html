@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Engine v2.0 | INNOVAQ SOLUTIONS</title>
+    <meta name="description" content="Motor de respuestas inteligentes + Gestión de seguidores TikTok con IA - INNOVAQ SOLUTIONS">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0b1120;color:#e5e7eb}
+        ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}::-webkit-scrollbar-thumb{background:rgba(59,130,246,0.3);border-radius:3px}
+        textarea:focus,input:focus{outline:none;border-color:#3b82f6!important}
+        button{font-family:inherit;transition:all 0.15s}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+        .fi{animation:fadeIn 0.25s ease-out}
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useCallback,useRef}=React;
+
+const PROXY="https://erp360-proxy.alvaro-ruiz-r-2024.workers.dev";
+
+const SYS_C=`Eres el motor de respuestas comerciales de INNOVAQ SOLUTIONS para TikTok. Clasificas comentarios y generas respuestas que convierten seguidores en leads.
+CONTEXTO: INNOVAQ SOLUTIONS SAC (RUC:20606205105) Trujillo, Perú. SIG 360° ISO 9001/14001/45001/37001 con IA. Fundador: Alvaro Ruiz Reyna, Ing.Industrial CIP 210152, MBA, Lead Auditor ISO, 19+ años exp. Sectores: minería, construcción, energía, agroindustria, hotelería. Suite: SIG 360°, ERP 360, TPM360, PMO360, AGRO360, FOOD360, HOTEL360, SALUD360, CATASTRO360. WhatsApp: wa.me/51900801059 | Web: www.innovaqsolution.com/global
+Responde SOLO JSON válido (sin markdown ni backticks):
+{"categoria":"curiosidad|dolor|escepticismo|compra|engagement|spam","prioridad":"alta|media|baja","sentimiento":"positivo|neutro|negativo","es_lead":true/false,"respuesta_tiktok":"150-300 chars, cercano, emoji, CTA","respuesta_extendida":"DM/WhatsApp detallada","hashtags":["#t1","#t2"],"accion_sugerida":"acción comercial","producto_relevante":"SIG360|ERP360|AGRO360|HOTEL360|SALUD360|TPM360|PMO360|FOOD360|Suite360","datos_lead":{"sector_probable":"o null","necesidad":"resumen"},"guion_video":"Guión 15-30seg video-respuesta"}
+REGLAS: No vendas directo. Datos concretos. Siempre CTA. Compra=lead+alta. Max 2 hashtags.`;
+
+const SYS_F=`Eres el estratega de engagement de INNOVAQ SOLUTIONS para nuevos seguidores TikTok. Conviertes followers en prospectos calificados.
+CONTEXTO: INNOVAQ SOLUTIONS SAC, Trujillo Perú. Suite 360°: SIG 360° (ISO 9001/14001/45001/37001 con IA), ERP 360, TPM360, PMO360, AGRO360, FOOD360, HOTEL360, SALUD360, CATASTRO360. Fundador: Alvaro Ruiz Reyna, 19+ años exp. industrial, Lead Auditor ISO. Sectores: minería, construcción, energía, agroindustria, hotelería, salud, gobierno. WhatsApp: wa.me/51900801059
+Responde SOLO JSON válido (sin markdown ni backticks):
+{"clasificacion":"prospecto_caliente|prospecto_tibio|influencer|estudiante|competidor|consumidor_general","potencial_comercial":"alto|medio|bajo|nulo","sector_detectado":"minería|construcción|energía|agroindustria|hotelería|salud|gobierno|tecnología|educación|otro|desconocido","perfil_resumen":"Resumen breve","estrategia_engagement":[{"accion":"Acción","canal":"TikTok|DM|WhatsApp|LinkedIn","prioridad":"inmediata|24h|semanal","mensaje":"Mensaje listo para enviar"}],"producto_relevante":"SIG360|ERP360|AGRO360|HOTEL360|SALUD360|TPM360|PMO360|FOOD360|Suite360|ninguno","es_lead":true/false,"datos_hubspot":{"nombre":"","empresa":"","sector":"","fuente":"TikTok Follower","notas":""},"contenido_sugerido":"Idea contenido TikTok para este perfil"}
+REGLAS: Bio empresarial=prospecto. Muchos seguidores=influencer. Estudiante=futuro prospecto. Competidor=monitorear. Min 2 acciones. Personaliza mensajes.`;
+
+const CATS={curiosidad:{l:"Curiosidad",c:"#3b82f6",i:"🔍"},dolor:{l:"Dolor",c:"#ef4444",i:"🔥"},escepticismo:{l:"Escepticismo",c:"#f59e0b",i:"🤔"},compra:{l:"Compra",c:"#10b981",i:"💰"},engagement:{l:"Engagement",c:"#8b5cf6",i:"💬"},spam:{l:"Spam",c:"#6b7280",i:"🚫"}};
+const FCATS={prospecto_caliente:{l:"Prospecto 🔥",c:"#ef4444",i:"🔥"},prospecto_tibio:{l:"Tibio",c:"#f59e0b",i:"🌡️"},influencer:{l:"Influencer",c:"#8b5cf6",i:"⭐"},estudiante:{l:"Estudiante",c:"#3b82f6",i:"🎓"},competidor:{l:"Competidor",c:"#6b7280",i:"👁️"},consumidor_general:{l:"General",c:"#64748b",i:"👤"}};
+const PRIS={alta:{l:"URGENTE",c:"#ef4444"},media:{l:"MEDIA",c:"#f59e0b"},baja:{l:"BAJA",c:"#6b7280"}};
+const POT={alto:{l:"ALTO",c:"#10b981"},medio:{l:"MEDIO",c:"#f59e0b"},bajo:{l:"BAJO",c:"#6b7280"},nulo:{l:"NULO",c:"#374151"}};
+
+const EXC=["¿Cuánto cuesta ISO 45001?","Necesito certificarme urgente","Eso es puro humo","¡Excelente! 🔥","¿Consultoría para minería?","Excel me basta"];
+const EXF=[{n:"Jefe SST minera",b:"@carlos_sst | Jefe SST | Minera Buenaventura | Lima"},{n:"Gerente hotel",b:"@hotel_mgmt | Gerente Hotel Libertador | Cusco"},{n:"Estudiante ing.",b:"@juanito_2025 | Est. Ing. Industrial UNT | Trujillo"},{n:"Influencer tech",b:"@techlatam | 50K seg | Tecnología y emprendimiento LATAM"},{n:"Agroindustrial",b:"@agroindustrias_norte | Espárrago y arándano | Export | La Libertad"}];
+
+const Bg=({children,color,filled})=>React.createElement("span",{style:{display:"inline-flex",fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20,background:filled?color:color+"20",color:filled?"#fff":color}},children);
+
+const Bt=({children,v="g",sm,act,onClick,sx})=>{
+  const b={padding:sm?"5px 11px":"7px 15px",fontSize:sm?11:12,fontWeight:700,border:"none",borderRadius:8,cursor:"pointer",...sx};
+  const m={p:{...b,background:act?"#10b981":"linear-gradient(135deg,#3b82f6,#06b6d4)",color:act?"#fff":"#0b1120"},
+    pu:{...b,border:"1px solid #8b5cf633",background:"#8b5cf610",color:"#a78bfa"},
+    gr:{...b,border:"1px solid #10b98133",background:"#10b98110",color:"#10b981"},
+    g:{...b,border:"1px solid rgba(255,255,255,0.1)",background:"transparent",color:"rgba(255,255,255,0.5)"}};
+  return React.createElement("button",{onClick,style:m[v]||m.g},children);
+};
+
+const Sec=({t,c,children})=>React.createElement("div",{style:{padding:"12px 14px",borderTop:"1px solid rgba(255,255,255,0.05)",background:c+"05"}},
+  React.createElement("p",{style:{fontSize:9,color:c,textTransform:"uppercase",letterSpacing:1,margin:"0 0 7px",fontWeight:700}},t),children);
+
+const Bx=({children,bg="rgba(0,0,0,0.25)",sx})=>React.createElement("div",{style:{fontSize:13,color:"rgba(255,255,255,0.75)",lineHeight:1.6,padding:"9px 12px",background:bg,borderRadius:9,...sx}},children);
+
+function CCard({cm,cid,onCopy,onDel}){
+  const[exp,setExp]=useState(false);const[scr,setScr]=useState(false);
+  const a=cm.analysis,cat=a?CATS[a.categoria]||CATS.spam:null,pri=a?PRIS[a.prioridad]||PRIS.baja:null;
+  return React.createElement("div",{className:"fi",style:{background:"#111827",border:"1px solid "+(a?.es_lead?"#10b98130":"rgba(255,255,255,0.06)"),borderRadius:14,overflow:"hidden",borderLeft:"3px solid "+(a?.es_lead?"#10b981":cat?cat.c:"#333"),marginBottom:8}},
+    React.createElement("div",{style:{padding:"12px 14px"}},
+      React.createElement("div",{style:{display:"flex",justifyContent:"space-between",gap:8}},
+        React.createElement("p",{style:{fontSize:13,color:"#f3f4f6",lineHeight:1.55,margin:0,flex:1}},'"'+cm.text+'"'),
+        React.createElement("button",{onClick:()=>onDel(cm.id),style:{background:"none",border:"none",color:"rgba(255,255,255,0.12)",cursor:"pointer",fontSize:13,padding:0}},"✕")),
+      React.createElement("div",{style:{display:"flex",gap:5,flexWrap:"wrap",marginTop:7}},
+        React.createElement("span",{style:{fontSize:9,color:"rgba(255,255,255,0.2)"}},cm.timestamp),
+        a&&React.createElement(Bg,{color:cat.c},cat.i+" "+cat.l),
+        a&&React.createElement(Bg,{color:pri.c},pri.l),
+        a?.es_lead&&React.createElement(Bg,{color:"#10b981",filled:true},"🔥 LEAD"),
+        a&&React.createElement(Bg,{color:"#3b82f6"},a.producto_relevante))),
+    cm.loading&&React.createElement("div",{style:{padding:14,textAlign:"center",color:"#60a5fa",fontSize:12,borderTop:"1px solid rgba(255,255,255,0.05)"}},"⚙️ Analizando..."),
+    cm.error&&React.createElement("div",{style:{padding:"10px 14px",background:"#ef444412",color:"#ef4444",fontSize:11,borderTop:"1px solid rgba(255,255,255,0.05)"}},"⚠️ "+cm.error),
+    a&&!cm.loading&&React.createElement("div",{style:{borderTop:"1px solid rgba(255,255,255,0.05)"}},
+      React.createElement("div",{style:{padding:"12px 14px",background:"#3b82f605"}},
+        React.createElement("p",{style:{fontSize:9,color:"#60a5fa",textTransform:"uppercase",letterSpacing:1,margin:"0 0 7px",fontWeight:700}},"📱 RESPUESTA TIKTOK"),
+        React.createElement(Bx,null,a.respuesta_tiktok),
+        a.hashtags&&React.createElement("div",{style:{display:"flex",gap:5,flexWrap:"wrap",margin:"8px 0"}},a.hashtags.map((h,i)=>React.createElement("span",{key:i,style:{fontSize:10,color:"#60a5fa",background:"#3b82f615",padding:"2px 7px",borderRadius:10}},h))),
+        React.createElement("div",{style:{display:"flex",gap:6,flexWrap:"wrap"}},
+          React.createElement(Bt,{v:"p",act:cid===cm.id,onClick:()=>onCopy(cm.id,a.respuesta_tiktok+(a.hashtags?.length?" "+a.hashtags.join(" "):""))},cid===cm.id?"✅ Copiado":"📋 Copiar"),
+          React.createElement(Bt,{onClick:()=>setExp(!exp)},exp?"▲":"▼ Más"),
+          a.guion_video&&React.createElement(Bt,{v:"pu",onClick:()=>setScr(!scr)},scr?"▲":"🎬 Guión"))),
+      scr&&a.guion_video&&React.createElement(Sec,{t:"🎬 GUIÓN VIDEO",c:"#a78bfa"},React.createElement(Bx,{sx:{whiteSpace:"pre-wrap"}},a.guion_video),React.createElement(Bt,{v:"pu",sm:true,sx:{marginTop:7},onClick:()=>onCopy(cm.id+"-sc",a.guion_video)},cid===cm.id+"-sc"?"✅":"📋 Copiar")),
+      exp&&React.createElement(React.Fragment,null,
+        a.respuesta_extendida&&React.createElement(Sec,{t:"📩 DM / WHATSAPP",c:"#fbbf24"},React.createElement(Bx,null,a.respuesta_extendida),React.createElement("div",{style:{display:"flex",gap:6,marginTop:7}},React.createElement(Bt,{sm:true,onClick:()=>onCopy(cm.id+"-ex",a.respuesta_extendida)},cid===cm.id+"-ex"?"✅":"📋 Copiar"),React.createElement("a",{href:"https://wa.me/51900801059?text="+encodeURIComponent(a.respuesta_extendida),target:"_blank",rel:"noreferrer",style:{padding:"5px 12px",fontSize:11,fontWeight:600,borderRadius:8,border:"1px solid #25d36633",background:"#25d36610",color:"#25d366",textDecoration:"none"}},"📱 WA"))),
+        a.accion_sugerida&&React.createElement(Sec,{t:"🎯 ACCIÓN",c:"#a78bfa"},React.createElement("p",{style:{fontSize:11,color:"rgba(255,255,255,0.45)",margin:0}},a.accion_sugerida)),
+        a.es_lead&&a.datos_lead&&React.createElement(Sec,{t:"📋 HUBSPOT",c:"#10b981"},React.createElement("div",{style:{fontSize:11}},a.datos_lead.sector_probable&&React.createElement("span",null,React.createElement("span",{style:{color:"rgba(255,255,255,0.25)"}},"Sector: "),a.datos_lead.sector_probable," "),a.datos_lead.necesidad&&React.createElement("span",null,React.createElement("span",{style:{color:"rgba(255,255,255,0.25)"}},"Necesidad: "),a.datos_lead.necesidad)),React.createElement(Bt,{v:"gr",sm:true,sx:{marginTop:7},onClick:()=>onCopy(cm.id+"-crm","LEAD TIKTOK\nComentario: "+cm.text+"\nSector: "+(a.datos_lead.sector_probable||"N/A")+"\nNecesidad: "+(a.datos_lead.necesidad||"N/A")+"\nProducto: "+a.producto_relevante+"\nFecha: "+cm.timestamp)},cid===cm.id+"-crm"?"✅":"📋 HubSpot")))));
+}
+
+function FCard({fw,cid,onCopy,onDel}){
+  const[exp,setExp]=useState(false);
+  const a=fw.analysis,fc=a?FCATS[a.clasificacion]||FCATS.consumidor_general:null,pt=a?POT[a.potencial_comercial]||POT.nulo:null;
+  return React.createElement("div",{className:"fi",style:{background:"#111827",border:"1px solid "+(a?.es_lead?"#10b98130":"rgba(255,255,255,0.06)"),borderRadius:14,overflow:"hidden",borderLeft:"3px solid "+(a?.es_lead?"#10b981":fc?fc.c:"#333"),marginBottom:8}},
+    React.createElement("div",{style:{padding:"12px 14px"}},
+      React.createElement("div",{style:{display:"flex",justifyContent:"space-between",gap:8}},
+        React.createElement("div",{style:{flex:1}},fw.username&&React.createElement("p",{style:{fontSize:13,fontWeight:700,color:"#06b6d4",margin:"0 0 4px"}},"@"+fw.username),React.createElement("p",{style:{fontSize:12,color:"rgba(255,255,255,0.6)",lineHeight:1.5,margin:0}},fw.bio)),
+        React.createElement("button",{onClick:()=>onDel(fw.id),style:{background:"none",border:"none",color:"rgba(255,255,255,0.12)",cursor:"pointer",fontSize:13,padding:0}},"✕")),
+      React.createElement("div",{style:{display:"flex",gap:5,flexWrap:"wrap",marginTop:7}},
+        React.createElement("span",{style:{fontSize:9,color:"rgba(255,255,255,0.2)"}},fw.timestamp),
+        a&&React.createElement(Bg,{color:fc.c},fc.i+" "+fc.l),
+        a&&React.createElement(Bg,{color:pt.c},"Potencial: "+pt.l),
+        a?.es_lead&&React.createElement(Bg,{color:"#10b981",filled:true},"🔥 LEAD"),
+        a?.sector_detectado&&a.sector_detectado!=="desconocido"&&React.createElement(Bg,{color:"#f59e0b"},a.sector_detectado),
+        a?.producto_relevante&&a.producto_relevante!=="ninguno"&&React.createElement(Bg,{color:"#3b82f6"},a.producto_relevante))),
+    fw.loading&&React.createElement("div",{style:{padding:14,textAlign:"center",color:"#06b6d4",fontSize:12,borderTop:"1px solid rgba(255,255,255,0.05)"}},"⚙️ Analizando perfil..."),
+    fw.error&&React.createElement("div",{style:{padding:"10px 14px",background:"#ef444412",color:"#ef4444",fontSize:11,borderTop:"1px solid rgba(255,255,255,0.05)"}},"⚠️ "+fw.error),
+    a&&!fw.loading&&React.createElement("div",{style:{borderTop:"1px solid rgba(255,255,255,0.05)"}},
+      React.createElement(Sec,{t:"📊 ANÁLISIS",c:"#06b6d4"},React.createElement(Bx,null,a.perfil_resumen)),
+      React.createElement(Sec,{t:"🚀 ESTRATEGIA",c:"#10b981"},(a.estrategia_engagement||[]).map((ac,i)=>React.createElement("div",{key:i,style:{marginBottom:i<(a.estrategia_engagement.length-1)?10:0}},React.createElement("div",{style:{display:"flex",gap:5,alignItems:"center",marginBottom:4}},React.createElement(Bg,{color:ac.prioridad==="inmediata"?"#ef4444":ac.prioridad==="24h"?"#f59e0b":"#3b82f6",filled:true},ac.prioridad),React.createElement(Bg,{color:"#8b5cf6"},ac.canal),React.createElement("span",{style:{fontSize:10,color:"rgba(255,255,255,0.4)"}},ac.accion)),React.createElement(Bx,{bg:"rgba(0,0,0,0.3)"},ac.mensaje),React.createElement(Bt,{v:"p",sm:true,act:cid===fw.id+"-a"+i,sx:{marginTop:6},onClick:()=>onCopy(fw.id+"-a"+i,ac.mensaje)},cid===fw.id+"-a"+i?"✅":"📋 Copiar")))),
+      a.contenido_sugerido&&React.createElement(Sec,{t:"💡 CONTENIDO",c:"#f59e0b"},React.createElement(Bx,null,a.contenido_sugerido)),
+      React.createElement("div",{style:{padding:"8px 14px",borderTop:"1px solid rgba(255,255,255,0.04)"}},React.createElement(Bt,{sm:true,onClick:()=>setExp(!exp)},exp?"▲ Ocultar CRM":"📋 Ver CRM")),
+      exp&&a.datos_hubspot&&React.createElement(Sec,{t:"📋 HUBSPOT",c:"#10b981"},React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,fontSize:11}},Object.entries(a.datos_hubspot).filter(([,v])=>v).map(([k,v])=>React.createElement("div",{key:k},React.createElement("span",{style:{color:"rgba(255,255,255,0.25)"}},k+": "),React.createElement("span",{style:{color:"#fff"}},v)))),React.createElement(Bt,{v:"gr",sm:true,sx:{marginTop:8},onClick:()=>onCopy(fw.id+"-crm",Object.entries(a.datos_hubspot).filter(([,v])=>v).map(([k,v])=>k+": "+v).join("\n"))},cid===fw.id+"-crm"?"✅":"📋 Copiar HubSpot"))));
+}
+
+function App(){
+  const[cs,setCs]=useState([]);const[fs,setFs]=useState([]);const[inp,setInp]=useState("");
+  const[fu,setFu]=useState("");const[fb,setFb]=useState("");const[proc,setProc]=useState(false);
+  const[tab,setTab]=useState("comments");const[sub,setSub]=useState("input");
+  const[cid,setCid]=useState(null);const[batch,setBatch]=useState(false);const[flt,setFlt]=useState("all");
+  const ref=useRef(null);
+
+  const cS={t:cs.length,l:cs.filter(c=>c.analysis?.es_lead).length};
+  const fS={t:fs.length,l:fs.filter(f=>f.analysis?.es_lead).length,h:fs.filter(f=>f.analysis?.clasificacion==="prospecto_caliente").length};
+
+  const ai=useCallback(async(sys,msg)=>{
+    const r=await fetch(PROXY,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:sys,messages:[{role:"user",content:msg}]})});
+    if(!r.ok)throw new Error("Error "+r.status);
+    const d=await r.json();return JSON.parse((d.content||[]).map(b=>b.text||"").join("").replace(/```json|```/g,"").trim());
+  },[]);
+
+  const subC=async()=>{
+    if(!inp.trim()||proc)return;setProc(true);
+    const ts=batch?inp.split("\n").filter(l=>l.trim().length>2):[inp.trim()];
+    for(const t of ts){const id=Date.now()+Math.random();
+      setCs(p=>[{id,text:t.trim(),timestamp:new Date().toLocaleString("es-PE"),analysis:null,loading:true,copied:false,error:null},...p]);
+      try{const a=await ai(SYS_C,'Analiza comentario TikTok @innovaqsolutions, SOLO JSON:\n\n"'+t.trim()+'"');setCs(p=>p.map(x=>x.id===id?{...x,analysis:a,loading:false}:x));}
+      catch(e){setCs(p=>p.map(x=>x.id===id?{...x,loading:false,error:e.message}:x));}}
+    setInp("");setProc(false);setSub("list");
+  };
+
+  const subF=async()=>{
+    if(!fb.trim()||proc)return;setProc(true);const id=Date.now()+Math.random();
+    setFs(p=>[{id,username:fu.trim().replace("@",""),bio:fb.trim(),timestamp:new Date().toLocaleString("es-PE"),analysis:null,loading:true,error:null},...p]);
+    try{const a=await ai(SYS_F,'Nuevo seguidor TikTok @innovaqsolutions:\nUsername: @'+(fu.trim().replace("@","")||"desconocido")+'\nBio: "'+fb.trim()+'"\nResponde SOLO JSON:');
+      setFs(p=>p.map(x=>x.id===id?{...x,analysis:a,loading:false}:x));}
+    catch(e){setFs(p=>p.map(x=>x.id===id?{...x,loading:false,error:e.message}:x));}
+    setFu("");setFb("");setProc(false);setSub("list");
+  };
+
+  const cp=(id,t)=>{navigator.clipboard.writeText(t).catch(()=>{});setCid(id);setTimeout(()=>setCid(null),2200);};
+  const dC=id=>setCs(p=>p.filter(c=>c.id!==id));const dF=id=>setFs(p=>p.filter(f=>f.id!==id));
+  const isC=tab==="comments";
+  const fltd=flt==="all"?(isC?cs:fs):flt==="leads"?(isC?cs:fs).filter(x=>x.analysis?.es_lead):(isC?cs.filter(c=>c.analysis?.categoria===flt):fs.filter(f=>f.analysis?.clasificacion===flt));
+
+  return React.createElement("div",{style:{minHeight:"100vh",background:"#0b1120"}},
+    // HEADER
+    React.createElement("div",{style:{background:"rgba(255,255,255,0.02)",borderBottom:"1px solid rgba(255,255,255,0.06)",padding:"10px 14px",display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:50}},
+      React.createElement("div",{style:{display:"flex",alignItems:"center",gap:9}},
+        React.createElement("div",{style:{width:30,height:30,borderRadius:8,background:"linear-gradient(135deg,#06b6d4,#3b82f6)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:800,color:"#0b1120"}},"IQ"),
+        React.createElement("div",null,React.createElement("div",{style:{fontSize:13,fontWeight:700,color:"#fff"}},"TikTok Engine v2.0"),React.createElement("div",{style:{fontSize:9,color:"#60a5fa"}},"INNOVAQ — Comentarios + Seguidores"))),
+      React.createElement("div",{style:{display:"flex",alignItems:"center",gap:5,fontSize:10,color:"rgba(255,255,255,0.25)"}},React.createElement("div",{style:{width:5,height:5,borderRadius:"50%",background:"#06b6d4"}})," Online")),
+
+    // STATS
+    React.createElement("div",{style:{display:"flex",gap:5,padding:"8px 14px"}},
+      [{l:"Comentarios",v:cS.t,c:"#3b82f6"},{l:"Seguidores",v:fS.t,c:"#06b6d4"},{l:"Leads",v:cS.l+fS.l,c:"#10b981"},{l:"Prosp.🔥",v:fS.h,c:"#ef4444"}].map((s,i)=>
+        React.createElement("div",{key:i,style:{flex:1,background:"#111827",border:"1px solid rgba(255,255,255,0.05)",borderRadius:9,padding:"7px 6px",textAlign:"center"}},
+          React.createElement("div",{style:{fontSize:8,color:"rgba(255,255,255,0.28)",textTransform:"uppercase",letterSpacing:0.6}},s.l),
+          React.createElement("div",{style:{fontSize:18,fontWeight:800,color:s.c}},s.v)))),
+
+    // MODE TABS
+    React.createElement("div",{style:{display:"flex",gap:3,padding:"0 14px",marginBottom:2}},
+      [{id:"comments",l:"💬 Comentarios ("+cS.t+")"},{id:"followers",l:"👥 Seguidores ("+fS.t+")"}].map(t=>
+        React.createElement("button",{key:t.id,onClick:()=>{setTab(t.id);setSub("input");setFlt("all");},
+          style:{flex:1,padding:"9px 8px",fontSize:12,fontWeight:700,border:"none",cursor:"pointer",borderRadius:"10px 10px 0 0",
+            background:tab===t.id?(t.id==="comments"?"#3b82f615":"#06b6d415"):"rgba(255,255,255,0.01)",
+            color:tab===t.id?(t.id==="comments"?"#60a5fa":"#06b6d4"):"rgba(255,255,255,0.25)",
+            borderBottom:tab===t.id?"2px solid "+(t.id==="comments"?"#3b82f6":"#06b6d4"):"2px solid transparent"}},t.l))),
+
+    // SUB TABS
+    React.createElement("div",{style:{display:"flex",gap:2,padding:"0 14px",marginBottom:8}},
+      [{id:"input",l:"📝 Nuevo"},{id:"list",l:"📋 Lista"},{id:"leads",l:"🔥 Leads"}].map(t=>
+        React.createElement("button",{key:t.id,onClick:()=>{setSub(t.id);setFlt(t.id==="leads"?"leads":"all");},
+          style:{flex:1,padding:"7px 6px",fontSize:10,fontWeight:600,border:"none",cursor:"pointer",
+            background:sub===t.id?"rgba(255,255,255,0.05)":"transparent",color:sub===t.id?"#fff":"rgba(255,255,255,0.2)",borderRadius:6}},t.l))),
+
+    React.createElement("div",{style:{padding:"0 14px 14px"}},
+      // COMMENT INPUT
+      isC&&sub==="input"&&React.createElement("div",{style:{background:"#111827",border:"1px solid rgba(255,255,255,0.06)",borderRadius:12,padding:14}},
+        React.createElement("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:8}},
+          React.createElement("span",{style:{color:"#fff",fontSize:12,fontWeight:600}},"Pega el comentario"),
+          React.createElement("label",{style:{display:"flex",alignItems:"center",gap:5,fontSize:10,color:"rgba(255,255,255,0.25)",cursor:"pointer"}},
+            React.createElement("input",{type:"checkbox",checked:batch,onChange:e=>setBatch(e.target.checked),style:{accentColor:"#3b82f6",width:12,height:12}})," Lote")),
+        React.createElement("textarea",{ref,value:inp,onChange:e=>setInp(e.target.value),onKeyDown:e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey))subC();},placeholder:batch?"Un comentario por línea...":"Pega comentario... (Ctrl+Enter)",style:{width:"100%",minHeight:60,padding:10,fontSize:13,background:"rgba(0,0,0,0.35)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:8,color:"#fff",resize:"vertical",fontFamily:"inherit",lineHeight:1.5,outline:"none",boxSizing:"border-box"}}),
+        React.createElement("button",{onClick:subC,disabled:proc||!inp.trim(),style:{marginTop:8,width:"100%",padding:10,fontSize:13,fontWeight:700,border:"none",borderRadius:8,cursor:proc?"wait":"pointer",background:proc?"#3b82f620":"linear-gradient(135deg,#3b82f6,#06b6d4)",color:proc?"rgba(255,255,255,0.3)":"#0b1120"}},proc?"⏳ Analizando...":"🚀 Analizar Comentario"),
+        React.createElement("div",{style:{marginTop:10,paddingTop:8,borderTop:"1px solid rgba(255,255,255,0.04)",display:"flex",flexWrap:"wrap",gap:4}},
+          EXC.map((e,i)=>React.createElement("button",{key:i,onClick:()=>{setInp(e);ref.current?.focus();},style:{padding:"3px 8px",fontSize:9,border:"1px solid rgba(255,255,255,0.05)",borderRadius:10,background:"rgba(255,255,255,0.02)",color:"rgba(255,255,255,0.3)",cursor:"pointer"}},e)))),
+
+      // FOLLOWER INPUT
+      !isC&&sub==="input"&&React.createElement("div",{style:{background:"#111827",border:"1px solid rgba(255,255,255,0.06)",borderRadius:12,padding:14}},
+        React.createElement("p",{style:{color:"#fff",fontSize:12,fontWeight:600,margin:"0 0 10px"}},"👤 Nuevo Seguidor"),
+        React.createElement("input",{value:fu,onChange:e=>setFu(e.target.value),placeholder:"@username (opcional)",style:{width:"100%",padding:9,fontSize:13,background:"rgba(0,0,0,0.35)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:8,color:"#06b6d4",fontFamily:"inherit",outline:"none",marginBottom:8,boxSizing:"border-box"}}),
+        React.createElement("textarea",{value:fb,onChange:e=>setFb(e.target.value),onKeyDown:e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey))subF();},placeholder:"Pega bio/descripción del perfil...",style:{width:"100%",minHeight:60,padding:10,fontSize:13,background:"rgba(0,0,0,0.35)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:8,color:"#fff",resize:"vertical",fontFamily:"inherit",lineHeight:1.5,outline:"none",boxSizing:"border-box"}}),
+        React.createElement("button",{onClick:subF,disabled:proc||!fb.trim(),style:{marginTop:8,width:"100%",padding:10,fontSize:13,fontWeight:700,border:"none",borderRadius:8,cursor:proc?"wait":"pointer",background:proc?"#06b6d420":"linear-gradient(135deg,#06b6d4,#8b5cf6)",color:proc?"rgba(255,255,255,0.3)":"#0b1120"}},proc?"⏳ Analizando...":"👥 Analizar Seguidor"),
+        React.createElement("div",{style:{marginTop:10,paddingTop:8,borderTop:"1px solid rgba(255,255,255,0.04)",display:"flex",flexWrap:"wrap",gap:4}},
+          EXF.map((e,i)=>React.createElement("button",{key:i,onClick:()=>{setFu(e.b.split("|")[0]?.trim()||"");setFb(e.b);},style:{padding:"3px 8px",fontSize:9,border:"1px solid rgba(255,255,255,0.05)",borderRadius:10,background:"rgba(255,255,255,0.02)",color:"rgba(255,255,255,0.3)",cursor:"pointer"}},e.n)))),
+
+      // LIST/LEADS
+      sub!=="input"&&React.createElement("div",null,
+        sub==="list"&&React.createElement("div",{style:{display:"flex",gap:4,marginBottom:8,flexWrap:"wrap"}},
+          [{id:"all",l:"Todos"},...Object.entries(isC?CATS:FCATS).map(([id,c])=>({id,l:c.i+" "+c.l}))].map(f=>
+            React.createElement("button",{key:f.id,onClick:()=>setFlt(f.id),style:{padding:"3px 7px",fontSize:9,fontWeight:600,border:"1px solid "+(flt===f.id?"#3b82f6":"rgba(255,255,255,0.04)"),borderRadius:10,cursor:"pointer",background:flt===f.id?"#3b82f612":"transparent",color:flt===f.id?"#60a5fa":"rgba(255,255,255,0.22)"}},f.l))),
+        fltd.length===0&&React.createElement("div",{style:{textAlign:"center",padding:"35px 16px",color:"rgba(255,255,255,0.12)"}},
+          React.createElement("div",{style:{fontSize:28,marginBottom:6}},sub==="leads"?"🎯":isC?"💬":"👥"),
+          React.createElement("div",{style:{fontSize:11}},"Sin "+(sub==="leads"?"leads":isC?"comentarios":"seguidores"))),
+        isC?fltd.map(c=>React.createElement(CCard,{key:c.id,cm:c,cid,onCopy:cp,onDel:dC})):fltd.map(f=>React.createElement(FCard,{key:f.id,fw:f,cid,onCopy:cp,onDel:dF})))),
+
+    React.createElement("div",{style:{textAlign:"center",padding:"10px 14px",fontSize:8,color:"rgba(255,255,255,0.07)",borderTop:"1px solid rgba(255,255,255,0.02)"}},"INNOVAQ SOLUTIONS SAC · TikTok Engine v2.0 · Claude AI"));
+}
+
+const root=ReactDOM.createRoot(document.getElementById("root"));
+root.render(React.createElement(App));
+</script>
+</body>
+</html>
