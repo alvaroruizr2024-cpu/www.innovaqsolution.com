@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inducción SSOMA — Tours Panasur | SIG 360°</title>
+<meta name="description" content="Portal de Inducción SSOMA — Sistema de Gestión SST para Homologación ENGIE 2026">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c18;--s:#0f1729;--c:#162040;--b:#253565;--bl:#3b82f6;--gr:#10b981;--rd:#ef4444;--am:#f59e0b;--tx:#e2e8f0;--tm:#94a3b8;--td:#64748b;--w:#fff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#080c18,#0f1a3a 50%,#0a1628)}
+.lc{background:var(--c);border:1px solid var(--b);border-radius:20px;padding:40px;max-width:480px;width:100%;text-align:center;animation:fu .5s ease}
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes si{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+.li{width:72px;height:72px;background:linear-gradient(135deg,#1e40af,var(--bl));border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:13px;font-weight:700;color:#fff;letter-spacing:-.5px;box-shadow:0 8px 32px rgba(59,130,246,.25);line-height:1.1}
+.lt{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+.ls{font-size:13px;color:var(--td);margin-bottom:24px}
+.lb{display:inline-block;background:rgba(245,158,11,.12);color:#f59e0b;padding:6px 16px;border-radius:8px;font-size:12px;font-weight:700;margin-bottom:20px;border:1px solid rgba(245,158,11,.2)}
+select,input{width:100%;background:var(--s);border:1px solid var(--b);border-radius:10px;padding:12px 16px;color:var(--tx);font-size:14px;font-family:inherit;outline:none;margin-bottom:12px;-webkit-appearance:none}
+select:focus,input:focus{border-color:var(--bl)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:var(--bl);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;margin-top:8px}
+.btn:hover{background:#2563eb;transform:translateY(-1px)}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.btn-s{background:var(--gr)}
+.pres{min-height:100vh;display:flex;flex-direction:column}
+.pt{padding:12px 20px;background:var(--s);border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.pu{font-size:12px;color:var(--td)}
+.pp{display:flex;align-items:center;gap:12px}
+.pb{width:200px;height:6px;background:rgba(37,53,101,.5);border-radius:3px;overflow:hidden}
+.pf{height:100%;background:linear-gradient(90deg,var(--bl),#818cf8);border-radius:3px;transition:width .4s}
+.pn{font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--td)}
+.sl{flex:1;display:flex;align-items:center;justify-content:center;padding:24px}
+.si2{max-width:800px;width:100%;text-align:center;animation:si .4s ease}
+.s-ic{font-size:56px;margin-bottom:16px}
+.s-sc{display:inline-block;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.s-tt{font-size:28px;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:-.5px;line-height:1.2}
+.s-su{font-size:15px;color:var(--td);margin-bottom:20px}
+.s-bd{font-size:14px;color:var(--tm);line-height:1.8;white-space:pre-line;background:var(--c);border:1px solid var(--b);border-radius:14px;padding:24px;max-height:400px;overflow-y:auto;text-align:left}
+.sn{padding:16px 20px;background:var(--s);border-top:1px solid var(--b);display:flex;align-items:center;justify-content:center;gap:16px;flex-shrink:0}
+.dots{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;max-width:500px}
+.dot{width:10px;height:10px;border-radius:50%;background:rgba(37,53,101,.6);cursor:pointer;transition:all .3s;flex-shrink:0}
+.dot.a{background:var(--bl);width:24px;border-radius:5px}.dot.v{background:rgba(59,130,246,.4)}
+.nb{padding:8px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
+.nb-p{background:var(--bl);color:#fff}.nb-p:hover{background:#2563eb}
+.nb-g{background:transparent;color:var(--tm);border:1px solid var(--b)}.nb-g:hover{color:#fff}
+.nb-s{background:var(--gr);color:#fff}
+.nb:disabled{opacity:.35;cursor:not-allowed}
+.done{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.dc{background:var(--c);border:1px solid var(--b);border-radius:20px;padding:40px;max-width:500px;width:100%;text-align:center;animation:fu .5s ease}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.hidden{display:none!important}
+@media(max-width:640px){.s-tt{font-size:20px}.s-bd{font-size:13px;padding:16px}.pb{width:100px}.dots{max-width:280px}.fg{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="login" class="login">
+  <div class="lc">
+    <div class="li">TOURS<br>PANASUR</div>
+    <div class="lt">Inducción SSOMA</div>
+    <div class="ls">Sistema de Gestión — Homologación ENGIE 2026<br>Proyecto CSF Hanaqpampa | Moquegua</div>
+    <div class="lb">📅 Capacitación: 18 de Marzo 2026</div>
+    <select id="wsel" onchange="onSel()"><option value="">— Seleccione su nombre —</option></select>
+    <div class="fg" id="winfo" style="display:none">
+      <input id="wdni" readonly placeholder="DNI">
+      <input id="wcargo" readonly placeholder="Cargo">
+    </div>
+    <button class="btn" id="btnStart" disabled onclick="startPres()">▶ Iniciar Inducción SSOMA</button>
+    <p style="font-size:11px;color:var(--td);margin-top:12px">Al finalizar, accederá a la evaluación de 20 preguntas.<br>Nota aprobatoria: 14/20 · Un solo intento.</p>
+  </div>
+</div>
+
+<div id="presentation" class="pres hidden">
+  <div class="pt">
+    <div class="pu" id="puser"></div>
+    <div class="pp"><div class="pb"><div class="pf" id="pfill"></div></div><div class="pn" id="pnum"></div></div>
+  </div>
+  <div class="sl"><div class="si2" id="slideContent"></div></div>
+  <div class="sn">
+    <button class="nb nb-g" id="bprev" onclick="prev()">← Anterior</button>
+    <div class="dots" id="dotsC"></div>
+    <button class="nb nb-p" id="bnext" onclick="next()">Siguiente →</button>
+    <button class="nb nb-s hidden" id="bfinish" onclick="finish()">✓ Ir a Evaluación</button>
+  </div>
+</div>
+
+<div id="complete" class="done hidden">
+  <div class="dc">
+    <div style="font-size:64px;margin-bottom:12px">✅</div>
+    <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:8px">Inducción Completada</div>
+    <div style="font-size:14px;color:var(--tm);margin-bottom:16px" id="doneUser"></div>
+    <div style="font-size:13px;color:var(--td);margin-bottom:16px">Ahora complete la evaluación de 20 preguntas.<br>Nota aprobatoria: 14/20 · Un solo intento · 30 minutos.</div>
+    <a href="evaluacion.html" style="text-decoration:none"><button class="btn btn-s">📝 Abrir Evaluación</button></a>
+    <p style="font-size:11px;color:var(--td);margin-top:16px">TP-FOR-SST-012 | SIG 360° Tours Panasur | INNOVAQ SOLUTIONS SAC</p>
+  </div>
+</div>
+
+<script>
+const W=[{id:1,n:"VICTOR RAUL CACERES MURILLO",d:"08063710",c:"GERENTE DE OBRA"},{id:2,n:"JUAN CARLOS VEGAS VITE",d:"06087383",c:"RESIDENTE OBRA"},{id:3,n:"ELISVAN CATUNTA MAMANI",d:"46311696",c:"ING. OFICINA TECNICA"},{id:4,n:"RONALD OCTAVIO CACERES APAZA",d:"41967998",c:"ING. CALIDAD"},{id:5,n:"ALVARO KENNY RUIZ REYNA",d:"42061951",c:"ING. SEGURIDAD"},{id:6,n:"ELVIS JUNIOR HUAMANI CALERO",d:"46584113",c:"COORDINADOR OBRA"},{id:7,n:"COCO GABRIEL SOTOMAYOR QUISPE",d:"04436685",c:"MAESTRO DE OBRA"},{id:8,n:"EDGAR EDWIN MANZANO ORTEGA",d:"44379252",c:"TOPOGRAFO"},{id:9,n:"EDWIN IVAN RAMOS RAMOS",d:"46733349",c:"AUX. TOPOGRAFIA"},{id:10,n:"FELIX FERNANDO CHARCA CUTIMBO",d:"44480983",c:"CADISTA"},{id:11,n:"EDDY SANTIAGO BALBIN TUCTO",d:"46296632",c:"OP. RODILLO"},{id:12,n:"FULLMER JOVINO SURICHAQUI MUÑOZ",d:"06568497",c:"OP. CISTERNA"},{id:13,n:"LUIS ANTONIO CALERO RIVERA",d:"23012972",c:"OP. VOLQUETE"},{id:14,n:"RICHARD WILLIANS SALAS RAMOS",d:"43400965",c:"OP. VOLQUETE"},{id:15,n:"ALEX OSWALDO LOPEZ SOLORZANO",d:"45772525",c:"OP. VOLQUETE"},{id:16,n:"EDWIN CCAMASA SUMALAVE",d:"40683074",c:"OP. VOLQUETE"},{id:17,n:"JORGE CHAMORRO RUIZ",d:"41216767",c:"OP. VOLQUETE"},{id:18,n:"HECTOR CIRILO CALERO RIVERA",d:"22657259",c:"OP. CARGADOR"},{id:19,n:"LUIS ALBERTO VILLALVA MEZA",d:"46434955",c:"COND. CAMIONETA"},{id:20,n:"RODRIGO ABELARDO MONTES MEDALLA",d:"32299479",c:"MECANICO"},{id:21,n:"GIANCARLO HUAMANI CALERO",d:"45166149",c:"JEFE OPERACIONES"},{id:22,n:"HECTOR QUISPE CASTILLO",d:"00374595",c:"AG. SEGURIDAD"},{id:23,n:"ROBERT ENRIQUE CASTILLA OJEDA",d:"23947295",c:"AG. SEGURIDAD"}];
+
+const S=[
+{t:"SISTEMA DE GESTIÓN SSOMA",s:"Seguridad, Salud Ocupacional y Medio Ambiente",b:"TOURS PANASUR E.I.R.L.\nHomologación de Proveedor | ENGIE Energía Perú S.A.\nProyecto: Central Solar Fotovoltaica Hanaqpampa | Moquegua, Perú\nMarzo 2026",i:"🏗️",c:"#1e40af",sc:"INICIO"},
+{t:"CONTENIDO",s:"15 módulos del Sistema de Gestión SSOMA",b:"01 Presentación de la Empresa\n02 Política SST y Objetivos\n03 Marco Normativo y Legal\n04 Organización y Responsabilidades\n05 Gestión de Riesgos (IPERC/IAAS)\n06 9 Reglas que Salvan Vidas ENGIE\n07 5 Herramientas Preventivas EEP\n08 Control de Riesgos Operacionales\n09 Plan de Emergencias\n10 Salud Ocupacional e Higiene\n11 Gestión Ambiental\n12 Capacitación y Competencias\n13 Indicadores y Estadísticas SST\n14 Programa Anual SST (PASST)\n15 Mejora Continua y Auditorías",i:"📋",c:"#6366f1",sc:"ÍNDICE"},
+{t:"DATOS GENERALES",s:"Tours Panasur E.I.R.L.",b:"Gerente General: Eugenio Huamani Quispe\nRubro: Transporte terrestre y turismo\nAlcance: Transporte de personal, carga y servicios turísticos\nUbicación: Moquegua, Perú\nCliente: ENGIE Energía Perú S.A.\nProyecto: CSF Hanaqpampa\n\nSistema alineado a ISO 45001:2018, ISO 14001:2015, Ley 29783 y Guía SSOMA ENGIE V03.",i:"🏢",c:"#059669",sc:"EMPRESA"},
+{t:"POLÍTICA SST",s:"Compromiso de la Alta Dirección",b:"Tours Panasur se compromete a:\n\n✅ Cumplir legislación vigente: Ley 29783, D.S. 005-2012-TR\n✅ Identificar, evaluar y controlar peligros y riesgos\n✅ Promover cultura preventiva: 9 Reglas + 5 Herramientas ENGIE\n✅ Garantizar competencia del personal\n✅ Fomentar participación de trabajadores en gestión SST\n✅ Implementar salud ocupacional y vigilancia médica\n✅ Investigar incidentes para determinar causas raíz\n✅ Asignar recursos para el Plan SSOMA y PASST",i:"📜",c:"#dc2626",sc:"POLÍTICA"},
+{t:"OBJETIVOS SST",s:"Metas cuantificables",b:"🎯 Cero accidentes fatales — IF = 0.00\n📊 IF < 1.0 e IG < 50\n✅ 100% cumplimiento PASST\n👷 100% personal capacitado\n🔍 100% inspecciones ejecutadas — 27 tipos\n🏥 100% aptitud médica — CAMO vigente",i:"🎯",c:"#f59e0b",sc:"OBJETIVOS"},
+{t:"MARCO NORMATIVO",s:"Base Legal y Estándares",b:"LEGISLACIÓN PERUANA:\n• Ley 29783 — Ley de SST\n• D.S. 005-2012-TR — Reglamento\n• D.L. 1278 — Residuos Sólidos\n• Ley 28256 — Transporte MATPEL\n\nREQUISITOS ENGIE:\n• Guía SSOMA V03\n• 9 Reglas que Salvan Vidas\n• 5 Herramientas Preventivas\n\nNORMAS ISO: 45001:2018, 14001:2015, 9001:2015",i:"⚖️",c:"#7c3aed",sc:"LEGAL"},
+{t:"ORGANIZACIÓN SST",s:"Estructura organizacional SSOMA",b:"GERENCIA GENERAL → Eugenio Huamani Quispe\n├─ COMITÉ DE SST (Art. 29 Ley 29783)\n├─ JEFE/SUPERVISOR SST\n│  ├─ Coordinador Medio Ambiente\n│  └─ Brigadas de Emergencia\n├─ JEFES DE ÁREA\n│  ├─ Conductores y Operadores\n│  └─ Personal Administrativo\n\n⚠️ TODO el personal tiene autoridad para DETENER EL TRABAJO (Regla STOP) ante condiciones inseguras.",i:"👥",c:"#0891b2",sc:"ORGANIZACIÓN"},
+{t:"IPERC Y MATRIZ DE RIESGOS",s:"Identificación de Peligros, Evaluación de Riesgos y Controles",b:"1️⃣ Identificación de peligros por actividad\n2️⃣ Evaluación: Probabilidad × Severidad\n3️⃣ Nivel: Trivial → Tolerable → Moderado → Importante → Intolerable\n4️⃣ Jerarquía de controles\n5️⃣ Riesgo residual ≤ Moderado (meta)\n6️⃣ Revisión periódica\n\nHerramientas: ATS + LMRA (Anexo 14 Guía SSOMA)\nActividades: Transporte personal/carga, operación turística, mantenimiento",i:"⚠️",c:"#ea580c",sc:"IPERC"},
+{t:"9 REGLAS QUE SALVAN VIDAS",s:"ENGIE: Ninguna Vida en Riesgo",b:"QUÉ HACER:\n1️⃣ MANTENTE ANCLADO — Arnés en trabajos en altura\n2️⃣ HAZTE A UN LADO — Aléjate de vehículos en movimiento\n3️⃣ COMPRUEBA — Verifica ausencia de energía\n4️⃣ ASEGÚRATE — Protección en zanjas\n5️⃣ CONTROLA — Atmósfera en espacios confinados\n\nQUÉ NO HACER:\n6️⃣ DETENTE — No trabajos en caliente sin control\n7️⃣ EVITA — No camines bajo cargas suspendidas\n8️⃣ DESCARTA — No alcohol ni drogas\n9️⃣ PARA — No teléfono al conducir",i:"🛑",c:"#dc2626",sc:"9 REGLAS"},
+{t:"5 HERRAMIENTAS PREVENTIVAS",s:"Programa EEP ENGIE",b:"1️⃣ REGLAS QUE SALVAN VIDAS — 9 reglas comunicadas a todo el personal\n\n2️⃣ VIGILANCIA COMPARTIDA — Deber de vigilar seguridad propia y de todos\n\n3️⃣ EVENTOS E INCIDENTES — Reporte de HiPo, accidentes, actos inseguros\n\n4️⃣ REGLA STOP — Autoridad para detener trabajo inseguro\n\n5️⃣ LMRA — Evaluación de Riesgo de Último Minuto antes de cada tarea",i:"🔧",c:"#0d9488",sc:"5 HERRAMIENTAS"},
+{t:"CONTROL DE RIESGOS OPERACIONALES",s:"6 pilares del control",b:"🚗 SEGURIDAD VIAL — Mantenimiento, GPS, SOAT, check-list diario\n📋 PETS — Procedimientos de Trabajo Seguro por actividad crítica\n🔍 INSPECCIONES — 27 tipos de inspección SSOMA\n📝 PERMISOS — Alto riesgo: caliente, altura, confinados\n🦺 EPP — Registro entrega, inspección, certificación\n👁️ OBSERVACIÓN PREVENTIVA — Comportamientos y condiciones inseguras",i:"🛡️",c:"#4f46e5",sc:"CONTROLES"},
+{t:"PLAN DE EMERGENCIAS",s:"Escenarios y recursos",b:"ESCENARIOS:\n🚗 Accidentes vehiculares\n🔄 Volcadura en desierto/altitud\n🔥 Incendio\n⛽ Derrame MATPEL\n🏥 Emergencia médica\n🌍 Sismos\n🔧 Falla mecánica zona remota\n🐍 Animales ponzoñosos\n\nRECURSOS:\n• 3 Brigadas capacitadas\n• Kit emergencia + Botiquín tipo C por vehículo\n• Comunicación satelital\n• Simulacros trimestrales",i:"🚨",c:"#b91c1c",sc:"EMERGENCIAS"},
+{t:"SALUD OCUPACIONAL",s:"Vigilancia médica y monitoreo",b:"🏥 VIGILANCIA MÉDICA — TP-PVMO-001 conforme R.M. 312-2011/MINSA\n   Exámenes pre-ocupacionales, periódicos y de retiro\n\n📋 CAMO VIGENTE — Vigencia máx. 1 año, protocolo para conductores\n\n🔬 RIESGOS HIGIÉNICOS — Ruido, radiación UV, temperaturas, ergonomía\n\n📊 MONITOREO — Dashboard estadísticas de salud 2023-2026",i:"🏥",c:"#0891b2",sc:"SALUD"},
+{t:"GESTIÓN AMBIENTAL",s:"ISO 14001:2015 — D.S. 014-2019-EM",b:"♻️ MANEJO DE RESIDUOS — Segregación código de colores, EO-RS autorizada\n\n🌍 ACCIÓN CLIMÁTICA — Reducción GEI: mantenimiento vehicular, rutas optimizadas\n\n⛽ CONTINGENCIA AMBIENTAL — Procedimiento derrames, plan de abandono\n\nMetodología IAAS: Frecuencia + Severidad + Extensión + Reversibilidad + Cumplimiento Legal",i:"🌿",c:"#059669",sc:"AMBIENTAL"},
+{t:"CAPACITACIÓN Y COMPETENCIAS",s:"10 capacitaciones obligatorias",b:"1️⃣ Inducción SST ENGIE\n2️⃣ 9 Reglas que Salvan Vidas\n3️⃣ 5 Herramientas Preventivas\n4️⃣ Manejo Defensivo (certificación anual)\n5️⃣ Manejo Vehículo 4x4\n6️⃣ Primeros Auxilios\n7️⃣ MATPEL — Sustancias Peligrosas\n8️⃣ Toolbox de Seguridad (quincenal)\n9️⃣ Sensibilización Ambiental\n🔟 Lucha Contra Incendios",i:"📚",c:"#7c3aed",sc:"CAPACITACIÓN"},
+{t:"INDICADORES SST",s:"Reportes mensuales a ENGIE",b:"📊 IF = 0.00 | IG = 0.00 | IF Trayecto = 0.00 | PASST = 100%\n\nREPORTES MENSUALES:\n• Reporte estadístico IF, IG, IF trayecto (Anexo 10)\n• Informe avance PASST\n• Registro comportamientos seguros/inseguros\n• Dashboard Excel firmado\n• Si IF > 0: Causas raíz + planes de acción",i:"📈",c:"#0d9488",sc:"INDICADORES"},
+{t:"PROGRAMA ANUAL SST",s:"PASST 2026",b:"📅 Inspecciones de trabajo — Semanal\n📅 Inspección EPP — Quincenal\n📅 Inspección vehículos — Diaria (pre-op)\n📅 Extintores — Mensual\n📅 Charlas seguridad — Diarias (5 min)\n📅 Toolbox Seguridad — Quincenal\n📅 Reunión Comité SST — Mensual\n📅 Caminata seguridad — Semanal (gerencia)\n📅 Simulacros — Trimestral\n📅 Monitoreos ocupacionales — Semestral\n📅 Auditoría interna — Trimestral",i:"📅",c:"#ea580c",sc:"PASST"},
+{t:"MEJORA CONTINUA — PHVA",s:"Ciclo del Sistema de Gestión SSOMA",b:"🔵 PLANIFICAR — Plan SSOMA, IPERC, IAAS, PASST, Plan Emergencias, Objetivos SST\n\n🟢 HACER — Ejecución PASST, capacitaciones, inspecciones, controles operacionales\n\n🟡 VERIFICAR — Auditorías, indicadores IF/IG, investigación incidentes, monitoreos\n\n🔴 ACTUAR — Acciones correctivas/preventivas, revisión por dirección, actualización docs",i:"🔄",c:"#6366f1",sc:"PHVA"},
+{t:"COMPROMISO TOTAL CON LA SEGURIDAD",s:"Ninguna Vida en Riesgo",b:"TOURS PANASUR E.I.R.L.\n\nGerente General: Eugenio Huamani Quispe\nCliente: ENGIE Energía Perú S.A.\nProyecto: Central Solar Fotovoltaica Hanaqpampa\nMoquegua, Perú — Marzo 2026\n\n🛡️ La seguridad no es negociable.\nCada uno tiene la responsabilidad y autoridad de PARAR cualquier trabajo inseguro.\n\n¡Gracias por su compromiso!",i:"🏆",c:"#d4a017",sc:"CIERRE"},
+];
+
+let cw=null,ci=0,vis=new Set([0]);
+function init(){const s=document.getElementById('wsel');W.forEach(w=>{const o=document.createElement('option');o.value=w.id;o.textContent=w.id+'. '+w.n;s.appendChild(o)})}
+function onSel(){const v=parseInt(document.getElementById('wsel').value);cw=W.find(w=>w.id===v)||null;document.getElementById('winfo').style.display=cw?'grid':'none';if(cw){document.getElementById('wdni').value='DNI: '+cw.d;document.getElementById('wcargo').value=cw.c}document.getElementById('btnStart').disabled=!cw}
+function startPres(){if(!cw)return;document.getElementById('login').classList.add('hidden');document.getElementById('presentation').classList.remove('hidden');document.getElementById('puser').textContent='👷 '+cw.n+' — '+cw.c;render();buildDots()}
+function render(){const s=S[ci];document.getElementById('slideContent').innerHTML='<div class="s-ic">'+s.i+'</div><div class="s-sc" style="background:'+s.c+'20;color:'+s.c+'">'+s.sc+'</div><div class="s-tt">'+s.t+'</div><div class="s-su">'+s.s+'</div><div class="s-bd">'+s.b+'</div>';document.getElementById('slideContent').style.animation='none';void document.getElementById('slideContent').offsetHeight;document.getElementById('slideContent').style.animation='si .4s ease';document.getElementById('pfill').style.width=((ci+1)/S.length*100)+'%';document.getElementById('pnum').textContent=(ci+1)+'/'+S.length;document.getElementById('bprev').disabled=ci===0;if(ci===S.length-1){document.getElementById('bnext').classList.add('hidden');document.getElementById('bfinish').classList.remove('hidden')}else{document.getElementById('bnext').classList.remove('hidden');document.getElementById('bfinish').classList.add('hidden')}updDots()}
+function buildDots(){const c=document.getElementById('dotsC');c.innerHTML='';for(let i=0;i<S.length;i++){const d=document.createElement('div');d.className='dot'+(i===ci?' a':vis.has(i)?' v':'');d.onclick=()=>{ci=i;vis.add(i);render()};c.appendChild(d)}}
+function updDots(){document.querySelectorAll('.dot').forEach((d,i)=>{d.className='dot'+(i===ci?' a':vis.has(i)?' v':'')})}
+function next(){if(ci<S.length-1){ci++;vis.add(ci);render()}}
+function prev(){if(ci>0){ci--;render()}}
+function finish(){document.getElementById('presentation').classList.add('hidden');document.getElementById('complete').classList.remove('hidden');document.getElementById('doneUser').textContent=cw.n+' — ha revisado las '+S.length+' secciones del Sistema de Gestión SSOMA.'}
+init();
+</script>
+</body>
+</html>
