@@ -37,21 +37,61 @@ const B = {
 // STRIPE PAYMENT LINKS
 // ═══════════════════════════════════════════════════════════════
 const STRIPE_LINKS = {
-  SIG360: {
-    mype:         { monthly: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00', annual: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00' },
-    starter:      { monthly: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00', annual: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00' },
-    professional: { monthly: 'https://buy.stripe.com/test_fZudR96WLfLH0RT5cG57W01', annual: 'https://buy.stripe.com/test_fZudR96WLfLH0RT5cG57W01' },
+  SIG360:      {
+    mype:         { monthly: 'https://buy.stripe.com/test_bJefZg1wjfpi90rg7sgbm00', annual: 'https://buy.stripe.com/test_bJecN4a2Pdha3G7bRcgbm01' },
+    starter:      { monthly: 'https://buy.stripe.com/test_eVqdR8df1dhaekL2gCgbm02', annual: 'https://buy.stripe.com/test_14A4gyfn92Cwb8zaN8gbm03' },
+    professional: { monthly: 'https://buy.stripe.com/test_3cI28qcaXdhagsT1cygbm04', annual: 'https://buy.stripe.com/test_dRm8wO7UH7WQ4KbaN8gbm05' },
   },
-  ERP360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  TPM360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  MTP360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  PMO360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  AGRO360:     { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  FOOD360:     { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  HOTEL360:    { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  SALUD360:    { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  CATASTRO360: { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  MEDCONGRESS: { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  ERP360:      {
+    mype:         { monthly: 'https://buy.stripe.com/test_eVqeVc0sf1ysekL2gCgbm06', annual: 'https://buy.stripe.com/test_eVq00ia2P90U6Sjf3ogbm07' },
+    starter:      { monthly: 'https://buy.stripe.com/test_9B68wO5Mz1ys7Wn4oKgbm08', annual: 'https://buy.stripe.com/test_5kQ28q4Iv7WQ7Wn1cygbm09' },
+    professional: { monthly: 'https://buy.stripe.com/test_00wbJ0caX5OI1xZ4oKgbm0a', annual: 'https://buy.stripe.com/test_5kQ8wOdf14KE0tVcVggbm0b' },
+  },
+  TPM360:      {
+    mype:         { monthly: 'https://buy.stripe.com/test_4gMbJ0fn97WQccD4oKgbm0c', annual: 'https://buy.stripe.com/test_28EcN4fn9a4YfoPbRcgbm0d' },
+    starter:      { monthly: 'https://buy.stripe.com/test_8x2fZg2Ana4YfoP3kGgbm0e', annual: 'https://buy.stripe.com/test_28E00ia2P0uo3G7cVggbm0f' },
+    professional: { monthly: 'https://buy.stripe.com/test_eVq7sKej5gtm3G75sOgbm0g', annual: 'https://buy.stripe.com/test_cNibJ0grd6SM3G76wSgbm0h' },
+  },
+  MTP360:      {
+    mype:         { monthly: 'https://buy.stripe.com/test_bJedR81wjele3G77AWgbm0i', annual: 'https://buy.stripe.com/test_00waEWb6Tcd67Wng7sgbm0j' },
+    starter:      { monthly: 'https://buy.stripe.com/test_fZu3cucaX2Cw0tV6wSgbm0k', annual: 'https://buy.stripe.com/test_5kQ3cu0sf7WQ0tV6wSgbm0l' },
+    professional: { monthly: 'https://buy.stripe.com/test_aFabJ01wj7WQekLaN8gbm0m', annual: 'https://buy.stripe.com/test_9B6eVcgrd0uo0tV6wSgbm0n' },
+  },
+  PMO360:      {
+    mype:         { monthly: 'https://buy.stripe.com/test_eVq14ma2P0uob8zdZkgbm0o', annual: 'https://buy.stripe.com/test_00w9AS6QD6SM1xZdZkgbm0p' },
+    starter:      { monthly: 'https://buy.stripe.com/test_4gMdR8a2P5OIccDbRcgbm0q', annual: 'https://buy.stripe.com/test_7sY4gygrdb920tV9J4gbm0r' },
+    professional: { monthly: 'https://buy.stripe.com/test_9B6bJ00sf1ysfoPaN8gbm0s', annual: 'https://buy.stripe.com/test_4gMfZg8YL6SMdgH08ugbm0t' },
+  },
+  AGRO360:     {
+    mype:         { monthly: 'https://buy.stripe.com/test_bJe28qfn96SMdgH08ugbm0u', annual: 'https://buy.stripe.com/test_cNieVcb6T1ysgsTg7sgbm0v' },
+    starter:      { monthly: 'https://buy.stripe.com/test_6oUeVccaX90UekL1cygbm0w', annual: 'https://buy.stripe.com/test_7sY6oGcaX5OI1xZf3ogbm0x' },
+    professional: { monthly: 'https://buy.stripe.com/test_9B6fZg2An4KEccD5sOgbm0y', annual: 'https://buy.stripe.com/test_bJebJ03Er90U6Sj9J4gbm0z' },
+  },
+  FOOD360:     {
+    mype:         { monthly: 'https://buy.stripe.com/test_00wbJ04Ivgtm5Of2gCgbm0A', annual: 'https://buy.stripe.com/test_9B6dR8b6Ta4Y90r1cygbm0B' },
+    starter:      { monthly: 'https://buy.stripe.com/test_eVqfZg1wj90Ub8z3kGgbm0C', annual: 'https://buy.stripe.com/test_9B6bJ0ej5b927WnaN8gbm0D' },
+    professional: { monthly: 'https://buy.stripe.com/test_8x2fZgb6T7WQ0tV8F0gbm0E', annual: 'https://buy.stripe.com/test_fZu00i8YLelegsTaN8gbm0F' },
+  },
+  HOTEL360:    {
+    mype:         { monthly: 'https://buy.stripe.com/test_8x214m7UH4KE4Kb2gCgbm0G', annual: 'https://buy.stripe.com/test_6oUbJ0a2P4KEdgH1cygbm0H' },
+    starter:      { monthly: 'https://buy.stripe.com/test_4gMaEW5Mzb920tVf3ogbm0I', annual: 'https://buy.stripe.com/test_fZu14mej5dha0tV2gCgbm0J' },
+    professional: { monthly: 'https://buy.stripe.com/test_3cIbJ05Mzcd690r5sOgbm0K', annual: 'https://buy.stripe.com/test_00weVcgrd4KE3G7bRcgbm0L' },
+  },
+  SALUD360:    {
+    mype:         { monthly: 'https://buy.stripe.com/test_5kQ9ASdf1gtma4v3kGgbm0M', annual: 'https://buy.stripe.com/test_5kQ14mcaX0uo3G77AWgbm0N' },
+    starter:      { monthly: 'https://buy.stripe.com/test_00waEW8YL6SMa4v2gCgbm0O', annual: 'https://buy.stripe.com/test_bJe7sK1wjcd63G7aN8gbm0P' },
+    professional: { monthly: 'https://buy.stripe.com/test_eVq9ASfn97WQ2C308ugbm0Q', annual: 'https://buy.stripe.com/test_3cIfZg2An2Cw7WnbRcgbm0R' },
+  },
+  CATASTRO360: {
+    mype:         { monthly: 'https://buy.stripe.com/test_fZu3cu2Anfpib8z7AWgbm0S', annual: 'https://buy.stripe.com/test_cNi4gydf1cd63G7g7sgbm0T' },
+    starter:      { monthly: 'https://buy.stripe.com/test_cNibJ0ej590UdgH5sOgbm0U', annual: 'https://buy.stripe.com/test_eVq00idf17WQb8zcVggbm0V' },
+    professional: { monthly: 'https://buy.stripe.com/test_9B6dR87UHfpi7Wn7AWgbm0W', annual: 'https://buy.stripe.com/test_3cIfZg0sfdha90r3kGgbm0X' },
+  },
+  MEDCONGRESS: {
+    mype:         { monthly: 'https://buy.stripe.com/test_fZu7sK2An4KEdgHf3ogbm0Y', annual: 'https://buy.stripe.com/test_aFacN45Mz3GA7WncVggbm0Z' },
+    starter:      { monthly: 'https://buy.stripe.com/test_00w6oG1wj6SM2C35sOgbm10', annual: 'https://buy.stripe.com/test_aFafZg7UHdhaccDaN8gbm11' },
+    professional: { monthly: 'https://buy.stripe.com/test_6oU14ma2P4KEb8z7AWgbm12', annual: 'https://buy.stripe.com/test_cNi5kCb6Tdha5Of9J4gbm13' },
+  },
 };
 
 const PAYPAL_LINKS = {
