@@ -95,17 +95,61 @@ const STRIPE_LINKS = {
 };
 
 const PAYPAL_LINKS = {
-  SIG360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  ERP360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  TPM360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  MTP360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  PMO360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  AGRO360:     { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  FOOD360:     { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  HOTEL360:    { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  SALUD360:    { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  CATASTRO360: { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
-  MEDCONGRESS: { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  SIG360:      {
+    mype:         { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-8NY24061RE818035ENHCMDRA', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-946284483D2325121NHCMDRA' },
+    starter:      { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-1R823407WT008073WNHCMDRI', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-1VR152390X7650637NHCMDRI' },
+    professional: { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-9E16848050433993YNHCMDRI', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-04T789888W850113JNHCMDRQ' },
+  },
+  ERP360:      {
+    mype:         { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-66W4244007681570DNHCMDRQ', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-18X51272N20736402NHCMDRY' },
+    starter:      { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-59W82392VT632042DNHCMDRY', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-0YK39866E0171860MNHCMDRY' },
+    professional: { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-5TL47517JS272183CNHCMDSA', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-4LV359898P541190YNHCMDSA' },
+  },
+  TPM360:      {
+    mype:         { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-1W1934749S126542GNHCMDSI', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-946609177P0804843NHCMDSI' },
+    starter:      { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-4FD875880N541490SNHCMDSQ', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-9GD8539123502790UNHCMDSQ' },
+    professional: { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-0TX71783PU5894416NHCMDSQ', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-0M346590PV719423WNHCMDSY' },
+  },
+  MTP360:      {
+    mype:         { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-8E777294E1746052CNHCMDTA', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-1G475073FT696483DNHCMDTA' },
+    starter:      { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-66C126615C384194BNHCMDTA', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-716261696Y1762106NHCMDTI' },
+    professional: { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-90E488661N195491UNHCMDTI', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-9LU75665YC095882YNHCMDTI' },
+  },
+  PMO360:      {
+    mype:         { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-75W968738B6893815NHCMDTQ', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-8YG24707AM021320HNHCMDTQ' },
+    starter:      { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-7B678545EF981470SNHCMDTY', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-2JH48103LN0153637NHCMDTY' },
+    professional: { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-1GT11914AR633693CNHCMDUA', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-6VA22610SX673714KNHCMDUA' },
+  },
+  AGRO360:     {
+    mype:         { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-37L88910YK003804NNHCMDUI', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-52030919A0384584ANHCMDUI' },
+    starter:      { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-1XR29004LT339204MNHCMDUI', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-01N987555Y287353UNHCMDUQ' },
+    professional: { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-1MJ52397DF450935CNHCMDUQ', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-8NE17722RN788613KNHCMDUQ' },
+  },
+  FOOD360:     {
+    mype:         { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-4NM90013SJ089752VNHCMDUY', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-6MD721013S142121VNHCMDUY' },
+    starter:      { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-6E600102S3306024RNHCMDVA', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-4UF31403UE985761TNHCMDVA' },
+    professional: { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-1GU925422D893842ANHCMDVA', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-01518440J15761845NHCMDVI' },
+  },
+  HOTEL360:    {
+    mype:         { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-1MG55870LP444041LNHCMDVI', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-28G0171455647724VNHCMDVQ' },
+    starter:      { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-07D4170214288594HNHCMDVQ', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-84Y85355R3073314KNHCMDVY' },
+    professional: { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-80S26128GB610625FNHCMDVY', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-0GE25961HR886100GNHCMDVY' },
+  },
+  SALUD360:    {
+    mype:         { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-6LB13068WE456430TNHCMDWA', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-9HA5354755758604YNHCMDWA' },
+    starter:      { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-1KE77294G8029652PNHCMDWI', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-59N90888942400612NHCMDWI' },
+    professional: { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-0EK07205A9720664VNHCMDWI', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-1LS3095670583414JNHCMDWQ' },
+  },
+  CATASTRO360: {
+    mype:         { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-4SA73338XW590271WNHCMDWQ', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-3VF295100S261103ENHCMDWY' },
+    starter:      { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-3VY23459AS134115WNHCMDWY', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-5ND21095JE766063RNHCMDWY' },
+    professional: { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-4R785020L61234117NHCMDXA', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-2P8556060N3803700NHCMDXA' },
+  },
+  MEDCONGRESS: {
+    mype:         { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-1CN62803FH8980132NHCMDXI', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-69L83928VL4055002NHCMDXI' },
+    starter:      { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-4V589850GU214271DNHCMDXI', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-27G84385WL3070636NHCMDXQ' },
+    professional: { monthly: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-8WN98589KT894820GNHCMDXQ', annual: 'https://www.paypal.com/webapps/billing/subscriptions?plan_id=P-9N963943NL901892YNHCMDXY' },
+  },
 };
 
 // ═══════════════════════════════════════════════════════════════
