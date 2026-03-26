@@ -33,6 +33,40 @@ const B = {
   text: '#1a1a2e', textMuted: '#5a5a6e', textLight: '#8a8a9e',
   border: '#e2e2dc', borderLight: '#eeeeea',
 };
+// ═══════════════════════════════════════════════════════════════
+// STRIPE PAYMENT LINKS
+// ═══════════════════════════════════════════════════════════════
+const STRIPE_LINKS = {
+  SIG360: {
+    mype:         { monthly: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00', annual: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00' },
+    starter:      { monthly: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00', annual: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00' },
+    professional: { monthly: 'https://buy.stripe.com/test_fZudR96WLfLH0RT5cG57W01', annual: 'https://buy.stripe.com/test_fZudR96WLfLH0RT5cG57W01' },
+  },
+  ERP360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  TPM360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  MTP360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  PMO360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  AGRO360:     { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  FOOD360:     { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  HOTEL360:    { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  SALUD360:    { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  CATASTRO360: { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  MEDCONGRESS: { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+};
+
+const PAYPAL_LINKS = {
+  SIG360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  ERP360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  TPM360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  MTP360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  PMO360:      { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  AGRO360:     { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  FOOD360:     { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  HOTEL360:    { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  SALUD360:    { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  CATASTRO360: { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+  MEDCONGRESS: { mype: { monthly: '', annual: '' }, starter: { monthly: '', annual: '' }, professional: { monthly: '', annual: '' } },
+};
 
 // ═══════════════════════════════════════════════════════════════
 // DATA
@@ -360,7 +394,9 @@ function Pricing() {
         <p style={{ fontSize: 15, color: B.textMuted, maxWidth: 520, margin: '0 auto' }}>{t('pricing.sub')}</p>
         <div style={{ display: 'flex', gap: 16, justifyContent: 'center', alignItems: 'center', marginTop: 12, opacity: 0.7 }}>
           <span style={{ fontSize: 12, color: B.textM }}>🔒 {lang === 'es' ? 'Pago seguro con' : 'Secure payment by'}</span>
-          <svg width="50" height="20" viewBox="0 0 50 20"><text x="0" y="15" fill={B.textM} fontSize="14" fontWeight="700" fontFamily="sans-serif">Stripe</text></svg>
+          <svg width="50" height="20" viewBox="0 0 50 20"><text x="0" y="15" fill="#635bff" fontSize="14" fontWeight="700" fontFamily="sans-serif">Stripe</text></svg>
+          <span style={{ fontSize: 12, color: B.textM }}>+</span>
+          <svg width="60" height="20" viewBox="0 0 60 20"><text x="0" y="15" fill="#003087" fontSize="14" fontWeight="700" fontFamily="sans-serif">PayPal</text></svg>
           <span style={{ fontSize: 12, color: B.textM }}>| 💳 Visa, Mastercard, AMEX</span>
         </div>
         <p style={{ display: 'none' }}>{}</p>
@@ -400,21 +436,37 @@ function Pricing() {
                 <span style={{ fontSize: 38, fontWeight: 800, color: B.blue, fontFamily: "'Space Mono',monospace" }}>{fmt(price)}</span>
                 <span style={{ fontSize: 14, color: B.textLight }}>/{lang === 'es' ? 'mes' : 'mo'}</span>
                 {billing === 'annual' && <div style={{ fontSize: 12, color: B.textLight, marginTop: 2 }}>{fmt(plan.yr)}/{lang === 'es' ? 'año' : 'yr'}</div>}
-              </div>
-              <button onClick={() => {
-                if (plan.tier === 'enterprise') { go('contact'); }
-                else {
-                  const links = {
-                    mype: { monthly: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00', annual: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00' },
-                    starter: { monthly: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00', annual: 'https://buy.stripe.com/test_cNi3cvfth6b73015cG57W00' },
-                    professional: { monthly: 'https://buy.stripe.com/test_fZudR96WLfLH0RT5cG57W01', annual: 'https://buy.stripe.com/test_fZudR96WLfLH0RT5cG57W01' },
-                  };
-                  const url = links[plan.tier] && links[plan.tier][billing === 'annual' ? 'annual' : 'monthly'];
-                  if (url) window.open(url, '_blank');
-                }
-              }} style={{ width: '100%', ...(pop ? btnP : btnO), padding: '11px 0', fontSize: 14, borderRadius: 10, cursor: 'pointer' }}>
-                {plan.tier === 'enterprise' ? t('pricing.contact') : t('pricing.subscribe')}
-              </button>
+              
+                            {plan.tier === 'enterprise' ? (
+                <button onClick={() => go('contact')} style={{ width: '100%', ...btnO, padding: '11px 0', fontSize: 14, borderRadius: 10, cursor: 'pointer' }}>
+                  {t('pricing.contact')}
+                </button>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <button onClick={() => {
+                    const productLinks = STRIPE_LINKS[active];
+                    const tierLinks = productLinks && productLinks[plan.tier];
+                    const url = tierLinks && tierLinks[billing === 'annual' ? 'annual' : 'monthly'];
+                    if (url) window.open(url, '_blank');
+                    else { go('contact'); }
+                  }} style={{ width: '100%', ...(pop ? btnP : btnO), padding: '11px 0', fontSize: 13, borderRadius: 10, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                    <svg width="40" height="16" viewBox="0 0 40 16"><text x="0" y="13" fill="currentColor" fontSize="12" fontWeight="700" fontFamily="sans-serif">Stripe</text></svg>
+                    <span>{lang === 'es' ? 'Tarjeta' : 'Card'}</span>
+                  </button>
+                  <button onClick={() => {
+                    const productLinks = PAYPAL_LINKS[active];
+                    const tierLinks = productLinks && productLinks[plan.tier];
+                    const url = tierLinks && tierLinks[billing === 'annual' ? 'annual' : 'monthly'];
+                    if (url) window.open(url, '_blank');
+                    else { go('contact'); }
+                  }} style={{ width: '100%', background: '#ffc439', color: '#003087', border: '1.5px solid #f0b72a', padding: '11px 0', fontSize: 13, fontWeight: 700, borderRadius: 10, cursor: 'pointer', fontFamily: "'DM Sans',sans-serif", display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, transition: 'all 0.15s' }}
+                    onMouseEnter={e => { e.currentTarget.style.background = '#f5ba31'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = '#ffc439'; }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 2.23A.773.773 0 0 1 5.707 1.6h6.727c2.231 0 3.792.627 4.533 1.823.635 1.025.735 2.36.29 3.867-.028.094-.06.19-.094.288-.036.098-.075.198-.116.3l-.006.013c-.9 2.467-2.9 3.714-5.94 3.714h-1.51a.773.773 0 0 0-.764.632l-.96 6.1z" fill="#003087"/><path d="M18.464 7.178c-.013.088-.027.177-.043.268-1.39 6.123-5.754 7.406-10.426 7.406h-1.13a.773.773 0 0 0-.764.632L5.07 21.337l-.313 1.983a.413.413 0 0 0 .407.478h3.39a.773.773 0 0 0 .763-.632l.032-.164.604-3.827.039-.21a.773.773 0 0 1 .763-.633h.48c3.11 0 5.548-1.264 6.258-4.92.297-1.527.143-2.802-.642-3.698a3.07 3.07 0 0 0-.879-.648l.492.112z" fill="#0070E0"/></svg>
+                    <span style={{ fontWeight: 800, fontFamily: "'DM Sans',sans-serif" }}>PayPal</span>
+                  </button>
+                </div>
+              )}  </div>
               <div style={{ marginTop: 20, paddingTop: 16, borderTop: `1px solid ${B.borderLight}` }}>
                 {(product.features[lang]).map((f, j) => <div key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7, fontSize: 12, color: B.textMuted }}><span style={{ color: B.green, fontWeight: 700, fontSize: 11 }}>✓</span>{f}</div>)}
               </div>
