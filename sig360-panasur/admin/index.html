@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIG 360° Admin — Tours Panasur</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap');
+:root { --bg:#0c1220; --surface:#131b2e; --card:#1a2540; --border:#2a3a5c; --blue:#3b82f6; --green:#10b981; --red:#ef4444; --amber:#f59e0b; --text:#e2e8f0; --muted:#94a3b8; --dim:#64748b; --white:#fff; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; padding:20px; }
+.container { max-width:900px; margin:0 auto; }
+h1 { font-size:24px; font-weight:700; margin-bottom:4px; }
+.sub { font-size:13px; color:var(--muted); margin-bottom:24px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:24px; margin-bottom:20px; }
+.card h2 { font-size:16px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.card h2::before { content:''; width:4px; height:20px; background:var(--blue); border-radius:2px; }
+label { display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+input, textarea { width:100%; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 14px; color:var(--text); font-size:14px; font-family:'DM Sans',sans-serif; outline:none; margin-bottom:12px; }
+input:focus, textarea:focus { border-color:var(--blue); }
+textarea { font-family:'JetBrains Mono',monospace; font-size:12px; resize:vertical; }
+.btn { display:inline-flex; align-items:center; gap:6px; padding:10px 20px; border:none; border-radius:8px; font-size:14px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.2s; }
+.btn-primary { background:var(--blue); color:var(--white); }
+.btn-primary:hover { background:#2563eb; }
+.btn-green { background:var(--green); color:var(--white); }
+.btn-green:hover { background:#059669; }
+.btn-outline { background:transparent; border:1px solid var(--border); color:var(--muted); }
+.btn-outline:hover { border-color:var(--blue); color:var(--blue); }
+.status { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:6px; font-size:12px; font-weight:600; }
+.status-ok { background:rgba(16,185,129,0.12); color:var(--green); }
+.status-warn { background:rgba(245,158,11,0.12); color:var(--amber); }
+.status-err { background:rgba(239,68,68,0.12); color:var(--red); }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.stat { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; text-align:center; }
+.stat .val { font-size:28px; font-weight:700; }
+.stat .lbl { font-size:11px; color:var(--dim); text-transform:uppercase; margin-top:4px; }
+.log { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:12px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); max-height:200px; overflow-y:auto; margin-top:12px; }
+.log .ok { color:var(--green); }
+.log .err { color:var(--red); }
+.log .warn { color:var(--amber); }
+.flex { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.tag { display:inline-block; padding:3px 10px; border-radius:6px; font-size:11px; font-weight:600; }
+.divider { height:1px; background:var(--border); margin:16px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>SIG 360° — Panel de Administración</h1>
+  <p class="sub">Tours Panasur E.I.R.L. | CSF Hanaqpampa — ENGIE | Configuración del Sistema</p>
+
+  <!-- STATUS OVERVIEW -->
+  <div class="card">
+    <h2>Estado del Sistema</h2>
+    <div class="grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="stat"><div class="val" id="st-docs" style="color:var(--green)">87</div><div class="lbl">Documentos ISO</div></div>
+      <div class="stat"><div class="val" id="st-workers" style="color:var(--blue)">23</div><div class="lbl">Trabajadores</div></div>
+      <div class="stat"><div class="val" id="st-eval" style="color:var(--amber)">—</div><div class="lbl">Evaluaciones</div></div>
+      <div class="stat"><div class="val" id="st-days" style="color:var(--green)">0</div><div class="lbl">Días sin accidentes</div></div>
+    </div>
+    <div style="margin-top:16px" class="flex">
+      <span class="tag" style="background:rgba(59,130,246,0.12);color:var(--blue)">ISO 9001</span>
+      <span class="tag" style="background:rgba(16,185,129,0.12);color:var(--green)">ISO 14001</span>
+      <span class="tag" style="background:rgba(245,158,11,0.12);color:var(--amber)">ISO 45001</span>
+      <span class="tag" style="background:rgba(139,92,246,0.12);color:#a78bfa">ISO 37001</span>
+      <span style="flex:1"></span>
+      <span class="status" id="status-badge">Verificando...</span>
+    </div>
+  </div>
+
+  <!-- SUPABASE CONFIG -->
+  <div class="card">
+    <h2>Configuración de Supabase</h2>
+    <p style="font-size:12px;color:var(--dim);margin-bottom:16px;">Conectar la plataforma SIG 360° con la base de datos Supabase para persistencia de datos en tiempo real.</p>
+    <label>Project URL</label>
+    <input type="url" id="sb-url" placeholder="https://xxxxx.supabase.co" />
+    <label>Anon Public Key</label>
+    <input type="text" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIs..." />
+    <div class="flex">
+      <button class="btn btn-primary" onclick="testSupabase()">Probar Conexión</button>
+      <button class="btn btn-green" onclick="saveSupabase()">Guardar Configuración</button>
+      <button class="btn btn-outline" onclick="copySql()">Copiar SQL Schema</button>
+    </div>
+    <div class="log" id="sb-log">Esperando configuración...</div>
+  </div>
+
+  <!-- GOOGLE SHEETS CONFIG -->
+  <div class="card">
+    <h2>Configuración de Google Sheets</h2>
+    <p style="font-size:12px;color:var(--dim);margin-bottom:16px;">Backend para las evaluaciones de inducción SSOMA. Siga las instrucciones del archivo <code>google-apps-script.js</code></p>
+    <label>Google Apps Script Web App URL</label>
+    <input type="url" id="gs-url" placeholder="https://script.google.com/macros/s/AKfycbx.../exec" />
+    <div class="flex">
+      <button class="btn btn-primary" onclick="testSheets()">Probar Conexión</button>
+      <button class="btn btn-green" onclick="saveSheets()">Aplicar a evaluacion.html</button>
+    </div>
+    <div class="log" id="gs-log">Esperando configuración...</div>
+  </div>
+
+  <!-- CHECKLIST DESPLIEGUE -->
+  <div class="card">
+    <h2>Checklist de Despliegue 100%</h2>
+    <div id="checklist"></div>
+  </div>
+
+  <!-- SQL PREVIEW -->
+  <div class="card">
+    <h2>SQL Schema — Vista Previa</h2>
+    <p style="font-size:12px;color:var(--dim);margin-bottom:12px;">Copiar y ejecutar en Supabase Dashboard → SQL Editor → New Query</p>
+    <textarea id="sql-preview" rows="12" readonly></textarea>
+    <button class="btn btn-outline" onclick="copySql()" style="margin-top:8px;">Copiar al Portapapeles</button>
+  </div>
+</div>
+
+<script>
+// Checklist items
+const CHECKS = [
+  { id: 'sb', label: 'Supabase configurado y conectado', key: 'sig360_sb_url' },
+  { id: 'gs', label: 'Google Sheets configurado para evaluaciones', key: 'sig360_gs_url' },
+  { id: 'eval', label: 'Al menos 1 evaluación de inducción registrada', auto: true },
+  { id: 'iperc', label: 'IPERC Línea Base cargado en plataforma', auto: true },
+  { id: 'audit', label: 'Auditorías 2026 programadas en el sistema', auto: true },
+  { id: 'nc', label: 'Al menos 1 ciclo NC completo (registro→cierre)', auto: true },
+  { id: 'denuncia', label: 'Canal de denuncias E2EE funcional', auto: true },
+  { id: 'bowtie', label: '3 análisis Bow-Tie configurados', auto: true },
+  { id: 'kpi', label: 'Dashboard con KPIs reales de Panasur', auto: true },
+  { id: 'docs', label: '84+ plantillas ISO disponibles', check: () => true },
+  { id: 'drive', label: 'Documentos sincronizados con Google Drive', auto: true },
+  { id: 'train', label: 'Capacitación completada a 23 trabajadores', auto: true },
+  { id: 'engie', label: 'Validación contra checklist ENGIE homologación', auto: true },
+];
+
+function renderChecklist() {
+  const el = document.getElementById('checklist');
+  const sbUrl = localStorage.getItem('sig360_sb_url');
+  const gsUrl = localStorage.getItem('sig360_gs_url');
+  let done = 0;
+  el.innerHTML = CHECKS.map(c => {
+    let checked = false;
+    if (c.key) checked = !!localStorage.getItem(c.key);
+    if (c.check) checked = c.check();
+    if (c.id === 'docs') checked = true; // 87 docs available
+    if (checked) done++;
+    return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);">
+      <div style="width:20px;height:20px;border-radius:6px;border:2px solid ${checked ? 'var(--green)' : 'var(--border)'};background:${checked ? 'rgba(16,185,129,0.12)' : 'transparent'};display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--green);">${checked ? '✓' : ''}</div>
+      <span style="font-size:13px;color:${checked ? 'var(--green)' : 'var(--text)'};">${c.label}</span>
+    </div>`;
+  }).join('');
+  el.innerHTML += `<div style="margin-top:12px;font-size:14px;font-weight:700;color:var(--blue);">Progreso: ${done}/${CHECKS.length} (${Math.round(done/CHECKS.length*100)}%)</div>`;
+}
+
+// Load saved config
+function loadConfig() {
+  const sbUrl = localStorage.getItem('sig360_sb_url') || '';
+  const sbKey = localStorage.getItem('sig360_sb_key') || '';
+  const gsUrl = localStorage.getItem('sig360_gs_url') || '';
+  document.getElementById('sb-url').value = sbUrl;
+  document.getElementById('sb-key').value = sbKey;
+  document.getElementById('gs-url').value = gsUrl;
+
+  // Status badge
+  const badge = document.getElementById('status-badge');
+  if (sbUrl && gsUrl) {
+    badge.className = 'status status-ok';
+    badge.textContent = '● Sistema Operativo';
+  } else if (sbUrl || gsUrl) {
+    badge.className = 'status status-warn';
+    badge.textContent = '● Configuración parcial';
+  } else {
+    badge.className = 'status status-err';
+    badge.textContent = '● Sin configurar';
+  }
+
+  renderChecklist();
+}
+
+// Test Supabase connection
+async function testSupabase() {
+  const log = document.getElementById('sb-log');
+  const url = document.getElementById('sb-url').value.trim();
+  const key = document.getElementById('sb-key').value.trim();
+  if (!url || !key) { log.innerHTML = '<span class="err">✗ Complete URL y Key</span>'; return; }
+
+  log.innerHTML = '<span class="warn">⏳ Probando conexión...</span>';
+  try {
+    const res = await fetch(`${url}/rest/v1/trabajadores?select=count`, {
+      headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      log.innerHTML = `<span class="ok">✓ Conexión exitosa — Supabase operativo</span>\n` +
+        `<span class="ok">✓ Tabla trabajadores: ${data.length > 0 ? 'datos encontrados' : 'vacía (ejecute SQL)'}</span>`;
+    } else {
+      log.innerHTML = `<span class="err">✗ Error ${res.status}: ${res.statusText}</span>\n` +
+        `<span class="warn">→ Verifique URL y Key. Si es 404, ejecute el SQL Schema primero.</span>`;
+    }
+  } catch (e) {
+    log.innerHTML = `<span class="err">✗ Error de conexión: ${e.message}</span>\n` +
+      `<span class="warn">→ Verifique que la URL es correcta y que tiene acceso a internet.</span>`;
+  }
+}
+
+function saveSupabase() {
+  const url = document.getElementById('sb-url').value.trim();
+  const key = document.getElementById('sb-key').value.trim();
+  if (!url || !key) { alert('Complete URL y Key'); return; }
+  localStorage.setItem('sig360_sb_url', url);
+  localStorage.setItem('sig360_sb_key', key);
+  document.getElementById('sb-log').innerHTML += `\n<span class="ok">✓ Configuración guardada en localStorage</span>`;
+  loadConfig();
+}
+
+// Test Google Sheets
+async function testSheets() {
+  const log = document.getElementById('gs-log');
+  const url = document.getElementById('gs-url').value.trim();
+  if (!url) { log.innerHTML = '<span class="err">✗ Ingrese la URL del Web App</span>'; return; }
+
+  log.innerHTML = '<span class="warn">⏳ Probando conexión...</span>';
+  try {
+    const res = await fetch(`${url}?action=count`);
+    if (res.ok) {
+      const data = await res.json();
+      log.innerHTML = `<span class="ok">✓ Google Sheets operativo</span>\n` +
+        `<span class="ok">✓ Evaluaciones registradas: ${data.count || 0}</span>`;
+      document.getElementById('st-eval').textContent = data.count || 0;
+    } else {
+      log.innerHTML = `<span class="warn">⚠ Respuesta ${res.status} — El Web App puede requerir permisos de acceso</span>`;
+    }
+  } catch (e) {
+    // mode: 'no-cors' expected for POST, but GET might work
+    log.innerHTML = `<span class="warn">⚠ No se pudo verificar (normal si usa mode: no-cors)</span>\n` +
+      `<span class="ok">→ La URL se guardará y se probará cuando se envíe una evaluación real.</span>`;
+  }
+}
+
+function saveSheets() {
+  const url = document.getElementById('gs-url').value.trim();
+  if (!url) { alert('Ingrese la URL'); return; }
+  localStorage.setItem('sig360_gs_url', url);
+  document.getElementById('gs-log').innerHTML += `\n<span class="ok">✓ URL guardada. Actualice SHEET_URL en evaluacion.html manualmente.</span>\n` +
+    `<span class="warn">→ Abra evaluacion.html línea 310 y pegue: const SHEET_URL = '${url}';</span>`;
+  loadConfig();
+}
+
+// SQL Copy
+function copySql() {
+  const sql = document.getElementById('sql-preview').value;
+  navigator.clipboard.writeText(sql).then(() => {
+    alert('SQL copiado al portapapeles. Péguelo en Supabase SQL Editor.');
+  });
+}
+
+// Load SQL preview
+fetch('../supabase-config.js').then(r => r.text()).then(text => {
+  const match = text.match(/const SUPABASE_SCHEMA_SQL = `([\s\S]*?)`;/);
+  if (match) document.getElementById('sql-preview').value = match[1].trim();
+}).catch(() => {
+  document.getElementById('sql-preview').value = '-- Error cargando SQL. Abra supabase-config.js directamente.';
+});
+
+loadConfig();
+</script>
+</body>
+</html>

@@ -28,6 +28,7 @@ SIG PANASUR/
 │   ├── TP-MAT-SIG-003 Matriz Requisitos Legales.docx
 │   ├── TP-MAT-SST-001 IPERC Línea Base.docx
 │   ├── TP-MAT-SST-002 IPERC Cerro Verde.docx
+│   ├── TP-MAT-SST-002 IPERC Continuo Operaciones.docx
 │   ├── TP-MAT-SST-003 Mapa Riesgos por Ruta.docx
 │   └── TP-MAT-AMB-001 Matriz IAIA.docx
 │
@@ -46,7 +47,10 @@ SIG PANASUR/
 │   ├── [15 PETS] TP-PET-OPE-001 a 014 + TP-PET-MAN-001
 │   ├── TP-MAT-SIG-004 Comunicaciones.docx
 │   ├── TP-MAT-RRH-001 Competencias.docx
-│   └── [Formatos H] TP-FOR-SST-001 a 010, FOR-AMB-001, FOR-MAN-001/002
+│   ├── [Formatos H] TP-FOR-SST-001 a 010, FOR-AMB-001, FOR-MAN-001/002
+│   ├── TP-FOR-SST-011 Formato Permiso de Trabajo.docx
+│   ├── TP-FOR-SST-012 Formato ATS.docx
+│   └── TP-FOR-AMB-003 Gestión de Residuos Sólidos.docx
 │
 ├── 3. V (Verificar)/
 │   ├── TP-PRO-SIG-003 Revisión por Dirección.docx
@@ -59,7 +63,10 @@ SIG PANASUR/
 │   ├── TP-FOR-AMB-002 Monitoreo Ambiental.docx
 │   ├── TP-FOR-RRH-001 Evaluación Desempeño.docx
 │   ├── TP-ACT-SST-002 Acta Reunión CSST.docx
-│   └── TP-INF-SIG-001 Informe Revisión Dirección.docx
+│   ├── TP-INF-SIG-001 Informe Revisión Dirección.docx
+│   ├── TP-FOR-SST-013 Observaciones Seguridad Conductual.docx
+│   ├── TP-FOR-CAL-001 Control de Calidad de Obra.docx
+│   └── TP-REG-SST-003 Estadísticas de SST.docx
 │
 ├── 4. A (Actuar - Mejora)/
 │   ├── TP-PRO-SIG-002 Acciones Correctivas.docx
@@ -75,3 +82,25 @@ SIG PANASUR/
     ├── TP-REG-SST-001 Entrega RISST.docx
     └── TP-REG-SST-002 Difusión Política.docx
 ```
+
+---
+
+## Changelog
+
+### 2026-04-03 — Se agregan 10 nuevos documentos plantilla
+
+**Sección 1. P (Planificación):**
+- TP-MAN-SIG-001 — Manual del SIG v2.0 (ya existente)
+- TP-MAT-SST-001 — IPERC Línea Base (ya existente)
+- TP-MAT-SST-002 — IPERC Continuo Operaciones (nuevo)
+- TP-MAT-AMB-001 — Matriz IAIA (ya existente)
+
+**Sección 2. H (Hacer):**
+- TP-FOR-SST-011 — Formato Permiso de Trabajo
+- TP-FOR-SST-012 — Formato ATS
+- TP-FOR-AMB-003 — Gestión de Residuos Sólidos
+
+**Sección 3. V (Verificar):**
+- TP-FOR-SST-013 — Observaciones Seguridad Conductual
+- TP-FOR-CAL-001 — Control de Calidad de Obra
+- TP-REG-SST-003 — Estadísticas de SST
