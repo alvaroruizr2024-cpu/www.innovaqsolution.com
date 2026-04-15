@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0B1120">
+    <title>PANASUR — Control de Combustible | CSF Hanaqpampa</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23F59E0B'/%3E%3Ctext x='50' y='68' font-family='Arial' font-size='50' font-weight='bold' text-anchor='middle' fill='%23000'%3E⛽%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-primary: #0B1120;
+            --bg-card: #131B2E;
+            --bg-card-hover: #1A2540;
+            --bg-input: #0F172A;
+            --border: #1E293B;
+            --border-focus: #F59E0B;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --amber: #F59E0B;
+            --amber-dark: #D97706;
+            --amber-glow: rgba(245,158,11,0.15);
+            --green: #22C55E;
+            --green-bg: rgba(34,197,94,0.12);
+            --red: #EF4444;
+            --red-bg: rgba(239,68,68,0.12);
+            --blue: #3B82F6;
+            --blue-bg: rgba(59,130,246,0.12);
+        }
+        html, body { 
+            background: var(--bg-primary); 
+            color: var(--text-primary); 
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        #root { min-height: 100vh; }
+        
+        input, select, textarea {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            width: 100%;
+            font-family: 'DM Sans', sans-serif;
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--amber);
+            box-shadow: 0 0 0 3px var(--amber-glow);
+        }
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 36px;
+        }
+        select option { background: var(--bg-card); color: var(--text-primary); }
+        
+        button { font-family: 'DM Sans', sans-serif; cursor: pointer; }
+        
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--bg-primary);
+            position: relative;
+            padding-bottom: 80px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1A2540 0%, #0B1120 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-left { display: flex; align-items: center; gap: 10px; }
+        .header-icon {
+            background: var(--amber);
+            border-radius: 8px;
+            padding: 6px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-title { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+        .header-sub {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .header-right { text-align: right; }
+        .header-right p { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+        .header-right p:last-child { font-size: 10px; }
+        
+        .content { padding: 16px 16px 0; }
+        
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            transition: all 0.2s;
+        }
+        .card:hover { background: var(--bg-card-hover); }
+        
+        .btn-primary {
+            background: var(--amber);
+            color: #000;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-primary:hover { background: var(--amber-dark); transform: translateY(-1px); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-primary:active { transform: scale(0.97); }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-size: 13px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+        
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .tag-green { background: var(--green-bg); color: var(--green); }
+        .tag-red { background: var(--red-bg); color: var(--red); }
+        .tag-blue { background: var(--blue-bg); color: var(--blue); }
+        .tag-amber { background: var(--amber-glow); color: var(--amber); }
+        
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            display: flex;
+            padding: 6px 0 max(8px, env(safe-area-inset-bottom));
+            z-index: 50;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 8px 4px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.2s;
+            font-size: 10px;
+            font-weight: 500;
+            position: relative;
+            flex: 1;
+            border: none;
+            background: none;
+        }
+        .nav-item.active { color: var(--amber); }
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 25%;
+            right: 25%;
+            height: 2px;
+            background: var(--amber);
+            border-radius: 0 0 2px 2px;
+        }
+        .nav-fab {
+            background: var(--amber);
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            margin-top: -18px;
+            box-shadow: 0 4px 15px rgba(245,158,11,0.4);
+            border: none;
+        }
+        
+        /* Checklist */
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.15s;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            color: inherit;
+        }
+        .checklist-item:hover { background: var(--bg-card-hover); }
+        .checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .checkbox.checked { background: var(--amber); border-color: var(--amber); }
+        
+        .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+        
+        .alert-banner {
+            background: var(--red-bg);
+            border: 1px solid rgba(239,68,68,0.3);
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .scrollable { max-height: calc(100vh - 200px); overflow-y: auto; }
+        .scrollable::-webkit-scrollbar { width: 4px; }
+        .scrollable::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        
+        .fade-in { animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner { display: inline-block; width: 40px; height: 40px; border: 4px solid var(--amber); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .row-border { border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+        
+        .dia-banner {
+            border-color: rgba(245,158,11,0.3);
+            background: linear-gradient(135deg, rgba(245,158,11,0.08) 0%, var(--bg-card) 100%);
+        }
+        
+        .step-dots { display: flex; gap: 6px; margin-bottom: 20px; }
+        .step-dot { flex: 1; height: 3px; border-radius: 2px; transition: background 0.3s; }
+        .step-dot.active { background: var(--amber); }
+        .step-dot.inactive { background: var(--border); }
+        
+        .cost-box {
+            background: var(--amber-glow);
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @media (max-width: 380px) {
+            .stat-value { font-size: 22px; }
+            .card { padding: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type="text/babel">
+const { useState, useEffect, useCallback, useRef } = React;
+
+// ─── Data ───
+const FLEET = [
+  { id: "VOL-01", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
+  { id: "VOL-02", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
+  { id: "VOL-03", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
+  { id: "VOL-04", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
+  { id: "VOL-05", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
+  { id: "VOL-06", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
+  { id: "VOL-07", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
+  { id: "CIS-01", tipo: "Cisterna", categoria: "Línea Amarilla" },
+  { id: "CIS-02", tipo: "Cisterna", categoria: "Línea Amarilla" },
+  { id: "EXC-01", tipo: "Excavadora c/picotón", categoria: "Línea Amarilla" },
+  { id: "EXC-02", tipo: "Excavadora c/picotón", categoria: "Línea Amarilla" },
+  { id: "EXC-03", tipo: "Excavadora c/picotón", categoria: "Línea Amarilla" },
+  { id: "CAR-01", tipo: "Cargador Frontal", categoria: "Línea Amarilla" },
+  { id: "CAR-02", tipo: "Cargador Frontal", categoria: "Línea Amarilla" },
+  { id: "TRA-01", tipo: "Tractor", categoria: "Línea Amarilla" },
+  { id: "TRA-02", tipo: "Tractor", categoria: "Línea Amarilla" },
+  { id: "MOT-01", tipo: "Motoniveladora", categoria: "Línea Amarilla" },
+  { id: "MOT-02", tipo: "Motoniveladora", categoria: "Línea Amarilla" },
+  { id: "ROD-01", tipo: "Rodillo Liso Vibratorio", categoria: "Línea Amarilla" },
+  { id: "ROD-02", tipo: "Rodillo Liso Vibratorio", categoria: "Línea Amarilla" },
+  { id: "CAM-01", tipo: "Camioneta", categoria: "Vehículo Liviano" },
+  { id: "CAM-02", tipo: "Camioneta", categoria: "Vehículo Liviano" },
+  { id: "CAM-03", tipo: "Camioneta", categoria: "Vehículo Liviano" },
+  { id: "AMB-01", tipo: "Ambulancia Toyota Hilux 4x4", categoria: "Vehículo Liviano", placa: "EUH-394" },
+  { id: "COM-01", tipo: "Microbús Combi", categoria: "Vehículo Liviano" },
+];
+
+const CHECKLIST_ITEMS = [
+  { id: "bandeja", label: "Bandeja antiderrames colocada bajo boca de llenado", critical: true },
+  { id: "kit_antiderrame", label: "Kit antiderrames disponible y completo", critical: true },
+  { id: "extintor", label: "Extintor operativo en zona de abastecimiento", critical: true },
+  { id: "señalizacion", label: "Señalización de zona de abastecimiento instalada", critical: false },
+  { id: "area_designada", label: "Abastecimiento en área designada (fuera de zona proyecto)", critical: true },
+  { id: "motor_apagado", label: "Motor del equipo apagado durante abastecimiento", critical: true },
+  { id: "epp_operador", label: "Operador con EPP completo (guantes nitrilo, lentes, casco)", critical: false },
+  { id: "hoja_seguridad", label: "MSDS/Hoja de seguridad disponible en punto de despacho", critical: false },
+  { id: "no_fuentes_ignicion", label: "Sin fuentes de ignición en radio de 6 metros", critical: true },
+  { id: "conexion_tierra", label: "Conexión a tierra verificada (cisterna → equipo)", critical: false },
+];
+
+const STORAGE_KEYS = { records: "panasur-fuel-records", settings: "panasur-fuel-settings" };
+
+function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function fmtDate(d) { if(!d) return ""; return new Date(d).toLocaleDateString("es-PE",{day:"2-digit",month:"2-digit",year:"numeric"}); }
+
+function loadLS(key, fallback) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+  catch { return fallback; }
+}
+function saveLS(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) { console.error(e); }
+}
+
+// ─── SVG Icons ───
+function Icon({ name, size=20, color="currentColor" }) {
+  const paths = {
+    fuel: <><path d="M3 22V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/><path d="M15 10h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2v0a1 1 0 0 0 1-1V9l-3-3"/><path d="M3 22h12"/><rect x="6" y="8" width="6" height="4" rx="1"/></>,
+    dashboard: <><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="4" rx="1"/><rect x="14" y="10" width="7" height="11" rx="1"/><rect x="3" y="13" width="7" height="8" rx="1"/></>,
+    list: <><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></>,
+    truck: <><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></>,
+    settings: <><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></>,
+    plus: <><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></>,
+    back: <polyline points="15 18 9 12 15 6"/>,
+    alert: <><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></>,
+    check: <><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></>,
+    download: <><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></>,
+    trash: <><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></>,
+  };
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width={size} height={size}>
+      {paths[name]}
+    </svg>
+  );
+}
+
+// ─── Main App ───
+function App() {
+  const [records, setRecords] = useState(() => loadLS(STORAGE_KEYS.records, []));
+  const [settings, setSettings] = useState(() => loadLS(STORAGE_KEYS.settings, { precioDiesel:14.50, precioGasoline:16.80, alertaConsumo:20 }));
+  const [view, setView] = useState("dashboard");
+  const [detailRecord, setDetailRecord] = useState(null);
+
+  useEffect(() => { saveLS(STORAGE_KEYS.records, records); }, [records]);
+  useEffect(() => { saveLS(STORAGE_KEYS.settings, settings); }, [settings]);
+
+  const addRecord = (form) => {
+    setRecords(prev => [{ ...form, id: genId(), timestamp: new Date().toISOString() }, ...prev]);
+    setView("records");
+  };
+  const deleteRecord = (id) => { if(confirm("¿Eliminar este registro de despacho?")) setRecords(prev => prev.filter(r=>r.id!==id)); };
+  const openDetail = (r) => { setDetailRecord(r); setView("detail"); };
+  const exportCSV = () => {
+    if(records.length===0) return alert("No hay registros para exportar.");
+    const headers = "ID,Equipo,Tipo,Fecha,Hora,Combustible,Galones,Costo,Horómetro,Odómetro,Progresiva,Operador,DIA_Cumple,Observaciones\n";
+    const rows = records.map(r => {
+      const eq = FLEET.find(f=>f.id===r.equipoId);
+      const checks = r.checklist||{};
+      const diaOk = CHECKLIST_ITEMS.filter(c=>c.critical).every(c=>checks[c.id]);
+      return [r.id,r.equipoId,eq?.tipo||"",r.fecha,r.hora,r.tipoCombustible,r.galones,r.costo,r.horómetro||"",r.odómetro||"",r.progresiva||"",r.operador||"",diaOk?"SI":"NO",`"${(r.observaciones||"").replace(/"/g,"''")}"`].join(",");
+    }).join("\n");
+    const blob = new Blob(["\ufeff"+headers+rows], {type:"text/csv;charset=utf-8;"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `PANASUR_Combustible_${new Date().toISOString().split("T")[0]}.csv`;
+    a.click();
+  };
+
+  return (
+    <div className="app-container">
+      {/* Header */}
+      <div className="header">
+        <div className="header-inner">
+          <div className="header-left">
+            <div className="header-icon">
+              <Icon name="fuel" size={18} color="#000"/>
+            </div>
+            <div>
+              <h1 className="header-title">PANASUR</h1>
+              <p className="header-sub">Control de Combustible</p>
+            </div>
+          </div>
+          <div className="header-right">
+            <p>CSF Hanaqpampa</p>
+            <p>RUC 20532012879</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="content fade-in" key={view}>
+        {view === "dashboard" && <Dashboard records={records} settings={settings} onNav={setView} onExport={exportCSV}/>}
+        {view === "new" && <NewRecord onSave={addRecord} onCancel={()=>setView("dashboard")} settings={settings}/>}
+        {view === "records" && <RecordsList records={records} onDelete={deleteRecord} onNav={setView} onDetail={openDetail} onExport={exportCSV}/>}
+        {view === "fleet" && <FleetView records={records}/>}
+        {view === "settings" && <SettingsView settings={settings} onSave={setSettings} records={records}/>}
+        {view === "detail" && detailRecord && <RecordDetail record={detailRecord} onBack={()=>{setDetailRecord(null);setView("records");}} onDelete={(id)=>{deleteRecord(id);setDetailRecord(null);setView("records");}}/>}
+      </div>
+
+      {/* Bottom Nav */}
+      <div className="bottom-nav">
+        {[
+          {k:"dashboard",icon:"dashboard",label:"Inicio"},
+          {k:"records",icon:"list",label:"Registros"},
+          {k:"new",icon:"plus",label:"Nuevo",fab:true},
+          {k:"fleet",icon:"truck",label:"Flota"},
+          {k:"settings",icon:"settings",label:"Config"},
+        ].map(item => (
+          <button key={item.k} className={`nav-item ${view===item.k?"active":""}`} onClick={()=>setView(item.k)}>
+            {item.fab ? (
+              <div className="nav-fab"><Icon name={item.icon} size={20} color="#000"/></div>
+            ) : <Icon name={item.icon} size={20}/>}
+            <span>{item.label}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Dashboard ───
+function Dashboard({ records, settings, onNav, onExport }) {
+  const today = new Date().toISOString().split("T")[0];
+  const todayRecs = records.filter(r => r.fecha === today);
+  const now = new Date();
+  const monthRecs = records.filter(r => { const d=new Date(r.fecha); return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear(); });
+  
+  const galToday = todayRecs.reduce((s,r)=>s+(parseFloat(r.galones)||0),0);
+  const galMonth = monthRecs.reduce((s,r)=>s+(parseFloat(r.galones)||0),0);
+  const costMonth = monthRecs.reduce((s,r)=>s+(parseFloat(r.costo)||0),0);
+  const avgGal = monthRecs.length>0 ? galMonth/monthRecs.length : 0;
+
+  const alertRecs = records.filter(r => {
+    const ch = r.checklist||{};
+    return CHECKLIST_ITEMS.some(c=>c.critical && !ch[c.id]);
+  }).slice(0,3);
+
+  const usage = {};
+  monthRecs.forEach(r => { usage[r.equipoId] = (usage[r.equipoId]||0) + (parseFloat(r.galones)||0); });
+  const topC = Object.entries(usage).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const maxC = topC.length>0 ? topC[0][1] : 1;
+
+  return (
+    <div className="scrollable">
+      <div className="grid-2" style={{marginBottom:16}}>
+        <div className="card">
+          <p style={{fontSize:11,color:"var(--text-muted)",fontWeight:600,marginBottom:8}}>HOY</p>
+          <p className="stat-value" style={{color:"var(--amber)"}}>{galToday.toFixed(1)}</p>
+          <p style={{fontSize:11,color:"var(--text-secondary)",marginTop:4}}>galones · {todayRecs.length} despachos</p>
+        </div>
+        <div className="card">
+          <p style={{fontSize:11,color:"var(--text-muted)",fontWeight:600,marginBottom:8}}>MES</p>
+          <p className="stat-value" style={{color:"var(--blue)"}}>{galMonth.toFixed(0)}</p>
+          <p style={{fontSize:11,color:"var(--text-secondary)",marginTop:4}}>galones · {monthRecs.length} reg.</p>
+        </div>
+        <div className="card">
+          <p style={{fontSize:11,color:"var(--text-muted)",fontWeight:600,marginBottom:8}}>COSTO MES</p>
+          <p className="stat-value" style={{color:"var(--green)"}}>{costMonth > 999 ? `${(costMonth/1000).toFixed(1)}k` : costMonth.toFixed(0)}</p>
+          <p style={{fontSize:11,color:"var(--text-secondary)",marginTop:4}}>soles acumulado</p>
+        </div>
+        <div className="card">
+          <p style={{fontSize:11,color:"var(--text-muted)",fontWeight:600,marginBottom:8}}>PROMEDIO</p>
+          <p className="stat-value" style={{color:"var(--text-primary)"}}>{avgGal.toFixed(1)}</p>
+          <p style={{fontSize:11,color:"var(--text-secondary)",marginTop:4}}>gal/despacho</p>
+        </div>
+      </div>
+
+      {/* DIA Banner */}
+      <div className="card dia-banner" style={{marginBottom:16}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
+          <span style={{color:"var(--amber)"}}><Icon name="alert" size={18}/></span>
+          <p style={{fontSize:12,fontWeight:700,color:"var(--amber)"}}>RESTRICCIÓN DIA — CSF HANAQPAMPA</p>
+        </div>
+        <p style={{fontSize:12,color:"var(--text-secondary)",lineHeight:1.5}}>
+          Bandejas antiderrames obligatorias. Mantenimiento mecánico prohibido en área de proyecto. Kit antiderrames y extintor requeridos en cada despacho.
+        </p>
+      </div>
+
+      {/* Alerts */}
+      {alertRecs.length > 0 && (
+        <div style={{marginBottom:16}}>
+          <p style={{fontSize:12,fontWeight:700,color:"var(--red)",marginBottom:10,display:"flex",alignItems:"center",gap:6}}>
+            <Icon name="alert" size={16}/> INCUMPLIMIENTOS RECIENTES
+          </p>
+          {alertRecs.map(r => {
+            const eq = FLEET.find(f=>f.id===r.equipoId);
+            const missing = CHECKLIST_ITEMS.filter(c=>c.critical && !(r.checklist||{})[c.id]);
+            return (
+              <div key={r.id} className="alert-banner">
+                <span style={{color:"var(--red)",flexShrink:0,marginTop:2}}><Icon name="alert" size={16}/></span>
+                <div>
+                  <p style={{fontSize:12,fontWeight:600,color:"var(--red)"}}>{r.equipoId} · {fmtDate(r.fecha)}</p>
+                  <p style={{fontSize:11,color:"var(--text-muted)",marginTop:2}}>{missing.map(m=>m.label.substring(0,40)+"...").join("; ")}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Top consumers */}
+      {topC.length > 0 && (
+        <div className="card" style={{marginBottom:16}}>
+          <p style={{fontSize:12,fontWeight:700,color:"var(--text-secondary)",marginBottom:14}}>TOP CONSUMIDORES — MES</p>
+          {topC.map(([id,gal]) => {
+            const eq = FLEET.find(f=>f.id===id);
+            return (
+              <div key={id} style={{marginBottom:12}}>
+                <div className="flex-between" style={{marginBottom:4}}>
+                  <span style={{fontSize:12,fontWeight:600}}>{id}</span>
+                  <span className="mono" style={{fontSize:12,color:"var(--amber)"}}>{gal.toFixed(1)} gal</span>
+                </div>
+                <div className="progress-bar">
+                  <div className="progress-fill" style={{width:`${(gal/maxC)*100}%`,background: gal > settings.alertaConsumo*5 ? "var(--red)" : "var(--amber)"}}/>
+                </div>
+                <p style={{fontSize:10,color:"var(--text-muted)",marginTop:2}}>{eq?.tipo||""}</p>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      <div style={{display:"flex",gap:10,marginBottom:16}}>
+        <button className="btn-primary" style={{flex:2}} onClick={()=>onNav("new")}>
+          <Icon name="fuel" size={18} color="#000"/> Registrar Despacho
+        </button>
+        <button className="btn-ghost" onClick={onExport} title="Exportar CSV">
+          <Icon name="download" size={16}/> CSV
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── New Record ───
+function NewRecord({ onSave, onCancel, settings }) {
+  const [step, setStep] = useState(1);
+  const [form, setForm] = useState({
+    equipoId:"", fecha:new Date().toISOString().split("T")[0],
+    hora:new Date().toTimeString().slice(0,5), galones:"", horómetro:"",
+    odómetro:"", tipoCombustible:"diesel", progresiva:"",
+    operador:"", observaciones:"", costo:"", checklist:{},
+  });
+
+  const update = (k,v) => setForm(p => {
+    const n = {...p, [k]:v};
+    if((k==="galones"||k==="tipoCombustible") && n.galones) {
+      const pr = n.tipoCombustible==="diesel" ? settings.precioDiesel : settings.precioGasoline;
+      n.costo = (parseFloat(n.galones)*pr).toFixed(2);
+    }
+    return n;
+  });
+  const toggleCheck = (id) => setForm(p => ({...p, checklist:{...p.checklist,[id]:!p.checklist[id]}}));
+
+  const critOk = CHECKLIST_ITEMS.filter(c=>c.critical).every(c=>form.checklist[c.id]);
+  const canNext = form.equipoId && form.galones && parseFloat(form.galones)>0;
+  const equipo = FLEET.find(f=>f.id===form.equipoId);
+  const isLiviano = equipo?.categoria==="Vehículo Liviano";
+
+  return (
+    <div className="scrollable">
+      <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:20}}>
+        <button className="btn-ghost" onClick={onCancel} style={{padding:8}}><Icon name="back" size={20}/></button>
+        <div>
+          <h2 style={{fontSize:18,fontWeight:700}}>Nuevo Despacho</h2>
+          <p style={{fontSize:12,color:"var(--text-muted)"}}>Paso {step} de 3</p>
+        </div>
+      </div>
+      <div className="step-dots">
+        {[1,2,3].map(s => <div key={s} className={`step-dot ${s<=step?"active":"inactive"}`}/>)}
+      </div>
+
+      {step===1 && (
+        <div className="fade-in">
+          <div className="card" style={{marginBottom:16}}>
+            <p style={{fontSize:13,fontWeight:700,marginBottom:14}}>Equipo y Datos del Despacho</p>
+            <div style={{marginBottom:14}}>
+              <label>Equipo / Vehículo *</label>
+              <select value={form.equipoId} onChange={e=>update("equipoId",e.target.value)}>
+                <option value="">Seleccionar equipo...</option>
+                <optgroup label="── Línea Amarilla ──">
+                  {FLEET.filter(f=>f.categoria==="Línea Amarilla").map(f => <option key={f.id} value={f.id}>{f.id} — {f.tipo}</option>)}
+                </optgroup>
+                <optgroup label="── Vehículos Livianos ──">
+                  {FLEET.filter(f=>f.categoria==="Vehículo Liviano").map(f => <option key={f.id} value={f.id}>{f.id} — {f.tipo}{f.placa?` (${f.placa})`:""}</option>)}
+                </optgroup>
+              </select>
+            </div>
+            <div className="grid-2" style={{marginBottom:14}}>
+              <div><label>Fecha *</label><input type="date" value={form.fecha} onChange={e=>update("fecha",e.target.value)}/></div>
+              <div><label>Hora *</label><input type="time" value={form.hora} onChange={e=>update("hora",e.target.value)}/></div>
+            </div>
+            <div className="grid-2" style={{marginBottom:14}}>
+              <div><label>Tipo Combustible</label>
+                <select value={form.tipoCombustible} onChange={e=>update("tipoCombustible",e.target.value)}>
+                  <option value="diesel">Diesel B5 S-50</option>
+                  <option value="gasolina">Gasolina 90</option>
+                </select>
+              </div>
+              <div><label>Galones *</label><input type="number" step="0.1" min="0" placeholder="0.0" value={form.galones} onChange={e=>update("galones",e.target.value)}/></div>
+            </div>
+            <div className="grid-2" style={{marginBottom:14}}>
+              <div><label>Horómetro (hrs)</label><input type="number" step="0.1" placeholder="Hrs acumuladas" value={form.horómetro} onChange={e=>update("horómetro",e.target.value)}/></div>
+              {isLiviano ? (
+                <div><label>Odómetro (km)</label><input type="number" step="0.1" placeholder="Km acumulados" value={form.odómetro} onChange={e=>update("odómetro",e.target.value)}/></div>
+              ) : (
+                <div><label>Progresiva (km)</label><input type="text" placeholder="Ej: Km 14+500" value={form.progresiva} onChange={e=>update("progresiva",e.target.value)}/></div>
+              )}
+            </div>
+            <div className="cost-box">
+              <span style={{fontSize:13,fontWeight:600,color:"var(--amber)"}}>Costo estimado</span>
+              <span className="mono" style={{fontSize:18,fontWeight:700,color:"var(--amber)"}}>S/ {form.costo||"0.00"}</span>
+            </div>
+          </div>
+          <button className="btn-primary" style={{width:"100%"}} disabled={!canNext} onClick={()=>setStep(2)}>
+            Continuar → Checklist DIA
+          </button>
+        </div>
+      )}
+
+      {step===2 && (
+        <div className="fade-in">
+          <div className="card" style={{marginBottom:16}}>
+            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14}}>
+              <span style={{color:"var(--amber)"}}><Icon name="check" size={18}/></span>
+              <p style={{fontSize:13,fontWeight:700}}>Checklist SSOMA — DIA Hanaqpampa</p>
+            </div>
+            <p style={{fontSize:11,color:"var(--text-muted)",marginBottom:16}}>
+              Items con <span style={{color:"var(--red)"}}>●</span> son obligatorios según compromisos DIA Cap. 7
+            </p>
+            {CHECKLIST_ITEMS.map(item => (
+              <button key={item.id} className="checklist-item" onClick={()=>toggleCheck(item.id)}>
+                <div className={`checkbox ${form.checklist[item.id]?"checked":""}`}>
+                  {form.checklist[item.id] && <svg viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="3" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg>}
+                </div>
+                <div style={{flex:1}}>
+                  <p style={{fontSize:13,fontWeight:form.checklist[item.id]?500:400,color:form.checklist[item.id]?"var(--text-primary)":"var(--text-secondary)"}}>
+                    {item.critical && <span style={{color:"var(--red)",marginRight:4}}>●</span>}
+                    {item.label}
+                  </p>
+                </div>
+              </button>
+            ))}
+          </div>
+          {!critOk && (
+            <div className="alert-banner">
+              <span style={{color:"var(--red)"}}><Icon name="alert" size={16}/></span>
+              <p style={{fontSize:12,color:"var(--red)"}}>Items críticos pendientes. Puede continuar pero se generará alerta de incumplimiento DIA.</p>
+            </div>
+          )}
+          <div style={{display:"flex",gap:10}}>
+            <button className="btn-ghost" onClick={()=>setStep(1)} style={{flex:1}}>← Atrás</button>
+            <button className="btn-primary" onClick={()=>setStep(3)} style={{flex:2}}>Continuar → Resumen</button>
+          </div>
+        </div>
+      )}
+
+      {step===3 && (
+        <div className="fade-in">
+          <div className="card" style={{marginBottom:16}}>
+            <p style={{fontSize:13,fontWeight:700,marginBottom:14}}>Resumen del Despacho</p>
+            <div style={{display:"grid",gap:10}}>
+              {[
+                ["Equipo",`${form.equipoId} — ${equipo?.tipo||""}`],
+                ["Fecha/Hora",`${fmtDate(form.fecha)} ${form.hora}`],
+                ["Combustible",form.tipoCombustible==="diesel"?"Diesel B5 S-50":"Gasolina 90"],
+                ["Galones",`${form.galones} gal`],
+                ["Costo",`S/ ${form.costo}`],
+                form.horómetro&&["Horómetro",`${form.horómetro} hrs`],
+                form.odómetro&&["Odómetro",`${form.odómetro} km`],
+                form.progresiva&&["Progresiva",form.progresiva],
+              ].filter(Boolean).map(([l,v],i) => (
+                <div key={i} className="flex-between row-border">
+                  <span style={{fontSize:12,color:"var(--text-muted)"}}>{l}</span>
+                  <span className="mono" style={{fontSize:12,fontWeight:600}}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="card" style={{marginBottom:16}}>
+            <p style={{fontSize:13,fontWeight:700,marginBottom:10}}>Cumplimiento SSOMA</p>
+            <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+              <span className={`tag ${critOk?"tag-green":"tag-red"}`}>{critOk?"✓ DIA OK":"✗ DIA INCUMPLE"}</span>
+              <span className="tag tag-blue">{Object.values(form.checklist).filter(Boolean).length}/{CHECKLIST_ITEMS.length} verificados</span>
+            </div>
+          </div>
+          <div style={{marginBottom:14}}>
+            <label>Operador Responsable</label>
+            <input type="text" placeholder="Nombre del operador" value={form.operador} onChange={e=>update("operador",e.target.value)}/>
+          </div>
+          <div style={{marginBottom:14}}>
+            <label>Observaciones</label>
+            <textarea rows={3} placeholder="Novedades, condiciones del equipo..." value={form.observaciones} onChange={e=>update("observaciones",e.target.value)} style={{resize:"vertical"}}/>
+          </div>
+          <div style={{display:"flex",gap:10}}>
+            <button className="btn-ghost" onClick={()=>setStep(2)} style={{flex:1}}>← Atrás</button>
+            <button className="btn-primary" onClick={()=>onSave(form)} style={{flex:2}}>✓ Guardar Registro</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Records List ───
+function RecordsList({ records, onDelete, onNav, onDetail, onExport }) {
+  const [filter, setFilter] = useState("");
+  const filtered = records.filter(r => {
+    if(!filter) return true;
+    const q = filter.toLowerCase();
+    return r.equipoId?.toLowerCase().includes(q) || r.operador?.toLowerCase().includes(q) || r.fecha?.includes(q);
+  });
+
+  return (
+    <div className="scrollable">
+      <div className="flex-between" style={{marginBottom:14}}>
+        <h2 style={{fontSize:18,fontWeight:700}}>Registros</h2>
+        <div style={{display:"flex",gap:8,alignItems:"center"}}>
+          <span className="tag tag-amber">{records.length} total</span>
+          <button className="btn-ghost" onClick={onExport} style={{padding:"6px 10px"}} title="Exportar CSV"><Icon name="download" size={16}/></button>
+        </div>
+      </div>
+      <input type="text" placeholder="Buscar por equipo, operador o fecha..." value={filter} onChange={e=>setFilter(e.target.value)} style={{marginBottom:14}}/>
+      {filtered.length===0 ? (
+        <div className="card" style={{textAlign:"center",padding:40}}>
+          <p style={{color:"var(--text-muted)",fontSize:14}}>No hay registros{filter?" con ese filtro":""}</p>
+          <button className="btn-primary" style={{marginTop:16}} onClick={()=>onNav("new")}>+ Nuevo Despacho</button>
+        </div>
+      ) : filtered.map(r => {
+        const eq = FLEET.find(f=>f.id===r.equipoId);
+        const ch = r.checklist||{};
+        const ok = CHECKLIST_ITEMS.filter(c=>c.critical).every(c=>ch[c.id]);
+        return (
+          <div key={r.id} className="card" style={{marginBottom:10,cursor:"pointer"}} onClick={()=>onDetail(r)}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+              <div style={{flex:1}}>
+                <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
+                  <span style={{fontWeight:700,fontSize:14}}>{r.equipoId}</span>
+                  <span className={`tag ${ok?"tag-green":"tag-red"}`} style={{fontSize:9}}>{ok?"DIA OK":"ALERTA"}</span>
+                </div>
+                <p style={{fontSize:11,color:"var(--text-muted)"}}>{eq?.tipo||""} · {fmtDate(r.fecha)} {r.hora}</p>
+                {r.operador && <p style={{fontSize:11,color:"var(--text-muted)",marginTop:2}}>Op: {r.operador}</p>}
+              </div>
+              <div style={{textAlign:"right"}}>
+                <p className="mono" style={{fontSize:16,fontWeight:700,color:"var(--amber)"}}>{parseFloat(r.galones).toFixed(1)}</p>
+                <p style={{fontSize:10,color:"var(--text-muted)"}}>galones</p>
+                <p className="mono" style={{fontSize:11,color:"var(--green)",marginTop:2}}>S/{parseFloat(r.costo||0).toFixed(2)}</p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── Record Detail ───
+function RecordDetail({ record, onBack, onDelete }) {
+  const eq = FLEET.find(f=>f.id===record.equipoId);
+  const ch = record.checklist||{};
+  const critOk = CHECKLIST_ITEMS.filter(c=>c.critical).every(c=>ch[c.id]);
+  
+  return (
+    <div className="scrollable">
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20}}>
+        <div style={{display:"flex",alignItems:"center",gap:12}}>
+          <button className="btn-ghost" onClick={onBack} style={{padding:8}}><Icon name="back" size={20}/></button>
+          <h2 style={{fontSize:18,fontWeight:700}}>Detalle</h2>
+        </div>
+        <button className="btn-ghost" onClick={()=>onDelete(record.id)} style={{padding:8,color:"var(--red)",borderColor:"rgba(239,68,68,0.3)"}}>
+          <Icon name="trash" size={16} color="var(--red)"/>
+        </button>
+      </div>
+      <div className="card" style={{marginBottom:16}}>
+        <div className="flex-between" style={{marginBottom:16}}>
+          <div>
+            <p style={{fontWeight:700,fontSize:18}}>{record.equipoId}</p>
+            <p style={{fontSize:12,color:"var(--text-muted)"}}>{eq?.tipo} · {eq?.categoria}</p>
+            {eq?.placa && <span className="tag tag-blue" style={{marginTop:4}}>{eq.placa}</span>}
+          </div>
+          <div style={{textAlign:"right"}}>
+            <p className="mono" style={{fontSize:28,fontWeight:700,color:"var(--amber)"}}>{parseFloat(record.galones).toFixed(1)}</p>
+            <p style={{fontSize:11,color:"var(--text-muted)"}}>galones</p>
+          </div>
+        </div>
+        <div style={{display:"grid",gap:10}}>
+          {[
+            ["Fecha",fmtDate(record.fecha)],["Hora",record.hora],
+            ["Combustible",record.tipoCombustible==="diesel"?"Diesel B5 S-50":"Gasolina 90"],
+            ["Costo",`S/ ${parseFloat(record.costo||0).toFixed(2)}`],
+            record.horómetro&&["Horómetro",`${record.horómetro} hrs`],
+            record.odómetro&&["Odómetro",`${record.odómetro} km`],
+            record.progresiva&&["Progresiva",record.progresiva],
+            record.operador&&["Operador",record.operador],
+          ].filter(Boolean).map(([l,v],i)=>(
+            <div key={i} className="flex-between row-border">
+              <span style={{fontSize:12,color:"var(--text-muted)"}}>{l}</span>
+              <span className="mono" style={{fontSize:12,fontWeight:600}}>{v}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="card" style={{marginBottom:16}}>
+        <div className="flex-between" style={{marginBottom:12}}>
+          <p style={{fontSize:13,fontWeight:700}}>Checklist SSOMA</p>
+          <span className={`tag ${critOk?"tag-green":"tag-red"}`}>{critOk?"DIA CUMPLE":"DIA INCUMPLE"}</span>
+        </div>
+        {CHECKLIST_ITEMS.map(item => (
+          <div key={item.id} style={{display:"flex",alignItems:"center",gap:10,padding:"6px 0",borderBottom:"1px solid var(--border)"}}>
+            <span style={{fontSize:14}}>{ch[item.id]?"✅":"❌"}</span>
+            <span style={{fontSize:12,color:ch[item.id]?"var(--text-primary)":"var(--red)",flex:1}}>
+              {item.critical && !ch[item.id] && <span style={{color:"var(--red)",fontWeight:700}}>[CRÍTICO] </span>}
+              {item.label}
+            </span>
+          </div>
+        ))}
+      </div>
+      {record.observaciones && (
+        <div className="card" style={{marginBottom:16}}>
+          <p style={{fontSize:13,fontWeight:700,marginBottom:8}}>Observaciones</p>
+          <p style={{fontSize:13,color:"var(--text-secondary)",lineHeight:1.6}}>{record.observaciones}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Fleet ───
+function FleetView({ records }) {
+  const [cat, setCat] = useState("all");
+  const stats = FLEET.map(f => {
+    const fr = records.filter(r=>r.equipoId===f.id);
+    const gal = fr.reduce((s,r)=>s+(parseFloat(r.galones)||0),0);
+    const cost = fr.reduce((s,r)=>s+(parseFloat(r.costo)||0),0);
+    return {...f, gal, cost, count:fr.length, last:fr[0]};
+  }).filter(f => cat==="all" || f.categoria===cat);
+
+  return (
+    <div className="scrollable">
+      <h2 style={{fontSize:18,fontWeight:700,marginBottom:14}}>Flota del Proyecto</h2>
+      <div style={{display:"flex",gap:8,marginBottom:16,overflowX:"auto",paddingBottom:4}}>
+        {["all","Línea Amarilla","Vehículo Liviano"].map(c => (
+          <button key={c} className={cat===c?"btn-primary":"btn-ghost"} onClick={()=>setCat(c)} style={{whiteSpace:"nowrap",fontSize:12,padding:"8px 14px"}}>
+            {c==="all"?"Todos ("+FLEET.length+")":c}
+          </button>
+        ))}
+      </div>
+      <p style={{fontSize:11,color:"var(--text-muted)",marginBottom:12}}>{stats.length} equipos · Consumo acumulado del proyecto</p>
+      {stats.map(f => (
+        <div key={f.id} className="card" style={{marginBottom:10}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+            <div>
+              <p style={{fontWeight:700,fontSize:14}}>{f.id}</p>
+              <p style={{fontSize:11,color:"var(--text-muted)"}}>{f.tipo}</p>
+              {f.placa && <span className="tag tag-blue" style={{marginTop:4}}>{f.placa}</span>}
+            </div>
+            <div style={{textAlign:"right"}}>
+              <p className="mono" style={{fontSize:16,fontWeight:700,color:f.gal>0?"var(--amber)":"var(--text-muted)"}}>
+                {f.gal.toFixed(1)} <span style={{fontSize:10,fontWeight:400}}>gal</span>
+              </p>
+              {f.cost>0 && <p className="mono" style={{fontSize:11,color:"var(--green)"}}>S/{f.cost.toFixed(0)}</p>}
+              <p style={{fontSize:10,color:"var(--text-muted)",marginTop:2}}>{f.count} despachos</p>
+            </div>
+          </div>
+          {f.last && (
+            <p style={{fontSize:10,color:"var(--text-muted)",marginTop:8,borderTop:"1px solid var(--border)",paddingTop:6}}>
+              Último: {fmtDate(f.last.fecha)} · {parseFloat(f.last.galones).toFixed(1)} gal
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── Settings ───
+function SettingsView({ settings, onSave, records }) {
+  const [local, setLocal] = useState(settings);
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = () => { onSave(local); setSaved(true); setTimeout(()=>setSaved(false),2000); };
+  const handleClear = () => {
+    if(confirm(`¿Está seguro de eliminar TODOS los ${records.length} registros? Esta acción no se puede deshacer.`)) {
+      localStorage.removeItem(STORAGE_KEYS.records);
+      location.reload();
+    }
+  };
+
+  return (
+    <div className="scrollable">
+      <h2 style={{fontSize:18,fontWeight:700,marginBottom:20}}>Configuración</h2>
+      <div className="card" style={{marginBottom:16}}>
+        <p style={{fontSize:13,fontWeight:700,marginBottom:14}}>Precios de Combustible</p>
+        <div style={{marginBottom:14}}>
+          <label>Precio Diesel B5 S-50 (S/. por galón)</label>
+          <input type="number" step="0.10" value={local.precioDiesel} onChange={e=>setLocal(p=>({...p,precioDiesel:parseFloat(e.target.value)||0}))}/>
+        </div>
+        <div>
+          <label>Precio Gasolina 90 (S/. por galón)</label>
+          <input type="number" step="0.10" value={local.precioGasoline} onChange={e=>setLocal(p=>({...p,precioGasoline:parseFloat(e.target.value)||0}))}/>
+        </div>
+      </div>
+      <div className="card" style={{marginBottom:16}}>
+        <p style={{fontSize:13,fontWeight:700,marginBottom:14}}>Alertas</p>
+        <label>Alerta consumo por despacho (galones)</label>
+        <input type="number" step="1" value={local.alertaConsumo} onChange={e=>setLocal(p=>({...p,alertaConsumo:parseFloat(e.target.value)||0}))}/>
+        <p style={{fontSize:11,color:"var(--text-muted)",marginTop:6}}>Equipos que superen 5× este valor mensual se marcan en rojo.</p>
+      </div>
+      <div className="card" style={{marginBottom:16}}>
+        <p style={{fontSize:13,fontWeight:700,marginBottom:10}}>Información del Proyecto</p>
+        <div style={{display:"grid",gap:8}}>
+          {[
+            ["Empresa","Tours Panasur E.I.R.L."],
+            ["RUC","20532012879"],
+            ["Proyecto","Acceso Principal CSF Hanaqpampa"],
+            ["Cliente","ENGIE Energía Perú S.A.A."],
+            ["Ubicación","Moquegua — 3,800–4,200 msnm"],
+            ["Jefe SSOMA","Alvaro Ruiz Reyna (CIP 210152)"],
+            ["Jefe Construcción","Ing. Víctor Cáceres Murillo (CIP 047901)"],
+            ["Gerente General","Eugenio Huamaní Quispe"],
+            ["Código doc.","PANASUR-SSOMA-REG-COM-001"],
+          ].map(([k,v],i) => (
+            <div key={i} className="flex-between row-border">
+              <span style={{fontSize:12,color:"var(--text-muted)"}}>{k}</span>
+              <span style={{fontSize:12,fontWeight:600,textAlign:"right",maxWidth:"55%"}}>{v}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <button className="btn-primary" style={{width:"100%",marginBottom:12}} onClick={handleSave}>
+        {saved?"✓ Configuración Guardada":"Guardar Configuración"}
+      </button>
+      {records.length > 0 && (
+        <button className="btn-ghost" style={{width:"100%",color:"var(--red)",borderColor:"rgba(239,68,68,0.3)",justifyContent:"center"}} onClick={handleClear}>
+          <Icon name="trash" size={14} color="var(--red)"/> Borrar todos los registros ({records.length})
+        </button>
+      )}
+      <div style={{textAlign:"center",marginTop:20,marginBottom:20}}>
+        <p style={{fontSize:10,color:"var(--text-muted)"}}>PANASUR — Control de Combustible v1.0</p>
+        <p style={{fontSize:10,color:"var(--text-muted)"}}>Proyecto CSF Hanaqpampa · ENGIE Energía Perú</p>
+        <p style={{fontSize:10,color:"var(--text-muted)",marginTop:4}}>Desarrollo: Área SSOMA PANASUR © 2026</p>
+      </div>
+    </div>
+  );
+}
+
+// ─── Render ───
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+    </script>
+</body>
+</html>
