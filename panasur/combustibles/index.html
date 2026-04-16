@@ -7,324 +7,91 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0B1120">
     <title>PANASUR — Control de Combustible | CSF Hanaqpampa</title>
-    <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23F59E0B'/%3E%3Ctext x='50' y='68' font-family='Arial' font-size='50' font-weight='bold' text-anchor='middle' fill='%23000'%3E⛽%3C/text%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --bg-primary: #0B1120;
-            --bg-card: #131B2E;
-            --bg-card-hover: #1A2540;
-            --bg-input: #0F172A;
-            --border: #1E293B;
-            --border-focus: #F59E0B;
-            --text-primary: #F1F5F9;
-            --text-secondary: #94A3B8;
-            --text-muted: #64748B;
-            --amber: #F59E0B;
-            --amber-dark: #D97706;
-            --amber-glow: rgba(245,158,11,0.15);
-            --green: #22C55E;
-            --green-bg: rgba(34,197,94,0.12);
-            --red: #EF4444;
-            --red-bg: rgba(239,68,68,0.12);
-            --blue: #3B82F6;
-            --blue-bg: rgba(59,130,246,0.12);
+            --bg-primary: #0B1120; --bg-card: #131B2E; --bg-card-hover: #1A2540;
+            --bg-input: #0F172A; --border: #1E293B; --border-focus: #F59E0B;
+            --text-primary: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+            --amber: #F59E0B; --amber-dark: #D97706; --amber-glow: rgba(245,158,11,0.15);
+            --green: #22C55E; --green-bg: rgba(34,197,94,0.12);
+            --red: #EF4444; --red-bg: rgba(239,68,68,0.12);
+            --blue: #3B82F6; --blue-bg: rgba(59,130,246,0.12);
         }
-        html, body { 
-            background: var(--bg-primary); 
-            color: var(--text-primary); 
-            font-family: 'DM Sans', sans-serif;
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
+        html, body { background: var(--bg-primary); color: var(--text-primary); font-family: 'DM Sans', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
         #root { min-height: 100vh; }
-        
-        input, select, textarea {
-            background: var(--bg-input);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            border-radius: 10px;
-            padding: 10px 14px;
-            font-size: 14px;
-            width: 100%;
-            font-family: 'DM Sans', sans-serif;
-            transition: border-color 0.2s;
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--amber);
-            box-shadow: 0 0 0 3px var(--amber-glow);
-        }
-        select {
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 16px;
-            padding-right: 36px;
-        }
+        input, select, textarea { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-primary); border-radius: 10px; padding: 10px 14px; font-size: 14px; width: 100%; font-family: 'DM Sans', sans-serif; transition: border-color 0.2s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber-glow); }
+        select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; padding-right: 36px; }
         select option { background: var(--bg-card); color: var(--text-primary); }
-        
         button { font-family: 'DM Sans', sans-serif; cursor: pointer; }
-        
-        .app-container {
-            max-width: 480px;
-            margin: 0 auto;
-            min-height: 100vh;
-            background: var(--bg-primary);
-            position: relative;
-            padding-bottom: 80px;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #1A2540 0%, #0B1120 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-        .header-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+        .app-container { max-width: 480px; margin: 0 auto; min-height: 100vh; background: var(--bg-primary); position: relative; padding-bottom: 80px; }
+        .header { background: linear-gradient(135deg, #1A2540 0%, #0B1120 100%); border-bottom: 1px solid var(--border); padding: 16px 20px; position: sticky; top: 0; z-index: 50; }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; }
         .header-left { display: flex; align-items: center; gap: 10px; }
-        .header-icon {
-            background: var(--amber);
-            border-radius: 8px;
-            padding: 6px 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .header-icon { background: var(--amber); border-radius: 8px; padding: 6px 8px; display: flex; align-items: center; justify-content: center; }
         .header-title { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
-        .header-sub {
-            font-size: 10px;
-            color: var(--text-muted);
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+        .header-sub { font-size: 10px; color: var(--text-muted); font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
         .header-right { text-align: right; }
         .header-right p { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
         .header-right p:last-child { font-size: 10px; }
-        
+        .sync-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 4px; font-size: 9px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 3px; }
+        .sync-online { background: var(--green-bg); color: var(--green); }
+        .sync-offline { background: var(--red-bg); color: var(--red); }
+        .sync-syncing { background: var(--blue-bg); color: var(--blue); }
+        .pulse { animation: pulse 1.5s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         .content { padding: 16px 16px 0; }
-        
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 18px;
-            transition: all 0.2s;
-        }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; transition: all 0.2s; }
         .card:hover { background: var(--bg-card-hover); }
-        
-        .btn-primary {
-            background: var(--amber);
-            color: #000;
-            font-weight: 600;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 20px;
-            font-size: 14px;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
+        .btn-primary { background: var(--amber); color: #000; font-weight: 600; border: none; border-radius: 10px; padding: 12px 20px; font-size: 14px; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-primary:hover { background: var(--amber-dark); transform: translateY(-1px); }
         .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         .btn-primary:active { transform: scale(0.97); }
-        
-        .btn-ghost {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 16px;
-            font-size: 13px;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; font-size: 13px; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
         .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
-        
-        .tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
+        .tag { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
         .tag-green { background: var(--green-bg); color: var(--green); }
         .tag-red { background: var(--red-bg); color: var(--red); }
         .tag-blue { background: var(--blue-bg); color: var(--blue); }
         .tag-amber { background: var(--amber-glow); color: var(--amber); }
-        
-        .stat-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 28px;
-            font-weight: 700;
-            line-height: 1;
-        }
+        .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; line-height: 1; }
         .mono { font-family: 'JetBrains Mono', monospace; }
-        
-        label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
-            background: var(--bg-card);
-            border-top: 1px solid var(--border);
-            display: flex;
-            padding: 6px 0 max(8px, env(safe-area-inset-bottom));
-            z-index: 50;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            padding: 8px 4px;
-            cursor: pointer;
-            color: var(--text-muted);
-            transition: color 0.2s;
-            font-size: 10px;
-            font-weight: 500;
-            position: relative;
-            flex: 1;
-            border: none;
-            background: none;
-        }
+        label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--bg-card); border-top: 1px solid var(--border); display: flex; padding: 6px 0 max(8px, env(safe-area-inset-bottom)); z-index: 50; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 4px; cursor: pointer; color: var(--text-muted); transition: color 0.2s; font-size: 10px; font-weight: 500; position: relative; flex: 1; border: none; background: none; }
         .nav-item.active { color: var(--amber); }
-        .nav-item.active::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: 25%;
-            right: 25%;
-            height: 2px;
-            background: var(--amber);
-            border-radius: 0 0 2px 2px;
-        }
-        .nav-fab {
-            background: var(--amber);
-            border-radius: 50%;
-            width: 42px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            margin-top: -18px;
-            box-shadow: 0 4px 15px rgba(245,158,11,0.4);
-            border: none;
-        }
-        
-        /* Checklist */
-        .checklist-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.15s;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-            color: inherit;
-        }
+        .nav-item.active::before { content: ''; position: absolute; top: -1px; left: 25%; right: 25%; height: 2px; background: var(--amber); border-radius: 0 0 2px 2px; }
+        .nav-fab { background: var(--amber); border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; color: #000; margin-top: -18px; box-shadow: 0 4px 15px rgba(245,158,11,0.4); border: none; }
+        .checklist-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 10px; cursor: pointer; transition: background 0.15s; border: none; background: none; width: 100%; text-align: left; color: inherit; }
         .checklist-item:hover { background: var(--bg-card-hover); }
-        .checkbox {
-            width: 22px;
-            height: 22px;
-            border: 2px solid var(--border);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
+        .checkbox { width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
         .checkbox.checked { background: var(--amber); border-color: var(--amber); }
-        
         .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
         .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
-        
-        .alert-banner {
-            background: var(--red-bg);
-            border: 1px solid rgba(239,68,68,0.3);
-            border-radius: 10px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-        
+        .alert-banner { background: var(--red-bg); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px; padding: 12px 16px; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
         .scrollable { max-height: calc(100vh - 200px); overflow-y: auto; }
         .scrollable::-webkit-scrollbar { width: 4px; }
         .scrollable::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-        
         .fade-in { animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes spin { to { transform: rotate(360deg); } }
         .spinner { display: inline-block; width: 40px; height: 40px; border: 4px solid var(--amber); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
-        
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .flex-between { display: flex; justify-content: space-between; align-items: center; }
         .row-border { border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-        
-        .dia-banner {
-            border-color: rgba(245,158,11,0.3);
-            background: linear-gradient(135deg, rgba(245,158,11,0.08) 0%, var(--bg-card) 100%);
-        }
-        
+        .dia-banner { border-color: rgba(245,158,11,0.3); background: linear-gradient(135deg, rgba(245,158,11,0.08) 0%, var(--bg-card) 100%); }
         .step-dots { display: flex; gap: 6px; margin-bottom: 20px; }
         .step-dot { flex: 1; height: 3px; border-radius: 2px; transition: background 0.3s; }
         .step-dot.active { background: var(--amber); }
         .step-dot.inactive { background: var(--border); }
-        
-        .cost-box {
-            background: var(--amber-glow);
-            border-radius: 10px;
-            padding: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        @media (max-width: 380px) {
-            .stat-value { font-size: 22px; }
-            .card { padding: 14px; }
-        }
+        .cost-box { background: var(--amber-glow); border-radius: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: var(--bg-card); border: 1px solid var(--green); color: var(--green); padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideDown 0.3s ease; }
+        .toast.error { border-color: var(--red); color: var(--red); }
+        @keyframes slideDown { from { top: 0; opacity: 0; } to { top: 80px; opacity: 1; } }
+        @media (max-width: 380px) { .stat-value { font-size: 22px; } .card { padding: 14px; } }
     </style>
 </head>
 <body>
@@ -333,44 +100,22 @@
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
     <script type="text/babel">
 const { useState, useEffect, useCallback, useRef } = React;
 
-// ─── Data ───
-const FLEET = [
-  { id: "VOL-01", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
-  { id: "VOL-02", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
-  { id: "VOL-03", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
-  { id: "VOL-04", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
-  { id: "VOL-05", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
-  { id: "VOL-06", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
-  { id: "VOL-07", tipo: "Volquete 20 m³", categoria: "Línea Amarilla" },
-  { id: "CIS-01", tipo: "Cisterna", categoria: "Línea Amarilla" },
-  { id: "CIS-02", tipo: "Cisterna", categoria: "Línea Amarilla" },
-  { id: "EXC-01", tipo: "Excavadora c/picotón", categoria: "Línea Amarilla" },
-  { id: "EXC-02", tipo: "Excavadora c/picotón", categoria: "Línea Amarilla" },
-  { id: "EXC-03", tipo: "Excavadora c/picotón", categoria: "Línea Amarilla" },
-  { id: "CAR-01", tipo: "Cargador Frontal", categoria: "Línea Amarilla" },
-  { id: "CAR-02", tipo: "Cargador Frontal", categoria: "Línea Amarilla" },
-  { id: "TRA-01", tipo: "Tractor", categoria: "Línea Amarilla" },
-  { id: "TRA-02", tipo: "Tractor", categoria: "Línea Amarilla" },
-  { id: "MOT-01", tipo: "Motoniveladora", categoria: "Línea Amarilla" },
-  { id: "MOT-02", tipo: "Motoniveladora", categoria: "Línea Amarilla" },
-  { id: "ROD-01", tipo: "Rodillo Liso Vibratorio", categoria: "Línea Amarilla" },
-  { id: "ROD-02", tipo: "Rodillo Liso Vibratorio", categoria: "Línea Amarilla" },
-  { id: "CAM-01", tipo: "Camioneta", categoria: "Vehículo Liviano" },
-  { id: "CAM-02", tipo: "Camioneta", categoria: "Vehículo Liviano" },
-  { id: "CAM-03", tipo: "Camioneta", categoria: "Vehículo Liviano" },
-  { id: "AMB-01", tipo: "Ambulancia Toyota Hilux 4x4", categoria: "Vehículo Liviano", placa: "EUH-394" },
-  { id: "COM-01", tipo: "Microbús Combi", categoria: "Vehículo Liviano" },
-];
+// ─── Supabase Config ───
+const SUPABASE_URL = "https://uinoropxppiuqgzktqjr.supabase.co";
+const SUPABASE_KEY = "sb_publishable_NHPCpOgHh5c-m-t9s4KhIw_xO4fRrtE";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// ─── Constants ───
 const CHECKLIST_ITEMS = [
   { id: "bandeja", label: "Bandeja antiderrames colocada bajo boca de llenado", critical: true },
   { id: "kit_antiderrame", label: "Kit antiderrames disponible y completo", critical: true },
   { id: "extintor", label: "Extintor operativo en zona de abastecimiento", critical: true },
-  { id: "señalizacion", label: "Señalización de zona de abastecimiento instalada", critical: false },
+  { id: "senalizacion", label: "Señalización de zona de abastecimiento instalada", critical: false },
   { id: "area_designada", label: "Abastecimiento en área designada (fuera de zona proyecto)", critical: true },
   { id: "motor_apagado", label: "Motor del equipo apagado durante abastecimiento", critical: true },
   { id: "epp_operador", label: "Operador con EPP completo (guantes nitrilo, lentes, casco)", critical: false },
@@ -379,18 +124,9 @@ const CHECKLIST_ITEMS = [
   { id: "conexion_tierra", label: "Conexión a tierra verificada (cisterna → equipo)", critical: false },
 ];
 
-const STORAGE_KEYS = { records: "panasur-fuel-records", settings: "panasur-fuel-settings" };
+const USER_KEY = "panasur-current-user";
 
-function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
-function fmtDate(d) { if(!d) return ""; return new Date(d).toLocaleDateString("es-PE",{day:"2-digit",month:"2-digit",year:"numeric"}); }
-
-function loadLS(key, fallback) {
-  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
-  catch { return fallback; }
-}
-function saveLS(key, val) {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) { console.error(e); }
-}
+function fmtDate(d) { if(!d) return ""; return new Date(d+"T00:00:00").toLocaleDateString("es-PE",{day:"2-digit",month:"2-digit",year:"numeric"}); }
 
 // ─── SVG Icons ───
 function Icon({ name, size=20, color="currentColor" }) {
@@ -406,55 +142,212 @@ function Icon({ name, size=20, color="currentColor" }) {
     check: <><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></>,
     download: <><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></>,
     trash: <><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></>,
+    cloud: <><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></>,
+    user: <><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></>,
   };
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width={size} height={size}>
-      {paths[name]}
-    </svg>
-  );
+  return <svg viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width={size} height={size}>{paths[name]}</svg>;
+}
+
+// ─── Supabase API Helpers ───
+async function loadFlota() {
+  const { data, error } = await supabase.from('panasur_flota').select('*').eq('activo', true).order('id');
+  if (error) { console.error(error); return []; }
+  return data || [];
+}
+
+async function loadRecords() {
+  const { data, error } = await supabase.from('panasur_despachos_combustible').select('*').order('fecha', {ascending:false}).order('hora', {ascending:false}).limit(500);
+  if (error) { console.error(error); return []; }
+  return (data || []).map(r => ({
+    id: r.id,
+    equipoId: r.equipo_id,
+    fecha: r.fecha,
+    hora: r.hora?.slice(0,5) || '',
+    tipoCombustible: r.tipo_combustible,
+    galones: r.galones,
+    costo: r.costo,
+    horometro: r.horometro,
+    odometro: r.odometro,
+    progresiva: r.progresiva,
+    operador: r.operador,
+    observaciones: r.observaciones,
+    checklist: r.checklist || {},
+    diaOk: r.dia_cumple,
+    creadoPor: r.creado_por,
+    timestamp: r.created_at,
+  }));
+}
+
+async function loadConfig() {
+  const { data } = await supabase.from('panasur_config').select('*');
+  const cfg = {};
+  (data||[]).forEach(c => cfg[c.key] = c.value);
+  return {
+    precioDiesel: cfg.precios?.diesel || 14.50,
+    precioGasoline: cfg.precios?.gasolina || 16.80,
+    alertaConsumo: cfg.alertas?.consumo_max_despacho || 20,
+  };
+}
+
+async function saveRecord(form, currentUser) {
+  const critOk = CHECKLIST_ITEMS.filter(c=>c.critical).every(c=>form.checklist[c.id]);
+  const payload = {
+    equipo_id: form.equipoId,
+    fecha: form.fecha,
+    hora: form.hora + ':00',
+    tipo_combustible: form.tipoCombustible,
+    galones: parseFloat(form.galones),
+    costo: parseFloat(form.costo) || 0,
+    horometro: form.horometro ? parseFloat(form.horometro) : null,
+    odometro: form.odometro ? parseFloat(form.odometro) : null,
+    progresiva: form.progresiva || null,
+    operador: form.operador || null,
+    observaciones: form.observaciones || null,
+    checklist: form.checklist,
+    dia_cumple: critOk,
+    creado_por: currentUser || null,
+  };
+  const { data, error } = await supabase.from('panasur_despachos_combustible').insert(payload).select().single();
+  if (error) throw error;
+  return data;
+}
+
+async function deleteRecord(id) {
+  const { error } = await supabase.from('panasur_despachos_combustible').delete().eq('id', id);
+  if (error) throw error;
+}
+
+async function saveConfig(settings) {
+  await Promise.all([
+    supabase.from('panasur_config').update({value: {diesel: settings.precioDiesel, gasolina: settings.precioGasoline}, updated_at: new Date().toISOString()}).eq('key', 'precios'),
+    supabase.from('panasur_config').update({value: {consumo_max_despacho: settings.alertaConsumo}, updated_at: new Date().toISOString()}).eq('key', 'alertas'),
+  ]);
 }
 
 // ─── Main App ───
 function App() {
-  const [records, setRecords] = useState(() => loadLS(STORAGE_KEYS.records, []));
-  const [settings, setSettings] = useState(() => loadLS(STORAGE_KEYS.settings, { precioDiesel:14.50, precioGasoline:16.80, alertaConsumo:20 }));
+  const [fleet, setFleet] = useState([]);
+  const [records, setRecords] = useState([]);
+  const [settings, setSettings] = useState({ precioDiesel:14.50, precioGasoline:16.80, alertaConsumo:20 });
   const [view, setView] = useState("dashboard");
   const [detailRecord, setDetailRecord] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [syncStatus, setSyncStatus] = useState("syncing"); // online | offline | syncing
+  const [currentUser, setCurrentUser] = useState(() => localStorage.getItem(USER_KEY) || "");
+  const [toast, setToast] = useState(null);
 
-  useEffect(() => { saveLS(STORAGE_KEYS.records, records); }, [records]);
-  useEffect(() => { saveLS(STORAGE_KEYS.settings, settings); }, [settings]);
+  const showToast = (msg, error=false) => { setToast({msg, error}); setTimeout(()=>setToast(null), 3000); };
 
-  const addRecord = (form) => {
-    setRecords(prev => [{ ...form, id: genId(), timestamp: new Date().toISOString() }, ...prev]);
-    setView("records");
+  // Initial load + realtime subscription
+  useEffect(() => {
+    (async () => {
+      setSyncStatus("syncing");
+      try {
+        const [f, r, c] = await Promise.all([loadFlota(), loadRecords(), loadConfig()]);
+        setFleet(f);
+        setRecords(r);
+        setSettings(c);
+        setSyncStatus("online");
+        setLoading(false);
+      } catch(e) {
+        console.error(e);
+        setSyncStatus("offline");
+        setLoading(false);
+        showToast("Error de conexión. Modo offline.", true);
+      }
+    })();
+
+    // Realtime subscription - all users see new records instantly
+    const channel = supabase
+      .channel('panasur-despachos')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'panasur_despachos_combustible' }, 
+        async (payload) => {
+          const r = await loadRecords();
+          setRecords(r);
+          if (payload.eventType === 'INSERT' && payload.new.creado_por !== currentUser) {
+            showToast(`Nuevo despacho: ${payload.new.equipo_id}`);
+          }
+        })
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, [currentUser]);
+
+  const handleAddRecord = async (form) => {
+    setSyncStatus("syncing");
+    try {
+      await saveRecord(form, currentUser);
+      const r = await loadRecords();
+      setRecords(r);
+      setSyncStatus("online");
+      showToast("Despacho guardado en la nube ✓");
+      setView("records");
+    } catch(e) {
+      setSyncStatus("offline");
+      showToast("Error al guardar: " + e.message, true);
+    }
   };
-  const deleteRecord = (id) => { if(confirm("¿Eliminar este registro de despacho?")) setRecords(prev => prev.filter(r=>r.id!==id)); };
+
+  const handleDelete = async (id) => {
+    if (!confirm("¿Eliminar este registro de despacho?")) return;
+    try {
+      await deleteRecord(id);
+      setRecords(prev => prev.filter(r => r.id !== id));
+      showToast("Registro eliminado ✓");
+    } catch(e) {
+      showToast("Error: " + e.message, true);
+    }
+  };
+
+  const handleSaveSettings = async (newSettings) => {
+    try {
+      await saveConfig(newSettings);
+      setSettings(newSettings);
+      showToast("Configuración guardada ✓");
+    } catch(e) {
+      showToast("Error: " + e.message, true);
+    }
+  };
+
+  const handleSetUser = (name) => {
+    setCurrentUser(name);
+    localStorage.setItem(USER_KEY, name);
+  };
+
   const openDetail = (r) => { setDetailRecord(r); setView("detail"); };
+
   const exportCSV = () => {
-    if(records.length===0) return alert("No hay registros para exportar.");
-    const headers = "ID,Equipo,Tipo,Fecha,Hora,Combustible,Galones,Costo,Horómetro,Odómetro,Progresiva,Operador,DIA_Cumple,Observaciones\n";
+    if(records.length===0) return showToast("No hay registros para exportar.", true);
+    const headers = "ID,Equipo,Tipo,Fecha,Hora,Combustible,Galones,Costo,Horómetro,Odómetro,Progresiva,Operador,DIA_Cumple,Creado_Por,Observaciones\n";
     const rows = records.map(r => {
-      const eq = FLEET.find(f=>f.id===r.equipoId);
-      const checks = r.checklist||{};
-      const diaOk = CHECKLIST_ITEMS.filter(c=>c.critical).every(c=>checks[c.id]);
-      return [r.id,r.equipoId,eq?.tipo||"",r.fecha,r.hora,r.tipoCombustible,r.galones,r.costo,r.horómetro||"",r.odómetro||"",r.progresiva||"",r.operador||"",diaOk?"SI":"NO",`"${(r.observaciones||"").replace(/"/g,"''")}"`].join(",");
+      const eq = fleet.find(f=>f.id===r.equipoId);
+      return [r.id,r.equipoId,eq?.tipo||"",r.fecha,r.hora,r.tipoCombustible,r.galones,r.costo,r.horometro||"",r.odometro||"",r.progresiva||"",r.operador||"",r.diaOk?"SI":"NO",r.creadoPor||"",`"${(r.observaciones||"").replace(/"/g,"''")}"`].join(",");
     }).join("\n");
     const blob = new Blob(["\ufeff"+headers+rows], {type:"text/csv;charset=utf-8;"});
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = `PANASUR_Combustible_${new Date().toISOString().split("T")[0]}.csv`;
     a.click();
+    showToast("CSV descargado ✓");
   };
+
+  if (loading) return (
+    <div style={{display:"flex",alignItems:"center",justifyContent:"center",minHeight:"100vh",flexDirection:"column",gap:20}}>
+      <div className="spinner"/>
+      <p style={{color:"var(--amber)",fontSize:14}}>Conectando con la nube...</p>
+    </div>
+  );
+
+  if (!currentUser) return <UserSetup onSetUser={handleSetUser}/>;
 
   return (
     <div className="app-container">
-      {/* Header */}
+      {toast && <div className={`toast ${toast.error?'error':''}`}>{toast.msg}</div>}
+      
       <div className="header">
         <div className="header-inner">
           <div className="header-left">
-            <div className="header-icon">
-              <Icon name="fuel" size={18} color="#000"/>
-            </div>
+            <div className="header-icon"><Icon name="fuel" size={18} color="#000"/></div>
             <div>
               <h1 className="header-title">PANASUR</h1>
               <p className="header-sub">Control de Combustible</p>
@@ -462,22 +355,23 @@ function App() {
           </div>
           <div className="header-right">
             <p>CSF Hanaqpampa</p>
-            <p>RUC 20532012879</p>
+            <div className={`sync-badge ${syncStatus==='online'?'sync-online':syncStatus==='syncing'?'sync-syncing pulse':'sync-offline'}`}>
+              <Icon name="cloud" size={10}/>
+              {syncStatus==='online'?'EN LÍNEA':syncStatus==='syncing'?'SINC...':'SIN CONEXIÓN'}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Content */}
       <div className="content fade-in" key={view}>
-        {view === "dashboard" && <Dashboard records={records} settings={settings} onNav={setView} onExport={exportCSV}/>}
-        {view === "new" && <NewRecord onSave={addRecord} onCancel={()=>setView("dashboard")} settings={settings}/>}
-        {view === "records" && <RecordsList records={records} onDelete={deleteRecord} onNav={setView} onDetail={openDetail} onExport={exportCSV}/>}
-        {view === "fleet" && <FleetView records={records}/>}
-        {view === "settings" && <SettingsView settings={settings} onSave={setSettings} records={records}/>}
-        {view === "detail" && detailRecord && <RecordDetail record={detailRecord} onBack={()=>{setDetailRecord(null);setView("records");}} onDelete={(id)=>{deleteRecord(id);setDetailRecord(null);setView("records");}}/>}
+        {view === "dashboard" && <Dashboard fleet={fleet} records={records} settings={settings} onNav={setView} onExport={exportCSV}/>}
+        {view === "new" && <NewRecord fleet={fleet} onSave={handleAddRecord} onCancel={()=>setView("dashboard")} settings={settings}/>}
+        {view === "records" && <RecordsList fleet={fleet} records={records} onNav={setView} onDetail={openDetail} onExport={exportCSV}/>}
+        {view === "fleet" && <FleetView fleet={fleet} records={records}/>}
+        {view === "settings" && <SettingsView settings={settings} onSave={handleSaveSettings} records={records} currentUser={currentUser} onChangeUser={()=>{localStorage.removeItem(USER_KEY); setCurrentUser("");}}/>}
+        {view === "detail" && detailRecord && <RecordDetail fleet={fleet} record={detailRecord} onBack={()=>{setDetailRecord(null);setView("records");}} onDelete={(id)=>{handleDelete(id);setDetailRecord(null);setView("records");}}/>}
       </div>
 
-      {/* Bottom Nav */}
       <div className="bottom-nav">
         {[
           {k:"dashboard",icon:"dashboard",label:"Inicio"},
@@ -487,9 +381,7 @@ function App() {
           {k:"settings",icon:"settings",label:"Config"},
         ].map(item => (
           <button key={item.k} className={`nav-item ${view===item.k?"active":""}`} onClick={()=>setView(item.k)}>
-            {item.fab ? (
-              <div className="nav-fab"><Icon name={item.icon} size={20} color="#000"/></div>
-            ) : <Icon name={item.icon} size={20}/>}
+            {item.fab ? <div className="nav-fab"><Icon name={item.icon} size={20} color="#000"/></div> : <Icon name={item.icon} size={20}/>}
             <span>{item.label}</span>
           </button>
         ))}
@@ -498,22 +390,43 @@ function App() {
   );
 }
 
+// ─── User Setup (first time) ───
+function UserSetup({ onSetUser }) {
+  const [name, setName] = useState("");
+  return (
+    <div style={{display:"flex",alignItems:"center",justifyContent:"center",minHeight:"100vh",padding:20}}>
+      <div className="card" style={{maxWidth:380,width:"100%"}}>
+        <div style={{textAlign:"center",marginBottom:20}}>
+          <div style={{background:"var(--amber)",borderRadius:16,padding:14,display:"inline-flex",marginBottom:12}}>
+            <Icon name="fuel" size={32} color="#000"/>
+          </div>
+          <h2 style={{fontSize:20,fontWeight:700,marginBottom:6}}>PANASUR</h2>
+          <p style={{fontSize:13,color:"var(--text-muted)"}}>Control de Combustible - CSF Hanaqpampa</p>
+        </div>
+        <label>Nombre del Usuario</label>
+        <input type="text" placeholder="Ej: Alvaro Ruiz" value={name} onChange={e=>setName(e.target.value)} style={{marginBottom:16}} onKeyDown={e=>e.key==='Enter'&&name.trim()&&onSetUser(name.trim())}/>
+        <p style={{fontSize:11,color:"var(--text-muted)",marginBottom:20}}>Todos los registros quedarán asociados a tu nombre. El equipo de campo verá los despachos en tiempo real.</p>
+        <button className="btn-primary" style={{width:"100%"}} disabled={!name.trim()} onClick={()=>onSetUser(name.trim())}>
+          Ingresar al sistema →
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ─── Dashboard ───
-function Dashboard({ records, settings, onNav, onExport }) {
+function Dashboard({ fleet, records, settings, onNav, onExport }) {
   const today = new Date().toISOString().split("T")[0];
   const todayRecs = records.filter(r => r.fecha === today);
   const now = new Date();
-  const monthRecs = records.filter(r => { const d=new Date(r.fecha); return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear(); });
+  const monthRecs = records.filter(r => { const d=new Date(r.fecha+"T00:00:00"); return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear(); });
   
   const galToday = todayRecs.reduce((s,r)=>s+(parseFloat(r.galones)||0),0);
   const galMonth = monthRecs.reduce((s,r)=>s+(parseFloat(r.galones)||0),0);
   const costMonth = monthRecs.reduce((s,r)=>s+(parseFloat(r.costo)||0),0);
   const avgGal = monthRecs.length>0 ? galMonth/monthRecs.length : 0;
 
-  const alertRecs = records.filter(r => {
-    const ch = r.checklist||{};
-    return CHECKLIST_ITEMS.some(c=>c.critical && !ch[c.id]);
-  }).slice(0,3);
+  const alertRecs = records.filter(r => !r.diaOk).slice(0,3);
 
   const usage = {};
   monthRecs.forEach(r => { usage[r.equipoId] = (usage[r.equipoId]||0) + (parseFloat(r.galones)||0); });
@@ -545,7 +458,6 @@ function Dashboard({ records, settings, onNav, onExport }) {
         </div>
       </div>
 
-      {/* DIA Banner */}
       <div className="card dia-banner" style={{marginBottom:16}}>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
           <span style={{color:"var(--amber)"}}><Icon name="alert" size={18}/></span>
@@ -556,14 +468,12 @@ function Dashboard({ records, settings, onNav, onExport }) {
         </p>
       </div>
 
-      {/* Alerts */}
       {alertRecs.length > 0 && (
         <div style={{marginBottom:16}}>
           <p style={{fontSize:12,fontWeight:700,color:"var(--red)",marginBottom:10,display:"flex",alignItems:"center",gap:6}}>
-            <Icon name="alert" size={16}/> INCUMPLIMIENTOS RECIENTES
+            <Icon name="alert" size={16}/> INCUMPLIMIENTOS DIA
           </p>
           {alertRecs.map(r => {
-            const eq = FLEET.find(f=>f.id===r.equipoId);
             const missing = CHECKLIST_ITEMS.filter(c=>c.critical && !(r.checklist||{})[c.id]);
             return (
               <div key={r.id} className="alert-banner">
@@ -578,12 +488,11 @@ function Dashboard({ records, settings, onNav, onExport }) {
         </div>
       )}
 
-      {/* Top consumers */}
       {topC.length > 0 && (
         <div className="card" style={{marginBottom:16}}>
           <p style={{fontSize:12,fontWeight:700,color:"var(--text-secondary)",marginBottom:14}}>TOP CONSUMIDORES — MES</p>
           {topC.map(([id,gal]) => {
-            const eq = FLEET.find(f=>f.id===id);
+            const eq = fleet.find(f=>f.id===id);
             return (
               <div key={id} style={{marginBottom:12}}>
                 <div className="flex-between" style={{marginBottom:4}}>
@@ -613,12 +522,13 @@ function Dashboard({ records, settings, onNav, onExport }) {
 }
 
 // ─── New Record ───
-function NewRecord({ onSave, onCancel, settings }) {
+function NewRecord({ fleet, onSave, onCancel, settings }) {
   const [step, setStep] = useState(1);
+  const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
     equipoId:"", fecha:new Date().toISOString().split("T")[0],
-    hora:new Date().toTimeString().slice(0,5), galones:"", horómetro:"",
-    odómetro:"", tipoCombustible:"diesel", progresiva:"",
+    hora:new Date().toTimeString().slice(0,5), galones:"", horometro:"",
+    odometro:"", tipoCombustible:"diesel", progresiva:"",
     operador:"", observaciones:"", costo:"", checklist:{},
   });
 
@@ -631,10 +541,11 @@ function NewRecord({ onSave, onCancel, settings }) {
     return n;
   });
   const toggleCheck = (id) => setForm(p => ({...p, checklist:{...p.checklist,[id]:!p.checklist[id]}}));
+  const handleSave = async () => { setSaving(true); try { await onSave(form); } catch(e) { setSaving(false); } };
 
   const critOk = CHECKLIST_ITEMS.filter(c=>c.critical).every(c=>form.checklist[c.id]);
   const canNext = form.equipoId && form.galones && parseFloat(form.galones)>0;
-  const equipo = FLEET.find(f=>f.id===form.equipoId);
+  const equipo = fleet.find(f=>f.id===form.equipoId);
   const isLiviano = equipo?.categoria==="Vehículo Liviano";
 
   return (
@@ -659,10 +570,10 @@ function NewRecord({ onSave, onCancel, settings }) {
               <select value={form.equipoId} onChange={e=>update("equipoId",e.target.value)}>
                 <option value="">Seleccionar equipo...</option>
                 <optgroup label="── Línea Amarilla ──">
-                  {FLEET.filter(f=>f.categoria==="Línea Amarilla").map(f => <option key={f.id} value={f.id}>{f.id} — {f.tipo}</option>)}
+                  {fleet.filter(f=>f.categoria==="Línea Amarilla").map(f => <option key={f.id} value={f.id}>{f.id} — {f.tipo}</option>)}
                 </optgroup>
                 <optgroup label="── Vehículos Livianos ──">
-                  {FLEET.filter(f=>f.categoria==="Vehículo Liviano").map(f => <option key={f.id} value={f.id}>{f.id} — {f.tipo}{f.placa?` (${f.placa})`:""}</option>)}
+                  {fleet.filter(f=>f.categoria==="Vehículo Liviano").map(f => <option key={f.id} value={f.id}>{f.id} — {f.tipo}{f.placa?` (${f.placa})`:""}</option>)}
                 </optgroup>
               </select>
             </div>
@@ -680,9 +591,9 @@ function NewRecord({ onSave, onCancel, settings }) {
               <div><label>Galones *</label><input type="number" step="0.1" min="0" placeholder="0.0" value={form.galones} onChange={e=>update("galones",e.target.value)}/></div>
             </div>
             <div className="grid-2" style={{marginBottom:14}}>
-              <div><label>Horómetro (hrs)</label><input type="number" step="0.1" placeholder="Hrs acumuladas" value={form.horómetro} onChange={e=>update("horómetro",e.target.value)}/></div>
+              <div><label>Horómetro (hrs)</label><input type="number" step="0.1" placeholder="Hrs" value={form.horometro} onChange={e=>update("horometro",e.target.value)}/></div>
               {isLiviano ? (
-                <div><label>Odómetro (km)</label><input type="number" step="0.1" placeholder="Km acumulados" value={form.odómetro} onChange={e=>update("odómetro",e.target.value)}/></div>
+                <div><label>Odómetro (km)</label><input type="number" step="0.1" placeholder="Km" value={form.odometro} onChange={e=>update("odometro",e.target.value)}/></div>
               ) : (
                 <div><label>Progresiva (km)</label><input type="text" placeholder="Ej: Km 14+500" value={form.progresiva} onChange={e=>update("progresiva",e.target.value)}/></div>
               )}
@@ -746,8 +657,8 @@ function NewRecord({ onSave, onCancel, settings }) {
                 ["Combustible",form.tipoCombustible==="diesel"?"Diesel B5 S-50":"Gasolina 90"],
                 ["Galones",`${form.galones} gal`],
                 ["Costo",`S/ ${form.costo}`],
-                form.horómetro&&["Horómetro",`${form.horómetro} hrs`],
-                form.odómetro&&["Odómetro",`${form.odómetro} km`],
+                form.horometro&&["Horómetro",`${form.horometro} hrs`],
+                form.odometro&&["Odómetro",`${form.odometro} km`],
                 form.progresiva&&["Progresiva",form.progresiva],
               ].filter(Boolean).map(([l,v],i) => (
                 <div key={i} className="flex-between row-border">
@@ -766,15 +677,17 @@ function NewRecord({ onSave, onCancel, settings }) {
           </div>
           <div style={{marginBottom:14}}>
             <label>Operador Responsable</label>
-            <input type="text" placeholder="Nombre del operador" value={form.operador} onChange={e=>update("operador",e.target.value)}/>
+            <input type="text" placeholder="Nombre del operador del equipo" value={form.operador} onChange={e=>update("operador",e.target.value)}/>
           </div>
           <div style={{marginBottom:14}}>
             <label>Observaciones</label>
             <textarea rows={3} placeholder="Novedades, condiciones del equipo..." value={form.observaciones} onChange={e=>update("observaciones",e.target.value)} style={{resize:"vertical"}}/>
           </div>
           <div style={{display:"flex",gap:10}}>
-            <button className="btn-ghost" onClick={()=>setStep(2)} style={{flex:1}}>← Atrás</button>
-            <button className="btn-primary" onClick={()=>onSave(form)} style={{flex:2}}>✓ Guardar Registro</button>
+            <button className="btn-ghost" onClick={()=>setStep(2)} style={{flex:1}} disabled={saving}>← Atrás</button>
+            <button className="btn-primary" onClick={handleSave} style={{flex:2}} disabled={saving}>
+              {saving ? "Guardando..." : "✓ Guardar en la Nube"}
+            </button>
           </div>
         </div>
       )}
@@ -783,12 +696,12 @@ function NewRecord({ onSave, onCancel, settings }) {
 }
 
 // ─── Records List ───
-function RecordsList({ records, onDelete, onNav, onDetail, onExport }) {
+function RecordsList({ fleet, records, onNav, onDetail, onExport }) {
   const [filter, setFilter] = useState("");
   const filtered = records.filter(r => {
     if(!filter) return true;
     const q = filter.toLowerCase();
-    return r.equipoId?.toLowerCase().includes(q) || r.operador?.toLowerCase().includes(q) || r.fecha?.includes(q);
+    return r.equipoId?.toLowerCase().includes(q) || r.operador?.toLowerCase().includes(q) || r.creadoPor?.toLowerCase().includes(q) || r.fecha?.includes(q);
   });
 
   return (
@@ -800,26 +713,25 @@ function RecordsList({ records, onDelete, onNav, onDetail, onExport }) {
           <button className="btn-ghost" onClick={onExport} style={{padding:"6px 10px"}} title="Exportar CSV"><Icon name="download" size={16}/></button>
         </div>
       </div>
-      <input type="text" placeholder="Buscar por equipo, operador o fecha..." value={filter} onChange={e=>setFilter(e.target.value)} style={{marginBottom:14}}/>
+      <input type="text" placeholder="Buscar por equipo, operador, usuario..." value={filter} onChange={e=>setFilter(e.target.value)} style={{marginBottom:14}}/>
       {filtered.length===0 ? (
         <div className="card" style={{textAlign:"center",padding:40}}>
           <p style={{color:"var(--text-muted)",fontSize:14}}>No hay registros{filter?" con ese filtro":""}</p>
           <button className="btn-primary" style={{marginTop:16}} onClick={()=>onNav("new")}>+ Nuevo Despacho</button>
         </div>
       ) : filtered.map(r => {
-        const eq = FLEET.find(f=>f.id===r.equipoId);
-        const ch = r.checklist||{};
-        const ok = CHECKLIST_ITEMS.filter(c=>c.critical).every(c=>ch[c.id]);
+        const eq = fleet.find(f=>f.id===r.equipoId);
         return (
           <div key={r.id} className="card" style={{marginBottom:10,cursor:"pointer"}} onClick={()=>onDetail(r)}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
               <div style={{flex:1}}>
                 <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
                   <span style={{fontWeight:700,fontSize:14}}>{r.equipoId}</span>
-                  <span className={`tag ${ok?"tag-green":"tag-red"}`} style={{fontSize:9}}>{ok?"DIA OK":"ALERTA"}</span>
+                  <span className={`tag ${r.diaOk?"tag-green":"tag-red"}`} style={{fontSize:9}}>{r.diaOk?"DIA OK":"ALERTA"}</span>
                 </div>
                 <p style={{fontSize:11,color:"var(--text-muted)"}}>{eq?.tipo||""} · {fmtDate(r.fecha)} {r.hora}</p>
                 {r.operador && <p style={{fontSize:11,color:"var(--text-muted)",marginTop:2}}>Op: {r.operador}</p>}
+                {r.creadoPor && <p style={{fontSize:10,color:"var(--text-muted)",marginTop:2,fontStyle:"italic"}}>Registrado por: {r.creadoPor}</p>}
               </div>
               <div style={{textAlign:"right"}}>
                 <p className="mono" style={{fontSize:16,fontWeight:700,color:"var(--amber)"}}>{parseFloat(r.galones).toFixed(1)}</p>
@@ -835,10 +747,9 @@ function RecordsList({ records, onDelete, onNav, onDetail, onExport }) {
 }
 
 // ─── Record Detail ───
-function RecordDetail({ record, onBack, onDelete }) {
-  const eq = FLEET.find(f=>f.id===record.equipoId);
+function RecordDetail({ fleet, record, onBack, onDelete }) {
+  const eq = fleet.find(f=>f.id===record.equipoId);
   const ch = record.checklist||{};
-  const critOk = CHECKLIST_ITEMS.filter(c=>c.critical).every(c=>ch[c.id]);
   
   return (
     <div className="scrollable">
@@ -868,10 +779,11 @@ function RecordDetail({ record, onBack, onDelete }) {
             ["Fecha",fmtDate(record.fecha)],["Hora",record.hora],
             ["Combustible",record.tipoCombustible==="diesel"?"Diesel B5 S-50":"Gasolina 90"],
             ["Costo",`S/ ${parseFloat(record.costo||0).toFixed(2)}`],
-            record.horómetro&&["Horómetro",`${record.horómetro} hrs`],
-            record.odómetro&&["Odómetro",`${record.odómetro} km`],
+            record.horometro&&["Horómetro",`${record.horometro} hrs`],
+            record.odometro&&["Odómetro",`${record.odometro} km`],
             record.progresiva&&["Progresiva",record.progresiva],
             record.operador&&["Operador",record.operador],
+            record.creadoPor&&["Registrado por",record.creadoPor],
           ].filter(Boolean).map(([l,v],i)=>(
             <div key={i} className="flex-between row-border">
               <span style={{fontSize:12,color:"var(--text-muted)"}}>{l}</span>
@@ -883,7 +795,7 @@ function RecordDetail({ record, onBack, onDelete }) {
       <div className="card" style={{marginBottom:16}}>
         <div className="flex-between" style={{marginBottom:12}}>
           <p style={{fontSize:13,fontWeight:700}}>Checklist SSOMA</p>
-          <span className={`tag ${critOk?"tag-green":"tag-red"}`}>{critOk?"DIA CUMPLE":"DIA INCUMPLE"}</span>
+          <span className={`tag ${record.diaOk?"tag-green":"tag-red"}`}>{record.diaOk?"DIA CUMPLE":"DIA INCUMPLE"}</span>
         </div>
         {CHECKLIST_ITEMS.map(item => (
           <div key={item.id} style={{display:"flex",alignItems:"center",gap:10,padding:"6px 0",borderBottom:"1px solid var(--border)"}}>
@@ -906,9 +818,9 @@ function RecordDetail({ record, onBack, onDelete }) {
 }
 
 // ─── Fleet ───
-function FleetView({ records }) {
+function FleetView({ fleet, records }) {
   const [cat, setCat] = useState("all");
-  const stats = FLEET.map(f => {
+  const stats = fleet.map(f => {
     const fr = records.filter(r=>r.equipoId===f.id);
     const gal = fr.reduce((s,r)=>s+(parseFloat(r.galones)||0),0);
     const cost = fr.reduce((s,r)=>s+(parseFloat(r.costo)||0),0);
@@ -921,7 +833,7 @@ function FleetView({ records }) {
       <div style={{display:"flex",gap:8,marginBottom:16,overflowX:"auto",paddingBottom:4}}>
         {["all","Línea Amarilla","Vehículo Liviano"].map(c => (
           <button key={c} className={cat===c?"btn-primary":"btn-ghost"} onClick={()=>setCat(c)} style={{whiteSpace:"nowrap",fontSize:12,padding:"8px 14px"}}>
-            {c==="all"?"Todos ("+FLEET.length+")":c}
+            {c==="all"?"Todos ("+fleet.length+")":c}
           </button>
         ))}
       </div>
@@ -954,21 +866,27 @@ function FleetView({ records }) {
 }
 
 // ─── Settings ───
-function SettingsView({ settings, onSave, records }) {
+function SettingsView({ settings, onSave, records, currentUser, onChangeUser }) {
   const [local, setLocal] = useState(settings);
-  const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
 
-  const handleSave = () => { onSave(local); setSaved(true); setTimeout(()=>setSaved(false),2000); };
-  const handleClear = () => {
-    if(confirm(`¿Está seguro de eliminar TODOS los ${records.length} registros? Esta acción no se puede deshacer.`)) {
-      localStorage.removeItem(STORAGE_KEYS.records);
-      location.reload();
-    }
-  };
+  const handleSave = async () => { setSaving(true); await onSave(local); setSaving(false); };
 
   return (
     <div className="scrollable">
       <h2 style={{fontSize:18,fontWeight:700,marginBottom:20}}>Configuración</h2>
+      
+      <div className="card" style={{marginBottom:16}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
+          <div style={{background:"var(--amber-glow)",borderRadius:8,padding:8,display:"flex"}}><Icon name="user" size={16} color="var(--amber)"/></div>
+          <div style={{flex:1}}>
+            <p style={{fontSize:11,color:"var(--text-muted)"}}>USUARIO ACTUAL</p>
+            <p style={{fontSize:15,fontWeight:700}}>{currentUser}</p>
+          </div>
+          <button className="btn-ghost" onClick={onChangeUser} style={{fontSize:11,padding:"6px 12px"}}>Cambiar</button>
+        </div>
+      </div>
+
       <div className="card" style={{marginBottom:16}}>
         <p style={{fontSize:13,fontWeight:700,marginBottom:14}}>Precios de Combustible</p>
         <div style={{marginBottom:14}}>
@@ -984,7 +902,6 @@ function SettingsView({ settings, onSave, records }) {
         <p style={{fontSize:13,fontWeight:700,marginBottom:14}}>Alertas</p>
         <label>Alerta consumo por despacho (galones)</label>
         <input type="number" step="1" value={local.alertaConsumo} onChange={e=>setLocal(p=>({...p,alertaConsumo:parseFloat(e.target.value)||0}))}/>
-        <p style={{fontSize:11,color:"var(--text-muted)",marginTop:6}}>Equipos que superen 5× este valor mensual se marcan en rojo.</p>
       </div>
       <div className="card" style={{marginBottom:16}}>
         <p style={{fontSize:13,fontWeight:700,marginBottom:10}}>Información del Proyecto</p>
@@ -998,7 +915,7 @@ function SettingsView({ settings, onSave, records }) {
             ["Jefe SSOMA","Alvaro Ruiz Reyna (CIP 210152)"],
             ["Jefe Construcción","Ing. Víctor Cáceres Murillo (CIP 047901)"],
             ["Gerente General","Eugenio Huamaní Quispe"],
-            ["Código doc.","PANASUR-SSOMA-REG-COM-001"],
+            ["Total Registros","" + records.length + " (nube Supabase)"],
           ].map(([k,v],i) => (
             <div key={i} className="flex-between row-border">
               <span style={{fontSize:12,color:"var(--text-muted)"}}>{k}</span>
@@ -1007,24 +924,18 @@ function SettingsView({ settings, onSave, records }) {
           ))}
         </div>
       </div>
-      <button className="btn-primary" style={{width:"100%",marginBottom:12}} onClick={handleSave}>
-        {saved?"✓ Configuración Guardada":"Guardar Configuración"}
+      <button className="btn-primary" style={{width:"100%",marginBottom:12}} onClick={handleSave} disabled={saving}>
+        {saving?"Guardando...":"Guardar Configuración"}
       </button>
-      {records.length > 0 && (
-        <button className="btn-ghost" style={{width:"100%",color:"var(--red)",borderColor:"rgba(239,68,68,0.3)",justifyContent:"center"}} onClick={handleClear}>
-          <Icon name="trash" size={14} color="var(--red)"/> Borrar todos los registros ({records.length})
-        </button>
-      )}
       <div style={{textAlign:"center",marginTop:20,marginBottom:20}}>
-        <p style={{fontSize:10,color:"var(--text-muted)"}}>PANASUR — Control de Combustible v1.0</p>
-        <p style={{fontSize:10,color:"var(--text-muted)"}}>Proyecto CSF Hanaqpampa · ENGIE Energía Perú</p>
-        <p style={{fontSize:10,color:"var(--text-muted)",marginTop:4}}>Desarrollo: Área SSOMA PANASUR © 2026</p>
+        <p style={{fontSize:10,color:"var(--text-muted)"}}>PANASUR — Control de Combustible v2.0</p>
+        <p style={{fontSize:10,color:"var(--text-muted)"}}>Multi-usuario · Sincronización en la nube</p>
+        <p style={{fontSize:10,color:"var(--text-muted)",marginTop:4}}>Desarrollo: INNOVAQ Solutions SAC © 2026</p>
       </div>
     </div>
   );
 }
 
-// ─── Render ───
 ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
     </script>
 </body>
