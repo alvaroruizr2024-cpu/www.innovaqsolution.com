@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1F3864">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>PANASUR · Fotocheck</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ================ LOGIN ================ -->
+<div id="login-screen" class="screen active">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-tp">TP</div>
+    </div>
+    <h1>PANASUR SSOMA</h1>
+    <p class="subtitle">Captura de Fotocheck</p>
+    <p class="project">Proyecto Hanaqpampa</p>
+    <div class="form-group">
+      <label>Usuario</label>
+      <input type="text" id="login-user" placeholder="alvaro.ruiz" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label>PIN de acceso</label>
+      <input type="password" id="login-pin" placeholder="••••" inputmode="numeric" maxlength="6" autocomplete="current-password">
+    </div>
+    <button id="btn-login" class="btn-primary">Ingresar</button>
+    <p id="login-error" class="error-msg"></p>
+    <p class="footer-version">v1.0.0 · Tours Panasur E.I.R.L.</p>
+  </div>
+</div>
+
+<!-- ================ APP ================ -->
+<div id="app-screen" class="screen">
+
+  <header class="app-header">
+    <div class="header-content">
+      <button id="btn-menu" class="btn-icon">☰</button>
+      <div class="header-title">
+        <div class="title-main">PANASUR · Fotocheck</div>
+        <div class="title-sub" id="header-user">—</div>
+      </div>
+      <div id="online-status" class="status-pill online">●</div>
+    </div>
+  </header>
+
+  <!-- ================ TAB BAR ================ -->
+  <nav class="tab-bar">
+    <button class="tab-btn active" data-tab="lista">
+      <span class="tab-icon">📋</span>
+      <span class="tab-label">Lista</span>
+    </button>
+    <button class="tab-btn" data-tab="capturar">
+      <span class="tab-icon">📷</span>
+      <span class="tab-label">Capturar</span>
+    </button>
+    <button class="tab-btn" data-tab="dashboard">
+      <span class="tab-icon">📊</span>
+      <span class="tab-label">Resumen</span>
+    </button>
+  </nav>
+
+  <main class="app-main">
+
+    <!-- ============ TAB LISTA ============ -->
+    <section id="tab-lista" class="tab-content active">
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="🔍 Buscar por DNI, nombre o credencial...">
+      </div>
+      <div class="filter-pills">
+        <button class="pill active" data-filter="todos">Todos</button>
+        <button class="pill" data-filter="VIGENTE">Vigentes</button>
+        <button class="pill" data-filter="PENDIENTE EMISIÓN">Pendientes</button>
+        <button class="pill" data-filter="sin-foto">Sin foto</button>
+      </div>
+      <div id="lista-counter" class="lista-counter">— trabajadores</div>
+      <div id="lista-trabajadores" class="lista-trabajadores">
+        <div class="loading">Cargando...</div>
+      </div>
+    </section>
+
+    <!-- ============ TAB CAPTURAR ============ -->
+    <section id="tab-capturar" class="tab-content">
+      <div id="capturar-content"></div>
+    </section>
+
+    <!-- ============ TAB DASHBOARD ============ -->
+    <section id="tab-dashboard" class="tab-content">
+      <div class="dashboard-header">
+        <h2>Resumen del Proyecto</h2>
+        <button id="btn-refresh" class="btn-link">⟳ Actualizar</button>
+      </div>
+      <div id="kpi-grid" class="kpi-grid">
+        <div class="kpi-card kpi-navy">
+          <div class="kpi-label">Total registrados</div>
+          <div class="kpi-value" id="kpi-total">—</div>
+        </div>
+        <div class="kpi-card kpi-green">
+          <div class="kpi-label">Vigentes</div>
+          <div class="kpi-value" id="kpi-vigentes">—</div>
+        </div>
+        <div class="kpi-card kpi-gold">
+          <div class="kpi-label">Pendientes</div>
+          <div class="kpi-value" id="kpi-pendientes">—</div>
+        </div>
+        <div class="kpi-card kpi-red">
+          <div class="kpi-label">Sin foto</div>
+          <div class="kpi-value" id="kpi-sin-foto">—</div>
+        </div>
+      </div>
+      <div class="dashboard-section">
+        <h3>Distribución por tipo</h3>
+        <div id="dist-tipo" class="dist-grid"></div>
+      </div>
+      <div class="dashboard-section">
+        <h3>EMO próximos a vencer</h3>
+        <div id="emo-vencer" class="lista-trabajadores"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ================ MODAL FOTOCHECK ================ -->
+<div id="modal-fotocheck" class="modal hidden">
+  <div class="modal-backdrop" onclick="cerrarModalFotocheck()"></div>
+  <div class="modal-content fotocheck-preview">
+    <button class="modal-close" onclick="cerrarModalFotocheck()">✕</button>
+    <h2>Vista Previa del Fotocheck</h2>
+    <div id="fc-preview-container" class="fc-preview-container"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="cerrarModalFotocheck()">Cerrar</button>
+      <button class="btn-primary" onclick="descargarFotocheck()">⬇ Descargar PNG</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================ MODAL CÁMARA ================ -->
+<div id="modal-camara" class="modal hidden">
+  <div class="camara-fullscreen">
+    <video id="camara-video" autoplay playsinline></video>
+    <canvas id="camara-canvas" class="hidden"></canvas>
+    <div class="camara-overlay">
+      <div class="camara-frame"></div>
+      <div class="camara-instructions">
+        Centre el rostro en el marco<br>
+        Fondo claro · EPP visible
+      </div>
+    </div>
+    <div class="camara-controls">
+      <button class="btn-icon-large" onclick="cerrarCamara()">✕</button>
+      <button class="btn-capture" id="btn-capture" onclick="capturarFoto()"></button>
+      <button class="btn-icon-large" id="btn-flip-camera" onclick="flipCamera()">⇆</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================ TOAST ================ -->
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
