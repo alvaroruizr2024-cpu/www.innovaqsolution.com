@@ -150,7 +150,7 @@ function Icon({ name, size=20, color="currentColor" }) {
 
 // ─── Supabase API Helpers ───
 async function loadFlota() {
-  const { data, error } = await supabase.from('panasur_flota').select('*').eq('activo', true).order('id');
+  const { data, error } = await supabase.from('panasur_flota').select('id,tipo,categoria,subcategoria,placa,marca_modelo,serie,anio,horometro_ref,odometro_ref,intervalo_mp,activo').eq('activo', true).order('categoria').order('subcategoria').order('id');
   if (error) { console.error(error); return []; }
   return data || [];
 }
@@ -569,12 +569,16 @@ function NewRecord({ fleet, onSave, onCancel, settings }) {
               <label>Equipo / Vehículo *</label>
               <select value={form.equipoId} onChange={e=>update("equipoId",e.target.value)}>
                 <option value="">Seleccionar equipo...</option>
-                <optgroup label="── Línea Amarilla ──">
-                  {fleet.filter(f=>f.categoria==="Línea Amarilla").map(f => <option key={f.id} value={f.id}>{f.id} — {f.tipo}</option>)}
-                </optgroup>
-                <optgroup label="── Vehículos Livianos ──">
-                  {fleet.filter(f=>f.categoria==="Vehículo Liviano").map(f => <option key={f.id} value={f.id}>{f.id} — {f.tipo}{f.placa?` (${f.placa})`:""}</option>)}
-                </optgroup>
+                {(() => {
+                  const subs = [...new Set(fleet.map(f=>f.subcategoria||f.categoria))];
+                  return subs.map(s => (
+                    <optgroup key={s} label={"── "+s+" ──"}>
+                      {fleet.filter(f=>(f.subcategoria||f.categoria)===s).map(f => (
+                        <option key={f.id} value={f.id}>{f.id}{f.placa?" ("+f.placa+")":""} — {f.marca_modelo||f.tipo}</option>
+                      ))}
+                    </optgroup>
+                  ));
+                })()}
               </select>
             </div>
             <div className="grid-2" style={{marginBottom:14}}>
@@ -729,7 +733,7 @@ function RecordsList({ fleet, records, onNav, onDetail, onExport }) {
                   <span style={{fontWeight:700,fontSize:14}}>{r.equipoId}</span>
                   <span className={`tag ${r.diaOk?"tag-green":"tag-red"}`} style={{fontSize:9}}>{r.diaOk?"DIA OK":"ALERTA"}</span>
                 </div>
-                <p style={{fontSize:11,color:"var(--text-muted)"}}>{eq?.tipo||""} · {fmtDate(r.fecha)} {r.hora}</p>
+                <p style={{fontSize:11,color:"var(--text-muted)"}}>{eq?.marca_modelo||eq?.tipo||""} · {fmtDate(r.fecha)} {r.hora}</p>
                 {r.operador && <p style={{fontSize:11,color:"var(--text-muted)",marginTop:2}}>Op: {r.operador}</p>}
                 {r.creadoPor && <p style={{fontSize:10,color:"var(--text-muted)",marginTop:2,fontStyle:"italic"}}>Registrado por: {r.creadoPor}</p>}
               </div>
@@ -766,7 +770,7 @@ function RecordDetail({ fleet, record, onBack, onDelete }) {
         <div className="flex-between" style={{marginBottom:16}}>
           <div>
             <p style={{fontWeight:700,fontSize:18}}>{record.equipoId}</p>
-            <p style={{fontSize:12,color:"var(--text-muted)"}}>{eq?.tipo} · {eq?.categoria}</p>
+            <p style={{fontSize:12,color:"var(--text-muted)"}}>{eq?.marca_modelo||eq?.tipo} · {eq?.subcategoria||eq?.categoria}</p>
             {eq?.placa && <span className="tag tag-blue" style={{marginTop:4}}>{eq.placa}</span>}
           </div>
           <div style={{textAlign:"right"}}>
@@ -843,7 +847,7 @@ function FleetView({ fleet, records }) {
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
             <div>
               <p style={{fontWeight:700,fontSize:14}}>{f.id}</p>
-              <p style={{fontSize:11,color:"var(--text-muted)"}}>{f.tipo}</p>
+              <p style={{fontSize:11,color:"var(--text-muted)"}}>{f.marca_modelo||f.tipo}</p>
               {f.placa && <span className="tag tag-blue" style={{marginTop:4}}>{f.placa}</span>}
             </div>
             <div style={{textAlign:"right"}}>
@@ -854,8 +858,16 @@ function FleetView({ fleet, records }) {
               <p style={{fontSize:10,color:"var(--text-muted)",marginTop:2}}>{f.count} despachos</p>
             </div>
           </div>
+          {(f.marca_modelo || f.serie) && (
+            <div style={{marginTop:8,borderTop:"1px solid var(--border)",paddingTop:6,display:"flex",gap:8,flexWrap:"wrap"}}>
+              {f.marca_modelo && <span className="mono" style={{fontSize:10,color:"var(--text-muted)"}}>{f.marca_modelo}</span>}
+              {f.serie && <span className="mono" style={{fontSize:10,color:"var(--text-muted)"}}>S/N: {f.serie}</span>}
+              {f.horometro_ref && <span className="mono" style={{fontSize:10,color:"var(--amber)"}}>Hor: {f.horometro_ref}h</span>}
+              {f.odometro_ref && <span className="mono" style={{fontSize:10,color:"var(--amber)"}}>Odo: {Number(f.odometro_ref).toLocaleString()}km</span>}
+            </div>
+          )}
           {f.last && (
-            <p style={{fontSize:10,color:"var(--text-muted)",marginTop:8,borderTop:"1px solid var(--border)",paddingTop:6}}>
+            <p style={{fontSize:10,color:"var(--text-muted)",marginTop:6,borderTop:"1px solid var(--border)",paddingTop:6}}>
               Último: {fmtDate(f.last.fecha)} · {parseFloat(f.last.galones).toFixed(1)} gal
             </p>
           )}
@@ -916,6 +928,7 @@ function SettingsView({ settings, onSave, records, currentUser, onChangeUser }) 
             ["Jefe Construcción","Ing. Víctor Cáceres Murillo (CIP 047901)"],
             ["Gerente General","Eugenio Huamaní Quispe"],
             ["Total Registros","" + records.length + " (nube Supabase)"],
+            ["Flota activa","15 equipos (HQP0007-02)"],
           ].map(([k,v],i) => (
             <div key={i} className="flex-between row-border">
               <span style={{fontSize:12,color:"var(--text-muted)"}}>{k}</span>
@@ -928,7 +941,7 @@ function SettingsView({ settings, onSave, records, currentUser, onChangeUser }) 
         {saving?"Guardando...":"Guardar Configuración"}
       </button>
       <div style={{textAlign:"center",marginTop:20,marginBottom:20}}>
-        <p style={{fontSize:10,color:"var(--text-muted)"}}>PANASUR — Control de Combustible v2.0</p>
+        <p style={{fontSize:10,color:"var(--text-muted)"}}>PANASUR — Control de Combustible v2.1</p>
         <p style={{fontSize:10,color:"var(--text-muted)"}}>Multi-usuario · Sincronización en la nube</p>
         <p style={{fontSize:10,color:"var(--text-muted)",marginTop:4}}>Desarrollo: INNOVAQ Solutions SAC © 2026</p>
       </div>
