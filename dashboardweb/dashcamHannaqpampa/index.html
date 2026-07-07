@@ -1,172 +1,527 @@
-<!DOCTYPE html><html lang="es"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Flota Hanaqpampa · Monitoreo Dashcam SSOMA</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#EEF1F5;--card:#FFFFFF;--ink:#1A2230;--mut:#5C6678;--line:#E2E7EE;--verde:#1FA463;--ambar:#E2A50B;--rojo:#D7263D;--grey:#AEB6C2;--link:#2257c2;
---mono:'IBM Plex Mono',ui-monospace,monospace;--head:'Barlow Semi Condensed',sans-serif;--body:'Inter',system-ui,sans-serif;}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14px;line-height:1.4}
-.wrap{max-width:1320px;margin:0 auto;padding:22px 22px 60px}
-h1,h2,h3{font-family:var(--head);margin:0;font-weight:700;letter-spacing:.2px}.mono{font-family:var(--mono)}
-.eyebrow{font-family:var(--head);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;font-size:11px;color:var(--mut)}
-a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
-.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;border-bottom:3px solid var(--ink);padding-bottom:14px;margin-bottom:14px;flex-wrap:wrap}
-.hd h1{font-size:30px;line-height:1.05}.hd .sub{color:var(--mut);font-size:13px;margin-top:4px}.hd .right{text-align:right;font-size:12px;color:var(--mut);font-family:var(--mono)}
-.upd{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--mut);margin-bottom:16px}
-.upd .tag{background:#E3F4EA;color:#137a45;border-radius:999px;padding:3px 11px;font-family:var(--head);font-weight:600;font-size:11.5px;letter-spacing:.4px}
-.upd .tag.s{background:#E7EEFB;color:#2257c2}.upd .tag.w{background:#FBEFD2;color:#8a6a12}
-.honest{background:#FFF7E2;border:1px solid #F0DCA0;border-left:4px solid var(--ambar);border-radius:8px;padding:11px 14px;font-size:12.5px;color:#6b5a18;margin-bottom:18px}.honest b{color:#7a6410}
-.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
-.kpi .k{font-size:11px;color:var(--mut);font-family:var(--head);font-weight:600;letter-spacing:.6px;text-transform:uppercase}
-.kpi .v{font-family:var(--mono);font-size:26px;font-weight:600;margin-top:4px;line-height:1}.kpi .u{font-size:11px;color:var(--mut);margin-top:3px}
-.kpi.pend .v{color:var(--ambar);font-size:18px}.kpi.obs .v{color:var(--rojo)}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
-.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 15px;cursor:pointer;font-family:var(--head);font-weight:600;font-size:13px;color:var(--mut);display:flex;align-items:center;gap:8px;transition:.12s}
-.chip:hover{border-color:var(--ink)}.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}.chip .dot{width:9px;height:9px;border-radius:50%}
-.toggle{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--mut)}
-.toggle input{width:34px;height:18px;-webkit-appearance:none;appearance:none;background:var(--grey);border-radius:9px;position:relative;cursor:pointer;outline:none;transition:.15s}
-.toggle input:checked{background:var(--ambar)}.toggle input::after{content:"";position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:2px;left:2px;transition:.15s}.toggle input:checked::after{left:18px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
-.uc{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.14s;border-top:4px solid var(--c)}
-.uc .top{padding:14px 15px 10px;cursor:pointer}.uc:hover{box-shadow:0 8px 22px rgba(20,30,50,.10)}
-.uc .nm{font-family:var(--head);font-weight:700;font-size:18px}.uc .pl{font-family:var(--mono);font-size:13px;color:#fff;background:var(--c);display:inline-block;padding:2px 9px;border-radius:6px;margin-top:5px}
-.uc .cam{font-size:12px;color:var(--mut);margin-top:9px;min-height:30px}
-.uc .stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border-top:1px solid var(--line)}
-.uc .st{background:var(--card);padding:9px 12px}.uc .st .l{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;font-family:var(--head);font-weight:600}.uc .st .n{font-family:var(--mono);font-size:16px;margin-top:2px}
-.badge{display:inline-block;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:999px;font-family:var(--head);letter-spacing:.4px}
-.b-dms{background:#E3F4EA;color:#137a45}.b-via{background:#E7EEFB;color:#2257c2}.b-pend{background:#FBEFD2;color:#8a6a12}.b-nots{background:#FBE3E7;color:#a31526}.b-obs{background:#FBE3E7;color:#a31526}
-.uc .foot{padding:8px 12px;border-top:1px solid var(--line);font-size:11px;color:var(--mut);display:flex;justify-content:space-between;align-items:center;gap:8px}
-.drivebtn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:7px;padding:5px 10px;font-family:var(--head);font-weight:600;font-size:11.5px;color:var(--link);cursor:pointer}.drivebtn:hover{border-color:var(--link);text-decoration:none}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px}
-.panel h2{font-size:15px;letter-spacing:.4px;text-transform:uppercase;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:9px}.panel h2 .bar{width:5px;height:18px;border-radius:2px;background:var(--ambar)}
-.note{font-size:12.5px;color:var(--mut);margin:2px 0 14px}
-.tl-leg{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--mut);margin-top:8px}.tl-leg .it{display:flex;align-items:center;gap:6px}.tl-leg .sw{width:11px;height:11px;border-radius:50%}
-svg{display:block;width:100%;height:auto;overflow:visible}
-.tip{position:fixed;pointer-events:none;background:var(--ink);color:#fff;padding:6px 9px;border-radius:7px;font-size:11.5px;font-family:var(--mono);opacity:0;transition:.08s;z-index:50;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.ind{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
-.ind h3{font-size:13px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px}.ind h3 .bar{width:4px;height:15px;border-radius:2px;background:var(--ambar)}
-.row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dotted var(--line)}.row:last-child{border-bottom:0}
-.row .led{width:9px;height:9px;border-radius:50%;flex:none}.led.v{background:var(--verde)}.led.a{background:var(--ambar)}.led.r{background:var(--rojo)}.led.n{background:var(--grey)}
-.row .lab{flex:1;min-width:0}.row .lab .t{font-size:13px;font-weight:500}.row .lab .s{font-size:10.5px;color:var(--mut)}
-.row .val{font-family:var(--mono);font-size:15px;font-weight:600;text-align:right}.row .val small{font-size:10px;color:var(--mut);font-weight:400}.row .val.dim{color:var(--grey)}
-.obs{display:flex;align-items:center;gap:11px;padding:10px 12px;border:1px solid var(--line);border-left:4px solid var(--ambar);border-radius:10px;margin-bottom:9px;background:#FFFDF6}
-.obs .sev{width:10px;height:10px;border-radius:50%;flex:none}.sev.media{background:var(--ambar)}.sev.alta{background:var(--rojo)}.sev.baja{background:var(--verde)}
-.obs .ob{flex:1;min-width:0}.obs .ob .t{font-family:var(--head);font-weight:600;font-size:13.5px}.obs .ob .d{font-size:12px;color:var(--mut)}
-.obs .vid{white-space:nowrap;display:inline-flex;align-items:center;gap:5px;font-family:var(--head);font-weight:600;font-size:12px;color:var(--rojo);border:1px solid #f3c9cf;background:#fff;border-radius:8px;padding:6px 11px}
-.obs .vid:hover{text-decoration:none;border-color:var(--rojo)}
-.search{width:100%;border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-family:var(--mono);font-size:12.5px;margin-bottom:10px;outline:none}.search:focus{border-color:var(--ink)}
-table{width:100%;border-collapse:collapse;font-size:12.5px}
-th{text-align:left;font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.5px;font-size:10.5px;color:var(--mut);padding:7px 8px;border-bottom:2px solid var(--line)}
-td{padding:7px 8px;border-bottom:1px solid var(--line);font-family:var(--mono)}tr.baja td{background:#FCEDD2}
-.pill{font-size:10px;padding:1px 7px;border-radius:999px;font-family:var(--head);font-weight:600}.pill.b{background:#FBE3E7;color:#a31526}.pill.n{background:#E7EEFB;color:#2257c2}
-.evlink{display:inline-flex;align-items:center;gap:5px;font-family:var(--head);font-weight:600;font-size:11.5px}.evlink.obs2{color:var(--rojo)}
-.foot-note{font-size:11px;color:var(--mut);margin-top:14px;border-top:1px solid var(--line);padding-top:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.printbtn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 13px;cursor:pointer;font-family:var(--head);font-weight:600;font-size:12.5px;color:var(--ink)}.printbtn:hover{border-color:var(--ink)}
-@media (max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.cols{grid-template-columns:1fr}}
-@media print{body{background:#fff}.chips,.toggle,.search,.printbtn{display:none!important}.panel,.uc,.kpi{break-inside:avoid}a{color:var(--ink)}}
-</style></head><body><div class="wrap">
-<div class="hd">
- <div><div class="eyebrow">SSOMA · Monitoreo de Conducción · Dashcam</div>
-  <h1>Flota Hanaqpampa · <span style="color:var(--mut)">Monitoreo de Conducción</span></h1>
-  <div class="sub">Fatiga / somnolencia + manejo defensivo · <a id="raizlink" target="_blank">raíz Drive ↗</a></div></div>
- <div class="right">Proyecto CSF Hanaqpampa · ENGIE / Panasur<br>INNOVAQ SOLUTIONS<br><button class="printbtn" onclick="window.print()">⎙ Imprimir / PDF</button></div>
-</div>
-<div class="upd" id="upd"></div>
-<div class="honest" id="honest"></div>
-<div class="kpis" id="kpis"></div>
-<div class="chips" id="chips"></div>
-<div id="view"></div>
-<div class="foot-note"><span>Umbrales: PERCLOS P80 · KSS 1–9 · regla 2 s · SDLP · ventanas baja vigilancia 00–06 / 13–16 / 20–24 h · HOS</span><span id="src">INNOVAQ SOLUTIONS · habilidad_fatiga_dashcam</span></div>
-</div><div class="tip" id="tip"></div>
-<script>
-const SEED={"units": [{"unidad": "BUS", "placa": "F7P-952", "color": "#2563EB", "camara": "Frontal (vía)", "framing": "Vía confirmada · sin cámara de cabina", "dms": false, "footage": "≈663.5 MB", "periodo": "08–16 jun 2026", "n": 7, "baja": 1, "ts_ok": true, "nota": "Cámara a la vía → solo proxies de comportamiento. Somnolencia real requiere cámara de cabina.", "folderId": "1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS", "folder": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS", "clips": [{"f": "20260608_185001_f", "t": "18:50", "h": 18.833, "b": false, "iso": "2026-06-08T18:50:01", "video": "", "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"}, {"f": "20260608_185201_f", "t": "18:52", "h": 18.867, "b": false, "iso": "2026-06-08T18:52:01", "video": "", "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"}, {"f": "20260608_200524_f", "t": "20:05", "h": 20.083, "b": true, "iso": "2026-06-08T20:05:24", "video": "", "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"}, {"f": "20260611_073446_f", "t": "07:34", "h": 7.567, "b": false, "iso": "2026-06-11T07:34:46", "video": "", "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"}, {"f": "20260615_122934_f", "t": "12:29", "h": 12.483, "b": false, "iso": "2026-06-15T12:29:34", "video": "", "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"}, {"f": "20260616_165451_f", "t": "16:54", "h": 16.9, "b": false, "iso": "2026-06-16T16:54:51", "video": "", "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"}, {"f": "20260616_172429_f", "t": "17:24", "h": 17.4, "b": false, "iso": "2026-06-16T17:24:29", "video": "", "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"}], "observaciones": [{"tipo": "Ventana de baja vigilancia", "severidad": "media", "clip": "20260608_200524_f", "hora": "20:05", "fecha": "2026-06-08", "video": "", "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS", "evento_seg": null, "detalle": "Conducción dentro de franja circadiana de baja alerta (13–16 / 20–24 / 00–06 h)."}], "fatiga": [["PERCLOS (P80)", "—", "%", "n", "requiere cámara de cabina"], ["Microsueños", "—", "ev/h", "n", "requiere cámara de cabina"], ["Bostezos", "—", "/15min", "n", "requiere cámara de cabina"], ["Parpadeo lento", "—", "%", "n", "requiere cámara de cabina"], ["Cabeceo (nod-off)", "—", "ev", "n", "requiere cámara de cabina"], ["KSS estimado", "—", "1–9", "n", "fusión DMS · pendiente"], ["Serpenteo · SDLP", "—", "cm", "n", "cám. vía · pendiente"], ["Conducción continua", "—", "min", "n", "clips + GPS"], ["Ventana circadiana", "1 / 7", "clips", "a", "REAL · clips en franja baja"]], "defensivo": [["Distancia seguim. ≥2 s", "—", "% cump", "n", "cám. vía · pendiente"], ["Colisión frontal TTC<2.5s", "—", "ev", "n", "pendiente"], ["Frenadas bruscas", "—", "/100km", "n", "pendiente"], ["Aceleraciones bruscas", "—", "/100km", "n", "pendiente"], ["Curvas bruscas", "—", "/100km", "n", "pendiente"], ["Exceso de velocidad", "—", "% dist", "n", "req. GPS"], ["Salidas de carril s/señal", "—", "ev", "n", "pendiente"], ["Distracción · mirada", "—", "ev", "n", "requiere cabina"]]}, {"unidad": "Camioneta 1", "placa": "BFB-898", "color": "#1FA463", "camara": "Vía (front) + Cabina/DMS (back)", "framing": "Cabina CONFIRMADA en _b (conductor visible)", "dms": true, "footage": "—", "periodo": "21 may · 16–17 jun 2026", "n": 14, "baja": 0, "ts_ok": true, "nota": "Back = cabina tipo DMS → PERCLOS/microsueños/bostezos/cabeceo REALES factibles al correr el pipeline.", "folderId": "1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG", "folder": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG", "clips": [{"f": "20260521_065700_b", "t": "06:57", "h": 6.95, "b": false, "iso": "2026-05-21T06:57:00", "video": "", "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"}, {"f": "20260521_065800_b", "t": "06:58", "h": 6.967, "b": false, "iso": "2026-05-21T06:58:00", "video": "", "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"}, {"f": "20260521_065900_b", "t": "06:59", "h": 6.983, "b": false, "iso": "2026-05-21T06:59:01", "video": "", "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"}, {"f": "20260521_070000_b", "t": "07:00", "h": 7.0, "b": false, "iso": "2026-05-21T07:00:01", "video": "", "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"}, {"f": "20260521_070100_b", "t": "07:01", "h": 7.017, "b": false, "iso": "2026-05-21T07:01:00", "video": "", "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"}, {"f": "20260521_070300_b", "t": "07:03", "h": 7.05, "b": false, "iso": "2026-05-21T07:03:00", "video": "", "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"}, {"f": "20260521_070400_b", "t": "07:04", "h": 7.067, "b": false, "iso": "2026-05-21T07:04:00", "video": "", "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"}, {"f": "20260521_070500_b", "t": "07:05", "h": 7.083, "b": false, "iso": "2026-05-21T07:05:00", "video": "", "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"}, {"f": "20260616_164011_b", "t": "16:40", "h": 16.667, "b": false, "iso": "2026-06-16T16:40:11", "video": "", "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"}, {"f": "20260616_164408_b", "t": "16:44", "h": 16.733, "b": false, "iso": "2026-06-16T16:44:08", "video": "", "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"}, {"f": "20260617_083619_f", "t": "08:36", "h": 8.6, "b": false, "iso": "2026-06-17T08:36:19", "video": "", "carpeta": "https://drive.google.com/drive/folders/1oaGSWwFHJAyANouo7HyPr7PoLbr8zCKw"}, {"f": "20260617_083620_b", "t": "08:36", "h": 8.6, "b": false, "iso": "2026-06-17T08:36:20", "video": "", "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"}, {"f": "20260617_083720_f", "t": "08:37", "h": 8.617, "b": false, "iso": "2026-06-17T08:37:20", "video": "", "carpeta": "https://drive.google.com/drive/folders/1oaGSWwFHJAyANouo7HyPr7PoLbr8zCKw"}, {"f": "20260617_083820_f", "t": "08:38", "h": 8.633, "b": false, "iso": "2026-06-17T08:38:20", "video": "", "carpeta": "https://drive.google.com/drive/folders/1oaGSWwFHJAyANouo7HyPr7PoLbr8zCKw"}], "observaciones": [], "fatiga": [["PERCLOS (P80)", "—", "%", "n", "cabina OK · pendiente"], ["Microsueños", "—", "ev/h", "n", "cabina OK · pendiente"], ["Bostezos", "—", "/15min", "n", "cabina OK · pendiente"], ["Parpadeo lento", "—", "%", "n", "cabina OK · pendiente"], ["Cabeceo (nod-off)", "—", "ev", "n", "cabina OK · pendiente"], ["KSS estimado", "—", "1–9", "n", "fusión DMS · pendiente"], ["Serpenteo · SDLP", "—", "cm", "n", "cám. vía · pendiente"], ["Conducción continua", "—", "min", "n", "clips + GPS"], ["Ventana circadiana", "0 / 14", "clips", "v", "REAL · ninguno"]], "defensivo": [["Distancia seguim. ≥2 s", "—", "% cump", "n", "cám. vía · pendiente"], ["Colisión frontal TTC<2.5s", "—", "ev", "n", "pendiente"], ["Frenadas bruscas", "—", "/100km", "n", "pendiente"], ["Aceleraciones bruscas", "—", "/100km", "n", "pendiente"], ["Curvas bruscas", "—", "/100km", "n", "pendiente"], ["Exceso de velocidad", "—", "% dist", "n", "req. GPS"], ["Salidas de carril s/señal", "—", "ev", "n", "pendiente"], ["Distracción · mirada", "—", "ev", "n", "cabina OK · pendiente"]]}, {"unidad": "Camioneta 2", "placa": "BPM-741", "color": "#E2A50B", "camara": ".AVI (VID_###)", "framing": "Reloj del equipo sin configurar (marca 2017)", "dms": false, "footage": "≈15–39 MB/clip", "periodo": "sin fecha confiable", "n": 11, "baja": null, "ts_ok": false, "nota": "Timestamps NO confiables → sin circadiano/HOS. La visión (CV) sí corre, pero no se ubica en el tiempo.", "folderId": "14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9", "folder": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9", "clips": [{"f": "VID_001.AVI", "t": null, "h": null, "b": false, "iso": null, "video": "", "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"}, {"f": "VID_002.AVI", "t": null, "h": null, "b": false, "iso": null, "video": "", "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"}, {"f": "VID_003.AVI", "t": null, "h": null, "b": false, "iso": null, "video": "", "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"}, {"f": "VID_004.AVI", "t": null, "h": null, "b": false, "iso": null, "video": "", "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"}, {"f": "VID_005.AVI", "t": null, "h": null, "b": false, "iso": null, "video": "", "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"}, {"f": "VID_006.AVI", "t": null, "h": null, "b": false, "iso": null, "video": "", "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"}, {"f": "VID_007.AVI", "t": null, "h": null, "b": false, "iso": null, "video": "", "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"}, {"f": "VID_008.AVI", "t": null, "h": null, "b": false, "iso": null, "video": "", "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"}, {"f": "VID_009.AVI", "t": null, "h": null, "b": false, "iso": null, "video": "", "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"}, {"f": "VID_010.AVI", "t": null, "h": null, "b": false, "iso": null, "video": "", "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"}, {"f": "VID_011.AVI", "t": null, "h": null, "b": false, "iso": null, "video": "", "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"}], "observaciones": [], "fatiga": [["PERCLOS (P80)", "—", "%", "n", "requiere cámara de cabina"], ["Microsueños", "—", "ev/h", "n", "requiere cámara de cabina"], ["Bostezos", "—", "/15min", "n", "requiere cámara de cabina"], ["Parpadeo lento", "—", "%", "n", "requiere cámara de cabina"], ["Cabeceo (nod-off)", "—", "ev", "n", "requiere cámara de cabina"], ["KSS estimado", "—", "1–9", "n", "fusión DMS · pendiente"], ["Serpenteo · SDLP", "—", "cm", "n", "cám. vía · pendiente"], ["Conducción continua", "—", "min", "n", "clips + GPS"], ["Ventana circadiana", "0 / 11", "clips", "n", "sin fecha confiable"]], "defensivo": [["Distancia seguim. ≥2 s", "—", "% cump", "n", "cám. vía · pendiente"], ["Colisión frontal TTC<2.5s", "—", "ev", "n", "pendiente"], ["Frenadas bruscas", "—", "/100km", "n", "pendiente"], ["Aceleraciones bruscas", "—", "/100km", "n", "pendiente"], ["Curvas bruscas", "—", "/100km", "n", "pendiente"], ["Exceso de velocidad", "—", "% dist", "n", "req. GPS"], ["Salidas de carril s/señal", "—", "ev", "n", "pendiente"], ["Distracción · mirada", "—", "ev", "n", "requiere cabina"]]}, {"unidad": "Camioneta 3", "placa": "Gris", "color": "#7C3AED", "camara": "Back (_b)", "framing": "Framing por confirmar (enviar miniatura)", "dms": null, "footage": "≈740 MB", "periodo": "16–18 jun 2026", "n": 12, "baja": 4, "ts_ok": true, "nota": "Cámara _b: falta miniatura para saber si mira a cabina (DMS) o vía. 4 clips en franja 13–16 h.", "folderId": "1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if", "folder": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if", "clips": [{"f": "20260616_153149_b", "t": "15:31", "h": 15.517, "b": true, "iso": "2026-06-16T15:31:49", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"}, {"f": "20260616_153249_b", "t": "15:32", "h": 15.533, "b": true, "iso": "2026-06-16T15:32:49", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"}, {"f": "20260617_142215_b", "t": "14:22", "h": 14.367, "b": true, "iso": "2026-06-17T14:22:15", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"}, {"f": "20260617_142315_b", "t": "14:23", "h": 14.383, "b": true, "iso": "2026-06-17T14:23:15", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"}, {"f": "20260618_090230_b", "t": "09:02", "h": 9.033, "b": false, "iso": "2026-06-18T09:02:30", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"}, {"f": "20260618_090330_b", "t": "09:03", "h": 9.05, "b": false, "iso": "2026-06-18T09:03:30", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"}, {"f": "20260618_102602_b", "t": "10:26", "h": 10.433, "b": false, "iso": "2026-06-18T10:26:02", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"}, {"f": "20260618_102702_b", "t": "10:27", "h": 10.45, "b": false, "iso": "2026-06-18T10:27:02", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"}, {"f": "20260618_103150_b", "t": "10:31", "h": 10.517, "b": false, "iso": "2026-06-18T10:31:50", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"}, {"f": "20260618_103550_b", "t": "10:35", "h": 10.583, "b": false, "iso": "2026-06-18T10:35:50", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"}, {"f": "20260618_103750_b", "t": "10:37", "h": 10.617, "b": false, "iso": "2026-06-18T10:37:50", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"}, {"f": "20260618_123449_b", "t": "12:34", "h": 12.567, "b": false, "iso": "2026-06-18T12:34:49", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"}], "observaciones": [{"tipo": "Ventana de baja vigilancia", "severidad": "media", "clip": "20260616_153149_b", "hora": "15:31", "fecha": "2026-06-16", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if", "evento_seg": null, "detalle": "Conducción dentro de franja circadiana de baja alerta (13–16 / 20–24 / 00–06 h)."}, {"tipo": "Ventana de baja vigilancia", "severidad": "media", "clip": "20260616_153249_b", "hora": "15:32", "fecha": "2026-06-16", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if", "evento_seg": null, "detalle": "Conducción dentro de franja circadiana de baja alerta (13–16 / 20–24 / 00–06 h)."}, {"tipo": "Ventana de baja vigilancia", "severidad": "media", "clip": "20260617_142215_b", "hora": "14:22", "fecha": "2026-06-17", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if", "evento_seg": null, "detalle": "Conducción dentro de franja circadiana de baja alerta (13–16 / 20–24 / 00–06 h)."}, {"tipo": "Ventana de baja vigilancia", "severidad": "media", "clip": "20260617_142315_b", "hora": "14:23", "fecha": "2026-06-17", "video": "", "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if", "evento_seg": null, "detalle": "Conducción dentro de franja circadiana de baja alerta (13–16 / 20–24 / 00–06 h)."}], "fatiga": [["PERCLOS (P80)", "—", "%", "n", "según framing · confirmar miniatura"], ["Microsueños", "—", "ev/h", "n", "según framing · confirmar miniatura"], ["Bostezos", "—", "/15min", "n", "según framing · confirmar miniatura"], ["Parpadeo lento", "—", "%", "n", "según framing · confirmar miniatura"], ["Cabeceo (nod-off)", "—", "ev", "n", "según framing · confirmar miniatura"], ["KSS estimado", "—", "1–9", "n", "fusión DMS · pendiente"], ["Serpenteo · SDLP", "—", "cm", "n", "cám. vía · pendiente"], ["Conducción continua", "—", "min", "n", "clips + GPS"], ["Ventana circadiana", "4 / 12", "clips", "a", "REAL · clips en franja baja"]], "defensivo": [["Distancia seguim. ≥2 s", "—", "% cump", "n", "cám. vía · pendiente"], ["Colisión frontal TTC<2.5s", "—", "ev", "n", "pendiente"], ["Frenadas bruscas", "—", "/100km", "n", "pendiente"], ["Aceleraciones bruscas", "—", "/100km", "n", "pendiente"], ["Curvas bruscas", "—", "/100km", "n", "pendiente"], ["Exceso de velocidad", "—", "% dist", "n", "req. GPS"], ["Salidas de carril s/señal", "—", "ev", "n", "pendiente"], ["Distracción · mirada", "—", "ev", "n", "requiere cabina"]]}, {"unidad": "Camioneta 4", "placa": "Z8B-730", "color": "#0EA5E9", "camara": "3 canales (DCIMA/DCIMB/DCIMC)", "framing": "Blanca · canal B posible cabina/DMS (por confirmar)", "dms": null, "footage": "3 canales (A/B/C)", "periodo": "agregada 27-06-2026", "n": 0, "baja": null, "ts_ok": false, "nota": "Unidad agregada el 27-06-2026 · 3 canales de dashcam. Clips pendientes de indexar — correr el pipeline (n8n) o enviar miniatura del <b>canal B</b> para confirmar si mira a cabina (DMS real). Canales: <a href='https://drive.google.com/drive/folders/1RF_NfQw4WkwImoh_iGibS9Azb9C1MaLU' target='_blank'>DCIMA · vía ↗</a> · <a href='https://drive.google.com/drive/folders/1AHNpXN8CThQJ4Doo9gttZI9dRoBcR8Qc' target='_blank'>DCIMB · cabina/DMS (por confirmar) ↗</a> · <a href='https://drive.google.com/drive/folders/1xuGaF_ASsAjTQZyz7LB9aRdd8FnD4kg7' target='_blank'>DCIMC · trasera ↗</a>.", "folderId": "1WaQ0tf2h__nLhSmdK49ABuIdGd4G0wsE", "folder": "https://drive.google.com/drive/folders/1WaQ0tf2h__nLhSmdK49ABuIdGd4G0wsE", "clips": [], "observaciones": [], "fatiga": [["PERCLOS (P80)", "—", "%", "n", "según framing · confirmar miniatura"], ["Microsueños", "—", "ev/h", "n", "según framing · confirmar miniatura"], ["Bostezos", "—", "/15min", "n", "según framing · confirmar miniatura"], ["Parpadeo lento", "—", "%", "n", "según framing · confirmar miniatura"], ["Cabeceo (nod-off)", "—", "ev", "n", "según framing · confirmar miniatura"], ["KSS estimado", "—", "1–9", "n", "fusión DMS · pendiente"], ["Serpenteo · SDLP", "—", "cm", "n", "cám. vía · pendiente"], ["Conducción continua", "—", "min", "n", "clips + GPS"], ["Ventana circadiana", "en indexación", "", "n", "clips pendientes de indexar (pipeline n8n)"]], "defensivo": [["Distancia seguim. ≥2 s", "—", "% cump", "n", "cám. vía · pendiente"], ["Colisión frontal TTC<2.5s", "—", "ev", "n", "pendiente"], ["Frenadas bruscas", "—", "/100km", "n", "pendiente"], ["Aceleraciones bruscas", "—", "/100km", "n", "pendiente"], ["Curvas bruscas", "—", "/100km", "n", "pendiente"], ["Exceso de velocidad", "—", "% dist", "n", "req. GPS"], ["Salidas de carril s/señal", "—", "ev", "n", "pendiente"], ["Distracción · mirada", "—", "ev", "n", "requiere cabina"]]}], "windows": [[0, 6], [13, 16], [20, 24]], "tot_unidades": 5, "tot_clips": 44, "tot_baja": 5, "tot_obs": 5, "dms_ok": 1, "dms_pend": 2, "raiz": "Grabaciones DashCam proyecto Hannaqpampa", "raiz_id": "1d_IYv7WahDSUQhXt_t2T4UD5RdjMoYnM", "raiz_url": "https://drive.google.com/drive/folders/1d_IYv7WahDSUQhXt_t2T4UD5RdjMoYnM", "meta": {"generado": "2026-06-27 06:00", "fuente": "actualización sábado 27-06-2026 · +Z8B-730 · enlaces = carpeta (pendiente pipeline para video exacto)", "cron": "0 6 * * 6", "cron_txt": "sábados 06:00 (America/Lima)", "proxima": "sábado 04-07-2026 06:00"}};
-let DATA=SEED, sel='flota', hl=false;
-const COL={v:'#1FA463',a:'#E2A50B',r:'#D7263D',n:'#AEB6C2'};
-const tip=document.getElementById('tip');
-function showTip(e,h){tip.innerHTML=h;tip.style.opacity=1;moveTip(e);}function moveTip(e){tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';}function hideTip(){tip.style.opacity=0;}
-function clipUrl(c){return c.video||c.carpeta;}function esExacto(c){return !!c.video;}
-function obsUrl(o){return o.video||o.carpeta;}
+:root {
+  --c-bg: #eef1f5;
+  --c-card: #ffffff;
+  --c-text: #1a2230;
+  --c-muted: #6b7280;
+  --c-border: #e3e5e9;
+  --c-yellow: #F6D24A;
+  --c-yellow-dark: #b48a00;
+  --c-green: #2f9e6e;
+  --c-amber: #d97706;
+  --c-red: #dc2626;
+  --c-blue: #2563eb;
+  --c-purple: #7c3aed;
+  font-size: 14px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--c-bg); color: var(--c-text); font-family: 'Helvetica Neue', Arial, sans-serif; min-height: 100vh; }
 
-function renderTop(){
- document.getElementById('raizlink').href=DATA.raiz_url;
- const m=DATA.meta||{};
- document.getElementById('upd').innerHTML=
-   `<span class="tag">● datos al ${m.generado||'—'}</span>`
-  +`<span class="tag s">↻ actualización automática: ${m.cron_txt||'sábados'} </span>`
-  +`<span class="tag w">próxima: ${m.proxima||'sábado'}</span>`
-  +`<span style="font-family:var(--mono)">cron <b>${m.cron||'0 6 * * 6'}</b> · fuente: ${m.fuente||'—'}</span>`;
- document.getElementById('honest').innerHTML=
-   `<b>Lectura honesta:</b> clips, fechas, horas y exposición circadiana son <b>REALES</b>. Indicadores de <b>visión por computador</b> en <b>"—" pendientes</b> (los completa el pipeline cada sábado). `
-  +`<b>Evidencia:</b> cada desvío enlaza al <b>video exacto</b> (<span class="mono">file/d/&lt;id&gt;/view</span>) cuando el pipeline entrega su <span class="mono">webViewLink</span>; mientras tanto abre la <b>carpeta</b>. <b>BPM-741</b>: reloj sin configurar → sin ubicación temporal.`;
- document.getElementById('src').textContent=`INNOVAQ SOLUTIONS · data.json ${m.generado||''}`;
+/* ── HEADER ─────────────────────────────────────────────── */
+.top-bar {
+  background: #11182a;
+  color: #a8b4c8;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-function renderKpis(){
- const k=[['Unidades',DATA.tot_unidades,'en flota'],['Clips reales',DATA.tot_clips,'leídos'],
-  ['Desvíos detectados',DATA.tot_obs,'con evidencia',null,'obs'],
-  ['Cámara cabina',DATA.dms_ok+' / '+DATA.tot_unidades,DATA.dms_pend+' por confirmar'],
-  ['Franja baja vig.',DATA.tot_baja,'clips 13–16/20–24 h'],
-  ['Indic. visión','PENDIENTE','pipeline sábados','pend']];
- document.getElementById('kpis').innerHTML=k.map(x=>`<div class="kpi ${x[3]||''} ${x[4]||''}"><div class="k">${x[0]}</div><div class="v">${x[1]}</div><div class="u">${x[2]}</div></div>`).join('');
+.top-bar a { color: var(--c-yellow); text-decoration: none; }
+header {
+  background: #fff;
+  border-bottom: 1px solid var(--c-border);
+  padding: 18px 24px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
 }
-function renderChips(){
- let h=`<div class="chip ${sel==='flota'?'on':''}" onclick="setSel('flota')">▦ Flota (todas)</div>`;
- DATA.units.forEach((u,i)=>{h+=`<div class="chip ${sel===i?'on':''}" onclick="setSel(${i})"><span class="dot" style="background:${u.color}"></span>${u.unidad} · ${u.placa}</div>`;});
- h+=`<label class="toggle"><input type="checkbox" ${hl?'checked':''} onchange="setHl(this.checked)"> resaltar franja baja vigilancia</label>`;
- document.getElementById('chips').innerHTML=h;
+.header-left h1 {
+  font-size: 22px; font-weight: 800; letter-spacing: -0.3px; color: var(--c-text);
 }
-window.setSel=s=>{sel=s;render();window.scrollTo({top:0,behavior:'smooth'});};window.setHl=v=>{hl=v;render();};
-function timeline(units,w,h){const padL=46,padR=20,padT=24,padB=30,iW=w-padL-padR,x=hh=>padL+(hh/24)*iW;
- let s=`<svg viewBox="0 0 ${w} ${h}">`;DATA.windows.forEach(([a,b])=>{s+=`<rect x="${x(a)}" y="${padT}" width="${x(b)-x(a)}" height="${h-padT-padB}" fill="#F2C94C" opacity="${hl?0.28:0.12}"/>`;});
- for(let H=0;H<=24;H+=3){s+=`<line x1="${x(H)}" y1="${padT}" x2="${x(H)}" y2="${h-padB}" stroke="#E2E7EE"/><text x="${x(H)}" y="${h-padB+16}" text-anchor="middle" font-size="10" fill="#5C6678" font-family="IBM Plex Mono">${String(H).padStart(2,'0')}:00</text>`;}
- const rows=units.length,band=(h-padT-padB);
- units.forEach((u,ri)=>{const yy=padT+band*((ri+0.5)/rows);
-  s+=`<text x="6" y="${yy+3}" font-size="10" fill="${u.color}" font-family="Barlow Semi Condensed" font-weight="700">${u.placa}</text><line x1="${padL}" y1="${yy}" x2="${w-padR}" y2="${yy}" stroke="#EEF1F5"/>`;
-  u.clips.forEach(c=>{if(c.h===null)return;const cx=x(c.h),cy=yy,fill=c.b?COL.r:u.color,r=c.b?5.5:4.5,url=clipUrl(c),ex=esExacto(c);
-   s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="#fff" stroke-width="1.3" class="dot" data-url="${url}" data-tip="${u.placa} · ${c.t} · ${c.f}${c.b?' · ⚠ BAJA VIGILANCIA':''} · clic: ${ex?'ver video ↗':'abrir carpeta ↗'}"/>`;});});
- return s+`</svg>`;}
-function bindDots(){document.querySelectorAll('svg circle.dot').forEach(c=>{c.style.cursor='pointer';c.addEventListener('mousemove',e=>showTip(e,c.getAttribute('data-tip')));c.addEventListener('mouseleave',hideTip);c.addEventListener('click',()=>{const u=c.getAttribute('data-url');if(u)window.open(u,'_blank');});});}
-function obsItem(u,o){const ex=!!o.video;const seg=o.evento_seg!=null?` · evento a ${o.evento_seg}s`:'';
- return `<div class="obs"><span class="sev ${o.severidad}"></span><div class="ob"><div class="t">${u.placa} · ${o.tipo} <span style="color:var(--mut);font-weight:500">· ${o.fecha} ${o.hora||''}${seg}</span></div><div class="d">${o.detalle}</div></div><a class="vid" href="${obsUrl(o)}" target="_blank">▶ ${ex?'ver video del desvío':'ver carpeta'} ↗</a></div>`;}
-function viewFlota(){
- const cards=DATA.units.map((u,i)=>{const dmsB=u.dms===true?`<span class="badge b-dms">CABINA / DMS</span>`:u.dms===false?`<span class="badge b-via">VÍA</span>`:`<span class="badge b-pend">POR CONFIRMAR</span>`;
-  const tsB=u.ts_ok?'':`<span class="badge b-nots">SIN FECHA</span>`,obB=u.observaciones.length?`<span class="badge b-obs">${u.observaciones.length} DESVÍOS</span>`:'';
-  const circ=u.ts_ok?(u.baja+' / '+u.n):'n/a';
-  return `<div class="uc" style="--c:${u.color}"><div class="top" onclick="setSel(${i})"><div class="nm">${u.unidad}</div><span class="pl">${u.placa}</span>
-   <div class="cam">${u.camara}<br><span style="font-size:11px">${u.framing}</span></div>
-   <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">${dmsB}${tsB}${obB}</div></div>
-   <div class="stats"><div class="st"><div class="l">Clips</div><div class="n">${u.n}</div></div><div class="st"><div class="l">Material</div><div class="n" style="font-size:13px">${u.footage}</div></div>
-   <div class="st"><div class="l">Periodo</div><div class="n" style="font-size:11px">${u.periodo}</div></div><div class="st"><div class="l">Franja baja</div><div class="n">${circ}</div></div></div>
-   <div class="foot"><a class="drivebtn" href="${u.folder}" target="_blank">▶ Abrir carpeta Drive</a><span class="badge b-pend">VISIÓN PENDIENTE</span></div></div>`;}).join('');
- let allObs='';DATA.units.forEach(u=>u.observaciones.forEach(o=>allObs+=obsItem(u,o)));
- const tlUnits=DATA.units.filter(u=>u.ts_ok);
- return `<div class="grid">${cards}</div>
-  <div class="panel"><h2><span class="bar" style="background:var(--rojo)"></span>Desvíos detectados · evidencia en video <span style="font-weight:500;font-size:11px;color:var(--mut);text-transform:none;letter-spacing:0">— clic abre el video exacto (o la carpeta si aún no hay link)</span></h2>
-   <div class="note">${DATA.tot_obs} desvíos detectados hoy (circadianos). Los desvíos de visión (PERCLOS, frenadas, distracción…) se agregan aquí automáticamente cuando corre el pipeline, cada uno con su video exacto y el segundo del evento.</div>${allObs||'<div class="note">Sin desvíos.</div>'}</div>
-  <div class="panel"><h2><span class="bar"></span>Línea de tiempo circadiana · flota <span style="font-weight:500;font-size:11px;color:var(--mut);text-transform:none;letter-spacing:0">— clic en un punto abre la evidencia</span></h2>
-   <div class="note">Cada punto = un clip por su hora real. Rojo = clip en franja de baja vigilancia. BPM-741 no aparece: sin fecha confiable.</div>${timeline(tlUnits,1240,150)}
-   <div class="tl-leg"><div class="it"><span class="sw" style="background:#2563EB"></span>BUS F7P-952</div><div class="it"><span class="sw" style="background:#1FA463"></span>Cam1 BFB-898</div><div class="it"><span class="sw" style="background:#7C3AED"></span>Cam3 Gris</div><div class="it"><span class="sw" style="background:#D7263D"></span>franja baja vigilancia</div><div class="it"><span class="sw" style="background:#F2C94C;opacity:.5"></span>ventanas 00–06 / 13–16 / 20–24 h</div></div></div>`;}
-function indRows(rows){return rows.map(r=>{const[lab,val,unit,lvl,sub]=r;const dim=val==='—'?' dim':'';return `<div class="row"><span class="led ${lvl}"></span><div class="lab"><div class="t">${lab}</div><div class="s">${sub}</div></div><div class="val${dim}">${val}${unit?` <small>${unit}</small>`:''}</div></div>`;}).join('');}
-function clipTable(u){const rows=u.clips.map(c=>{const baja=c.b,dt=c.iso?c.iso.slice(0,10):'—',hh=c.t?c.t:'—';
-  const tag=c.iso?(baja?`<span class="pill b">baja vig.</span>`:`<span class="pill n">normal</span>`):`<span class="pill n" style="background:#EEE;color:#777">sin fecha</span>`;
-  const ex=esExacto(c),url=clipUrl(c),ev=`<a class="evlink ${baja?'obs2':''}" href="${url}" target="_blank">${baja?'⚠ ':''}${ex?'video':'carpeta'} ↗</a>`;
-  return `<tr class="${baja?'baja':''}" data-f="${c.f.toLowerCase()}"><td>${c.f}</td><td>${dt}</td><td>${hh}</td><td>${tag}</td><td>${ev}</td></tr>`;}).join('');
- return `<input class="search" placeholder="filtrar clip…" oninput="filtClips(this.value)"><div style="max-height:340px;overflow:auto"><table><thead><tr><th>Archivo</th><th>Fecha</th><th>Hora</th><th>Circadiano</th><th>Evidencia</th></tr></thead><tbody id="clipbody">${rows}</tbody></table></div>`;}
-window.filtClips=q=>{q=q.toLowerCase();document.querySelectorAll('#clipbody tr').forEach(tr=>{tr.style.display=tr.getAttribute('data-f').includes(q)?'':'none';});};
-function viewUnit(i){const u=DATA.units[i];const dmsB=u.dms===true?`<span class="badge b-dms">CABINA / DMS</span>`:u.dms===false?`<span class="badge b-via">VÍA</span>`:`<span class="badge b-pend">FRAMING POR CONFIRMAR</span>`;
- const circ=u.ts_ok?(u.baja+' / '+u.n+' clips en franja baja'):'sin fecha confiable';const extra=(i===1)?` · <span style="font-size:11px">_f en otra carpeta (video_front_lock)</span>`:'';
- const obs=u.observaciones.length?u.observaciones.map(o=>obsItem(u,o)).join(''):'<div class="note">Sin desvíos detectados (a falta de CV).</div>';
- return `<div class="panel" style="border-top:4px solid ${u.color}"><h2><span class="bar" style="background:${u.color}"></span>${u.unidad} · <span class="mono">${u.placa}</span> ${dmsB}<a class="drivebtn" style="margin-left:auto" href="${u.folder}" target="_blank">▶ Abrir carpeta en Drive ↗</a></h2>
-  <div class="note">${u.camara} · ${u.framing} · ${u.periodo} · ${u.n} clips · ${u.footage} · circadiano: ${circ}${extra}</div>
-  <div class="honest" style="margin:0 0 14px">${u.nota}</div>
-  ${u.ts_ok?`${timeline([u],1240,118)}<div class="tl-leg"><div class="it"><span class="sw" style="background:${u.color}"></span>clip normal</div><div class="it"><span class="sw" style="background:#D7263D"></span>franja baja vigilancia</div><div class="it" style="color:var(--link)">clic en punto → abre evidencia ↗</div></div>`:`<div class="note" style="background:#FBE3E7;color:#a31526;padding:10px 12px;border-radius:8px">Sin línea de tiempo: los .AVI no tienen fecha/hora confiable. La CV igual corre, pero no se ubica en franjas circadianas ni HOS.</div>`}</div>
-  <div class="panel"><h2><span class="bar" style="background:var(--rojo)"></span>Desvíos detectados · ${u.placa}</h2><div class="note">Cada desvío enlaza al video exacto (o carpeta) donde se identifica.</div>${obs}</div>
-  <div class="cols"><div class="ind"><h3><span class="bar"></span>Indicadores de fatiga / somnolencia</h3>${indRows(u.fatiga)}</div><div class="ind"><h3><span class="bar"></span>Indicadores de manejo defensivo</h3>${indRows(u.defensivo)}</div></div>
-  <div class="panel" style="margin-top:18px"><h2><span class="bar"></span>Clips leídos · ${u.placa}</h2><div class="note">Listado real. Filas resaltadas = clip en franja de baja vigilancia. La columna Evidencia abre el video exacto o la carpeta.</div>${clipTable(u)}</div>`;}
-function render(){renderTop();renderKpis();renderChips();document.getElementById('view').innerHTML=(sel==='flota')?viewFlota():viewUnit(sel);bindDots();}
-document.addEventListener('mousemove',e=>{if(tip.style.opacity==1)moveTip(e);});
-async function cargar(){try{const r=await fetch('data.json',{cache:'no-store'});if(r.ok){DATA=await r.json();}}catch(e){console.warn('usando SEED embebido',e);}render();}
-cargar(); setInterval(cargar, 30*60*1000); // re-lee data.json cada 30 min (hosting vivo)
-</script></body></html>
+.header-left .sub {
+  margin-top: 4px; color: var(--c-muted); font-size: 12px;
+}
+.header-right { text-align: right; font-size: 12px; color: var(--c-muted); line-height: 1.7; flex-shrink: 0; }
+.header-right b { color: var(--c-text); }
+.print-btn {
+  display: inline-block; margin-top: 6px; background: #11182a; color: #fff;
+  border: none; border-radius: 4px; padding: 6px 14px; font-size: 11px;
+  cursor: pointer; font-weight: 700; letter-spacing: .5px;
+}
+.print-btn:hover { background: #1f2d45; }
+
+/* ── KPI STRIP ───────────────────────────────────────────── */
+.kpi-strip {
+  display: flex; gap: 10px; padding: 16px 24px; background: #fff;
+  border-bottom: 1px solid var(--c-border);
+}
+.kpi {
+  flex: 1; border: 1px solid var(--c-border); border-radius: 6px;
+  padding: 10px 14px; background: #fafbfc;
+}
+.kpi-val { font-size: 22px; font-weight: 800; line-height: 1; }
+.kpi-label { font-size: 11px; color: var(--c-muted); margin-top: 3px; }
+.kpi-note { font-size: 10px; color: var(--c-muted); margin-top: 2px; }
+
+/* ── GRID ────────────────────────────────────────────────── */
+.grid { display: flex; flex-wrap: wrap; gap: 14px; padding: 20px 24px; }
+
+/* ── VEHICLE CARD ────────────────────────────────────────── */
+.v-card {
+  background: var(--c-card); border-radius: 8px;
+  border: 1px solid var(--c-border);
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  flex: 1 1 340px; min-width: 300px; max-width: 520px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.v-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-bottom: 1px solid var(--c-border);
+}
+.v-badge {
+  font-size: 13px; font-weight: 800; padding: 5px 12px; border-radius: 4px;
+  color: #fff; letter-spacing: .5px; white-space: nowrap;
+}
+.v-type { font-size: 11px; color: var(--c-muted); }
+.v-plate { font-size: 16px; font-weight: 800; letter-spacing: 1px; }
+.status-pill {
+  margin-left: auto; font-size: 10px; font-weight: 700; padding: 3px 8px;
+  border-radius: 12px; white-space: nowrap;
+}
+.pill-parcial  { background: #fef3c7; color: #92400e; }
+.pill-pdf      { background: #dbeafe; color: #1e40af; }
+.pill-pending  { background: #f3f4f6; color: #6b7280; }
+.pill-new      { background: #d1fae5; color: #065f46; }
+.pill-ok       { background: #d1fae5; color: #065f46; }
+
+.v-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+
+.stat-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.stat-chip {
+  background: #f3f4f6; border-radius: 4px; padding: 5px 10px;
+  font-size: 11px; display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.stat-chip strong { font-size: 15px; font-weight: 800; line-height: 1; }
+.stat-chip span { color: var(--c-muted); font-size: 10px; }
+
+.channels { font-size: 11px; color: var(--c-muted); }
+.channels b { color: var(--c-text); font-weight: 600; }
+.channels .tag { 
+  display: inline-block; font-size: 10px; font-weight: 600; 
+  padding: 1px 6px; border-radius: 3px; margin-right: 4px; margin-bottom: 3px;
+  background: #e0f2fe; color: #0369a1;
+}
+.channels .tag-grey { background: #f3f4f6; color: var(--c-muted); }
+.channels .tag-warn { background: #fef3c7; color: #92400e; }
+
+.findings { border-top: 1px solid var(--c-border); padding-top: 10px; }
+.findings-title { font-size: 10px; font-weight: 700; color: var(--c-muted); letter-spacing: .8px; text-transform: uppercase; margin-bottom: 6px; }
+.finding-item {
+  display: flex; gap: 8px; align-items: flex-start;
+  font-size: 11px; margin-bottom: 5px;
+}
+.f-time { font-weight: 700; color: var(--c-text); white-space: nowrap; min-width: 54px; }
+.f-text { color: #374151; }
+.f-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
+.dot-ok { background: var(--c-green); }
+.dot-warn { background: var(--c-amber); }
+.dot-info { background: var(--c-blue); }
+
+.alert-bar {
+  margin: 0 16px 14px; padding: 6px 10px; border-radius: 4px; font-size: 11px;
+  background: #fef3c7; border-left: 3px solid var(--c-amber); color: #78350f;
+}
+.alert-bar b { color: #92400e; }
+
+/* ── TIMELINE CARD ───────────────────────────────────────── */
+.tl-card {
+  background: var(--c-card); border-radius: 8px;
+  border: 1px solid var(--c-border);
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  padding: 16px 20px; width: 100%;
+}
+.tl-title { font-size: 13px; font-weight: 800; border-left: 4px solid var(--c-yellow); padding-left: 8px; margin-bottom: 14px; }
+.tl-rows { display: flex; flex-direction: column; gap: 12px; }
+.tl-row { display: flex; align-items: center; gap: 12px; }
+.tl-label { width: 110px; flex-shrink: 0; font-size: 11px; font-weight: 700; text-align: right; color: var(--c-text); }
+.tl-bar-wrap { flex: 1; position: relative; height: 20px; background: #f3f4f6; border-radius: 3px; overflow: visible; }
+.tl-seg { position: absolute; height: 100%; border-radius: 2px; }
+.tl-gap-stripe {
+  position: absolute; height: 100%; border-radius: 2px;
+  background: repeating-linear-gradient(45deg,#fca5a5,#fca5a5 3px,#fef2f2 3px,#fef2f2 7px);
+}
+.tl-dot-mark {
+  position: absolute; top: 50%; transform: translate(-50%,-50%);
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 2px solid #fff; box-shadow: 0 0 0 1.5px #6b7280; z-index: 2;
+}
+.tl-dot-warn { box-shadow: 0 0 0 1.5px var(--c-amber) !important; background: var(--c-amber) !important; }
+.tl-axis { display: flex; justify-content: space-between; padding: 0 0 0 122px; margin-top: 4px; }
+.tl-axis span { font-size: 10px; color: var(--c-muted); }
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+footer {
+  padding: 16px 24px; font-size: 11px; color: var(--c-muted);
+  border-top: 1px solid var(--c-border); background: #fff;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+footer a { color: var(--c-blue); }
+
+/* ── PRINT ────────────────────────────────────────────────── */
+@media print {
+  .print-btn, .top-bar { display: none; }
+  body { background: #fff; }
+  .grid { padding: 0; }
+  .v-card, .tl-card { break-inside: avoid; box-shadow: none; }
+}
+
+@media (max-width: 600px) {
+  .kpi-strip { flex-wrap: wrap; }
+  header { flex-direction: column; }
+  .header-right { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span>SSOMA · Monitoreo de Conducción · Dashcam</span>
+  <span>Proyecto CSF Hanaqpampa · ENGIE / Panasur &nbsp;|&nbsp; <a href="https://drive.google.com/drive/folders/1d_IYv7WahDSUQhXt_t2T4UD5RdjMoYnM" target="_blank">raíz Drive ↗</a></span>
+</div>
+
+<header>
+  <div class="header-left">
+    <h1>Flota Hanaqpampa · Monitoreo de Conducción</h1>
+    <div class="sub">Fatiga / somnolencia + manejo defensivo &nbsp;·&nbsp; 5 vehículos &nbsp;·&nbsp; Proyecto CSF Hanaqpampa · ENGIE / Panasur</div>
+  </div>
+  <div class="header-right">
+    <b>Actualizado:</b> 07 jul 2026<br>
+    <b>Material total en Drive:</b> ~6.6 GB (6 641 MB)<br>
+    <b>Clips indexados:</b> 115 clips (105 TS + 10+ AVI)<br>
+    <button class="print-btn" onclick="window.print()">⎙ Imprimir / PDF</button>
+  </div>
+</header>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi">
+    <div class="kpi-val">5</div>
+    <div class="kpi-label">Vehículos registrados</div>
+    <div class="kpi-note">4 camionetas + 1 bus</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val" style="color:var(--c-amber)">1</div>
+    <div class="kpi-label">Con análisis parcial</div>
+    <div class="kpi-note">BFB-898 · 3/74 clips revisados</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val" style="color:var(--c-red)">1</div>
+    <div class="kpi-label">Hallazgo activo</div>
+    <div class="kpi-note">08:54 celular en mano (verificar)</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val" style="color:var(--c-muted)">4</div>
+    <div class="kpi-label">Pipeline pendiente</div>
+    <div class="kpi-note">BPM-741 · Gris · Blanca · F7P-952</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val">45.7</div>
+    <div class="kpi-label">Min. vacío grabación</div>
+    <div class="kpi-note">BFB-898 · 07:53–08:39 · confirmar causa</div>
+  </div>
+</div>
+
+<!-- VEHICLE CARDS -->
+<div class="grid">
+
+  <!-- BFB-898 -->
+  <div class="v-card">
+    <div class="v-header">
+      <div class="v-badge" style="background:#2563eb">CAM 1</div>
+      <div>
+        <div class="v-type">Camioneta</div>
+        <div class="v-plate">BFB-898</div>
+      </div>
+      <div class="status-pill pill-parcial">ANÁLISIS PARCIAL</div>
+    </div>
+    <div class="v-body">
+      <div class="stat-row">
+        <div class="stat-chip"><strong>74</strong><span>clips .ts</span></div>
+        <div class="stat-chip"><strong>2</strong><span>clips .avi</span></div>
+        <div class="stat-chip"><strong>4.34 GB</strong><span>material</span></div>
+        <div class="stat-chip"><strong>21 may 26</strong><span>periodo</span></div>
+        <div class="stat-chip"><strong>06:57–09:14</strong><span>ventana</span></div>
+      </div>
+      <div class="channels">
+        <b>Canales:</b><br>
+        <span class="tag">video_back (cabina)</span>
+        <span class="tag tag-grey">video_front_lock (vacío)</span>
+      </div>
+      <div class="findings">
+        <div class="findings-title">Hallazgos · muestreo manual 3/74 clips</div>
+        <div class="finding-item">
+          <div class="f-dot dot-ok"></div>
+          <div class="f-time">07:28</div>
+          <div class="f-text">Cinturón y EPP correctos en ambos ocupantes. Sin novedad.</div>
+        </div>
+        <div class="finding-item">
+          <div class="f-dot dot-warn"></div>
+          <div class="f-time">08:54</div>
+          <div class="f-text">Ocupante con <b>celular en mano</b> dentro de cabina. Verificar si vehículo estaba en movimiento.</div>
+        </div>
+        <div class="finding-item">
+          <div class="f-dot dot-ok"></div>
+          <div class="f-time">09:14</div>
+          <div class="f-text">Cinturón y EPP correctos. Último segmento del turno.</div>
+        </div>
+      </div>
+    </div>
+    <div class="alert-bar"><b>⚠ Vacío de grabación 45.7 min</b> (07:53–08:39) — confirmar con bitácora / conductor si fue parada o falla DMS.</div>
+  </div>
+
+  <!-- BPM-741 -->
+  <div class="v-card">
+    <div class="v-header">
+      <div class="v-badge" style="background:#7c3aed">CAM 2</div>
+      <div>
+        <div class="v-type">Camioneta</div>
+        <div class="v-plate">BPM-741</div>
+      </div>
+      <div class="status-pill pill-pending">SIN ANALIZAR</div>
+    </div>
+    <div class="v-body">
+      <div class="stat-row">
+        <div class="stat-chip"><strong>8</strong><span>clips .avi</span></div>
+        <div class="stat-chip"><strong>169 MB</strong><span>material</span></div>
+        <div class="stat-chip"><strong>may 2026</strong><span>periodo</span></div>
+      </div>
+      <div class="channels">
+        <b>Canales:</b><br>
+        <span class="tag">video_back</span>
+        <span class="tag">video_front</span>
+        <span class="tag tag-grey">AVI (reloj interno puede estar desconfigurado)</span>
+      </div>
+      <div class="findings">
+        <div class="findings-title">Estado</div>
+        <div class="finding-item">
+          <div class="f-dot dot-info"></div>
+          <div class="f-time">—</div>
+          <div class="f-text">Material disponible en Drive. Pipeline de análisis no ejecutado. Pendiente de revisión.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Camioneta 3 Gris -->
+  <div class="v-card">
+    <div class="v-header">
+      <div class="v-badge" style="background:#059669">CAM 3</div>
+      <div>
+        <div class="v-type">Camioneta · color Gris</div>
+        <div class="v-plate" style="color:var(--c-muted);font-size:13px">Placa sin registrar</div>
+      </div>
+      <div class="status-pill pill-pending">SIN ANALIZAR</div>
+    </div>
+    <div class="v-body">
+      <div class="stat-row">
+        <div class="stat-chip"><strong>24</strong><span>clips .ts</span></div>
+        <div class="stat-chip"><strong>1.36 GB</strong><span>material</span></div>
+        <div class="stat-chip"><strong>16–18 jun 26</strong><span>periodo</span></div>
+        <div class="stat-chip"><strong>3</strong><span>jornadas</span></div>
+      </div>
+      <div class="channels">
+        <b>Canales:</b><br>
+        <span class="tag">video_back (cabina)</span>
+        <span class="tag tag-grey">sin carpeta front</span>
+      </div>
+      <div class="findings">
+        <div class="findings-title">Estado</div>
+        <div class="finding-item">
+          <div class="f-dot dot-info"></div>
+          <div class="f-time">—</div>
+          <div class="f-text">3 jornadas registradas (16, 17 y 18 jun · 09:02–15:33). Pendiente placa y análisis de pipeline.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Camioneta 4 Blanca -->
+  <div class="v-card">
+    <div class="v-header">
+      <div class="v-badge" style="background:#d97706">CAM 4</div>
+      <div>
+        <div class="v-type">Camioneta · color Blanca</div>
+        <div class="v-plate" style="color:var(--c-muted);font-size:13px">Placa sin registrar</div>
+      </div>
+      <div class="status-pill pill-parcial">SUBIDA INCOMPLETA</div>
+    </div>
+    <div class="v-body">
+      <div class="stat-row">
+        <div class="stat-chip"><strong>0</strong><span>clips de video</span></div>
+        <div class="stat-chip"><strong>27 jun 26</strong><span>subido</span></div>
+        <div class="stat-chip"><strong>3 carpetas</strong><span>DCIMA/B/C</span></div>
+      </div>
+      <div class="channels">
+        <b>Canales:</b><br>
+        <span class="tag">DCIMA</span>
+        <span class="tag">DCIMB</span>
+        <span class="tag">DCIMC</span>
+      </div>
+      <div class="findings">
+        <div class="findings-title">Estado</div>
+        <div class="finding-item">
+          <div class="f-dot dot-info"></div>
+          <div class="f-time">—</div>
+          <div class="f-text"><b>Carpetas DCIM sin videos</b> — solo contienen archivos de sistema (bitarry.dat, 8 bytes c/u). La copia desde la SD no incluyó los clips: re-subir el material de la memoria.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUS F7P-952 -->
+  <div class="v-card">
+    <div class="v-header">
+      <div class="v-badge" style="background:#dc2626">BUS</div>
+      <div>
+        <div class="v-type">Bus de personal</div>
+        <div class="v-plate">F7P-952</div>
+      </div>
+      <div class="status-pill pill-pdf">DEMO · PDF generado</div>
+    </div>
+    <div class="v-body">
+      <div class="stat-row">
+        <div class="stat-chip"><strong>7</strong><span>clips .ts</span></div>
+        <div class="stat-chip"><strong>663.5 MB</strong><span>material</span></div>
+        <div class="stat-chip"><strong>08–16 jun 26</strong><span>periodo</span></div>
+        <div class="stat-chip"><strong>5 días</strong><span>jornadas</span></div>
+      </div>
+      <div class="channels">
+        <b>Canales:</b><br>
+        <span class="tag">video_front (vía)</span>
+        <span class="tag">image_back</span>
+        <span class="tag tag-warn">sin cámara cabina (DMS n/d)</span>
+      </div>
+      <div class="findings">
+        <div class="findings-title">Indicadores cargados en PDF demo</div>
+        <div class="finding-item">
+          <div class="f-dot dot-info"></div>
+          <div class="f-time">Serpenteo</div>
+          <div class="f-text">18 cm SDLP (proxy frontal · muestra)</div>
+        </div>
+        <div class="finding-item">
+          <div class="f-dot dot-warn"></div>
+          <div class="f-time">20:05 h</div>
+          <div class="f-text">1/7 clips en ventana circadiana de baja vigilancia (20–24h) — riesgo fatiga elevado.</div>
+        </div>
+        <div class="finding-item">
+          <div class="f-dot dot-info"></div>
+          <div class="f-time">Manejo</div>
+          <div class="f-text">82% cumplimiento distancia seguimiento · 2 ev TTC &lt;2.5s · 3.1 frenadas/100km · 4 salidas de carril.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE CARD -->
+  <div class="tl-card">
+    <div class="tl-title">LÍNEA DE TIEMPO POR VEHÍCULO · grabaciones disponibles en Drive</div>
+    <!-- escala 06:00-22:00 = 16h = 960min -->
+    <div class="tl-rows">
+
+      <!-- BFB-898: 06:57-09:14 con gap 07:53-08:39 -->
+      <div class="tl-row">
+        <div class="tl-label">BFB-898<br><span style="font-size:10px;color:var(--c-muted)">21 may</span></div>
+        <div class="tl-bar-wrap">
+          <!-- 06:57=57min, 07:53=113min, 08:39=159min, 09:14=194min -->
+          <!-- scale: left% = (min-360)/960*100 where 06:00=360min from midnight -->
+          <!-- 06:57=417, 07:53=473, 08:39=519, 09:14=554 from midnight -->
+          <!-- range 06:00=360 to 22:00=1320, span=960 -->
+          <div class="tl-seg" style="left:5.9%;width:5.8%;background:#2563eb;opacity:.8"></div><!-- 06:57-07:53 -->
+          <div class="tl-gap-stripe" style="left:11.8%;width:4.8%"></div><!-- 07:53-08:39 gap -->
+          <div class="tl-seg" style="left:16.6%;width:3.6%;background:#2563eb;opacity:.8"></div><!-- 08:39-09:14 -->
+          <div class="tl-dot-mark" style="left:14.7%;background:#2563eb"></div><!-- 07:28 -->
+          <div class="tl-dot-mark tl-dot-warn" style="left:20.7%"></div><!-- 08:54 -->
+        </div>
+      </div>
+
+      <!-- BPM-741: may 2026, varios clips (~17:00-18:00) -->
+      <div class="tl-row">
+        <div class="tl-label">BPM-741<br><span style="font-size:10px;color:var(--c-muted)">may 2026</span></div>
+        <div class="tl-bar-wrap">
+          <div class="tl-seg" style="left:62%;width:4%;background:#7c3aed;opacity:.6"></div>
+          <div class="tl-seg" style="left:68%;width:2%;background:#7c3aed;opacity:.6"></div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:var(--c-muted)">pendiente de análisis</div>
+        </div>
+      </div>
+
+      <!-- Cam3 Gris: 17-18 jun, 09:02-14:37 -->
+      <div class="tl-row">
+        <div class="tl-label">Cam3 Gris<br><span style="font-size:10px;color:var(--c-muted)">16–18 jun</span></div>
+        <div class="tl-bar-wrap">
+          <!-- 09:02=542, 14:37=877 from midnight. left=(542-360)/960=19%, width=(877-542)/960=35% -->
+          <div class="tl-seg" style="left:19%;width:40.7%;background:#059669;opacity:.7"></div>
+          <!-- 09:03 shade 13-16h=(780-360)/960=44% width=(960-780)/960=... 13:00=780, 16:00=960 => left=44% width=18.75% -->
+          <div style="position:absolute;left:44.4%;width:18.75%;height:100%;background:#fef3c7;opacity:.5;border-radius:2px"></div>
+        </div>
+      </div>
+
+      <!-- Cam4 Blanca: 27 jun, pendiente -->
+      <div class="tl-row">
+        <div class="tl-label">Cam4 Blanca<br><span style="font-size:10px;color:var(--c-muted)">27 jun</span></div>
+        <div class="tl-bar-wrap">
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:#92400e">⚠ DCIM sin videos · re-subir desde SD</div>
+        </div>
+      </div>
+
+      <!-- BUS F7P-952: 08-16 jun varios horarios -->
+      <div class="tl-row">
+        <div class="tl-label">F7P-952<br><span style="font-size:10px;color:var(--c-muted)">08–16 jun</span></div>
+        <div class="tl-bar-wrap">
+          <!-- 07:34=454, 12:29=749, 16:54=1014, 17:24=1044, 18:50=1130, 18:52=1132, 20:05=1205 from midnight -->
+          <!-- left=(min-360)/960 -->
+          <div class="tl-dot-mark" style="left:9.8%;background:#dc2626"></div><!-- 07:34 -->
+          <div class="tl-dot-mark" style="left:40.5%;background:#dc2626"></div><!-- 12:29 -->
+          <div class="tl-dot-mark" style="left:68%;background:#dc2626"></div><!-- 16:54 -->
+          <div class="tl-dot-mark" style="left:71.2%;background:#dc2626"></div><!-- 17:24 -->
+          <div class="tl-dot-mark" style="left:80.2%;background:#dc2626"></div><!-- 18:50 -->
+          <div class="tl-dot-mark" style="left:80.4%;background:#dc2626"></div><!-- 18:52 -->
+          <div class="tl-dot-mark tl-dot-warn" style="left:88%;background:var(--c-amber)"></div><!-- 20:05 riesgo -->
+          <!-- ventanas baja vigilancia 20-24h -->
+          <div style="position:absolute;left:83.3%;width:16.7%;height:100%;background:#fef3c7;opacity:.6;border-radius:2px"></div>
+          <div style="position:absolute;left:44.4%;width:18.75%;height:100%;background:#fef3c7;opacity:.4;border-radius:2px"></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="tl-axis">
+      <span>06:00</span><span>08:00</span><span>10:00</span><span>12:00</span>
+      <span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span><span>22:00</span>
+    </div>
+    <div style="margin-top:10px;font-size:10px;color:var(--c-muted);display:flex;gap:16px;flex-wrap:wrap">
+      <span>■ <span style="color:#2563eb">■</span> Grabación disponible</span>
+      <span style="background:#fef3c7;padding:1px 6px;border-radius:2px">Ventana baja vigilancia (13–16h, 20–24h)</span>
+      <span>⬤ Clip revisado · <span style="color:var(--c-amber)">⬤</span> Evento de atención</span>
+      <span style="background:repeating-linear-gradient(45deg,#fca5a5,#fca5a5 3px,#fef2f2 3px,#fef2f2 7px);padding:1px 8px;border-radius:2px;color:#991b1b">Vacío de grabación</span>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+
+<footer>
+  <span>Umbrales: PERCLOS P80 · KSS 1–9 · regla 2 s · SDLP · ventanas baja vigilancia 00–06 / 13–16 / 20–24 h · HOS &nbsp;|&nbsp; INNOVAQ SOLUTIONS · <code>habilidad_fatiga_dashcam</code></span>
+  <span>Generado: 07 jul 2026 (rev. 2) · Datos: Drive / muestreo manual</span>
+</footer>
+
+</body>
+</html>
