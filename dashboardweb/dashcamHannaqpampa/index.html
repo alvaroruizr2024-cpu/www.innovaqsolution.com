@@ -210,6 +210,7 @@ footer a { color: var(--c-blue); }
     <b>Material total en Drive:</b> ~6.6 GB (6 641 MB)<br>
     <b>Clips indexados:</b> 115 clips (105 TS + 10+ AVI)<br>
     <button class="print-btn" onclick="window.print()">⎙ Imprimir / PDF</button>
+    <a class="print-btn" style="background:var(--c-amber);text-decoration:none;margin-left:6px" href="TP-SSOMA-PAC-001-2026_Plan_Acciones_Correctivas_Dashcam.docx" download>⬇ Plan de Acciones Correctivas (Word)</a>
   </div>
 </header>
 
@@ -228,7 +229,7 @@ footer a { color: var(--c-blue); }
   <div class="kpi">
     <div class="kpi-val" style="color:var(--c-red)">1</div>
     <div class="kpi-label">Hallazgo activo</div>
-    <div class="kpi-note">08:54 celular en mano (verificar)</div>
+    <div class="kpi-note">08:54 celular en mano · PAC N°1 en proceso</div>
   </div>
   <div class="kpi">
     <div class="kpi-val" style="color:var(--c-muted)">4</div>
@@ -516,11 +517,109 @@ footer a { color: var(--c-blue); }
     </div>
   </div>
 
+
+  <!-- PLAN DE ACCIONES CORRECTIVAS -->
+  <div class="tl-card">
+    <div class="tl-title">PLAN DE ACCIONES CORRECTIVAS · TP-SSOMA-PAC-001-2026 · Rev. 0 · 07 jul 2026
+      <a href="TP-SSOMA-PAC-001-2026_Plan_Acciones_Correctivas_Dashcam.docx" download style="float:right;font-size:11px;color:var(--c-blue);font-weight:600">⬇ Descargar documento completo (Word)</a>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:11px">
+      <thead>
+        <tr style="background:#f3f4f6;text-align:left">
+          <th style="padding:6px 8px;border:1px solid var(--c-border);width:28px">N°</th>
+          <th style="padding:6px 8px;border:1px solid var(--c-border)">Observación</th>
+          <th style="padding:6px 8px;border:1px solid var(--c-border)">Acción correctiva (resumen)</th>
+          <th style="padding:6px 8px;border:1px solid var(--c-border);width:110px">Responsable</th>
+          <th style="padding:6px 8px;border:1px solid var(--c-border);width:70px">Plazo</th>
+          <th style="padding:6px 8px;border:1px solid var(--c-border);width:60px">Prior.</th>
+          <th style="padding:6px 8px;border:1px solid var(--c-border);width:110px">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">1</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Celular en mano en cabina — BFB-898, 21/05 08:54</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Revisar clip completo, identificar conductor, retroalimentación + toolbox de uso de celular a la flota</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Jefe SSOMA / Sup. Op.</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">15/07</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fbe4e4;font-weight:700;color:#991b1b">ALTA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-parcial">EN PROCESO</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">2</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Vacío de grabación 45.7 min — BFB-898 (07:53–08:39)</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Contrastar bitácora, verificar alimentación de dashcam, checklist pre-uso con verificación de grabación</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Jefe SSOMA / Mant.</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">22/07</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fbe4e4;font-weight:700;color:#991b1b">ALTA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-pending">PENDIENTE</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">3</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Copia SD incompleta — Cam4 Blanca (DCIM sin videos)</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Re-ejecutar copia desde SD original + instructivo de volcado con verificación obligatoria</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Sup. Operaciones</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">14/07</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fbe4e4;font-weight:700;color:#991b1b">ALTA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-pending">PENDIENTE</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">4</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Relojes de dashcam desconfigurados (clips "2017")</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Sincronizar fecha/hora en los 5 vehículos + verificación en inspección mensual</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Mant. de flota</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">18/07</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fff2cc;font-weight:700;color:#92400e">MEDIA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-pending">PENDIENTE</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">5</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Cobertura incompleta: BFB-898 sin frontal / Bus sin cámara cabina</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Definir estándar mínimo (frontal + cabina en 5 vehículos), auditar equipos, gestionar habilitación</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Jefe SSOMA / Gerencia</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">31/07</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fff2cc;font-weight:700;color:#92400e">MEDIA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-pending">PENDIENTE</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">6</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Placas sin registrar — Cam3 Gris y Cam4 Blanca</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Registrar placa/modelo/conductor, renombrar carpetas Drive, actualizar dashboard</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Jefe SSOMA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">11/07</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fff2cc;font-weight:700;color:#92400e">MEDIA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-pending">PENDIENTE</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">7</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Conducción en ventana circadiana 20:05 h — Bus F7P-952 sin DMS</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Verificar programación y HOS del conductor, pausas activas, priorizar bus en habilitación de cámara cabina</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Sup. Op. / Jefe SSOMA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">25/07</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fff2cc;font-weight:700;color:#92400e">MEDIA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-pending">PENDIENTE</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">8</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Material sin analizar / pipeline no ejecutado (indicadores n/d)</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Definir flujo de análisis (carga directa de clips), frecuencia semanal, ejecutar primer ciclo completo</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">INNOVAQ / Jefe SSOMA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">31/07</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fff2cc;font-weight:700;color:#92400e">MEDIA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-parcial">EN PROCESO</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:8px;font-size:10px;color:var(--c-muted)">
+      Seguimiento semanal en reunión SSOMA · Cierre solo con evidencia objetiva · Verificación de eficacia a 30 días del cierre · Documento completo: TP-SSOMA-PAC-001-2026 Rev. 0
+    </div>
+  </div>
+
 </div><!-- /grid -->
 
 <footer>
   <span>Umbrales: PERCLOS P80 · KSS 1–9 · regla 2 s · SDLP · ventanas baja vigilancia 00–06 / 13–16 / 20–24 h · HOS &nbsp;|&nbsp; INNOVAQ SOLUTIONS · <code>habilidad_fatiga_dashcam</code></span>
-  <span>Generado: 07 jul 2026 (rev. 2) · Datos: Drive / muestreo manual</span>
+  <span>Generado: 08 jul 2026 (rev. 3 · +PAC) · Datos: Drive / muestreo manual</span>
 </footer>
 
 </body>
