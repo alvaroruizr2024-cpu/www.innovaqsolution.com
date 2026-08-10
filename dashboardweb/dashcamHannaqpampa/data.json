@@ -1,1196 +1,603 @@
 {
- "units": [
-  {
-   "unidad": "BUS",
-   "placa": "F7P-952",
-   "color": "#2563EB",
-   "camara": "Frontal (vÃ­a)",
-   "framing": "VÃ­a confirmada Â· sin cÃ¡mara de cabina",
-   "dms": false,
-   "footage": "â‰ˆ663.5 MB",
-   "periodo": "08â€“16 jun 2026",
-   "n": 7,
-   "baja": 1,
-   "ts_ok": true,
-   "nota": "CÃ¡mara a la vÃ­a â†’ solo proxies de comportamiento. Somnolencia real requiere cÃ¡mara de cabina.",
-   "folderId": "1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS",
-   "folder": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS",
-   "clips": [
+  "units": [
     {
-     "f": "20260608_185001_f",
-     "t": "18:50",
-     "h": 18.833,
-     "b": false,
-     "iso": "2026-06-08T18:50:01",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
+      "unidad": "BUS",
+      "placa": "F7P-952",
+      "color": "#2563EB",
+      "camara": "Frontal (vÃ­a)",
+      "framing": "VÃ­a confirmada Â· sin cÃ¡mara de cabina",
+      "dms": false,
+      "footage": "â‰ˆ663.5 MB",
+      "periodo": "08â€“16 jun 2026",
+      "n": 7,
+      "baja": 1,
+      "ts_ok": true,
+      "nota": "CÃ¡mara a la vÃ­a â†’ solo proxies de comportamiento. Somnolencia real requiere cÃ¡mara de cabina.",
+      "folderId": "1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS",
+      "folder": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS",
+      "clips": [
+        {
+          "f": "20260608_185001_f",
+          "t": "18:50",
+          "h": 18.833,
+          "b": false,
+          "iso": "2026-06-08T18:50:01",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
+        },
+        {
+          "f": "20260608_185201_f",
+          "t": "18:52",
+          "h": 18.867,
+          "b": false,
+          "iso": "2026-06-08T18:52:01",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
+        },
+        {
+          "f": "20260608_200524_f",
+          "t": "20:05",
+          "h": 20.083,
+          "b": true,
+          "iso": "2026-06-08T20:05:24",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
+        },
+        {
+          "f": "20260611_073446_f",
+          "t": "07:34",
+          "h": 7.567,
+          "b": false,
+          "iso": "2026-06-11T07:34:46",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
+        },
+        {
+          "f": "20260615_122934_f",
+          "t": "12:29",
+          "h": 12.483,
+          "b": false,
+          "iso": "2026-06-15T12:29:34",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
+        },
+        {
+          "f": "20260616_165451_f",
+          "t": "16:54",
+          "h": 16.9,
+          "b": false,
+          "iso": "2026-06-16T16:54:51",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
+        },
+        {
+          "f": "20260616_172429_f",
+          "t": "17:24",
+          "h": 17.4,
+          "b": false,
+          "iso": "2026-06-16T17:24:29",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
+        }
+      ],
+      "observaciones": [
+        {
+          "tipo": "Ventana de baja vigilancia",
+          "severidad": "media",
+          "clip": "20260608_200524_f",
+          "hora": "20:05",
+          "fecha": "2026-06-08",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS",
+          "evento_seg": null,
+          "detalle": "ConducciÃ³n dentro de franja circadiana de baja alerta (13â€“16 / 20â€“24 / 00â€“06 h)."
+        }
+      ],
+      "fatiga": [
+        [
+          "PERCLOS (P80)",
+          "â€”",
+          "%",
+          "n",
+          "requiere cÃ¡mara de cabina"
+        ],
+        [
+          "MicrosueÃ±os",
+          "â€”",
+          "ev/h",
+          "n",
+          "requiere cÃ¡mara de cabina"
+        ],
+        [
+          "Bostezos",
+          "â€”",
+          "/15min",
+          "n",
+          "requiere cÃ¡mara de cabina"
+        ],
+        [
+          "Parpadeo lento",
+          "â€”",
+          "%",
+          "n",
+          "requiere cÃ¡mara de cabina"
+        ],
+        [
+          "Cabeceo (nod-off)",
+          "â€”",
+          "ev",
+          "n",
+          "requiere cÃ¡mara de cabina"
+        ],
+        [
+          "KSS estimado",
+          "â€”",
+          "1â€“9",
+          "n",
+          "fusiÃ³n DMS Â· histÃ³rico"
+        ],
+        [
+          "Serpenteo Â· SDLP",
+          "â€”",
+          "cm",
+          "n",
+          "cÃ¡m. vÃ­a Â· histÃ³rico"
+        ],
+        [
+          "ConducciÃ³n continua",
+          "â€”",
+          "min",
+          "n",
+          "clips + GPS"
+        ],
+        [
+          "Ventana circadiana",
+          "1 / 7",
+          "clips",
+          "a",
+          "REAL Â· clips en franja baja"
+        ]
+      ],
+      "defensivo": [
+        [
+          "Distancia seguim. â‰¥2 s",
+          "â€”",
+          "% cump",
+          "n",
+          "cÃ¡m. vÃ­a Â· histÃ³rico"
+        ],
+        [
+          "ColisiÃ³n frontal TTC<2.5s",
+          "â€”",
+          "ev",
+          "n",
+          "histÃ³rico"
+        ],
+        [
+          "Frenadas bruscas",
+          "â€”",
+          "/100km",
+          "n",
+          "histÃ³rico"
+        ],
+        [
+          "Aceleraciones bruscas",
+          "â€”",
+          "/100km",
+          "n",
+          "histÃ³rico"
+        ],
+        [
+          "Curvas bruscas",
+          "â€”",
+          "/100km",
+          "n",
+          "histÃ³rico"
+        ],
+        [
+          "Exceso de velocidad",
+          "â€”",
+          "% dist",
+          "n",
+          "req. GPS"
+        ],
+        [
+          "Salidas de carril s/seÃ±al",
+          "â€”",
+          "ev",
+          "n",
+          "histÃ³rico"
+        ],
+        [
+          "DistracciÃ³n Â· mirada",
+          "â€”",
+          "ev",
+          "n",
+          "requiere cabina"
+        ]
+      ]
     },
     {
-     "f": "20260608_185201_f",
-     "t": "18:52",
-     "h": 18.867,
-     "b": false,
-     "iso": "2026-06-08T18:52:01",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
+      "unidad": "Camioneta 1",
+      "placa": "BFB-898",
+      "color": "#1FA463",
+      "camara": "VÃ­a (front) + Cabina/DMS (back)",
+      "framing": "Cabina CONFIRMADA en _b (conductor visible)",
+      "dms": true,
+      "footage": "â€”",
+      "periodo": "21 may Â· 16â€“17 jun 2026",
+      "n": 14,
+      "baja": 0,
+      "ts_ok": true,
+      "nota": "Back = cabina tipo DMS â†’ PERCLOS/microsueÃ±os/bostezos/cabeceo REALES factibles al correr el pipeline.",
+      "folderId": "1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG",
+      "folder": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG",
+      "clips": [
+        {
+          "f": "20260521_065700_b",
+          "t": "06:57",
+          "h": 6.95,
+          "b": false,
+          "iso": "2026-05-21T06:57:00",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
+        },
+        {
+          "f": "20260521_065800_b",
+          "t": "06:58",
+          "h": 6.967,
+          "b": false,
+          "iso": "2026-05-21T06:58:00",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
+        },
+        {
+          "f": "20260521_065900_b",
+          "t": "06:59",
+          "h": 6.983,
+          "b": false,
+          "iso": "2026-05-21T06:59:01",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
+        },
+        {
+          "f": "20260521_070000_b",
+          "t": "07:00",
+          "h": 7,
+          "b": false,
+          "iso": "2026-05-21T07:00:01",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
+        },
+        {
+          "f": "20260521_070100_b",
+          "t": "07:01",
+          "h": 7.017,
+          "b": false,
+          "iso": "2026-05-21T07:01:00",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
+        },
+        {
+          "f": "20260521_070300_b",
+          "t": "07:03",
+          "h": 7.05,
+          "b": false,
+          "iso": "2026-05-21T07:03:00",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
+        },
+        {
+          "f": "20260521_070400_b",
+          "t": "07:04",
+          "h": 7.067,
+          "b": false,
+          "iso": "2026-05-21T07:04:00",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
+        },
+        {
+          "f": "20260521_070500_b",
+          "t": "07:05",
+          "h": 7.083,
+          "b": false,
+          "iso": "2026-05-21T07:05:00",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
+        },
+        {
+          "f": "20260616_164011_b",
+          "t": "16:40",
+          "h": 16.667,
+          "b": false,
+          "iso": "2026-06-16T16:40:11",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
+        },
+        {
+          "f": "20260616_164408_b",
+          "t": "16:44",
+          "h": 16.733,
+          "b": false,
+          "iso": "2026-06-16T16:44:08",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
+        },
+        {
+          "f": "20260617_083619_f",
+          "t": "08:36",
+          "h": 8.6,
+          "b": false,
+          "iso": "2026-06-17T08:36:19",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1oaGSWwFHJAyANouo7HyPr7PoLbr8zCKw"
+        },
+        {
+          "f": "20260617_083620_b",
+          "t": "08:36",
+          "h": 8.6,
+          "b": false,
+          "iso": "2026-06-17T08:36:20",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
+        },
+        {
+          "f": "20260617_083720_f",
+          "t": "08:37",
+          "h": 8.617,
+          "b": false,
+          "iso": "2026-06-17T08:37:20",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1oaGSWwFHJAyANouo7HyPr7PoLbr8zCKw"
+        },
+        {
+          "f": "20260617_083820_f",
+          "t": "08:38",
+          "h": 8.633,
+          "b": false,
+          "iso": "2026-06-17T08:38:20",
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/1oaGSWwFHJAyANouo7HyPr7PoLbr8zCKw"
+        }
+      ],
+      "observaciones": [],
+      "fatiga": [
+        [
+          "PERCLOS (P80)",
+          "â€”",
+          "%",
+          "n",
+          "cabina OK Â· histÃ³rico"
+        ],
+        [
+          "MicrosueÃ±os",
+          "â€”",
+          "ev/h",
+          "n",
+          "cabina OK Â· histÃ³rico"
+        ],
+        [
+          "Bostezos",
+          "â€”",
+          "/15min",
+          "n",
+          "cabina OK Â· histÃ³rico"
+        ],
+        [
+          "Parpadeo lento",
+          "â€”",
+          "%",
+          "n",
+          "cabina OK Â· histÃ³rico"
+        ],
+        [
+          "Cabeceo (nod-off)",
+          "â€”",
+          "ev",
+          "n",
+          "cabina OK Â· histÃ³rico"
+        ],
+        [
+          "KSS estimado",
+          "â€”",
+          "1â€“9",
+          "n",
+          "fusiÃ³n DMS Â· histÃ³rico"
+        ],
+        [
+          "Serpenteo Â· SDLP",
+          "â€”",
+          "cm",
+          "n",
+          "cÃ¡m. vÃ­a Â· histÃ³rico"
+        ],
+        [
+          "ConducciÃ³n continua",
+          "â€”",
+          "min",
+          "n",
+          "clips + GPS"
+        ],
+        [
+          "Ventana circadiana",
+          "0 / 14",
+          "clips",
+          "v",
+          "REAL Â· ninguno"
+        ]
+      ],
+      "defensivo": [
+        [
+          "Distancia seguim. â‰¥2 s",
+          "â€”",
+          "% cump",
+          "n",
+          "cÃ¡m. vÃ­a Â· histÃ³rico"
+        ],
+        [
+          "ColisiÃ³n frontal TTC<2.5s",
+          "â€”",
+          "ev",
+          "n",
+          "histÃ³rico"
+        ],
+        [
+          "Frenadas bruscas",
+          "â€”",
+          "/100km",
+          "n",
+          "histÃ³rico"
+        ],
+        [
+          "Aceleraciones bruscas",
+          "â€”",
+          "/100km",
+          "n",
+          "histÃ³rico"
+        ],
+        [
+          "Curvas bruscas",
+          "â€”",
+          "/100km",
+          "n",
+          "histÃ³rico"
+        ],
+        [
+          "Exceso de velocidad",
+          "â€”",
+          "% dist",
+          "n",
+          "req. GPS"
+        ],
+        [
+          "Salidas de carril s/seÃ±al",
+          "â€”",
+          "ev",
+          "n",
+          "histÃ³rico"
+        ],
+        [
+          "DistracciÃ³n Â· mirada",
+          "â€”",
+          "ev",
+          "n",
+          "cabina OK Â· histÃ³rico"
+        ]
+      ]
     },
     {
-     "f": "20260608_200524_f",
-     "t": "20:05",
-     "h": 20.083,
-     "b": true,
-     "iso": "2026-06-08T20:05:24",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
-    },
-    {
-     "f": "20260611_073446_f",
-     "t": "07:34",
-     "h": 7.567,
-     "b": false,
-     "iso": "2026-06-11T07:34:46",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
-    },
-    {
-     "f": "20260615_122934_f",
-     "t": "12:29",
-     "h": 12.483,
-     "b": false,
-     "iso": "2026-06-15T12:29:34",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
-    },
-    {
-     "f": "20260616_165451_f",
-     "t": "16:54",
-     "h": 16.9,
-     "b": false,
-     "iso": "2026-06-16T16:54:51",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
-    },
-    {
-     "f": "20260616_172429_f",
-     "t": "17:24",
-     "h": 17.4,
-     "b": false,
-     "iso": "2026-06-16T17:24:29",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS"
-    }
-   ],
-   "observaciones": [
-    {
-     "tipo": "Ventana de baja vigilancia",
-     "severidad": "media",
-     "clip": "20260608_200524_f",
-     "hora": "20:05",
-     "fecha": "2026-06-08",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1H--GQi-C5EXIBw_Jc3dzqnw7xZIUz-WS",
-     "evento_seg": null,
-     "detalle": "ConducciÃ³n dentro de franja circadiana de baja alerta (13â€“16 / 20â€“24 / 00â€“06 h)."
-    }
-   ],
-   "fatiga": [
-    [
-     "PERCLOS (P80)",
-     "â€”",
-     "%",
-     "n",
-     "requiere cÃ¡mara de cabina"
-    ],
-    [
-     "MicrosueÃ±os",
-     "â€”",
-     "ev/h",
-     "n",
-     "requiere cÃ¡mara de cabina"
-    ],
-    [
-     "Bostezos",
-     "â€”",
-     "/15min",
-     "n",
-     "requiere cÃ¡mara de cabina"
-    ],
-    [
-     "Parpadeo lento",
-     "â€”",
-     "%",
-     "n",
-     "requiere cÃ¡mara de cabina"
-    ],
-    [
-     "Cabeceo (nod-off)",
-     "â€”",
-     "ev",
-     "n",
-     "requiere cÃ¡mara de cabina"
-    ],
-    [
-     "KSS estimado",
-     "â€”",
-     "1â€“9",
-     "n",
-     "fusiÃ³n DMS Â· pendiente"
-    ],
-    [
-     "Serpenteo Â· SDLP",
-     "â€”",
-     "cm",
-     "n",
-     "cÃ¡m. vÃ­a Â· pendiente"
-    ],
-    [
-     "ConducciÃ³n continua",
-     "â€”",
-     "min",
-     "n",
-     "clips + GPS"
-    ],
-    [
-     "Ventana circadiana",
-     "1 / 7",
-     "clips",
-     "a",
-     "REAL Â· clips en franja baja"
-    ]
-   ],
-   "defensivo": [
-    [
-     "Distancia seguim. â‰¥2 s",
-     "â€”",
-     "% cump",
-     "n",
-     "cÃ¡m. vÃ­a Â· pendiente"
-    ],
-    [
-     "ColisiÃ³n frontal TTC<2.5s",
-     "â€”",
-     "ev",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Frenadas bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Aceleraciones bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Curvas bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Exceso de velocidad",
-     "â€”",
-     "% dist",
-     "n",
-     "req. GPS"
-    ],
-    [
-     "Salidas de carril s/seÃ±al",
-     "â€”",
-     "ev",
-     "n",
-     "pendiente"
-    ],
-    [
-     "DistracciÃ³n Â· mirada",
-     "â€”",
-     "ev",
-     "n",
-     "requiere cabina"
-    ]
-   ]
-  },
-  {
-   "unidad": "Camioneta 1",
-   "placa": "BFB-898",
-   "color": "#1FA463",
-   "camara": "VÃ­a (front) + Cabina/DMS (back)",
-   "framing": "Cabina CONFIRMADA en _b (conductor visible)",
-   "dms": true,
-   "footage": "â€”",
-   "periodo": "21 may Â· 16â€“17 jun 2026",
-   "n": 14,
-   "baja": 0,
-   "ts_ok": true,
-   "nota": "Back = cabina tipo DMS â†’ PERCLOS/microsueÃ±os/bostezos/cabeceo REALES factibles al correr el pipeline.",
-   "folderId": "1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG",
-   "folder": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG",
-   "clips": [
-    {
-     "f": "20260521_065700_b",
-     "t": "06:57",
-     "h": 6.95,
-     "b": false,
-     "iso": "2026-05-21T06:57:00",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
-    },
-    {
-     "f": "20260521_065800_b",
-     "t": "06:58",
-     "h": 6.967,
-     "b": false,
-     "iso": "2026-05-21T06:58:00",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
-    },
-    {
-     "f": "20260521_065900_b",
-     "t": "06:59",
-     "h": 6.983,
-     "b": false,
-     "iso": "2026-05-21T06:59:01",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
-    },
-    {
-     "f": "20260521_070000_b",
-     "t": "07:00",
-     "h": 7.0,
-     "b": false,
-     "iso": "2026-05-21T07:00:01",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
-    },
-    {
-     "f": "20260521_070100_b",
-     "t": "07:01",
-     "h": 7.017,
-     "b": false,
-     "iso": "2026-05-21T07:01:00",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
-    },
-    {
-     "f": "20260521_070300_b",
-     "t": "07:03",
-     "h": 7.05,
-     "b": false,
-     "iso": "2026-05-21T07:03:00",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
-    },
-    {
-     "f": "20260521_070400_b",
-     "t": "07:04",
-     "h": 7.067,
-     "b": false,
-     "iso": "2026-05-21T07:04:00",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
-    },
-    {
-     "f": "20260521_070500_b",
-     "t": "07:05",
-     "h": 7.083,
-     "b": false,
-     "iso": "2026-05-21T07:05:00",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
-    },
-    {
-     "f": "20260616_164011_b",
-     "t": "16:40",
-     "h": 16.667,
-     "b": false,
-     "iso": "2026-06-16T16:40:11",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
-    },
-    {
-     "f": "20260616_164408_b",
-     "t": "16:44",
-     "h": 16.733,
-     "b": false,
-     "iso": "2026-06-16T16:44:08",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
-    },
-    {
-     "f": "20260617_083619_f",
-     "t": "08:36",
-     "h": 8.6,
-     "b": false,
-     "iso": "2026-06-17T08:36:19",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1oaGSWwFHJAyANouo7HyPr7PoLbr8zCKw"
-    },
-    {
-     "f": "20260617_083620_b",
-     "t": "08:36",
-     "h": 8.6,
-     "b": false,
-     "iso": "2026-06-17T08:36:20",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1S5KvRRXH1HRyAYZA2AApBdRz1VhtvJNG"
-    },
-    {
-     "f": "20260617_083720_f",
-     "t": "08:37",
-     "h": 8.617,
-     "b": false,
-     "iso": "2026-06-17T08:37:20",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1oaGSWwFHJAyANouo7HyPr7PoLbr8zCKw"
-    },
-    {
-     "f": "20260617_083820_f",
-     "t": "08:38",
-     "h": 8.633,
-     "b": false,
-     "iso": "2026-06-17T08:38:20",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1oaGSWwFHJAyANouo7HyPr7PoLbr8zCKw"
-    }
-   ],
-   "observaciones": [],
-   "fatiga": [
-    [
-     "PERCLOS (P80)",
-     "â€”",
-     "%",
-     "n",
-     "cabina OK Â· pendiente"
-    ],
-    [
-     "MicrosueÃ±os",
-     "â€”",
-     "ev/h",
-     "n",
-     "cabina OK Â· pendiente"
-    ],
-    [
-     "Bostezos",
-     "â€”",
-     "/15min",
-     "n",
-     "cabina OK Â· pendiente"
-    ],
-    [
-     "Parpadeo lento",
-     "â€”",
-     "%",
-     "n",
-     "cabina OK Â· pendiente"
-    ],
-    [
-     "Cabeceo (nod-off)",
-     "â€”",
-     "ev",
-     "n",
-     "cabina OK Â· pendiente"
-    ],
-    [
-     "KSS estimado",
-     "â€”",
-     "1â€“9",
-     "n",
-     "fusiÃ³n DMS Â· pendiente"
-    ],
-    [
-     "Serpenteo Â· SDLP",
-     "â€”",
-     "cm",
-     "n",
-     "cÃ¡m. vÃ­a Â· pendiente"
-    ],
-    [
-     "ConducciÃ³n continua",
-     "â€”",
-     "min",
-     "n",
-     "clips + GPS"
-    ],
-    [
-     "Ventana circadiana",
-     "0 / 14",
-     "clips",
-     "v",
-     "REAL Â· ninguno"
-    ]
-   ],
-   "defensivo": [
-    [
-     "Distancia seguim. â‰¥2 s",
-     "â€”",
-     "% cump",
-     "n",
-     "cÃ¡m. vÃ­a Â· pendiente"
-    ],
-    [
-     "ColisiÃ³n frontal TTC<2.5s",
-     "â€”",
-     "ev",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Frenadas bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Aceleraciones bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Curvas bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Exceso de velocidad",
-     "â€”",
-     "% dist",
-     "n",
-     "req. GPS"
-    ],
-    [
-     "Salidas de carril s/seÃ±al",
-     "â€”",
-     "ev",
-     "n",
-     "pendiente"
-    ],
-    [
-     "DistracciÃ³n Â· mirada",
-     "â€”",
-     "ev",
-     "n",
-     "cabina OK Â· pendiente"
-    ]
-   ]
-  },
-  {
-   "unidad": "Camioneta 2",
-   "placa": "BPM-741",
-   "color": "#E2A50B",
-   "camara": ".AVI (VID_###)",
-   "framing": "Reloj del equipo sin configurar (marca 2017)",
-   "dms": false,
-   "footage": "â‰ˆ15â€“39 MB/clip",
-   "periodo": "sin fecha confiable",
-   "n": 11,
-   "baja": null,
-   "ts_ok": false,
-   "nota": "Timestamps NO confiables â†’ sin circadiano/HOS. La visiÃ³n (CV) sÃ­ corre, pero no se ubica en el tiempo.",
-   "folderId": "14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9",
-   "folder": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9",
-   "clips": [
-    {
-     "f": "VID_001.AVI",
-     "t": null,
-     "h": null,
-     "b": false,
-     "iso": null,
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
-    },
-    {
-     "f": "VID_002.AVI",
-     "t": null,
-     "h": null,
-     "b": false,
-     "iso": null,
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
-    },
-    {
-     "f": "VID_003.AVI",
-     "t": null,
-     "h": null,
-     "b": false,
-     "iso": null,
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
-    },
-    {
-     "f": "VID_004.AVI",
-     "t": null,
-     "h": null,
-     "b": false,
-     "iso": null,
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
-    },
-    {
-     "f": "VID_005.AVI",
-     "t": null,
-     "h": null,
-     "b": false,
-     "iso": null,
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
-    },
-    {
-     "f": "VID_006.AVI",
-     "t": null,
-     "h": null,
-     "b": false,
-     "iso": null,
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
-    },
-    {
-     "f": "VID_007.AVI",
-     "t": null,
-     "h": null,
-     "b": false,
-     "iso": null,
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
-    },
-    {
-     "f": "VID_008.AVI",
-     "t": null,
-     "h": null,
-     "b": false,
-     "iso": null,
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
-    },
-    {
-     "f": "VID_009.AVI",
-     "t": null,
-     "h": null,
-     "b": false,
-     "iso": null,
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
-    },
-    {
-     "f": "VID_010.AVI",
-     "t": null,
-     "h": null,
-     "b": false,
-     "iso": null,
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
-    },
-    {
-     "f": "VID_011.AVI",
-     "t": null,
-     "h": null,
-     "b": false,
-     "iso": null,
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
-    }
-   ],
-   "observaciones": [],
-   "fatiga": [
-    [
-     "PERCLOS (P80)",
-     "â€”",
-     "%",
-     "n",
-     "requiere cÃ¡mara de cabina"
-    ],
-    [
-     "MicrosueÃ±os",
-     "â€”",
-     "ev/h",
-     "n",
-     "requiere cÃ¡mara de cabina"
-    ],
-    [
-     "Bostezos",
-     "â€”",
-     "/15min",
-     "n",
-     "requiere cÃ¡mara de cabina"
-    ],
-    [
-     "Parpadeo lento",
-     "â€”",
-     "%",
-     "n",
-     "requiere cÃ¡mara de cabina"
-    ],
-    [
-     "Cabeceo (nod-off)",
-     "â€”",
-     "ev",
-     "n",
-     "requiere cÃ¡mara de cabina"
-    ],
-    [
-     "KSS estimado",
-     "â€”",
-     "1â€“9",
-     "n",
-     "fusiÃ³n DMS Â· pendiente"
-    ],
-    [
-     "Serpenteo Â· SDLP",
-     "â€”",
-     "cm",
-     "n",
-     "cÃ¡m. vÃ­a Â· pendiente"
-    ],
-    [
-     "ConducciÃ³n continua",
-     "â€”",
-     "min",
-     "n",
-     "clips + GPS"
-    ],
-    [
-     "Ventana circadiana",
-     "0 / 11",
-     "clips",
-     "n",
-     "sin fecha confiable"
-    ]
-   ],
-   "defensivo": [
-    [
-     "Distancia seguim. â‰¥2 s",
-     "â€”",
-     "% cump",
-     "n",
-     "cÃ¡m. vÃ­a Â· pendiente"
-    ],
-    [
-     "ColisiÃ³n frontal TTC<2.5s",
-     "â€”",
-     "ev",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Frenadas bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Aceleraciones bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Curvas bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Exceso de velocidad",
-     "â€”",
-     "% dist",
-     "n",
-     "req. GPS"
-    ],
-    [
-     "Salidas de carril s/seÃ±al",
-     "â€”",
-     "ev",
-     "n",
-     "pendiente"
-    ],
-    [
-     "DistracciÃ³n Â· mirada",
-     "â€”",
-     "ev",
-     "n",
-     "requiere cabina"
-    ]
-   ]
-  },
-  {
-   "unidad": "Camioneta 3",
-   "placa": "Gris",
-   "color": "#7C3AED",
-   "camara": "Back (_b)",
-   "framing": "Framing por confirmar (enviar miniatura)",
-   "dms": null,
-   "footage": "â‰ˆ740 MB",
-   "periodo": "16â€“18 jun 2026",
-   "n": 12,
-   "baja": 4,
-   "ts_ok": true,
-   "nota": "CÃ¡mara _b: falta miniatura para saber si mira a cabina (DMS) o vÃ­a. 4 clips en franja 13â€“16 h.",
-   "folderId": "1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if",
-   "folder": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if",
-   "clips": [
-    {
-     "f": "20260616_153149_b",
-     "t": "15:31",
-     "h": 15.517,
-     "b": true,
-     "iso": "2026-06-16T15:31:49",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"
-    },
-    {
-     "f": "20260616_153249_b",
-     "t": "15:32",
-     "h": 15.533,
-     "b": true,
-     "iso": "2026-06-16T15:32:49",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"
-    },
-    {
-     "f": "20260617_142215_b",
-     "t": "14:22",
-     "h": 14.367,
-     "b": true,
-     "iso": "2026-06-17T14:22:15",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"
-    },
-    {
-     "f": "20260617_142315_b",
-     "t": "14:23",
-     "h": 14.383,
-     "b": true,
-     "iso": "2026-06-17T14:23:15",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"
-    },
-    {
-     "f": "20260618_090230_b",
-     "t": "09:02",
-     "h": 9.033,
-     "b": false,
-     "iso": "2026-06-18T09:02:30",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"
-    },
-    {
-     "f": "20260618_090330_b",
-     "t": "09:03",
-     "h": 9.05,
-     "b": false,
-     "iso": "2026-06-18T09:03:30",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"
-    },
-    {
-     "f": "20260618_102602_b",
-     "t": "10:26",
-     "h": 10.433,
-     "b": false,
-     "iso": "2026-06-18T10:26:02",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"
-    },
-    {
-     "f": "20260618_102702_b",
-     "t": "10:27",
-     "h": 10.45,
-     "b": false,
-     "iso": "2026-06-18T10:27:02",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"
-    },
-    {
-     "f": "20260618_103150_b",
-     "t": "10:31",
-     "h": 10.517,
-     "b": false,
-     "iso": "2026-06-18T10:31:50",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"
-    },
-    {
-     "f": "20260618_103550_b",
-     "t": "10:35",
-     "h": 10.583,
-     "b": false,
-     "iso": "2026-06-18T10:35:50",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"
-    },
-    {
-     "f": "20260618_103750_b",
-     "t": "10:37",
-     "h": 10.617,
-     "b": false,
-     "iso": "2026-06-18T10:37:50",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"
-    },
-    {
-     "f": "20260618_123449_b",
-     "t": "12:34",
-     "h": 12.567,
-     "b": false,
-     "iso": "2026-06-18T12:34:49",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if"
-    }
-   ],
-   "observaciones": [
-    {
-     "tipo": "Ventana de baja vigilancia",
-     "severidad": "media",
-     "clip": "20260616_153149_b",
-     "hora": "15:31",
-     "fecha": "2026-06-16",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if",
-     "evento_seg": null,
-     "detalle": "ConducciÃ³n dentro de franja circadiana de baja alerta (13â€“16 / 20â€“24 / 00â€“06 h)."
-    },
-    {
-     "tipo": "Ventana de baja vigilancia",
-     "severidad": "media",
-     "clip": "20260616_153249_b",
-     "hora": "15:32",
-     "fecha": "2026-06-16",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if",
-     "evento_seg": null,
-     "detalle": "ConducciÃ³n dentro de franja circadiana de baja alerta (13â€“16 / 20â€“24 / 00â€“06 h)."
-    },
-    {
-     "tipo": "Ventana de baja vigilancia",
-     "severidad": "media",
-     "clip": "20260617_142215_b",
-     "hora": "14:22",
-     "fecha": "2026-06-17",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if",
-     "evento_seg": null,
-     "detalle": "ConducciÃ³n dentro de franja circadiana de baja alerta (13â€“16 / 20â€“24 / 00â€“06 h)."
-    },
-    {
-     "tipo": "Ventana de baja vigilancia",
-     "severidad": "media",
-     "clip": "20260617_142315_b",
-     "hora": "14:23",
-     "fecha": "2026-06-17",
-     "video": "",
-     "carpeta": "https://drive.google.com/drive/folders/1sOAw1cvclnV92ajI2uCBkE4VG_ftu7if",
-     "evento_seg": null,
-     "detalle": "ConducciÃ³n dentro de franja circadiana de baja alerta (13â€“16 / 20â€“24 / 00â€“06 h)."
-    }
-   ],
-   "fatiga": [
-    [
-     "PERCLOS (P80)",
-     "â€”",
-     "%",
-     "n",
-     "segÃºn framing Â· confirmar miniatura"
-    ],
-    [
-     "MicrosueÃ±os",
-     "â€”",
-     "ev/h",
-     "n",
-     "segÃºn framing Â· confirmar miniatura"
-    ],
-    [
-     "Bostezos",
-     "â€”",
-     "/15min",
-     "n",
-     "segÃºn framing Â· confirmar miniatura"
-    ],
-    [
-     "Parpadeo lento",
-     "â€”",
-     "%",
-     "n",
-     "segÃºn framing Â· confirmar miniatura"
-    ],
-    [
-     "Cabeceo (nod-off)",
-     "â€”",
-     "ev",
-     "n",
-     "segÃºn framing Â· confirmar miniatura"
-    ],
-    [
-     "KSS estimado",
-     "â€”",
-     "1â€“9",
-     "n",
-     "fusiÃ³n DMS Â· pendiente"
-    ],
-    [
-     "Serpenteo Â· SDLP",
-     "â€”",
-     "cm",
-     "n",
-     "cÃ¡m. vÃ­a Â· pendiente"
-    ],
-    [
-     "ConducciÃ³n continua",
-     "â€”",
-     "min",
-     "n",
-     "clips + GPS"
-    ],
-    [
-     "Ventana circadiana",
-     "4 / 12",
-     "clips",
-     "a",
-     "REAL Â· clips en franja baja"
-    ]
-   ],
-   "defensivo": [
-    [
-     "Distancia seguim. â‰¥2 s",
-     "â€”",
-     "% cump",
-     "n",
-     "cÃ¡m. vÃ­a Â· pendiente"
-    ],
-    [
-     "ColisiÃ³n frontal TTC<2.5s",
-     "â€”",
-     "ev",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Frenadas bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Aceleraciones bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Curvas bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Exceso de velocidad",
-     "â€”",
-     "% dist",
-     "n",
-     "req. GPS"
-    ],
-    [
-     "Salidas de carril s/seÃ±al",
-     "â€”",
-     "ev",
-     "n",
-     "pendiente"
-    ],
-    [
-     "DistracciÃ³n Â· mirada",
-     "â€”",
-     "ev",
-     "n",
-     "requiere cabina"
-    ]
-   ]
-  },
-  {
-   "unidad": "Camioneta 4",
-   "placa": "Z8B-730",
-   "color": "#0EA5E9",
-   "camara": "3 canales (DCIMA/DCIMB/DCIMC)",
-   "framing": "Blanca Â· canal B posible cabina/DMS (por confirmar)",
-   "dms": null,
-   "footage": "3 canales (A/B/C)",
-   "periodo": "agregada 27-06-2026",
-   "n": 0,
-   "baja": null,
-   "ts_ok": false,
-   "nota": "Unidad agregada el 27-06-2026 Â· 3 canales de dashcam. Clips pendientes de indexar â€” correr el pipeline (n8n) o enviar miniatura del <b>canal B</b> para confirmar si mira a cabina (DMS real). Canales: <a href='https://drive.google.com/drive/folders/1RF_NfQw4WkwImoh_iGibS9Azb9C1MaLU' target='_blank'>DCIMA Â· vÃ­a â†—</a> Â· <a href='https://drive.google.com/drive/folders/1AHNpXN8CThQJ4Doo9gttZI9dRoBcR8Qc' target='_blank'>DCIMB Â· cabina/DMS (por confirmar) â†—</a> Â· <a href='https://drive.google.com/drive/folders/1xuGaF_ASsAjTQZyz7LB9aRdd8FnD4kg7' target='_blank'>DCIMC Â· trasera â†—</a>.",
-   "folderId": "1WaQ0tf2h__nLhSmdK49ABuIdGd4G0wsE",
-   "folder": "https://drive.google.com/drive/folders/1WaQ0tf2h__nLhSmdK49ABuIdGd4G0wsE",
-   "clips": [],
-   "observaciones": [],
-   "fatiga": [
-    [
-     "PERCLOS (P80)",
-     "â€”",
-     "%",
-     "n",
-     "segÃºn framing Â· confirmar miniatura"
-    ],
-    [
-     "MicrosueÃ±os",
-     "â€”",
-     "ev/h",
-     "n",
-     "segÃºn framing Â· confirmar miniatura"
-    ],
-    [
-     "Bostezos",
-     "â€”",
-     "/15min",
-     "n",
-     "segÃºn framing Â· confirmar miniatura"
-    ],
-    [
-     "Parpadeo lento",
-     "â€”",
-     "%",
-     "n",
-     "segÃºn framing Â· confirmar miniatura"
-    ],
-    [
-     "Cabeceo (nod-off)",
-     "â€”",
-     "ev",
-     "n",
-     "segÃºn framing Â· confirmar miniatura"
-    ],
-    [
-     "KSS estimado",
-     "â€”",
-     "1â€“9",
-     "n",
-     "fusiÃ³n DMS Â· pendiente"
-    ],
-    [
-     "Serpenteo Â· SDLP",
-     "â€”",
-     "cm",
-     "n",
-     "cÃ¡m. vÃ­a Â· pendiente"
-    ],
-    [
-     "ConducciÃ³n continua",
-     "â€”",
-     "min",
-     "n",
-     "clips + GPS"
-    ],
-    [
-     "Ventana circadiana",
-     "en indexaciÃ³n",
-     "",
-     "n",
-     "clips pendientes de indexar (pipeline n8n)"
-    ]
-   ],
-   "defensivo": [
-    [
-     "Distancia seguim. â‰¥2 s",
-     "â€”",
-     "% cump",
-     "n",
-     "cÃ¡m. vÃ­a Â· pendiente"
-    ],
-    [
-     "ColisiÃ³n frontal TTC<2.5s",
-     "â€”",
-     "ev",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Frenadas bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Aceleraciones bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Curvas bruscas",
-     "â€”",
-     "/100km",
-     "n",
-     "pendiente"
-    ],
-    [
-     "Exceso de velocidad",
-     "â€”",
-     "% dist",
-     "n",
-     "req. GPS"
-    ],
-    [
-     "Salidas de carril s/seÃ±al",
-     "â€”",
-     "ev",
-     "n",
-     "pendiente"
-    ],
-    [
-     "DistracciÃ³n Â· mirada",
-     "â€”",
-     "ev",
-     "n",
-     "requiere cabina"
-    ]
-   ]
-  }
- ],
- "windows": [
-  [
-   0,
-   6
-  ],
-  [
-   13,
-   16
-  ],
-  [
-   20,
-   24
-  ]
- ],
- "tot_unidades": 5,
- "tot_clips": 44,
- "tot_baja": 5,
- "tot_obs": 5,
- "dms_ok": 1,
- "dms_pend": 2,
- "raiz": "Grabaciones DashCam proyecto Hannaqpampa",
- "raiz_id": "1d_IYv7WahDSUQhXt_t2T4UD5RdjMoYnM",
- "raiz_url": "https://drive.google.com/drive/folders/1d_IYv7WahDSUQhXt_t2T4UD5RdjMoYnM",
- "meta": {
-  "generado": "2026-06-27 06:00",
-  "fuente": "actualizaciÃ³n sÃ¡bado 27-06-2026 Â· +Z8B-730 Â· enlaces = carpeta (pendiente pipeline para video exacto)",
-  "cron": "0 6 * * 6",
-  "cron_txt": "sÃ¡bados 06:00 (America/Lima)",
-  "proxima": "sÃ¡bado 04-07-2026 06:00"
- }
-}
+      "unidad": "Camioneta 2",
+      "placa": "BPM-741",
+      "color": "#E2A50B",
+      "camara": ".AVI (VID_###)",
+      "framing": "Reloj del equipo sin configurar (marca 2017)",
+      "dms": false,
+      "footage": "â‰ˆ15â€“39 MB/clip",
+      "periodo": "sin fecha confiable",
+      "n": 11,
+      "baja": null,
+      "ts_ok": false,
+      "nota": "Timestamps NO confiables â†’ sin circadiano/HOS. La visiÃ³n (CV) sÃ­ corre, pero no se ubica en el tiempo.",
+      "folderId": "14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9",
+      "folder": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9",
+      "clips": [
+        {
+          "f": "VID_001.AVI",
+          "t": null,
+          "h": null,
+          "b": false,
+          "iso": null,
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
+        },
+        {
+          "f": "VID_002.AVI",
+          "t": null,
+          "h": null,
+          "b": false,
+          "iso": null,
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
+        },
+        {
+          "f": "VID_003.AVI",
+          "t": null,
+          "h": null,
+          "b": false,
+          "iso": null,
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
+        },
+        {
+          "f": "VID_004.AVI",
+          "t": null,
+          "h": null,
+          "b": false,
+          "iso": null,
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
+        },
+        {
+          "f": "VID_005.AVI",
+          "t": null,
+          "h": null,
+          "b": false,
+          "iso": null,
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
+        },
+        {
+          "f": "VID_006.AVI",
+          "t": null,
+          "h": null,
+          "b": false,
+          "iso": null,
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
+        },
+        {
+          "f": "VID_007.AVI",
+          "t": null,
+          "h": null,
+          "b": false,
+          "iso": null,
+          "video": "",
+          "carpeta": "https://drive.google.com/drive/folders/14fFRcbt-yguW2ntw1dLrYqNgBVMcs5J9"
+        },
+        {
+          "f": "VID_008.AVI",
+          "t": null,
+          "h": null,
+          "b": false,
+          "iso": null,
+          "video": "",
+          "carpeta×_y¶‰žËkºwµçDÁ…É„Í…‰•ÈÍ¤µ¥É„„…‰¥¹„€¡5L¤¼Ûµ„¸€Ð±¥ÁÌ•¸™É…¹©„€ÄÏŠLÄØ ¸ˆ°(€€€€€€‰™½±‘•É%ˆè€ˆÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ°(€€€€€€‰™½±‘•Èˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ°(€€€€€€‰±¥ÁÌˆèl(€€€€€€€ì(€€€€€€€€€€‰˜ˆè€ˆÈÀÈØÀØÄÙ|ÄÔÌÄÐå}ˆˆ°(€€€€€€€€€€‰Ðˆè€ˆÄÔèÌÄˆ°(€€€€€€€€€€‰ ˆè€ÄÔ¸ÔÄÜ°(€€€€€€€€€€‰ˆˆèÑÉÕ”°(€€€€€€€€€€‰¥Í¼ˆè€ˆÈÀÈØ´ÀØ´ÄÙPÄÔèÌÄèÐäˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰˜ˆè€ˆÈÀÈØÀØÄÙ|ÄÔÌÈÐå}ˆˆ°(€€€€€€€€€€‰Ðˆè€ˆÄÔèÌÈˆ°(€€€€€€€€€€‰ ˆè€ÄÔ¸ÔÌÌ°(€€€€€€€€€€‰ˆˆèÑÉÕ”°(€€€€€€€€€€‰¥Í¼ˆè€ˆÈÀÈØ´ÀØ´ÄÙPÄÔèÌÈèÐäˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰˜ˆè€ˆÈÀÈØÀØÄÝ|ÄÐÈÈÄÕ}ˆˆ°(€€€€€€€€€€‰Ðˆè€ˆÄÐèÈÈˆ°(€€€€€€€€€€‰ ˆè€ÄÐ¸ÌØÜ°(€€€€€€€€€€‰ˆˆèÑÉÕ”°(€€€€€€€€€€‰¥Í¼ˆè€ˆÈÀÈØ´ÀØ´ÄÝPÄÐèÈÈèÄÔˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰˜ˆè€ˆÈÀÈØÀØÄÝ|ÄÐÈÌÄÕ}ˆˆ°(€€€€€€€€€€‰Ðˆè€ˆÄÐèÈÌˆ°(€€€€€€€€€€‰ ˆè€ÄÐ¸ÌàÌ°(€€€€€€€€€€‰ˆˆèÑÉÕ”°(€€€€€€€€€€‰¥Í¼ˆè€ˆÈÀÈØ´ÀØ´ÄÝPÄÐèÈÌèÄÔˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰˜ˆè€ˆÈÀÈØÀØÄá|ÀäÀÈÌÁ}ˆˆ°(€€€€€€€€€€‰Ðˆè€ˆÀäèÀÈˆ°(€€€€€€€€€€‰ ˆè€ä¸ÀÌÌ°(€€€€€€€€€€‰ˆˆè™…±Í”°(€€€€€€€€€€‰¥Í¼ˆè€ˆÈÀÈØ´ÀØ´ÄáPÀäèÀÈèÌÀˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰˜ˆè€ˆÈÀÈØÀØÄá|ÀäÀÌÌÁ}ˆˆ°(€€€€€€€€€€‰Ðˆè€ˆÀäèÀÌˆ°(€€€€€€€€€€‰ ˆè€ä¸ÀÔ°(€€€€€€€€€€‰ˆˆè™…±Í”°(€€€€€€€€€€‰¥Í¼ˆè€ˆÈÀÈØ´ÀØ´ÄáPÀäèÀÌèÌÀˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰˜ˆè€ˆÈÀÈØÀØÄá|ÄÀÈØÀÉ}ˆˆ°(€€€€€€€€€€‰Ðˆè€ˆÄÀèÈØˆ°(€€€€€€€€€€‰ ˆè€ÄÀ¸ÐÌÌ°(€€€€€€€€€€‰ˆˆè™…±Í”°(€€€€€€€€€€‰¥Í¼ˆè€ˆÈÀÈØ´ÀØ´ÄáPÄÀèÈØèÀÈˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰˜ˆè€ˆÈÀÈØÀØÄá|ÄÀÈÜÀÉ}ˆˆ°(€€€€€€€€€€‰Ðˆè€ˆÄÀèÈÜˆ°(€€€€€€€€€€‰ ˆè€ÄÀ¸ÐÔ°(€€€€€€€€€€‰ˆˆè™…±Í”°(€€€€€€€€€€‰¥Í¼ˆè€ˆÈÀÈØ´ÀØ´ÄáPÄÀèÈÜèÀÈˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰˜ˆè€ˆÈÀÈØÀØÄá|ÄÀÌÄÔÁ}ˆˆ°(€€€€€€€€€€‰Ðˆè€ˆÄÀèÌÄˆ°(€€€€€€€€€€‰ ˆè€ÄÀ¸ÔÄÜ°(€€€€€€€€€€‰ˆˆè™…±Í”°(€€€€€€€€€€‰¥Í¼ˆè€ˆÈÀÈØ´ÀØ´ÄáPÄÀèÌÄèÔÀˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰˜ˆè€ˆÈÀÈØÀØÄá|ÄÀÌÔÔÁ}ˆˆ°(€€€€€€€€€€‰Ðˆè€ˆÄÀèÌÔˆ°(€€€€€€€€€€‰ ˆè€ÄÀ¸ÔàÌ°(€€€€€€€€€€‰ˆˆè™…±Í”°(€€€€€€€€€€‰¥Í¼ˆè€ˆÈÀÈØ´ÀØ´ÄáPÄÀèÌÔèÔÀˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰˜ˆè€ˆÈÀÈØÀØÄá|ÄÀÌÜÔÁ}ˆˆ°(€€€€€€€€€€‰Ðˆè€ˆÄÀèÌÜˆ°(€€€€€€€€€€‰ ˆè€ÄÀ¸ØÄÜ°(€€€€€€€€€€‰ˆˆè™…±Í”°(€€€€€€€€€€‰¥Í¼ˆè€ˆÈÀÈØ´ÀØ´ÄáPÄÀèÌÜèÔÀˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰˜ˆè€ˆÈÀÈØÀØÄá|ÄÈÌÐÐå}ˆˆ°(€€€€€€€€€€‰Ðˆè€ˆÄÈèÌÐˆ°(€€€€€€€€€€‰ ˆè€ÄÈ¸ÔØÜ°(€€€€€€€€€€‰ˆˆè™…±Í”°(€€€€€€€€€€‰¥Í¼ˆè€ˆÈÀÈØ´ÀØ´ÄáPÄÈèÌÐèÐäˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ(€€€€€€€ô(€€€€€t°(€€€€€€‰½‰Í•ÉÙ…¥½¹•Ìˆèl(€€€€€€€ì(€€€€€€€€€€‰Ñ¥Á¼ˆè€‰Y•¹Ñ…¹„‘”‰…©„Ù¥¥±…¹¥„ˆ°(€€€€€€€€€€‰Í•Ù•É¥‘…ˆè€‰µ•‘¥„ˆ°(€€€€€€€€€€‰±¥Àˆè€ˆÈÀÈØÀØÄÙ|ÄÔÌÄÐå}ˆˆ°(€€€€€€€€€€‰¡½É„ˆè€ˆÄÔèÌÄˆ°(€€€€€€€€€€‰™•¡„ˆè€ˆÈÀÈØ´ÀØ´ÄØˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ°(€€€€€€€€€€‰•Ù•¹Ñ½}Í•œˆè¹Õ±°°(€€€€€€€€€€‰‘•Ñ…±±”ˆè€‰½¹‘Õ§Í¸‘•¹ÑÉ¼‘”™É…¹©„¥É…‘¥…¹„‘”‰…©„…±•ÉÑ„€ ÄÏŠLÄØ€¼€ÈÃŠLÈÐ€¼€ÀÃŠLÀØ ¤¸ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰Ñ¥Á¼ˆè€‰Y•¹Ñ…¹„‘”‰…©„Ù¥¥±…¹¥„ˆ°(€€€€€€€€€€‰Í•Ù•É¥‘…ˆè€‰µ•‘¥„ˆ°(€€€€€€€€€€‰±¥Àˆè€ˆÈÀÈØÀØÄÙ|ÄÔÌÈÐå}ˆˆ°(€€€€€€€€€€‰¡½É„ˆè€ˆÄÔèÌÈˆ°(€€€€€€€€€€‰™•¡„ˆè€ˆÈÀÈØ´ÀØ´ÄØˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ°(€€€€€€€€€€‰•Ù•¹Ñ½}Í•œˆè¹Õ±°°(€€€€€€€€€€‰‘•Ñ…±±”ˆè€‰½¹‘Õ§Í¸‘•¹ÑÉ¼‘”™É…¹©„¥É…‘¥…¹„‘”‰…©„…±•ÉÑ„€ ÄÏŠLÄØ€¼€ÈÃŠLÈÐ€¼€ÀÃŠLÀØ ¤¸ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰Ñ¥Á¼ˆè€‰Y•¹Ñ…¹„‘”‰…©„Ù¥¥±…¹¥„ˆ°(€€€€€€€€€€‰Í•Ù•É¥‘…ˆè€‰µ•‘¥„ˆ°(€€€€€€€€€€‰±¥Àˆè€ˆÈÀÈØÀØÄÝ|ÄÐÈÈÄÕ}ˆˆ°(€€€€€€€€€€‰¡½É„ˆè€ˆÄÐèÈÈˆ°(€€€€€€€€€€‰™•¡„ˆè€ˆÈÀÈØ´ÀØ´ÄÜˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ°(€€€€€€€€€€‰•Ù•¹Ñ½}Í•œˆè¹Õ±°°(€€€€€€€€€€‰‘•Ñ…±±”ˆè€‰½¹‘Õ§Í¸‘•¹ÑÉ¼‘”™É…¹©„¥É…‘¥…¹„‘”‰…©„…±•ÉÑ„€ ÄÏŠLÄØ€¼€ÈÃŠLÈÐ€¼€ÀÃŠLÀØ ¤¸ˆ(€€€€€€€ô°(€€€€€€€ì(€€€€€€€€€€‰Ñ¥Á¼ˆè€‰Y•¹Ñ…¹„‘”‰…©„Ù¥¥±…¹¥„ˆ°(€€€€€€€€€€‰Í•Ù•É¥‘…ˆè€‰µ•‘¥„ˆ°(€€€€€€€€€€‰±¥Àˆè€ˆÈÀÈØÀØÄÝ|ÄÐÈÌÄÕ}ˆˆ°(€€€€€€€€€€‰¡½É„ˆè€ˆÄÐèÈÌˆ°(€€€€€€€€€€‰™•¡„ˆè€ˆÈÀÈØ´ÀØ´ÄÜˆ°(€€€€€€€€€€‰Ù¥‘•¼ˆè€ˆˆ°(€€€€€€€€€€‰…ÉÁ•Ñ„ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅÍ=ÜÅÙ±¹XäÉ…©$ÉÕ	­ÑY}™ÑÔÝ¥˜ˆ°(€€€€€€€€€€‰•Ù•¹Ñ½}Í•œˆè¹Õ±°°(€€€€€€€€€€‰‘•Ñ…±±”ˆè€‰½¹‘Õ§Í¸‘•¹ÑÉ¼‘”™É…¹©„¥É…‘¥…¹„‘”‰…©„…±•ÉÑ„€ ÄÏŠLÄØ€¼€ÈÃŠLÈÐ€¼€ÀÃŠLÀØ ¤¸ˆ(€€€€€€€ô(€€€€€t°(€€€€€€‰™…Ñ¥„ˆèl(€€€€€€€l(€€€€€€€€€€‰AI1=L€¡@àÀ¤ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ”ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰Í•Ÿé¸™É…µ¥¹œƒ
+Ü½¹™¥Éµ…Èµ¥¹¥…ÑÕÉ„ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰5¥É½ÍÕ—Å½Ìˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰•Ø½ ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰Í•Ÿé¸™É…µ¥¹œƒ
+Ü½¹™¥Éµ…Èµ¥¹¥…ÑÕÉ„ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰	½ÍÑ•é½Ìˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ¼ÄÕµ¥¸ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰Í•Ÿé¸™É…µ¥¹œƒ
+Ü½¹™¥Éµ…Èµ¥¹¥…ÑÕÉ„ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰A…ÉÁ…‘•¼±•¹Ñ¼ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ”ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰Í•Ÿé¸™É…µ¥¹œƒ
+Ü½¹™¥Éµ…Èµ¥¹¥…ÑÕÉ„ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰…‰••¼€¡¹½µ½™˜¤ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰•Øˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰Í•Ÿé¸™É…µ¥¹œƒ
+Ü½¹™¥Éµ…Èµ¥¹¥…ÑÕÉ„ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰-ML•ÍÑ¥µ…‘¼ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆÇŠLäˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰™ÕÍ§Í¸5Lƒ
+Ü¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰M•ÉÁ•¹Ñ•¼ƒ
+ÜM1@ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰´ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰…´¸Ûµ„ƒ
+Ü¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰½¹‘Õ§Í¸½¹Ñ¥¹Õ„ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰µ¥¸ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰±¥ÁÌ€¬ALˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰Y•¹Ñ…¹„¥É…‘¥…¹„ˆ°(€€€€€€€€€€ˆÐ€¼€ÄÈˆ°(€€€€€€€€€€‰±¥ÁÌˆ°(€€€€€€€€€€‰„ˆ°(€€€€€€€€€€‰I0ƒ
+Ü±¥ÁÌ•¸™É…¹©„‰…©„ˆ(€€€€€€€t(€€€€€t°(€€€€€€‰‘•™•¹Í¥Ù¼ˆèl(€€€€€€€l(€€€€€€€€€€‰¥ÍÑ…¹¥„Í•Õ¥´¸ƒŠ&”ÈÌˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ”ÕµÀˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰…´¸Ûµ„ƒ
+Ü¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰½±¥Í§Í¸™É½¹Ñ…°QQðÈ¸ÕÌˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰•Øˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰É•¹…‘…Ì‰ÉÕÍ…Ìˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ¼ÄÀÁ­´ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰•±•É…¥½¹•Ì‰ÉÕÍ…Ìˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ¼ÄÀÁ­´ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰ÕÉÙ…Ì‰ÉÕÍ…Ìˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ¼ÄÀÁ­´ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰á•Í¼‘”Ù•±½¥‘…ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ”‘¥ÍÐˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰É•Ä¸ALˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰M…±¥‘…Ì‘”…ÉÉ¥°Ì½Í—Å…°ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰•Øˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰¥ÍÑÉ…§Í¸ƒ
+Üµ¥É…‘„ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰•Øˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰É•ÅÕ¥•É”…‰¥¹„ˆ(€€€€€€€t(€€€€€t(€€€ô°(€€€ì(€€€€€€‰Õ¹¥‘…ˆè€‰…µ¥½¹•Ñ„€Ðˆ°(€€€€€€‰Á±…„ˆè€‰há´ÜÌÀˆ°(€€€€€€‰½±½Èˆè€ˆŒÁÕäˆ°(€€€€€€‰…µ…É„ˆè€ˆÌ…¹…±•Ì€¡%5½%5½%5¤ˆ°(€€€€€€‰™É…µ¥¹œˆè€‰	±…¹„ƒ
+Ü…¹…°Á½Í¥‰±”…‰¥¹„½5L€¡Á½È½¹™¥Éµ…È¤ˆ°(€€€€€€‰‘µÌˆè¹Õ±°°(€€€€€€‰™½½Ñ…”ˆè€ˆÌ…¹…±•Ì€¡½½¤ˆ°(€€€€€€‰Á•É¥½‘¼ˆè€‰…É•…‘„€ÈÜ´ÀØ´ÈÀÈØˆ°(€€€€€€‰¸ˆè€À°(€€€€€€‰‰…©„ˆè¹Õ±°°(€€€€€€‰ÑÍ}½¬ˆè™…±Í”°(€€€€€€‰¹½Ñ„ˆè€‰U¹¥‘……É•…‘„•°€ÈÜ´ÀØ´ÈÀÈØƒ
+Ü€Ì…¹…±•Ì‘”‘…Í¡…´¸±¥ÁÌ¡¥ÍÓÍÉ¥½Ì‘”¥¹‘•á…ÈƒŠP½ÉÉ•È•°Á¥Á•±¥¹”€¡¸á¸¤¼•¹Ù¥…Èµ¥¹¥…ÑÕÉ„‘•°€ñˆù…¹…°ð½ˆøÁ…É„½¹™¥Éµ…ÈÍ¤µ¥É„„…‰¥¹„€¡5LÉ•…°¤¸…¹…±•Ìè€ñ„¡É•˜ô¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅI}9™EÜÑ]­Ý%µ½¡}¥¥‰LåéˆåÅ5…1TœÑ…É•Ðô}‰±…¹¬œù%5ƒ
+ÜÛµ„ƒŠ\ð½„øƒ
+Ü€ñ„¡É•˜ô¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼Å!9Áa8áQ¡E(Ñ½¼åÑÑi$å‘I½	HáEŒœÑ…É•Ðô}‰±…¹¬œù%5ƒ
+Ü…‰¥¹„½5L€¡Á½È½¹™¥Éµ…È¤ƒŠ\ð½„øƒ
+Ü€ñ„¡É•˜ô¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼ÅáÕ…}MÍ©QEiåèÝ1å…I‘á¹Ñ­œÜœÑ…É•Ðô}‰±…¹¬œù%5ƒ
+ÜÑÉ…Í•É„ƒŠ\ð½„ø¸ˆ°(€€€€€€‰™½±‘•É%ˆè€ˆÅ]…DÁÑ˜É¡}}¹1¡Mµ‘,Ðå	Õ%‘ÑÁÝÍˆ°(€€€€€€‰™½±‘•Èˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼Å]…DÁÑ˜É¡}}¹1¡Mµ‘,Ðå	Õ%‘ÑÁÝÍˆ°(€€€€€€‰±¥ÁÌˆèmt°(€€€€€€‰½‰Í•ÉÙ…¥½¹•Ìˆèmt°(€€€€€€‰™…Ñ¥„ˆèl(€€€€€€€l(€€€€€€€€€€‰AI1=L€¡@àÀ¤ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ”ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰Í•Ÿé¸™É…µ¥¹œƒ
+Ü½¹™¥Éµ…Èµ¥¹¥…ÑÕÉ„ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰5¥É½ÍÕ—Å½Ìˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰•Ø½ ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰Í•Ÿé¸™É…µ¥¹œƒ
+Ü½¹™¥Éµ…Èµ¥¹¥…ÑÕÉ„ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰	½ÍÑ•é½Ìˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ¼ÄÕµ¥¸ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰Í•Ÿé¸™É…µ¥¹œƒ
+Ü½¹™¥Éµ…Èµ¥¹¥…ÑÕÉ„ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰A…ÉÁ…‘•¼±•¹Ñ¼ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ”ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰Í•Ÿé¸™É…µ¥¹œƒ
+Ü½¹™¥Éµ…Èµ¥¹¥…ÑÕÉ„ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰…‰••¼€¡¹½µ½™˜¤ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰•Øˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰Í•Ÿé¸™É…µ¥¹œƒ
+Ü½¹™¥Éµ…Èµ¥¹¥…ÑÕÉ„ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰-ML•ÍÑ¥µ…‘¼ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆÇŠLäˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰™ÕÍ§Í¸5Lƒ
+Ü¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰M•ÉÁ•¹Ñ•¼ƒ
+ÜM1@ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰´ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰…´¸Ûµ„ƒ
+Ü¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰½¹‘Õ§Í¸½¹Ñ¥¹Õ„ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰µ¥¸ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰±¥ÁÌ€¬ALˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰Y•¹Ñ…¹„¥É…‘¥…¹„ˆ°(€€€€€€€€€€‰•¸¥¹‘•á…§Í¸ˆ°(€€€€€€€€€€ˆˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰±¥ÁÌ¡¥ÍÓÍÉ¥½Ì‘”¥¹‘•á…È€¡Á¥Á•±¥¹”¸á¸¤ˆ(€€€€€€€t(€€€€€t°(€€€€€€‰‘•™•¹Í¥Ù¼ˆèl(€€€€€€€l(€€€€€€€€€€‰¥ÍÑ…¹¥„Í•Õ¥´¸ƒŠ&”ÈÌˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ”ÕµÀˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰…´¸Ûµ„ƒ
+Ü¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰½±¥Í§Í¸™É½¹Ñ…°QQðÈ¸ÕÌˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰•Øˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰É•¹…‘…Ì‰ÉÕÍ…Ìˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ¼ÄÀÁ­´ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰•±•É…¥½¹•Ì‰ÉÕÍ…Ìˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ¼ÄÀÁ­´ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰ÕÉÙ…Ì‰ÉÕÍ…Ìˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ¼ÄÀÁ­´ˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰á•Í¼‘”Ù•±½¥‘…ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€ˆ”‘¥ÍÐˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰É•Ä¸ALˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰M…±¥‘…Ì‘”…ÉÉ¥°Ì½Í—Å…°ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰•Øˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰¡¥ÍÓÍÉ¥¼ˆ(€€€€€€€t°(€€€€€€€l(€€€€€€€€€€‰¥ÍÑÉ…§Í¸ƒ
+Üµ¥É…‘„ˆ°(€€€€€€€€€€‹ŠPˆ°(€€€€€€€€€€‰•Øˆ°(€€€€€€€€€€‰¸ˆ°(€€€€€€€€€€‰É•ÅÕ¥•É”…‰¥¹„ˆ(€€€€€€€t(€€€€€t(€€€ô(€t°(€€‰Ý¥¹‘½ÝÌˆèl(€€€l(€€€€€€À°(€€€€€€Ø(€€€t°(€€€l(€€€€€€ÄÌ°(€€€€€€ÄØ(€€€t°(€€€l(€€€€€€ÈÀ°(€€€€€€ÈÐ(€€€t(€t°(€€‰Ñ½Ñ}Õ¹¥‘…‘•Ìˆè€Ô°(€€‰Ñ½Ñ}±¥ÁÌˆè€ÐÐ°(€€‰Ñ½Ñ}‰…©„ˆè€Ô°(€€‰Ñ½Ñ}½‰Ìˆè€À°(€€‰‘µÍ}½¬ˆè€Ä°(€€‰‘µÍ}Á•¹ˆè€À°(€€‰É…¥èˆè€‰É…‰…¥½¹•Ì…Í¡…´ÁÉ½å•Ñ¼!…¹¹…ÅÁ…µÁ„ˆ°(€€‰É…¥é}¥ˆè€ˆÅ‘}%eØÝ]…¡MUE¡aÑ}ÐÉPÑUÕI‘©5½e¹4ˆ°(€€‰É…¥é}ÕÉ°ˆè€‰¡ÑÑÁÌè¼½‘É¥Ù”¹½½±”¹½´½‘É¥Ù”½™½±‘•ÉÌ¼Å‘}%eØÝ]…¡MUE¡aÑ}ÐÉPÑUÕI‘©5½e¹4ˆ°(€€‰µ•Ñ„ˆèì(€€€€‰•¹•É…‘¼ˆè€ˆÈÀÈØ´Àà´Àà€ÄàèÀÀˆ°(€€€€‰™Õ•¹Ñ”ˆè€‰¥•ÉÉ”A…Í¡…´ƒ
+ÜÑ„‘”¥•ÉÉ”MM=5ˆ°(€€€€‰É½¸ˆè¹Õ±°°(€€€€‰É½¹}ÑáÐˆè€‰¥•ÉÉ”‘½Õµ•¹Ñ…°ˆ°(€€€€‰ÁÉ½á¥µ„ˆè¹Õ±°(€ô°(€€‰Ù•ÉÍ¥½¸ˆè€Ð°(€€‰ÕÁ‘…Ñ•ˆè€ˆÈÀÈØ´Àà´Ààˆ°(€€‰±½ÍÕÉ”ˆèì(€€€€‰Á±…¹}½‘”ˆè€‰Q@µMM=5µA´ÀÀÄ´ÈÀÈØˆ°(€€€€‰É•Ù¥Í¥½¸ˆè€Ä°(€€€€‰ÍÑ…ÑÕÌˆè€‰II<ˆ°(€€€€‰±½Í•‘}…Ðˆè€ˆÈÀÈØ´Àà´Ààˆ°(€€€€‰‘•±…É•‘}‰äˆè€‰)•™”MM=5ˆ°(€€€€‰…Ñ¥½¹Í}Ñ½Ñ…°ˆè€à°(€€€€‰…Ñ¥½¹Í}•á•ÕÑ•ˆè€à°(€€€€‰½Á•¹}½‰Í•ÉÙ…Ñ¥½¹Ìˆè€À°(€€€€‰±½ÍÕÉ•}Á•É•¹Ðˆè€ÄÀÀ°(€€€€‰•Ù¥‘•¹•}‘½Õµ•¹Ðˆè€‰Q@µMM=5µQµ%IIµM!4´ÀÀÄ´ÈÀÈØˆ(€ô°(€€‰…Ñ¥½¹Ìˆèl(€€€ì(€€€€€€‰¥ˆè€Ä°(€€€€€€‰µ•…ÍÕÉ•}…ÁÁ±¥•ˆè€‰±¥ÀÉ•Ù¥Í…‘¼ì½¹‘ÕÑ½ÈÉ•ÑÉ½…±¥µ•¹Ñ…‘¼ä¡…É±„Ñ½½±‰½à•©•ÕÑ…‘„Á…É„±„™±½Ñ„ˆ°(€€€€€€‰ÍÑ…ÑÕÌˆè€‰)UQ<ˆ°(€€€€€€‰±½Í•‘}…Ðˆè€ˆÈÀÈØ´Àà´Ààˆ°(€€€€€€‰•Ù¥‘•¹”ˆè€‰Q@µMM=5µQµ%IIµM!4´ÀÀÄ´ÈÀÈØˆ(€€€ô°(€€€ì(€€€€€€‰¥ˆè€È°(€€€€€€‰µ•…ÍÕÉ•}…ÁÁ±¥•ˆè€‰	¥Ó…½É„½¹ÑÉ…ÍÑ…‘„ì…±¥µ•¹Ñ…§Í¸Ù•É¥™¥…‘„ä¡•­±¥ÍÐÁÉ•ÕÍ¼…ÑÕ…±¥é…‘¼ˆ°(€€€€€€‰ÍÑ…ÑÕÌˆè€‰)UQ<ˆ°(€€€€€€‰±½Í•‘}…Ðˆè€ˆÈÀÈØ´Àà´Ààˆ°(€€€€€€‰•Ù¥‘•¹”ˆè€‰Q@µMM=5µQµ%IIµM!4´ÀÀÄ´ÈÀÈØˆ(€€€ô°(€€€ì(€€€€€€‰¥ˆè€Ì°(€€€€€€‰µ•…ÍÕÉ•}…ÁÁ±¥•ˆè€‰%¹ÍÑÉÕÑ¥Ù¼‘”Ù½±…‘¼…Á±¥…‘¼½¸Ù•É¥™¥…§Í¸½‰±¥…Ñ½É¥„ì™…±Ñ…¹Ñ•Ì¡¥ÍÓÍÉ¥½ÌÁÉ•Í•ÉÙ…‘½Ìˆ°(€€€€€€‰ÍÑ…ÑÕÌˆè€‰)UQ<ˆ°(€€€€€€‰±½Í•‘}…Ðˆè€ˆÈÀÈØ´Àà´Ààˆ°(€€€€€€‰•Ù¥‘•¹”ˆè€‰Q@µMM=5µQµ%IIµM!4´ÀÀÄ´ÈÀÈØˆ(€€€ô°(€€€ì(€€€€€€‰¥ˆè€Ð°(€€€€€€‰µ•…ÍÕÉ•}…ÁÁ±¥•ˆè€‰•¡„ä¡½É„Í¥¹É½¹¥é…‘…Ìì½¹ÑÉ½°¥¹½ÉÁ½É…‘¼„±„¥¹ÍÁ•§Í¸µ•¹ÍÕ…°ˆ°(€€€€€€‰ÍÑ…ÑÕÌˆè€‰)UQ<ˆ°(€€€€€€‰±½Í•‘}…Ðˆè€ˆÈÀÈØ´Àà´Ààˆ°(€€€€€€‰•Ù¥‘•¹”ˆè€‰Q@µMM=5µQµ%IIµM!4´ÀÀÄ´ÈÀÈØˆ(€€€ô°(€€€ì(€€€€€€‰¥ˆè€Ô°(€€€€€€‰µ•…ÍÕÉ•}…ÁÁ±¥•ˆè€‰ÍÓ…¹‘…È·µ¹¥µ¼™É½¹Ñ…°€¬…‰¥¹„‘•™¥¹¥‘¼ì•ÅÕ¥Á½Ì…Õ‘¥Ñ…‘½Ìä¡…‰¥±¥Ñ…§Í¸•ÍÑ¥½¹…‘„ˆ°(€€€€€€‰ÍÑ…ÑÕÌˆè€‰)UQ<ˆ°(€€€€€€‰±½Í•‘}…Ðˆè€ˆÈÀÈØ´Àà´Ààˆ°(€€€€€€‰•Ù¥‘•¹”ˆè€‰Q@µMM=5µQµ%IIµM!4´ÀÀÄ´ÈÀÈØˆ(€€€ô°(€€€ì(€€€€€€‰¥ˆè€Ø°(€€€€€€‰µ•…ÍÕÉ•}…ÁÁ±¥•ˆè€‰U¹¥‘…‘•Ì¥‘•¹Ñ¥™¥…‘…Ìì…ÉÁ•Ñ…ÌÉ•¹½µ‰É…‘…Ìä‘…Í¡‰½…É…ÑÕ…±¥é…‘¼€¡4´ÌÍ¥¸Á±…„¥¹Ù•¹Ñ…‘„¤ˆ°(€€€€€€‰ÍÑ…ÑÕÌˆè€‰)UQ<ˆ°(€€€€€€‰±½Í•‘}…Ðˆè€ˆÈÀÈØ´Àà´Ààˆ°(€€€€€€‰•Ù¥‘•¹”ˆè€‰Q@µMM=5µQµ%IIµM!4´ÀÀÄ´ÈÀÈØˆ(€€€ô°(€€€ì(€€€€€€‰¥ˆè€Ü°(€€€€€€‰µ•…ÍÕÉ•}…ÁÁ±¥•ˆè€‰AÉ½É…µ…§Í¸½!=LÙ•É¥™¥…‘½ÌìÁ…ÕÍ…Ì…Ñ¥Ù…Ì…Á±¥…‘…Ìä‰ÕÌÁÉ¥½É¥é…‘¼ˆ°(€€€€€€‰ÍÑ…ÑÕÌˆè€‰)UQ<ˆ°(€€€€€€‰±½Í•‘}…Ðˆè€ˆÈÀÈØ´Àà´Ààˆ°(€€€€€€‰•Ù¥‘•¹”ˆè€‰Q@µMM=5µQµ%IIµM!4´ÀÀÄ´ÈÀÈØˆ(€€€ô°(€€€ì(€€€€€€‰¥ˆè€à°(€€€€€€‰µ•…ÍÕÉ•}…ÁÁ±¥•ˆè€‰±Õ©¼‘”…»…±¥Í¥ÌÍ•µ…¹…°‘•™¥¹¥‘¼äÁÉ¥µ•È¥±¼‘”¥•ÉÉ”‘½Õµ•¹Ñ…‘¼ˆ°(€€€€€€‰ÍÑ…ÑÕÌˆè€‰)UQ<ˆ°(€€€€€€‰±½Í•‘}…Ðˆè€ˆÈÀÈØ´Àà´Ààˆ°(€€€€€€‰•Ù¥‘•¹”ˆè€‰Q@µMM=5µQµ%IIµM!4´ÀÀÄ´ÈÀÈØˆ(€€€ô(€t°(€€‰¡¥ÍÑ½É¥…±}…É¡¥Ù”ˆèì(€€€€‰ÁÉ•Í•ÉÙ•ˆèÑÉÕ”°(€€€€‰…Ñ¥Ù•}½‰Í•ÉÙ…Ñ¥½¹Ìˆè€À°(€€€€‰¹½Ñ”ˆè€‰1½Ì…É¡¥Ù½Ì½¸¡½É…É¥½Ì¥¹½ÉÉ•Ñ½Ìä±½ÌÙ¥‘•½Ì™…±Ñ…¹Ñ•Ì™½Éµ…¸Á…ÉÑ”‘•°…É¡¥Ù¼¡¥ÍÓÍÉ¥¼ä¹¼Í½¸½‰Í•ÉÙ…¥½¹•Ì…Ñ¥Ù…Ì¸ˆ°(€€€€‰‘¥µ}¹½Ñ”ˆè€‰1…Ì…ÉÁ•Ñ…Ì%5½%5½%5¡¥ÍÓÍÉ¥…ÌÁ•Éµ…¹••¸Í¥¸±¥ÁÌ¸°¥•ÉÉ”Í”ÍÕÍÑ•¹Ñ„•¸±„µ•‘¥‘„½ÉÉ•Ñ¥Ù„‘•±…É…‘„ä¹¼•¸Ù¥‘•½Ì¥¹•á¥ÍÑ•¹Ñ•Ì¸ˆ(€ô)ô((
