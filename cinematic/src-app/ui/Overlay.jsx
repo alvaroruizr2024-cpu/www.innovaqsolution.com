@@ -1,4 +1,4 @@
-import { COMPANY, COPY, PRODUCTS, waUrl } from '../content.js'
+import { COMPANY, PRODUCTS, waUrl } from '../content.js'
 
 export function Overlay({
   lang,
@@ -35,16 +35,26 @@ export function Overlay({
           </a>
         </nav>
         <div className="hud-tools">
+          <details className="mobile-menu">
+            <summary aria-label="Menu">☰</summary>
+            <div>
+              <a href="#productos">{t.products}</a>
+              <a href="#servicios">{t.services}</a>
+              <a href="#sectores">{t.sectors}</a>
+              <a href="#demo">{t.demo}</a>
+              <a href="../global/">{t.portal}</a>
+            </div>
+          </details>
           <button type="button" className="lang" onClick={() => setLang(lang === 'es' ? 'en' : 'es')} aria-label="Language">
             {lang === 'es' ? 'ES' : 'EN'}
-            <span>/ {COPY[lang === 'es' ? 'en' : 'es'].lang === 'ES' ? 'EN' : 'ES'}</span>
+            <span>/ {lang === 'es' ? 'EN' : 'ES'}</span>
           </button>
         </div>
       </header>
 
       <div className={`letterbox ${introDone ? 'hidden' : ''}`} />
 
-      <div className="hud-left">
+      <div className={`hud-left ${active ? 'dim' : ''}`}>
         <p className="badge">{t.badge}</p>
         <h1>{t.title}</h1>
         <p className="lede">{t.subtitle}</p>
@@ -91,11 +101,36 @@ export function Overlay({
               <li key={f}>{f}</li>
             ))}
           </ul>
-          <a className="btn wa slim" href={waUrl(lang, active)} target="_blank" rel="noreferrer">
-            {t.consultCta}
-          </a>
+          <div className="card-actions">
+            <a className="btn wa slim" href={waUrl(lang, active)} target="_blank" rel="noreferrer">
+              {t.consultCta}
+            </a>
+            {selected && (
+              <button type="button" className="btn ghost slim" onClick={() => onSelect(null)}>
+                {t.close}
+              </button>
+            )}
+          </div>
         </div>
       )}
+
+      <div className="mobile-rail" aria-label={t.products}>
+        {PRODUCTS.map((p, i) => (
+          <button
+            key={p.code}
+            type="button"
+            className={activeCode === p.code ? 'on' : ''}
+            style={{ '--c': p.color }}
+            onClick={() => onSelect(selected === p.code ? null : p.code)}
+          >
+            {String(i + 1).padStart(2, '0')} {p.name}
+          </button>
+        ))}
+      </div>
+
+      <a className="wa-float" href={waUrl(lang, product || active)} target="_blank" rel="noreferrer">
+        {t.wa}
+      </a>
 
       {!introDone && (
         <button type="button" className="skip" onClick={skipIntro}>

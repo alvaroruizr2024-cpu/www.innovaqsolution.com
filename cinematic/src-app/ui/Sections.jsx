@@ -138,13 +138,12 @@ function MotionSlots({ lang, t }) {
       <div className="grid videos">
         {VIDEO_SLOTS.map((slot) => (
           <figure key={slot.id} className="video-slot">
-            <video
-              controls
-              playsInline
-              preload="metadata"
-              poster="./motion/poster.svg"
-              src={`./motion/${slot.file}`}
-            />
+            <div className="video-frame">
+              <img src="./motion/poster.svg" alt="" />
+              <video controls playsInline preload="none" poster="./motion/poster.svg">
+                <source data-slot={slot.file} />
+              </video>
+            </div>
             <figcaption>
               <strong>{slot[lang]}</strong>
               <span>{t.videoEmpty}</span>
@@ -279,7 +278,7 @@ export function SiteFooter({ lang, t }) {
         </p>
       </div>
       <div>
-        <a href={COMPANY.portal}>{t.portal}</a>
+        <a href="../global/">{t.portal}</a>
         <p>{t.consult}</p>
         <p>{t.footer}</p>
       </div>
