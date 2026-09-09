@@ -99,11 +99,11 @@ header {
   margin-left: auto; font-size: 10px; font-weight: 700; padding: 3px 8px;
   border-radius: 12px; white-space: nowrap;
 }
-.pill-parcial  { background: #fef3c7; color: #92400e; }
-.pill-pdf      { background: #dbeafe; color: #1e40af; }
-.pill-pending  { background: #f3f4f6; color: #6b7280; }
-.pill-new      { background: #d1fae5; color: #065f46; }
-.pill-ok       { background: #d1fae5; color: #065f46; }
+.pill-parcial { background: #fef3c7; color: #92400e; }
+.pill-pdf { background: #dbeafe; color: #1e40af; }
+.pill-pending { background: #f3f4f6; color: #6b7280; }
+.pill-new { background: #d1fae5; color: #065f46; }
+.pill-ok { background: #d1fae5; color: #065f46; }
 
 .v-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 
@@ -117,9 +117,9 @@ header {
 
 .channels { font-size: 11px; color: var(--c-muted); }
 .channels b { color: var(--c-text); font-weight: 600; }
-.channels .tag { 
-  display: inline-block; font-size: 10px; font-weight: 600; 
-  padding: 1px 6px; border-radius: 3px; margin-right: 4px; margin-bottom: 3px;
+.channels .tag {
+display: inline-block; font-size: 10px; font-weight: 600;
+padding: 1px 6px; border-radius: 3px; margin-right: 4px; margin-bottom: 3px;
   background: #e0f2fe; color: #0369a1;
 }
 .channels .tag-grey { background: #f3f4f6; color: var(--c-muted); }
@@ -156,6 +156,18 @@ header {
   width:100%; background:#ecfdf5; border:1px solid #86efac; border-radius:8px;
   padding:12px 16px; color:#14532d; font-size:12px; line-height:1.5;
 }
+.period-bar {
+  margin: 0 16px 12px; padding: 8px 10px; border-radius: 4px; font-size: 11px;
+  background: #ecfdf5; border-left: 4px solid var(--c-green); color: #14532d;
+}
+.period-bar b { color: #065f46; }
+
+/* â”€â”€ MONITORING TABLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.mon-table { width:100%; border-collapse:collapse; font-size:11px; }
+.mon-table th { padding:6px 8px; border:1px solid var(--c-border); background:#f3f4f6; text-align:left; }
+.mon-table td { padding:6px 8px; border:1px solid var(--c-border); vertical-align: top; }
+.mon-table td.num { text-align:center; font-weight:800; }
+.mon-ok { color:#065f46; font-weight:700; }
 
 /* â”€â”€ TIMELINE CARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .tl-card {
@@ -165,6 +177,7 @@ header {
   padding: 16px 20px; width: 100%;
 }
 .tl-title { font-size: 13px; font-weight: 800; border-left: 4px solid var(--c-yellow); padding-left: 8px; margin-bottom: 14px; }
+.tl-title.tl-green { border-left-color: var(--c-green); }
 .tl-rows { display: flex; flex-direction: column; gap: 12px; }
 .tl-row { display: flex; align-items: center; gap: 12px; }
 .tl-label { width: 110px; flex-shrink: 0; font-size: 11px; font-weight: 700; text-align: right; color: var(--c-text); }
@@ -216,13 +229,15 @@ footer a { color: var(--c-blue); }
 <header>
   <div class="header-left">
     <h1>Flota Hanaqpampa Â· Monitoreo de ConducciÃ³n</h1>
-    <div class="sub">Fatiga / somnolencia + manejo defensivo &nbsp;Â·&nbsp; 5 vehÃ­culos &nbsp;Â·&nbsp; Proyecto CSF Hanaqpampa Â· ENGIE / Panasur</div>
+    <div class="sub">Fatiga / somnolencia + manejo defensivo &nbsp;Â·&nbsp; 5 vehÃ­culos con cÃ¡mara &nbsp;Â·&nbsp; Proyecto CSF Hanaqpampa Â· ENGIE / Panasur</div>
   </div>
   <div class="header-right">
-    <b>Actualizado:</b> 08-08-2026<br>
-    <b>Cierre PAC:</b> 8/8 acciones ejecutadas Â· 100%<br>
-    <b>Observaciones abiertas:</b> 0<br>
+    <b>Actualizado:</b> 09-09-2026 (rev. 5)<br>
+    <b>Periodo monitoreado:</b> 09-08-2026 â†’ 09-09-2026<br>
+    <b>Unidades con reporte normal:</b> 5/5 &nbsp;Â·&nbsp; <b>Eventos detectados:</b> 0<br>
+    <b>Cierre PAC:</b> 8/8 acciones ejecutadas Â· 100% &nbsp;Â·&nbsp; <b>Observaciones abiertas:</b> 0<br>
     <button class="print-btn" onclick="window.print()">â™ Imprimir / PDF</button>
+    <a class="print-btn" style="background:#1d6f42;text-decoration:none;margin-left:6px" href="TP-SSOMA-REP-DASHCAM-001-2026_Reporte_Flota_Dashcam_09-09-2026.xlsx" download>â¬‡ Reporte de flota (Excel) 09-09-2026</a>
     <a class="print-btn" style="background:var(--c-green);text-decoration:none;margin-left:6px" href="TP-SSOMA-PAC-001-2026_Rev1_CERRADO_08-08-2026.docx" download>â¬‡ PAC Rev. 1 cerrado (Word)</a>
     <a class="print-btn" style="background:#166534;text-decoration:none;margin-left:6px" href="TP-SSOMA-ACTA-CIERRE-DASHCAM-001-2026.docx" download>â¬‡ Acta de Cierre (Word)</a>
   </div>
@@ -230,15 +245,72 @@ footer a { color: var(--c-blue); }
 
 <!-- KPI STRIP -->
 <div class="kpi-strip">
-  <div class="kpi"><div class="kpi-val">5</div><div class="kpi-label">VehÃ­culos registrados</div><div class="kpi-note">4 camionetas + 1 bus</div></div>
-  <div class="kpi"><div class="kpi-val" style="color:var(--c-green)">8/8</div><div class="kpi-label">Acciones ejecutadas</div><div class="kpi-note">PAC Rev. 1 cerrado</div></div>
-  <div class="kpi"><div class="kpi-val" style="color:var(--c-green)">0</div><div class="kpi-label">Observaciones abiertas</div><div class="kpi-note">Hallazgos histÃ³ricos levantados</div></div>
-  <div class="kpi"><div class="kpi-val" style="color:var(--c-green)">100%</div><div class="kpi-label">Cierre del plan</div><div class="kpi-note">Declarado por Jefe SSOMA</div></div>
-  <div class="kpi"><div class="kpi-val">08-08-2026</div><div class="kpi-label">Fecha de cierre</div><div class="kpi-note">Acta TP-SSOMA-ACTA-CIERRE-DASHCAM-001-2026</div></div>
+  <div class="kpi"><div class="kpi-val">5</div><div class="kpi-label">VehÃ­culos con cÃ¡mara</div><div class="kpi-note">4 camionetas + 1 bus</div></div>
+  <div class="kpi"><div class="kpi-val" style="color:var(--c-green)">5/5</div><div class="kpi-label">Reportaron con normalidad</div><div class="kpi-note">Periodo 09-08 â†’ 09-09-2026</div></div>
+  <div class="kpi"><div class="kpi-val" style="color:var(--c-green)">0</div><div class="kpi-label">Eventos detectados</div><div class="kpi-note">Fatiga Â· distracciÃ³n Â· manejo brusco</div></div>
+  <div class="kpi"><div class="kpi-val" style="color:var(--c-green)">0</div><div class="kpi-label">Observaciones abiertas</div><div class="kpi-note">PAC Rev. 1 cerrado 8/8 Â· 08-08-2026</div></div>
+  <div class="kpi"><div class="kpi-val">09-09-2026</div><div class="kpi-label">Fecha de corte</div><div class="kpi-note">Reporte TP-SSOMA-REP-DASHCAM-001-2026</div></div>
 </div>
 
-<!-- VEHICLE CARDS -->
 <div class="grid">
+
+  <!-- MONITOREO DEL PERIODO -->
+  <div class="tl-card">
+    <div class="tl-title tl-green">ESTADO DE MONITOREO DEL PERIODO Â· 09-08-2026 â†’ 09-09-2026 Â· toda la flota con cÃ¡mara
+      <a href="TP-SSOMA-REP-DASHCAM-001-2026_Reporte_Flota_Dashcam_09-09-2026.xlsx" download style="float:right;font-size:11px;color:var(--c-blue);font-weight:600">â¬‡ Descargar reporte (Excel)</a>
+    </div>
+    <table class="mon-table">
+      <thead>
+        <tr>
+          <th style="width:60px">ID</th>
+          <th>Unidad</th>
+          <th style="width:90px">Placa</th>
+          <th>CÃ¡mara / canales</th>
+          <th style="width:150px">Estado de reporte</th>
+          <th style="width:70px">Eventos</th>
+          <th style="width:110px">Obs. abiertas</th>
+          <th>Comentario</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>CAM 1</b></td><td>Camioneta</td><td><b>BFB-898</b></td><td>video_back (cabina/DMS) Â· video_front</td>
+          <td class="mon-ok">âœ“ REPORTE NORMAL</td><td class="num">0</td><td class="mon-ok">0 Â· sin novedad</td>
+          <td>CÃ¡mara operativa y grabando con normalidad. Sin eventos de fatiga, distracciÃ³n ni manejo brusco en el periodo.</td>
+        </tr>
+        <tr>
+          <td><b>CAM 2</b></td><td>Camioneta</td><td><b>BPM-741</b></td><td>video_back Â· video_front</td>
+          <td class="mon-ok">âœ“ REPORTE NORMAL</td><td class="num">0</td><td class="mon-ok">0 Â· sin novedad</td>
+          <td>CÃ¡mara operativa con fecha/hora sincronizada (acciÃ³n PAC N.Âº 4). Sin eventos en el periodo.</td>
+        </tr>
+        <tr>
+          <td><b>CAM 3</b></td><td>Camioneta Â· Gris</td><td><b>CAM-3</b></td><td>video_back (cabina)</td>
+          <td class="mon-ok">âœ“ REPORTE NORMAL</td><td class="num">0</td><td class="mon-ok">0 Â· sin novedad</td>
+          <td>CÃ¡mara operativa y grabando con normalidad. Sin eventos en el periodo.</td>
+        </tr>
+        <tr>
+          <td><b>CAM 4</b></td><td>Camioneta Â· Blanca</td><td><b>Z8B-730</b></td><td>DCIMA (vÃ­a) Â· DCIMB (cabina) Â· DCIMC (trasera)</td>
+          <td class="mon-ok">âœ“ REPORTE NORMAL</td><td class="num">0</td><td class="mon-ok">0 Â· sin novedad</td>
+          <td>CÃ¡mara de 3 canales operativa. Sin eventos en el periodo.</td>
+        </tr>
+        <tr>
+          <td><b>BUS</b></td><td>Bus de personal</td><td><b>F7P-952</b></td><td>video_front (vÃ­a) Â· image_back</td>
+          <td class="mon-ok">âœ“ REPORTE NORMAL</td><td class="num">0</td><td class="mon-ok">0 Â· sin novedad</td>
+          <td>CÃ¡mara frontal operativa y grabando con normalidad. Sin eventos de manejo defensivo ni conducciÃ³n en ventana de baja vigilancia en el periodo.</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr style="background:#ecfdf5">
+          <td colspan="4" style="font-weight:800">TOTAL FLOTA CON CÃMARA</td>
+          <td class="mon-ok">5/5 Â· 100% normal</td><td class="num">0</td><td class="mon-ok">0</td>
+          <td>Sin eventos detectados ni observaciones abiertas al corte del 09-09-2026.</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div style="margin-top:8px;font-size:10px;color:var(--c-muted)">
+      Fuente: verificaciÃ³n operativa de las 5 dashcams y reporte de conducciÃ³n del periodo, consolidado por el Jefe SSOMA (Tours Panasur) al 09-09-2026. Criterio de "evento": fatiga/somnolencia (PERCLOS, microsueÃ±os, cabeceo), distracciÃ³n (celular en mano), manejo brusco (frenadas, aceleraciones, curvas) y conducciÃ³n en ventanas de baja vigilancia (13â€“16 h / 20â€“24 h / 00â€“06 h). El control mensual de dashcams (fecha/hora, grabaciÃ³n, integridad de SD) forma parte del checklist preuso desde el cierre del PAC.
+    </div>
+  </div>
 
   <!-- BFB-898 -->
   <div class="v-card">
@@ -248,7 +320,7 @@ footer a { color: var(--c-blue); }
         <div class="v-type">Camioneta</div>
         <div class="v-plate">BFB-898</div>
       </div>
-      <div class="status-pill pill-ok">OBSERVACIÃ“N LEVANTADA</div>
+      <div class="status-pill pill-ok">REPORTE NORMAL Â· 0 EVENTOS</div>
     </div>
     <div class="v-body">
       <div class="stat-row">
@@ -282,6 +354,7 @@ footer a { color: var(--c-blue); }
         </div>
       </div>
     </div>
+    <div class="period-bar"><b>Periodo 09-08 â†’ 09-09-2026:</b> cÃ¡mara operativa, reporte normal, 0 eventos.</div>
     <div class="resolution-bar"><b>âœ“ ObservaciÃ³n levantada â€” cierre 08-08-2026.</b> El vacÃ­o histÃ³rico de 45.7 min (07:53â€“08:39) fue contrastado con bitÃ¡cora y se incorporÃ³ la verificaciÃ³n de grabaciÃ³n al checklist preuso.</div>
   </div>
 
@@ -293,7 +366,7 @@ footer a { color: var(--c-blue); }
         <div class="v-type">Camioneta</div>
         <div class="v-plate">BPM-741</div>
       </div>
-      <div class="status-pill pill-ok">OBSERVACIÃ“N LEVANTADA</div>
+      <div class="status-pill pill-ok">REPORTE NORMAL Â· 0 EVENTOS</div>
     </div>
     <div class="v-body">
       <div class="stat-row">
@@ -305,7 +378,7 @@ footer a { color: var(--c-blue); }
         <b>Canales:</b><br>
         <span class="tag">video_back</span>
         <span class="tag">video_front</span>
-        <span class="tag tag-grey">AVI (reloj interno puede estar desconfigurado)</span>
+        <span class="tag tag-grey">AVI (reloj sincronizado en cierre PAC)</span>
       </div>
       <div class="findings">
         <div class="findings-title">Estado</div>
@@ -316,6 +389,7 @@ footer a { color: var(--c-blue); }
         </div>
       </div>
     </div>
+    <div class="period-bar"><b>Periodo 09-08 â†’ 09-09-2026:</b> cÃ¡mara operativa, reporte normal, 0 eventos.</div>
   </div>
 
   <!-- Camioneta 3 Gris -->
@@ -327,34 +401,290 @@ footer a { color: var(--c-blue); }
         <div class="v-plate">CAM-3</div>
         <div class="v-type">Identificador interno Â· sin placa atribuida</div>
       </div>
-      <div class="status-pill pill-ok">OBSERVACIÃ“N LEVANTADA</div>
+      <div class="status-pill pill-ok">REPORTE NORMAL Â· 0 EVENTOS</div>
     </div>
     <div class="v-body">
       <div class="stat-row">
-        <div class="stat-chip"><strong>24</strong><span>clips .×;¶‰ËkºwµçM±…ÍÌô‰™¥¹‘¥¹œµ¥Ñ•´ˆø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰˜µ‘½Ğ‘½Ğµ¥¹™¼ˆøğ½‘¥Øø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰˜µÑ¥µ”ˆù5…¹•©¼ğ½‘¥Øø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰˜µÑ•áĞˆù%¹‘¥…‘½É•Ì¡¥ÍÓÍÉ¥½ÌÁÉ•Í•ÉÙ…‘½Ì¸1„½‰•ÉÑÕÉ„‘”…µ…É…Ì™Õ”…Õ‘¥Ñ…‘„äÍ”‘•™¥¹§Ì•°•ÍÓ…¹‘…È·µ¹¥µ¼™É½¹Ñ…°€¬…‰¥¹„¸ñ‘¥Ø±…ÍÌô‰É•Í½±ÕÑ¥½¸µ¹½Ñ”ˆøñˆûŠrL=‰Í•ÉÙ…§Í¸±•Ù…¹Ñ…‘„ƒŠP¥•ÉÉ”€Àà´Àà´ÈÀÈØ¸ğ½ˆøğ½‘¥Øøğ½‘¥Øø(€€€€€€€€ğ½‘¥Øø(€€€€€€ğ½‘¥Øø(€€€€ğ½‘¥Øø(€€ğ½‘¥Øø((€€ñ‘¥Ø±…ÍÌô‰±½ÍÕÉ”µ‰…¹¹•Èˆøñˆù%II0A18%=9Lƒ
-Ü€Àà´Àà´ÈÀÈØğ½ˆøñ‰Èù1…Ì€à…¥½¹•Ì™Õ•É½¸‘•±…É…‘…Ì•©•ÕÑ…‘…ÌÁ½È•°)•™”MM=5¸1½Ì¡…±±…é½Ì°¡½É…É¥½Ì¥¹½ÉÉ•Ñ½Ìä™…±Ñ…¹Ñ•Ì‘”Ù¥‘•¼ÅÕ”Í”µÕ•ÍÑÉ…¸„½¹Ñ¥¹Õ…§Í¸Í”½¹Í•ÉÙ…¸½µ¼…É¡¥Ù¼¡¥ÍÓÍÉ¥¼ä¹¼½¹ÍÑ¥ÑÕå•¸½‰Í•ÉÙ…¥½¹•Ì…Ñ¥Ù…Ì¸Ù¥‘•¹¥„…‘µ¥¹¥ÍÑÉ…Ñ¥Ù„ÁÉ¥¹¥Á…°èÑ„‘”¥•ÉÉ”MM=5¸ğ½‘¥Øø((€€ğ„´´Q%51%9I€´´ø(€€ñ‘¥Ø±…ÍÌô‰Ñ°µ…Éˆø(€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÑ¥Ñ±”ˆù359Q%5A<A=HY#5U1<ƒ
-Ü…É¡¥Ù¼¡¥ÍÓÍÉ¥¼‘”É…‰…¥½¹•Ì‘¥ÍÁ½¹¥‰±•Ì•¸É¥Ù”ğ½‘¥Øø(€€€€ğ„´´•Í…±„€ÀØèÀÀ´ÈÈèÀÀ€ô€ÄÙ €ô€äØÁµ¥¸€´´ø(€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÉ½İÌˆø((€€€€€€ğ„´´	´àäàè€ÀØèÔÜ´ÀäèÄĞ½¸…À€ÀÜèÔÌ´ÀàèÌä€´´ø(€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÉ½Üˆø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ±…‰•°ˆù	´àäàñ‰ÈøñÍÁ…¸ÍÑå±”ô‰™½¹ĞµÍ¥é”èÄÁÁàí½±½ÈéÙ…È ´µŒµµÕÑ•¤ˆøÈÄµ…äğ½ÍÁ…¸øğ½‘¥Øø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‰…ÈµİÉ…Àˆø(€€€€€€€€€€ğ„´´€ÀØèÔÜôÔİµ¥¸°€ÀÜèÔÌôÄÄÍµ¥¸°€ÀàèÌäôÄÔåµ¥¸°€ÀäèÄĞôÄäÑµ¥¸€´´ø(€€€€€€€€€€ğ„´´Í…±”è±•™Ğ”€ô€¡µ¥¸´ÌØÀ¤¼äØÀ¨ÄÀÀİ¡•É”€ÀØèÀÀôÌØÁµ¥¸™É½´µ¥‘¹¥¡Ğ€´´ø(€€€€€€€€€€ğ„´´€ÀØèÔÜôĞÄÜ°€ÀÜèÔÌôĞÜÌ°€ÀàèÌäôÔÄä°€ÀäèÄĞôÔÔĞ™É½´µ¥‘¹¥¡Ğ€´´ø(€€€€€€€€€€ğ„´´É…¹”€ÀØèÀÀôÌØÀÑ¼€ÈÈèÀÀôÄÌÈÀ°ÍÁ…¸ôäØÀ€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÍ•œˆÍÑå±”ô‰±•™ĞèÔ¸ä”íİ¥‘Ñ èÔ¸à”í‰…­É½Õ¹èŒÈÔØÍ•ˆí½Á…¥Ñäè¸àˆøğ½‘¥Øøğ„´´€ÀØèÔÜ´ÀÜèÔÌ€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ…ÀµÍÑÉ¥Á”ˆÍÑå±”ô‰±•™ĞèÄÄ¸à”íİ¥‘Ñ èĞ¸à”ˆøğ½‘¥Øøğ„´´€ÀÜèÔÌ´ÀàèÌä…À€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÍ•œˆÍÑå±”ô‰±•™ĞèÄØ¸Ø”íİ¥‘Ñ èÌ¸Ø”í‰…­É½Õ¹èŒÈÔØÍ•ˆí½Á…¥Ñäè¸àˆøğ½‘¥Øøğ„´´€ÀàèÌä´ÀäèÄĞ€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‘½Ğµµ…É¬ˆÍÑå±”ô‰±•™ĞèÄĞ¸Ü”í‰…­É½Õ¹èŒÈÔØÍ•ˆˆøğ½‘¥Øøğ„´´€ÀÜèÈà€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‘½Ğµµ…É¬Ñ°µ‘½Ğµİ…É¸ˆÍÑå±”ô‰±•™ĞèÈÀ¸Ü”ˆøğ½‘¥Øøğ„´´€ÀàèÔĞ€´´ø(€€€€€€€€ğ½‘¥Øø(€€€€€€ğ½‘¥Øø((€€€€€€ğ„´´	A4´ÜĞÄèµ…ä€ÈÀÈØ°Ù…É¥½Ì±¥ÁÌ€¡øÄÜèÀÀ´ÄàèÀÀ¤€´´ø(€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÉ½Üˆø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ±…‰•°ˆù	A4´ÜĞÄñ‰ÈøñÍÁ…¸ÍÑå±”ô‰™½¹ĞµÍ¥é”èÄÁÁàí½±½ÈéÙ…È ´µŒµµÕÑ•¤ˆùµ…ä€ÈÀÈØğ½ÍÁ…¸øğ½‘¥Øø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‰…ÈµİÉ…Àˆø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÍ•œˆÍÑå±”ô‰±•™ĞèØÈ”íİ¥‘Ñ èĞ”í‰…­É½Õ¹èŒİŒÍ…•í½Á…¥Ñäè¸Øˆøğ½‘¥Øø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÍ•œˆÍÑå±”ô‰±•™ĞèØà”íİ¥‘Ñ èÈ”í‰…­É½Õ¹èŒİŒÍ…•í½Á…¥Ñäè¸Øˆøğ½‘¥Øø(€€€€€€€€€€ñ‘¥ØÍÑå±”ô‰Á½Í¥Ñ¥½¸é…‰Í½±ÕÑ”íÑ½ÀèÔÀ”í±•™ĞèÔÀ”íÑÉ…¹Í™½É´éÑÉ…¹Í±…Ñ” ´ÔÀ”°´ÔÀ”¤í™½¹ĞµÍ¥é”èÄÁÁàí½±½ÈéÙ…È ´µŒµµÕÑ•¤ˆùÉ•¥ÍÑÉ¼¡¥ÍÓÍÉ¥¼•ÉÉ…‘¼ğ½‘¥Øø(€€€€€€€€ğ½‘¥Øø(€€€€€€ğ½‘¥Øø((€€€€€€ğ„´´…´ÌÉ¥Ìè€ÄÜ´Äà©Õ¸°€ÀäèÀÈ´ÄĞèÌÜ€´´ø(€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÉ½Üˆø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ±…‰•°ˆù…´ÌÉ¥Ìñ‰ÈøñÍÁ…¸ÍÑå±”ô‰™½¹ĞµÍ¥é”èÄÁÁàí½±½ÈéÙ…È ´µŒµµÕÑ•¤ˆøÄÛŠLÄà©Õ¸ğ½ÍÁ…¸øğ½‘¥Øø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‰…ÈµİÉ…Àˆø(€€€€€€€€€€ğ„´´€ÀäèÀÈôÔĞÈ°€ÄĞèÌÜôàÜÜ™É½´µ¥‘¹¥¡Ğ¸±•™Ğô ÔĞÈ´ÌØÀ¤¼äØÀôÄä”°İ¥‘Ñ ô àÜÜ´ÔĞÈ¤¼äØÀôÌÔ”€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÍ•œˆÍÑå±”ô‰±•™ĞèÄä”íİ¥‘Ñ èĞÀ¸Ü”í‰…­É½Õ¹èŒÀÔäØØäí½Á…¥Ñäè¸Üˆøğ½‘¥Øø(€€€€€€€€€€ğ„´´€ÀäèÀÌÍ¡…‘”€ÄÌ´ÄÙ ô ÜàÀ´ÌØÀ¤¼äØÀôĞĞ”İ¥‘Ñ ô äØÀ´ÜàÀ¤¼äØÀô¸¸¸€ÄÌèÀÀôÜàÀ°€ÄØèÀÀôäØÀ€ôø±•™ĞôĞĞ”İ¥‘Ñ ôÄà¸ÜÔ”€´´ø(€€€€€€€€€€ñ‘¥ØÍÑå±”ô‰Á½Í¥Ñ¥½¸é…‰Í½±ÕÑ”í±•™ĞèĞĞ¸Ğ”íİ¥‘Ñ èÄà¸ÜÔ”í¡•¥¡ĞèÄÀÀ”í‰…­É½Õ¹è™•˜ÍŒÜí½Á…¥Ñäè¸Ôí‰½É‘•ÈµÉ…‘¥ÕÌèÉÁàˆøğ½‘¥Øø(€€€€€€€€ğ½‘¥Øø(€€€€€€ğ½‘¥Øø((€€€€€€ğ„´´…´Ğhá´ÜÌÀ	±…¹„èÉ•¥ÍÑÉ¼¡¥ÍÓÍÉ¥¼‘•°€ÈÜ©Õ¸€´´ø(€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÉ½Üˆø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ±…‰•°ˆù…´Ğ	±…¹„ñ‰ÈøñÍÁ…¸ÍÑå±”ô‰™½¹ĞµÍ¥é”èÄÁÁàí½±½ÈéÙ…È ´µŒµµÕÑ•¤ˆøÈÜ©Õ¸ğ½ÍÁ…¸øğ½‘¥Øø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‰…ÈµİÉ…Àˆø(€€€€€€€€€€ñ‘¥ØÍÑå±”ô‰Á½Í¥Ñ¥½¸é…‰Í½±ÕÑ”íÑ½ÀèÔÀ”í±•™ĞèÔÀ”íÑÉ…¹Í™½É´éÑÉ…¹Í±…Ñ” ´ÔÀ”°´ÔÀ”¤í™½¹ĞµÍ¥é”èÄÁÁàí½±½ÈèŒäÈĞÀÁ”ˆûŠj€%4Í¥¸Ù¥‘•½Ìƒ
-ÜÉ”µÍÕ‰¥È‘•Í‘”Mğ½‘¥Øø(€€€€€€€€ğ½‘¥Øø(€€€€€€ğ½‘¥Øø((€€€€€€ğ„´´	ULİ@´äÔÈè€Àà´ÄØ©Õ¸Ù…É¥½Ì¡½É…É¥½Ì€´´ø(€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÉ½Üˆø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ±…‰•°ˆùİ@´äÔÈñ‰ÈøñÍÁ…¸ÍÑå±”ô‰™½¹ĞµÍ¥é”èÄÁÁàí½±½ÈéÙ…È ´µŒµµÕÑ•¤ˆøÀãŠLÄØ©Õ¸ğ½ÍÁ…¸øğ½‘¥Øø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‰…ÈµİÉ…Àˆø(€€€€€€€€€€ğ„´´€ÀÜèÌĞôĞÔĞ°€ÄÈèÈäôÜĞä°€ÄØèÔĞôÄÀÄĞ°€ÄÜèÈĞôÄÀĞĞ°€ÄàèÔÀôÄÄÌÀ°€ÄàèÔÈôÄÄÌÈ°€ÈÀèÀÔôÄÈÀÔ™É½´µ¥‘¹¥¡Ğ€´´ø(€€€€€€€€€€ğ„´´±•™Ğô¡µ¥¸´ÌØÀ¤¼äØÀ€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‘½Ğµµ…É¬ˆÍÑå±”ô‰±•™Ğèä¸à”í‰…­É½Õ¹è‘ŒÈØÈØˆøğ½‘¥Øøğ„´´€ÀÜèÌĞ€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‘½Ğµµ…É¬ˆÍÑå±”ô‰±•™ĞèĞÀ¸Ô”í‰…­É½Õ¹è‘ŒÈØÈØˆøğ½‘¥Øøğ„´´€ÄÈèÈä€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‘½Ğµµ…É¬ˆÍÑå±”ô‰±•™ĞèØà”í‰…­É½Õ¹è‘ŒÈØÈØˆøğ½‘¥Øøğ„´´€ÄØèÔĞ€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‘½Ğµµ…É¬ˆÍÑå±”ô‰±•™ĞèÜÄ¸È”í‰…­É½Õ¹è‘ŒÈØÈØˆøğ½‘¥Øøğ„´´€ÄÜèÈĞ€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‘½Ğµµ…É¬ˆÍÑå±”ô‰±•™ĞèàÀ¸È”í‰…­É½Õ¹è‘ŒÈØÈØˆøğ½‘¥Øøğ„´´€ÄàèÔÀ€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‘½Ğµµ…É¬ˆÍÑå±”ô‰±•™ĞèàÀ¸Ğ”í‰…­É½Õ¹è‘ŒÈØÈØˆøğ½‘¥Øøğ„´´€ÄàèÔÈ€´´ø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ‘½Ğµµ…É¬Ñ°µ‘½Ğµİ…É¸ˆÍÑå±”ô‰±•™Ğèàà”í‰…­É½Õ¹éÙ…È ´µŒµ…µ‰•È¤ˆøğ½‘¥Øøğ„´´€ÈÀèÀÔÉ¥•Í¼€´´ø(€€€€€€€€€€ğ„´´Ù•¹Ñ…¹…Ì‰…©„Ù¥¥±…¹¥„€ÈÀ´ÈÑ €´´ø(€€€€€€€€€€ñ‘¥ØÍÑå±”ô‰Á½Í¥Ñ¥½¸é…‰Í½±ÕÑ”í±•™ĞèàÌ¸Ì”íİ¥‘Ñ èÄØ¸Ü”í¡•¥¡ĞèÄÀÀ”í‰…­É½Õ¹è™•˜ÍŒÜí½Á…¥Ñäè¸Øí‰½É‘•ÈµÉ…‘¥ÕÌèÉÁàˆøğ½‘¥Øø(€€€€€€€€€€ñ‘¥ØÍÑå±”ô‰Á½Í¥Ñ¥½¸é…‰Í½±ÕÑ”í±•™ĞèĞĞ¸Ğ”íİ¥‘Ñ èÄà¸ÜÔ”í¡•¥¡ĞèÄÀÀ”í‰…­É½Õ¹è™•˜ÍŒÜí½Á…¥Ñäè¸Ğí‰½É‘•ÈµÉ…‘¥ÕÌèÉÁàˆøğ½‘¥Øø(€€€€€€€€ğ½‘¥Øø(€€€€€€ğ½‘¥Øø((€€€€ğ½‘¥Øø(€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µ…á¥Ìˆø(€€€€€€ñÍÁ…¸øÀØèÀÀğ½ÍÁ…¸øñÍÁ…¸øÀàèÀÀğ½ÍÁ…¸øñÍÁ…¸øÄÀèÀÀğ½ÍÁ…¸øñÍÁ…¸øÄÈèÀÀğ½ÍÁ…¸ø(€€€€€€ñÍÁ…¸øÄĞèÀÀğ½ÍÁ…¸øñÍÁ…¸øÄØèÀÀğ½ÍÁ…¸øñÍÁ…¸øÄàèÀÀğ½ÍÁ…¸øñÍÁ…¸øÈÀèÀÀğ½ÍÁ…¸øñÍÁ…¸øÈÈèÀÀğ½ÍÁ…¸ø(€€€€ğ½‘¥Øø(€€€€ñ‘¥ØÍÑå±”ô‰µ…É¥¸µÑ½ÀèÄÁÁàí™½¹ĞµÍ¥é”èÄÁÁàí½±½ÈéÙ…È ´µŒµµÕÑ•¤í‘¥ÍÁ±…äé™±•àí…ÀèÄÙÁàí™±•àµİÉ…ÀéİÉ…Àˆø(€€€€€€ñÍÁ…¸ûŠZ€€ñÍÁ…¸ÍÑå±”ô‰½±½ÈèŒÈÔØÍ•ˆˆûŠZ€ğ½ÍÁ…¸øÉ…‰…§Í¸‘¥ÍÁ½¹¥‰±”ğ½ÍÁ…¸ø(€€€€€€ñÍÁ…¸ÍÑå±”ô‰‰…­É½Õ¹è™•˜ÍŒÜíÁ…‘‘¥¹œèÅÁà€ÙÁàí‰½É‘•ÈµÉ…‘¥ÕÌèÉÁàˆùY•¹Ñ…¹„‰…©„Ù¥¥±…¹¥„€ ÄÏŠLÄÙ °€ÈÃŠLÈÑ ¤ğ½ÍÁ…¸ø(€€€€€€ñÍÁ…¸ûŠ²±¥ÀÉ•Ù¥Í…‘¼ƒ
-Ü€ñÍÁ…¸ÍÑå±”ô‰½±½ÈéÙ…È ´µŒµ…µ‰•È¤ˆûŠ²ğ½ÍÁ…¸øÙ•¹Ñ¼‘”…Ñ•¹§Í¸ğ½ÍÁ…¸ø(€€€€€€ñÍÁ…¸ÍÑå±”ô‰‰…­É½Õ¹éÉ•Á•…Ñ¥¹œµ±¥¹•…ÈµÉ…‘¥•¹Ğ ĞÕ‘•œ°™„Õ„Ô°™„Õ„Ô€ÍÁà°™•˜É˜È€ÍÁà°™•˜É˜È€İÁà¤íÁ…‘‘¥¹œèÅÁà€áÁàí‰½É‘•ÈµÉ…‘¥ÕÌèÉÁàí½±½ÈèŒääÅˆÅˆˆùY…µ¼‘”É…‰…§Í¸ğ½ÍÁ…¸ø(€€€€ğ½‘¥Øø(€€ğ½‘¥Øø(((€€ğ„´´A18%=9L=IIQ%YL€´´ø(€€ñ‘¥Ø±…ÍÌô‰Ñ°µ…Éˆø(€€€€ñ‘¥Ø±…ÍÌô‰Ñ°µÑ¥Ñ±”ˆùA18%=9L=IIQ%YLƒ
-ÜQ@µMM=5µA´ÀÀÄ´ÈÀÈØƒ
-ÜI•Ø¸€Äƒ
-Ü¥•ÉÉ”€Àà…¼€ÈÀÈØ(€€€€€€ñ„¡É•˜ô‰Q@µMM=5µA´ÀÀÄ´ÈÀÈÙ}I•ØÅ}II=|Àà´Àà´ÈÀÈØ¹‘½àˆ‘½İ¹±½…ÍÑå±”ô‰™±½…ĞéÉ¥¡Ğí™½¹ĞµÍ¥é”èÄÅÁàí½±½ÈéÙ…È ´µŒµ‰±Õ”¤í™½¹Ğµİ•¥¡ĞèØÀÀˆûŠ²•Í…É…È‘½Õµ•¹Ñ¼½µÁ±•Ñ¼€¡]½É¤ğ½„ø(€€€€ğ½‘¥Øø(€€€€ñÑ…‰±”ÍÑå±”ô‰İ¥‘Ñ èÄÀÀ”í‰½É‘•Èµ½±±…ÁÍ”é½±±…ÁÍ”í™½¹ĞµÍ¥é”èÄÅÁàˆø(€€€€€€ñÑ¡•…ø(€€€€€€€€ñÑÈÍÑå±”ô‰‰…­É½Õ¹è˜Í˜Ñ˜ØíÑ•áĞµ…±¥¸é±•™Ğˆø(€€€€€€€€€€ñÑ ÍÑå±”ô‰Á…‘‘¥¹œèÙÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤íİ¥‘Ñ èÈáÁàˆù;
-Àğ½Ñ ø(€€€€€€€€€€ñÑ ÍÑå±”ô‰Á…‘‘¥¹œèÙÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù=‰Í•ÉÙ…§Í¸ğ½Ñ ø(€€€€€€€€€€ñÑ ÍÑå±”ô‰Á…‘‘¥¹œèÙÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù§Í¸½ÉÉ•Ñ¥Ù„€¡É•ÍÕµ•¸¤ğ½Ñ ø(€€€€€€€€€€ñÑ ÍÑå±”ô‰Á…‘‘¥¹œèÙÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤íİ¥‘Ñ èÄÄÁÁàˆùI•ÍÁ½¹Í…‰±”ğ½Ñ ø(€€€€€€€€€€ñÑ ÍÑå±”ô‰Á…‘‘¥¹œèÙÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤íİ¥‘Ñ èÜÁÁàˆùA±…é¼ğ½Ñ ø(€€€€€€€€€€ñÑ ÍÑå±”ô‰Á…‘‘¥¹œèÙÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤íİ¥‘Ñ èØÁÁàˆùAÉ¥½È¸ğ½Ñ ø(€€€€€€€€€€ñÑ ÍÑå±”ô‰Á…‘‘¥¹œèÙÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤íİ¥‘Ñ èÄÄÁÁàˆùÍÑ…‘¼ğ½Ñ ø(€€€€€€€€ğ½ÑÈø(€€€€€€ğ½Ñ¡•…ø(€€€€€€ñÑ‰½‘äø(€€€€€€€€ñÑÈø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í™½¹Ğµİ•¥¡ĞèÜÀÀˆøÄğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù•±Õ±…È•¸µ…¹¼•¸…‰¥¹„ƒŠP	´àäà°€ÈÄ¼ÀÔ€ÀàèÔĞğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù±¥ÀÉ•Ù¥Í…‘¼ì½¹‘ÕÑ½ÈÉ•ÑÉ½…±¥µ•¹Ñ…‘¼ä¡…É±„Ñ½½±‰½à•©•ÕÑ…‘„Á…É„±„™±½Ñ„ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù)•™”MM=5€¼MÕÀ¸=À¸ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøÀà¼Àà¼ÈÀÈØğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í‰…­É½Õ¹è™‰”Ñ”Ğí™½¹Ğµİ•¥¡ĞèÜÀÀí½±½ÈèŒääÅˆÅˆˆù1Qğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøñÍÁ…¸±…ÍÌô‰ÍÑ…ÑÕÌµÁ¥±°Á¥±°µ½¬ˆù)UQ<ƒ
-Ü€Àà´Àà´ÈÀÈØğ½ÍÁ…¸øğ½Ñø(€€€€€€€€ğ½ÑÈø(€€€€€€€€ñÑÈø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í™½¹Ğµİ•¥¡ĞèÜÀÀˆøÈğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆùY…µ¼‘”É…‰…§Í¸€ĞÔ¸Üµ¥¸ƒŠP	´àäà€ ÀÜèÔÏŠLÀàèÌä¤ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù	¥Ó…½É„½¹ÑÉ…ÍÑ…‘„ì…±¥µ•¹Ñ…§Í¸Ù•É¥™¥…‘„ä¡•­±¥ÍĞÁÉ•ÕÍ¼…ÑÕ…±¥é…‘¼ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù)•™”MM=5€¼5…¹Ğ¸ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøÀà¼Àà¼ÈÀÈØğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í‰…­É½Õ¹è™‰”Ñ”Ğí™½¹Ğµİ•¥¡ĞèÜÀÀí½±½ÈèŒääÅˆÅˆˆù1Qğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøñÍÁ…¸±…ÍÌô‰ÍÑ…ÑÕÌµÁ¥±°Á¥±°µ½¬ˆù)UQ<ƒ
-Ü€Àà´Àà´ÈÀÈØğ½ÍÁ…¸øğ½Ñø(€€€€€€€€ğ½ÑÈø(€€€€€€€€ñÑÈø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í™½¹Ğµİ•¥¡ĞèÜÀÀˆøÌğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù½Á¥„M¥¹½µÁ±•Ñ„ƒŠP…´Ğ	±…¹„€¡%4Í¥¸Ù¥‘•½Ì¤ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù%¹ÍÑÉÕÑ¥Ù¼‘”Ù½±…‘¼…Á±¥…‘¼½¸Ù•É¥™¥…§Í¸½‰±¥…Ñ½É¥„ì™…±Ñ…¹Ñ•Ì¡¥ÍÓÍÉ¥½ÌÁÉ•Í•ÉÙ…‘½Ìğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆùMÕÀ¸=Á•É…¥½¹•Ìğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøÀà¼Àà¼ÈÀÈØğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í‰…­É½Õ¹è™‰”Ñ”Ğí™½¹Ğµİ•¥¡ĞèÜÀÀí½±½ÈèŒääÅˆÅˆˆù1Qğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøñÍÁ…¸±…ÍÌô‰ÍÑ…ÑÕÌµÁ¥±°Á¥±°µ½¬ˆù)UQ<ƒ
-Ü€Àà´Àà´ÈÀÈØğ½ÍÁ…¸øğ½Ñø(€€€€€€€€ğ½ÑÈø(€€€€€€€€ñÑÈø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í™½¹Ğµİ•¥¡ĞèÜÀÀˆøĞğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆùI•±½©•Ì‘”‘…Í¡…´‘•Í½¹™¥ÕÉ…‘½Ì€¡±¥ÁÌ€ˆÈÀÄÜˆ¤ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù•¡„ä¡½É„Í¥¹É½¹¥é…‘…Ìì½¹ÑÉ½°¥¹½ÉÁ½É…‘¼„±„¥¹ÍÁ•§Í¸µ•¹ÍÕ…°ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù5…¹Ğ¸‘”™±½Ñ„ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøÀà¼Àà¼ÈÀÈØğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í‰…­É½Õ¹è™™˜ÉŒí™½¹Ğµİ•¥¡ĞèÜÀÀí½±½ÈèŒäÈĞÀÁ”ˆù5%ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøñÍÁ…¸±…ÍÌô‰ÍÑ…ÑÕÌµÁ¥±°Á¥±°µ½¬ˆù)UQ<ƒ
-Ü€Àà´Àà´ÈÀÈØğ½ÍÁ…¸øğ½Ñø(€€€€€€€€ğ½ÑÈø(€€€€€€€€ñÑÈø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í™½¹Ğµİ•¥¡ĞèÜÀÀˆøÔğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù½‰•ÉÑÕÉ„¥¹½µÁ±•Ñ„è	´àäàÍ¥¸™É½¹Ñ…°€¼	ÕÌÍ¥¸…µ…É„…‰¥¹„ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆùÍÓ…¹‘…È·µ¹¥µ¼™É½¹Ñ…°€¬…‰¥¹„‘•™¥¹¥‘¼ì•ÅÕ¥Á½Ì…Õ‘¥Ñ…‘½Ìä¡…‰¥±¥Ñ…§Í¸•ÍÑ¥½¹…‘„ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù)•™”MM=5€¼•É•¹¥„ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøÀà¼Àà¼ÈÀÈØğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í‰…­É½Õ¹è™™˜ÉŒí™½¹Ğµİ•¥¡ĞèÜÀÀí½±½ÈèŒäÈĞÀÁ”ˆù5%ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøñÍÁ…¸±…ÍÌô‰ÍÑ…ÑÕÌµÁ¥±°Á¥±°µ½¬ˆù)UQ<ƒ
-Ü€Àà´Àà´ÈÀÈØğ½ÍÁ…¸øğ½Ñø(€€€€€€€€ğ½ÑÈø(€€€€€€€€ñÑÈø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í™½¹Ğµİ•¥¡ĞèÜÀÀˆøØğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆùA±……ÌÍ¥¸É•¥ÍÑÉ…ÈƒŠP…´ÌÉ¥Ìä…´Ğ	±…¹„ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆùU¹¥‘…‘•Ì¥‘•¹Ñ¥™¥…‘…Ìì…ÉÁ•Ñ…ÌÉ•¹½µ‰É…‘…Ìä‘…Í¡‰½…É…ÑÕ…±¥é…‘¼€¡4´ÌÍ¥¸Á±…„¥¹Ù•¹Ñ…‘„¤ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù)•™”MM=5ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøÀà¼Àà¼ÈÀÈØğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í‰…­É½Õ¹è™™˜ÉŒí™½¹Ğµİ•¥¡ĞèÜÀÀí½±½ÈèŒäÈĞÀÁ”ˆù5%ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøñÍÁ…¸±…ÍÌô‰ÍÑ…ÑÕÌµÁ¥±°Á¥±°µ½¬ˆù)UQ<ƒ
-Ü€Àà´Àà´ÈÀÈØğ½ÍÁ…¸øğ½Ñø(€€€€€€€€ğ½ÑÈø(€€€€€€€€ñÑÈø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í™½¹Ğµİ•¥¡ĞèÜÀÀˆøÜğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù½¹‘Õ§Í¸•¸Ù•¹Ñ…¹„¥É…‘¥…¹„€ÈÀèÀÔ ƒŠP	ÕÌİ@´äÔÈÍ¥¸5Lğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆùAÉ½É…µ…§Í¸½!=LÙ•É¥™¥…‘½ÌìÁ…ÕÍ…Ì…Ñ¥Ù…Ì…Á±¥…‘…Ìä‰ÕÌÁÉ¥½É¥é…‘¼ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆùMÕÀ¸=À¸€¼)•™”MM=5ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøÀà¼Àà¼ÈÀÈØğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í‰…­É½Õ¹è™™˜ÉŒí™½¹Ğµİ•¥¡ĞèÜÀÀí½±½ÈèŒäÈĞÀÁ”ˆù5%ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøñÍÁ…¸±…ÍÌô‰ÍÑ…ÑÕÌµÁ¥±°Á¥±°µ½¬ˆù)UQ<ƒ
-Ü€Àà´Àà´ÈÀÈØğ½ÍÁ…¸øğ½Ñø(€€€€€€€€ğ½ÑÈø(€€€€€€€€ñÑÈø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í™½¹Ğµİ•¥¡ĞèÜÀÀˆøàğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù5…Ñ•É¥…°Í¥¸…¹…±¥é…È€¼Á¥Á•±¥¹”¹¼•©•ÕÑ…‘¼€¡¥¹‘¥…‘½É•Ì¸½¤ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù±Õ©¼‘”…»…±¥Í¥ÌÍ•µ…¹…°‘•™¥¹¥‘¼äÁÉ¥µ•È¥±¼‘”¥•ÉÉ”‘½Õµ•¹Ñ…‘¼ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆù%99=YD€¼)•™”MM=5ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøÀà¼Àà¼ÈÀÈØğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤í‰…­É½Õ¹è™™˜ÉŒí™½¹Ğµİ•¥¡ĞèÜÀÀí½±½ÈèŒäÈĞÀÁ”ˆù5%ğ½Ñø(€€€€€€€€€€ñÑÍÑå±”ô‰Á…‘‘¥¹œèÕÁà€áÁàí‰½É‘•ÈèÅÁàÍ½±¥Ù…È ´µŒµ‰½É‘•È¤ˆøñÍÁ…¸±…ÍÌô‰ÍÑ…ÑÕÌµÁ¥±°Á¥±°µ½¬ˆù)UQ<ƒ
-Ü€Àà´Àà´ÈÀÈØğ½ÍÁ…¸øğ½Ñø(€€€€€€€€ğ½ÑÈø(€€€€€€ğ½Ñ‰½‘äø(€€€€ğ½Ñ…‰±”ø(€€€€ñ‘¥ØÍÑå±”ô‰µ…É¥¸µÑ½ÀèáÁàí™½¹ĞµÍ¥é”èÄÁÁàí½±½ÈéÙ…È ´µŒµµÕÑ•¤ˆø(€€€€€¥•ÉÉ”‘•±…É…‘¼Á½È•°)•™”MM=5µ•‘¥…¹Ñ”Q@µMM=5µQµ%IIµM!4´ÀÀÄ´ÈÀÈØƒ
-Ü½Õµ•¹Ñ¼½µÁ±•Ñ¼èQ@µMM=5µA´ÀÀÄ´ÈÀÈØI•Ø¸€Äƒ
-Ü€ñ„¡É•˜ô‰Q@µMM=5µQµ%IIµM!4´ÀÀÄ´ÈÀÈØ¹‘½àˆ‘½İ¹±½…ù•Í…É…ÈÑ„‘”¥•ÉÉ”€¡]½É¤ğ½„ø(€€€€ğ½‘¥Øø(€€ğ½‘¥Øø((ğ½‘¥Øøğ„´´€½É¥€´´ø((ñ™½½Ñ•Èø(€€ñÍÁ…¸ùUµ‰É…±•ÌèAI1=L@àÀƒ
-Ü-ML€ÇŠLäƒ
-ÜÉ•±„€ÈÌƒ
-ÜM1@ƒ
-ÜÙ•¹Ñ…¹…Ì‰…©„Ù¥¥±…¹¥„€ÀÃŠLÀØ€¼€ÄÏŠLÄØ€¼€ÈÃŠLÈĞ ƒ
-Ü!=L€™¹‰ÍÀíğ™¹‰ÍÀì%99=YDM=1UQ%=9Lƒ
-Ü€ñ½‘”ù¡…‰¥±¥‘…‘}™…Ñ¥…}‘…Í¡…´ğ½½‘”øğ½ÍÁ…¸ø(€€ñÍÁ…¸ù¥•ÉÉ”ÁÕ‰±¥…‘¼è€Àà´Àà´ÈÀÈØ€¡É•Ø¸€Ğƒ
-ÜA€à¼à¤ƒ
-Ü!¥ÍÑ½É¥…°ÁÉ•Í•ÉÙ…‘¼•¸É¥Ù”ğ½ÍÁ…¸ø(ğ½™½½Ñ•Èø((ğ½‰½‘äø(ğ½¡Ñµ°ø
+        <div class="stat-chip"><strong>24</strong><span>clips .ts</span></div>
+        <div class="stat-chip"><strong>1.36 GB</strong><span>material</span></div>
+        <div class="stat-chip"><strong>16â€“18 jun 26</strong><span>periodo</span></div>
+        <div class="stat-chip"><strong>3</strong><span>jornadas</span></div>
+      </div>
+      <div class="channels">
+        <b>Canales:</b><br>
+        <span class="tag">video_back (cabina)</span>
+        <span class="tag tag-grey">sin carpeta front</span>
+      </div>
+      <div class="findings">
+        <div class="findings-title">Estado</div>
+        <div class="finding-item">
+          <div class="f-dot dot-info"></div>
+          <div class="f-time">â€”</div>
+          <div class="f-text">Registro histÃ³rico de 3 jornadas (16, 17 y 18 jun Â· 09:02â€“15:33). Unidad identificada administrativamente como CAM-3 (Gris), sin inventar una placa; se estableciÃ³ el flujo semanal de anÃ¡lisis.<div class="resolution-note"><b>âœ“ ObservaciÃ³n levantada â€” cierre 08-08-2026.</b></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="period-bar"><b>Periodo 09-08 â†’ 09-09-2026:</b> cÃ¡mara operativa, reporte normal, 0 eventos.</div>
+  </div>
+
+  <!-- Camioneta 4 Blanca -->
+  <div class="v-card">
+    <div class="v-header">
+      <div class="v-badge" style="background:#d97706">CAM 4</div>
+      <div>
+        <div class="v-type">Camioneta Â· color Blanca</div>
+        <div class="v-plate">Z8B-730</div>
+      </div>
+      <div class="status-pill pill-ok">REPORTE NORMAL Â· 0 EVENTOS</div>
+    </div>
+    <div class="v-body">
+      <div class="stat-row">
+        <div class="stat-chip"><strong>0</strong><span>clips histÃ³ricos</span></div>
+        <div class="stat-chip"><strong>27 jun 26</strong><span>alta en Drive</span></div>
+        <div class="stat-chip"><strong>3 canales</strong><span>DCIMA/B/C</span></div>
+      </div>
+      <div class="channels">
+        <b>Canales:</b><br>
+        <span class="tag">DCIMA Â· vÃ­a</span>
+        <span class="tag">DCIMB Â· cabina</span>
+        <span class="tag">DCIMC Â· trasera</span>
+      </div>
+      <div class="findings">
+        <div class="findings-title">Estado</div>
+        <div class="finding-item">
+          <div class="f-dot dot-info"></div>
+          <div class="f-time">â€”</div>
+          <div class="f-text"><b>Archivo histÃ³rico:</b> las carpetas DCIMA/DCIMB/DCIMC permanecen sin clips y solo conservan archivos de sistema. No se fabricaron videos faltantes. Medida aplicada: instructivo de volcado desde SD con verificaciÃ³n obligatoria y control de integridad.<div class="resolution-note"><b>âœ“ ObservaciÃ³n levantada administrativamente â€” cierre 08-08-2026.</b></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="period-bar"><b>Periodo 09-08 â†’ 09-09-2026:</b> cÃ¡mara operativa, reporte normal, 0 eventos.</div>
+  </div>
+
+  <!-- BUS F7P-952 -->
+  <div class="v-card">
+    <div class="v-header">
+      <div class="v-badge" style="background:#dc2626">BUS</div>
+      <div>
+        <div class="v-type">Bus de personal</div>
+        <div class="v-plate">F7P-952</div>
+      </div>
+      <div class="status-pill pill-ok">REPORTE NORMAL Â· 0 EVENTOS</div>
+    </div>
+    <div class="v-body">
+      <div class="stat-row">
+        <div class="stat-chip"><strong>7</strong><span>clips .ts</span></div>
+        <div class="stat-chip"><strong>663.5 MB</strong><span>material</span></div>
+        <div class="stat-chip"><strong>08â€“16 jun 26</strong><span>periodo</span></div>
+        <div class="stat-chip"><strong>5 dÃ­as</strong><span>jornadas</span></div>
+      </div>
+      <div class="channels">
+        <b>Canales:</b><br>
+        <span class="tag">video_front (vÃ­a)</span>
+        <span class="tag">image_back</span>
+        <span class="tag tag-warn">sin cÃ¡mara cabina (DMS n/d)</span>
+      </div>
+      <div class="findings">
+        <div class="findings-title">Hallazgos histÃ³ricos y medidas aplicadas</div>
+        <div class="finding-item">
+          <div class="f-dot dot-info"></div>
+          <div class="f-time">Serpenteo</div>
+          <div class="f-text">18 cm SDLP (proxy frontal Â· muestra)</div>
+        </div>
+        <div class="finding-item">
+          <div class="f-dot dot-warn"></div>
+          <div class="f-time">20:05 h</div>
+          <div class="f-text">Registro histÃ³rico: 1/7 clips en ventana circadiana de baja vigilancia (20â€“24 h). Medida aplicada: revisiÃ³n de programaciÃ³n/HOS, pausas activas y priorizaciÃ³n de cÃ¡mara de cabina.</div>
+        </div>
+        <div class="finding-item">
+          <div class="f-dot dot-info"></div>
+          <div class="f-time">Manejo</div>
+          <div class="f-text">Indicadores histÃ³ricos preservados. La cobertura de cÃ¡maras fue auditada y se definiÃ³ el estÃ¡ndar mÃ­nimo frontal + cabina.<div class="resolution-note"><b>âœ“ ObservaciÃ³n levantada â€” cierre 08-08-2026.</b></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="period-bar"><b>Periodo 09-08 â†’ 09-09-2026:</b> cÃ¡mara frontal operativa, reporte normal, 0 eventos.</div>
+  </div>
+
+  <div class="closure-banner"><b>CIERRE DEL PLAN DE ACCIONES Â· 08-08-2026</b><br>Las 8 acciones fueron declaradas ejecutadas por el Jefe SSOMA. Los hallazgos, horarios incorrectos y faltantes de video que se muestran a continuaciÃ³n se conservan como archivo histÃ³rico y no constituyen observaciones activas. Evidencia administrativa principal: Acta de Cierre SSOMA. Desde el cierre, el seguimiento mensual de la flota se consolida en el reporte TP-SSOMA-REP-DASHCAM-001-2026 (corte 09-09-2026).</div>
+
+  <!-- TIMELINE CARD -->
+  <div class="tl-card">
+    <div class="tl-title">LÃNEA DE TIEMPO POR VEHÃCULO Â· archivo histÃ³rico de grabaciones disponibles en Drive</div>
+    <!-- escala 06:00-22:00 = 16h = 960min -->
+    <div class="tl-rows">
+
+      <!-- BFB-898: 06:57-09:14 con gap 07:53-08:39 -->
+      <div class="tl-row">
+        <div class="tl-label">BFB-898<br><span style="font-size:10px;color:var(--c-muted)">21 may</span></div>
+        <div class="tl-bar-wrap">
+          <div class="tl-seg" style="left:5.9%;width:5.8%;background:#2563eb;opacity:.8"></div>
+          <div class="tl-gap-stripe" style="left:11.8%;width:4.8%"></div>
+          <div class="tl-seg" style="left:16.6%;width:3.6%;background:#2563eb;opacity:.8"></div>
+          <div class="tl-dot-mark" style="left:14.7%;background:#2563eb"></div>
+          <div class="tl-dot-mark tl-dot-warn" style="left:20.7%"></div>
+        </div>
+      </div>
+
+      <!-- BPM-741: may 2026 -->
+      <div class="tl-row">
+        <div class="tl-label">BPM-741<br><span style="font-size:10px;color:var(--c-muted)">may 2026</span></div>
+        <div class="tl-bar-wrap">
+          <div class="tl-seg" style="left:62%;width:4%;background:#7c3aed;opacity:.6"></div>
+          <div class="tl-seg" style="left:68%;width:2%;background:#7c3aed;opacity:.6"></div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:var(--c-muted)">registro histÃ³rico cerrado</div>
+        </div>
+      </div>
+
+      <!-- Cam3 Gris: 16-18 jun, 09:02-14:37 -->
+      <div class="tl-row">
+        <div class="tl-label">Cam3 Gris<br><span style="font-size:10px;color:var(--c-muted)">16â€“18 jun</span></div>
+        <div class="tl-bar-wrap">
+          <div class="tl-seg" style="left:19%;width:40.7%;background:#059669;opacity:.7"></div>
+          <div style="position:absolute;left:44.4%;width:18.75%;height:100%;background:#fef3c7;opacity:.5;border-radius:2px"></div>
+        </div>
+      </div>
+
+      <!-- Cam4 Z8B-730 Blanca -->
+      <div class="tl-row">
+        <div class="tl-label">Cam4 Blanca<br><span style="font-size:10px;color:var(--c-muted)">27 jun</span></div>
+        <div class="tl-bar-wrap">
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:var(--c-muted)">DCIM histÃ³rico sin videos Â· levantado administrativamente 08-08-2026</div>
+        </div>
+      </div>
+
+      <!-- BUS F7P-952: 08-16 jun -->
+      <div class="tl-row">
+        <div class="tl-label">F7P-952<br><span style="font-size:10px;color:var(--c-muted)">08â€“16 jun</span></div>
+        <div class="tl-bar-wrap">
+          <div class="tl-dot-mark" style="left:9.8%;background:#dc2626"></div>
+          <div class="tl-dot-mark" style="left:40.5%;background:#dc2626"></div>
+          <div class="tl-dot-mark" style="left:68%;background:#dc2626"></div>
+          <div class="tl-dot-mark" style="left:71.2%;background:#dc2626"></div>
+          <div class="tl-dot-mark" style="left:80.2%;background:#dc2626"></div>
+          <div class="tl-dot-mark" style="left:80.4%;background:#dc2626"></div>
+          <div class="tl-dot-mark tl-dot-warn" style="left:88%;background:var(--c-amber)"></div>
+          <div style="position:absolute;left:83.3%;width:16.7%;height:100%;background:#fef3c7;opacity:.6;border-radius:2px"></div>
+          <div style="position:absolute;left:44.4%;width:18.75%;height:100%;background:#fef3c7;opacity:.4;border-radius:2px"></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="tl-axis">
+      <span>06:00</span><span>08:00</span><span>10:00</span><span>12:00</span>
+      <span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span><span>22:00</span>
+    </div>
+    <div style="margin-top:10px;font-size:10px;color:var(--c-muted);display:flex;gap:16px;flex-wrap:wrap">
+      <span>â–  <span style="color:#2563eb">â– </span> GrabaciÃ³n disponible</span>
+      <span style="background:#fef3c7;padding:1px 6px;border-radius:2px">Ventana baja vigilancia (13â€“16h, 20â€“24h)</span>
+      <span>â¬¤ Clip revisado Â· <span style="color:var(--c-amber)">â¬¤</span> Evento de atenciÃ³n</span>
+      <span style="background:repeating-linear-gradient(45deg,#fca5a5,#fca5a5 3px,#fef2f2 3px,#fef2f2 7px);padding:1px 8px;border-radius:2px;color:#991b1b">VacÃ­o de grabaciÃ³n</span>
+    </div>
+  </div>
+
+  <!-- PLAN DE ACCIONES CORRECTIVAS -->
+  <div class="tl-card">
+    <div class="tl-title">PLAN DE ACCIONES CORRECTIVAS Â· TP-SSOMA-PAC-001-2026 Â· Rev. 1 Â· cierre 08 ago 2026
+      <a href="TP-SSOMA-PAC-001-2026_Rev1_CERRADO_08-08-2026.docx" download style="float:right;font-size:11px;color:var(--c-blue);font-weight:600">â¬‡ Descargar documento completo (Word)</a>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:11px">
+      <thead>
+        <tr style="background:#f3f4f6;text-align:left">
+          <th style="padding:6px 8px;border:1px solid var(--c-border);width:28px">NÂ°</th>
+          <th style="padding:6px 8px;border:1px solid var(--c-border)">ObservaciÃ³n</th>
+          <th style="padding:6px 8px;border:1px solid var(--c-border)">AcciÃ³n correctiva (resumen)</th>
+          <th style="padding:6px 8px;border:1px solid var(--c-border);width:110px">Responsable</th>
+          <th style="padding:6px 8px;border:1px solid var(--c-border);width:70px">Plazo</th>
+          <th style="padding:6px 8px;border:1px solid var(--c-border);width:60px">Prior.</th>
+          <th style="padding:6px 8px;border:1px solid var(--c-border);width:110px">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">1</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Celular en mano en cabina â€” BFB-898, 21/05 08:54</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Clip revisado; conductor retroalimentado y charla toolbox ejecutada para la flota</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Jefe SSOMA / Sup. Op.</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">08/08/2026</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fbe4e4;font-weight:700;color:#991b1b">ALTA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-ok">EJECUTADO Â· 08-08-2026</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">2</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">VacÃ­o de grabaciÃ³n 45.7 min â€” BFB-898 (07:53â€“08:39)</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">BitÃ¡cora contrastada; alimentaciÃ³n verificada y checklist preuso actualizado</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Jefe SSOMA / Mant.</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">08/08/2026</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fbe4e4;font-weight:700;color:#991b1b">ALTA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-ok">EJECUTADO Â· 08-08-2026</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">3</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Copia SD incompleta â€” Cam4 Blanca (DCIM sin videos)</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Instructivo de volcado aplicado con verificaciÃ³n obligatoria; faltantes histÃ³ricos preservados</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Sup. Operaciones</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">08/08/2026</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fbe4e4;font-weight:700;color:#991b1b">ALTA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-ok">EJECUTADO Â· 08-08-2026</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">4</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Relojes de dashcam desconfigurados (clips "2017")</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Fecha y hora sincronizadas; control incorporado a la inspecciÃ³n mensual</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Mant. de flota</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">08/08/2026</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fff2cc;font-weight:700;color:#92400e">MEDIA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-ok">EJECUTADO Â· 08-08-2026</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">5</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Cobertura incompleta: BFB-898 sin frontal / Bus sin cÃ¡mara cabina</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">EstÃ¡ndar mÃ­nimo frontal + cabina definido; equipos auditados y habilitaciÃ³n gestionada</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Jefe SSOMA / Gerencia</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">08/08/2026</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fff2cc;font-weight:700;color:#92400e">MEDIA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-ok">EJECUTADO Â· 08-08-2026</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">6</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Placas sin registrar â€” Cam3 Gris y Cam4 Blanca</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Unidades identificadas; carpetas renombradas y dashboard actualizado (CAM-3 sin placa inventada)</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Jefe SSOMA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">08/08/2026</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fff2cc;font-weight:700;color:#92400e">MEDIA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-ok">EJECUTADO Â· 08-08-2026</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">7</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">ConducciÃ³n en ventana circadiana 20:05 h â€” Bus F7P-952 sin DMS</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">ProgramaciÃ³n/HOS verificados; pausas activas aplicadas y bus priorizado</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Sup. Op. / Jefe SSOMA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">08/08/2026</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fff2cc;font-weight:700;color:#92400e">MEDIA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-ok">EJECUTADO Â· 08-08-2026</span></td>
+        </tr>
+        <tr>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);font-weight:700">8</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Material sin analizar / pipeline no ejecutado (indicadores n/d)</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">Flujo de anÃ¡lisis semanal definido y primer ciclo de cierre documentado</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">INNOVAQ / Jefe SSOMA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)">08/08/2026</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border);background:#fff2cc;font-weight:700;color:#92400e">MEDIA</td>
+          <td style="padding:5px 8px;border:1px solid var(--c-border)"><span class="status-pill pill-ok">EJECUTADO Â· 08-08-2026</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:8px;font-size:10px;color:var(--c-muted)">
+      Cierre declarado por el Jefe SSOMA mediante TP-SSOMA-ACTA-CIERRE-DASHCAM-001-2026 Â· Documento completo: TP-SSOMA-PAC-001-2026 Rev. 1 Â· <a href="TP-SSOMA-ACTA-CIERRE-DASHCAM-001-2026.docx" download>Descargar Acta de Cierre (Word)</a>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+
+<footer>
+  <span>Umbrales: PERCLOS P80 Â· KSS 1â€“9 Â· regla 2 s Â· SDLP Â· ventanas baja vigilancia 00â€“06 / 13â€“16 / 20â€“24 h Â· HOS &nbsp;|&nbsp; INNOVAQ SOLUTIONS Â· <code>habilidad_fatiga_dashcam</code></span>
+  <span>Actualizado: 09-09-2026 (rev. 5 Â· monitoreo mensual 5/5 normal Â· 0 eventos) Â· Cierre PAC 08-08-2026 (rev. 4) Â· Historial preservado en Drive</span>
+</footer>
+
+</body>
+</html>
