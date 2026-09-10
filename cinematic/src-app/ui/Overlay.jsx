@@ -1,4 +1,5 @@
-import { COMPANY, PRODUCTS, waUrl } from '../content.js'
+import { COMPANY, PRODUCTS, neighbor, productIndex, waUrl } from '../content.js'
+import { productMedia } from '../media.js'
 
 export function Overlay({
   lang,
@@ -10,10 +11,19 @@ export function Overlay({
   onSelect,
   onOpenForm,
   t,
+  quality,
+  setQuality,
 }) {
   const activeCode = selected || hovered
   const active = PRODUCTS.find((p) => p.code === activeCode)
   const product = selected ? PRODUCTS.find((p) => p.code === selected) : null
+  const idx = productIndex(activeCode || PRODUCTS[0].code)
+  const media = active ? productMedia(active.code) : {}
+
+  const goRel = (dir) => {
+    const from = selected || hovered || PRODUCTS[0].code
+    onSelect(neighbor(from, dir).code)
+  }
 
   return (
     <div className="hud" aria-live="polite">
@@ -35,6 +45,13 @@ export function Overlay({
           </a>
         </nav>
         <div className="hud-tools">
+          <button
+            type="button"
+            className={`lang ${quality === 'ultra' ? 'on' : ''}`}
+            onClick={() => setQuality(quality === 'ultra' ? 'performance' : 'ultra')}
+          >
+            {quality === 'ultra' ? t.qualityUltra : t.qualityPerf}
+          </button>
           <details className="mobile-menu">
             <summary aria-label="Menu">☰</summary>
             <div>
@@ -68,43 +85,61 @@ export function Overlay({
           </button>
         </div>
         <p className="consult">{t.consult}</p>
+        <p className="keys">{t.keysHint}</p>
       </div>
 
       <aside className="hud-right">
         <p className="kicker">{introDone ? t.interactHint : t.orbitHint}</p>
         <ol className="plist">
-          {PRODUCTS.map((p, i) => (
-            <li key={p.code}>
-              <button
-                type="button"
-                className={activeCode === p.code ? 'on' : ''}
-                style={{ '--c': p.color }}
-                onClick={() => onSelect(selected === p.code ? null : p.code)}
-              >
-                <span className="n">{String(i + 1).padStart(2, '0')}</span>
-                <span className="nm">{p.name}</span>
-              </button>
-            </li>
-          ))}
+          {PRODUCTS.map((p, i) => {
+            const m = productMedia(p.code)
+            return (
+              <li key={p.code}>
+                <button
+                  type="button"
+                  className={activeCode === p.code ? 'on' : ''}
+                  style={{ '--c': p.color }}
+                  onClick={() => onSelect(selected === p.code ? null : p.code)}
+                >
+                  <span className="n">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="nm">{p.name}</span>
+                  {m.still || m.loop ? <span className="dot" title="media" /> : null}
+                </button>
+              </li>
+            )
+          })}
         </ol>
       </aside>
 
       {active && (
-        <div className="hud-card">
+        <div className="hud-card glass">
           <p className="card-kicker" style={{ color: active.color }}>
-            {active.sub[lang]}
+            {String(idx + 1).padStart(2, '0')} / 11 · {active.sub[lang]}
           </p>
-          <h2>{active.name}</h2>
+          <h2>
+            {active.name}
+            {active.alias ? <small> · {active.alias}</small> : null}
+          </h2>
           <p>{active.desc[lang]}</p>
           <ul>
             {active.features[lang].slice(0, 5).map((f) => (
               <li key={f}>{f}</li>
             ))}
           </ul>
+          <p className="media-flags">
+            {media.still ? <span>{t.stillReady}</span> : null}
+            {media.loop ? <span>{t.videoReady}</span> : null}
+          </p>
           <div className="card-actions">
             <a className="btn wa slim" href={waUrl(lang, active)} target="_blank" rel="noreferrer">
               {t.consultCta}
             </a>
+            <button type="button" className="btn ghost slim" onClick={() => goRel(-1)}>
+              ← {t.prev}
+            </button>
+            <button type="button" className="btn ghost slim" onClick={() => goRel(1)}>
+              {t.next} →
+            </button>
             {selected && (
               <button type="button" className="btn ghost slim" onClick={() => onSelect(null)}>
                 {t.close}
@@ -113,6 +148,27 @@ export function Overlay({
           </div>
         </div>
       )}
+
+      <nav className="film-rail" aria-label={t.film}>
+        <button type="button" className="rail-nav" onClick={() => goRel(-1)} aria-label={t.prev}>
+          ←
+        </button>
+        {PRODUCTS.map((p, i) => (
+          <button
+            key={p.code}
+            type="button"
+            className={activeCode === p.code ? 'on' : ''}
+            style={{ '--c': p.color }}
+            onClick={() => onSelect(selected === p.code ? null : p.code)}
+            title={p.name}
+          >
+            {String(i + 1).padStart(2, '0')}
+          </button>
+        ))}
+        <button type="button" className="rail-nav" onClick={() => goRel(1)} aria-label={t.next}>
+          →
+        </button>
+      </nav>
 
       <div className="mobile-rail" aria-label={t.products}>
         {PRODUCTS.map((p, i) => (
@@ -139,6 +195,7 @@ export function Overlay({
       )}
 
       <footer className="hud-bottom">
+        <span>{t.film}</span>
         <span>{COMPANY.city}</span>
         <span>RUC {COMPANY.ruc}</span>
         <span>{COMPANY.phone}</span>

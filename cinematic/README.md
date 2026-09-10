@@ -1,25 +1,44 @@
-# INNOVAQ cinematic showroom
+# INNOVAQ cinematic showroom (4K gallery)
 
 Dark WebGL landing for **INNOVAQ SOLUTIONS SAC** (RUC 20606205105, Trujillo, Perú).
 
-This folder is additive. The existing `/global` portal is not modified.
+Additive folder. `/global` stays the SaaS portal.
 
 ## Preview
 
-- **Production path:** `https://www.innovaqsolution.com/cinematic/`
-- **Local dev:** `cd cinematic && npm install && npm run dev`
-- **Local production build:** `npm run build && npm run preview`
+- **Live:** https://www.innovaqsolution.com/cinematic/
+- **Dev:** `cd cinematic && npm install && npm run dev`
+- **Production build:** `npm run build` then commit `cinematic/` (GitHub Pages serves this folder)
 
-The GitHub Pages site serves the built `index.html` and `assets/` in this folder.
+## Drop Nano Banana 2 stills + Higgsfield / Seedance loops
 
-## Locked brief (v3)
+There are **no live APIs**. Quality bar only.
 
-- 11 products in an **equal rotating showroom** (no flagship centerpiece)
-- Opening **360° camera orbit**, then interactive settle
-- Primary CTA: WhatsApp `+51 900 801 059`
-- Demo / trial form is secondary (mailto). **No prices**
-- Spanish default + English
-- R3F + custom shaders + postprocessing (DOF, bloom, fog, grain)
-- Video slots for generated motion under `public/motion/` — no invented APIs
+1. Stills (prefer **3840×2160 WebP**) → `cinematic/public/products/<CODE>/still-4k.webp`
+2. Loops (muted seamless MP4/WebM) → `cinematic/public/products/<CODE>/loop.webm`
+3. Section reels → `cinematic/public/motion/hero-orbit.mp4` (etc.)
 
-Copy, products, services, sectors and ISO credentials are taken from `/global`.
+Product codes: `SIG360`, `ERP360`, `TPM360`, `MTP360`, `PMO360`, `AGRO360`, `FOOD360`, `HOTEL360`, `SALUD360`, `CATASTRO360`, `MEDCONGRESS`.
+
+Full naming: `public/products/README.md`.
+
+Then:
+
+```bash
+cd cinematic
+npm run build
+git add cinematic && git commit -m "Add product media" && git push
+# merge to main → GitHub Pages (~1–3 min)
+```
+
+`npm run build` scans disk and writes `src-app/generated/asset-manifest.json`. Missing files are **never requested** (no 404s). Procedural 3D heroes fill empty slots.
+
+Published copies: `/cinematic/products/` and `/cinematic/motion/`.
+
+## Experience
+
+- 11 equal-orbit 3D heroes (distinct silhouettes, brand emissive)
+- 360° opening camera, then hover/select cinematic framing (DOF + bloom)
+- Keyboard `←` `→` · Esc · Enter · film rail · WhatsApp per product
+- Quality: **Ultra 4K** (DPR cap 2) / **Performance** (mobile default)
+- Spanish default + English · no prices

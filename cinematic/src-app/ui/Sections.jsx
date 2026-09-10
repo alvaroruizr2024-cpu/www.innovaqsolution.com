@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import {
   COMPANY,
-  COPY,
   ISO,
   PRODUCTS,
   SECTORS,
@@ -10,11 +9,21 @@ import {
   VIDEO_SLOTS,
   waUrl,
 } from '../content.js'
+import { motionSrc, productMedia } from '../media.js'
+
+function Chapter({ n, children, ...props }) {
+  return (
+    <section {...props} className={`band ${props.className || ''}`}>
+      <p className="chapter-no">{String(n).padStart(2, '0')}</p>
+      {children}
+    </section>
+  )
+}
 
 export function Sections({ lang, t, formOpen, setFormOpen, selected }) {
   return (
-    <main className="page">
-      <Stats t={t} lang={lang} />
+    <main className="page film">
+      <Stats lang={lang} />
       <Products lang={lang} t={t} />
       <Services lang={lang} t={t} />
       <Sectors lang={lang} t={t} />
@@ -28,43 +37,47 @@ export function Sections({ lang, t, formOpen, setFormOpen, selected }) {
 
 function Stats({ lang }) {
   return (
-    <section className="band stats">
+    <Chapter n={1} className="stats" id="stats">
       {STATS.map((s) => (
         <article key={s.n}>
           <strong>{s.n}</strong>
           <span>{s[lang]}</span>
         </article>
       ))}
-    </section>
+    </Chapter>
   )
 }
 
 function Products({ lang, t }) {
   return (
-    <section id="productos" className="band">
+    <Chapter n={2} id="productos">
       <header className="sec-head">
         <p>{t.equalNote}</p>
         <h2>{t.products}</h2>
       </header>
       <div className="grid products">
-        {PRODUCTS.map((p) => (
+        {PRODUCTS.map((p) => {
+          const media = productMedia(p.code)
+          return (
           <article key={p.code} className="card" style={{ '--c': p.color }}>
-            <h3>{p.name}</h3>
+            {media.still ? <img className="card-still" src={media.still} alt="" /> : <div className="card-still fallback" style={{ background: `linear-gradient(135deg, ${p.color}, #05070c)` }} />}
+            <h3>{p.name}{p.alias ? <small> · {p.alias}</small> : null}</h3>
             <p className="sub">{p.sub[lang]}</p>
             <p>{p.desc[lang]}</p>
             <a className="text-wa" href={waUrl(lang, p)} target="_blank" rel="noreferrer">
               {t.consultCta}
             </a>
           </article>
-        ))}
+          )
+        })}
       </div>
-    </section>
+    </Chapter>
   )
 }
 
 function Services({ lang, t }) {
   return (
-    <section id="servicios" className="band">
+    <Chapter n={3} id="servicios">
       <header className="sec-head">
         <p>INNOVAQ</p>
         <h2>{t.services}</h2>
@@ -82,13 +95,13 @@ function Services({ lang, t }) {
           </article>
         ))}
       </div>
-    </section>
+    </Chapter>
   )
 }
 
 function Sectors({ lang, t }) {
   return (
-    <section id="sectores" className="band">
+    <Chapter n={4} id="sectores">
       <header className="sec-head">
         <p>B2B</p>
         <h2>{t.sectors}</h2>
@@ -101,13 +114,13 @@ function Sectors({ lang, t }) {
           </article>
         ))}
       </div>
-    </section>
+    </Chapter>
   )
 }
 
 function Iso({ lang, t }) {
   return (
-    <section id="credenciales" className="band iso">
+    <Chapter n={5} id="credenciales" className="iso">
       <header className="sec-head">
         <p>{t.credentials}</p>
         <h2>{t.isoTitle}</h2>
@@ -123,36 +136,39 @@ function Iso({ lang, t }) {
           </article>
         ))}
       </div>
-    </section>
+    </Chapter>
   )
 }
 
 function MotionSlots({ lang, t }) {
   return (
-    <section id="motion" className="band">
+    <Chapter n={6} id="motion">
       <header className="sec-head">
         <p>{t.motion}</p>
         <h2>{t.videoTitle}</h2>
         <p className="lede">{t.videoSub}</p>
       </header>
       <div className="grid videos">
-        {VIDEO_SLOTS.map((slot) => (
+        {VIDEO_SLOTS.map((slot) => {
+          const src = motionSrc(slot.id)
+          return (
           <figure key={slot.id} className="video-slot">
             <div className="video-frame">
               <img src="./motion/poster.svg" alt="" />
-              <video controls playsInline preload="none" poster="./motion/poster.svg">
-                <source data-slot={slot.file} />
-              </video>
+              {src ? (
+                <video controls playsInline loop muted preload="metadata" poster="./motion/poster.svg" src={src} />
+              ) : null}
             </div>
             <figcaption>
               <strong>{slot[lang]}</strong>
-              <span>{t.videoEmpty}</span>
+              <span>{src ? t.videoReady : t.videoEmpty}</span>
               <code>motion/{slot.file}</code>
             </figcaption>
           </figure>
-        ))}
+          )
+        })}
       </div>
-    </section>
+    </Chapter>
   )
 }
 
@@ -195,6 +211,7 @@ function DemoForm({ lang, t, open, setOpen, selected }) {
 
   return (
     <section id="demo" className={`band form-band ${open ? 'open' : ''}`}>
+      <p className="chapter-no">07</p>
       <header className="sec-head">
         <p>{COMPANY.email}</p>
         <h2>{t.formTitle}</h2>
