@@ -351,6 +351,10 @@ export const COPY = {
     close: 'Cerrar',
     consultCta: 'Consultar este producto',
     reduced: 'Modo reducido',
+    hintTitle: 'Cómo recorrer el showroom',
+    hintBody: 'Once productos, misma órbita. Use ← →, la cinta inferior o Siguiente/Anterior. WhatsApp +51 900 801 059 es el canal principal — sin precios.',
+    hintDismiss: 'Entendido, explorar',
+    waNumber: '+51 900 801 059',
   },
   en: {
     badge: 'Cinematic showroom · 11 products in equal orbit',
@@ -405,6 +409,10 @@ export const COPY = {
     close: 'Close',
     consultCta: 'Consult this product',
     reduced: 'Reduced mode',
+    hintTitle: 'How to browse the showroom',
+    hintBody: 'Eleven products, same orbit. Use ← →, the film rail, or Next/Previous. WhatsApp +51 900 801 059 is the primary channel — no prices.',
+    hintDismiss: 'Got it, explore',
+    waNumber: '+51 900 801 059',
   },
 }
 

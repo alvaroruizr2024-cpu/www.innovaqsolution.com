@@ -13,6 +13,8 @@ export function Overlay({
   t,
   quality,
   setQuality,
+  hint,
+  onDismissHint,
 }) {
   const activeCode = selected || hovered
   const active = PRODUCTS.find((p) => p.code === activeCode)
@@ -78,7 +80,7 @@ export function Overlay({
         <p className="equal">{t.equalNote}</p>
         <div className="cta-row">
           <a className="btn wa" href={waUrl(lang, product)} target="_blank" rel="noreferrer">
-            {t.wa}
+            {t.wa} · {t.waNumber}
           </a>
           <button type="button" className="btn ghost" onClick={onOpenForm}>
             {t.demo}
@@ -111,6 +113,29 @@ export function Overlay({
         </ol>
       </aside>
 
+      {hint && (
+        <div className="guide-hint" role="dialog" aria-labelledby="guide-title">
+          <p id="guide-title">{t.hintTitle}</p>
+          <p>{t.hintBody}</p>
+          <button type="button" className="btn wa" onClick={onDismissHint}>
+            {t.hintDismiss}
+          </button>
+        </div>
+      )}
+
+      {introDone && (
+        <>
+          <button type="button" className="explore-side left" onClick={() => goRel(-1)}>
+            <span>{t.prev}</span>
+            <strong>{neighbor(selected || hovered || PRODUCTS[0].code, -1).name}</strong>
+          </button>
+          <button type="button" className="explore-side right" onClick={() => goRel(1)}>
+            <span>{t.next}</span>
+            <strong>{neighbor(selected || hovered || PRODUCTS[0].code, 1).name}</strong>
+          </button>
+        </>
+      )}
+
       {active && (
         <div className="hud-card glass">
           <p className="card-kicker" style={{ color: active.color }}>
@@ -132,7 +157,7 @@ export function Overlay({
           </p>
           <div className="card-actions">
             <a className="btn wa slim" href={waUrl(lang, active)} target="_blank" rel="noreferrer">
-              {t.consultCta}
+              {t.consultCta} · {t.waNumber}
             </a>
             <button type="button" className="btn ghost slim" onClick={() => goRel(-1)}>
               ← {t.prev}
@@ -157,12 +182,13 @@ export function Overlay({
           <button
             key={p.code}
             type="button"
-            className={activeCode === p.code ? 'on' : ''}
+            className={activeCode === p.code ? 'on named' : ''}
             style={{ '--c': p.color }}
             onClick={() => onSelect(selected === p.code ? null : p.code)}
             title={p.name}
           >
-            {String(i + 1).padStart(2, '0')}
+            <span className="rail-id">{String(i + 1).padStart(2, '0')}</span>
+            {activeCode === p.code ? <span className="rail-name">{p.name}</span> : null}
           </button>
         ))}
         <button type="button" className="rail-nav" onClick={() => goRel(1)} aria-label={t.next}>
@@ -185,7 +211,8 @@ export function Overlay({
       </div>
 
       <a className="wa-float" href={waUrl(lang, product || active)} target="_blank" rel="noreferrer">
-        {t.wa}
+        <span className="wa-label">{t.wa}</span>
+        <span className="wa-num">{t.waNumber}</span>
       </a>
 
       {!introDone && (

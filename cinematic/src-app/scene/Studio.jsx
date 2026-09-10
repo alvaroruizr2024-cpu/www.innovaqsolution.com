@@ -54,17 +54,18 @@ export function Studio({ reduced }) {
       <fog attach="fog" args={['#05070c', 10, 28]} />
       <hemisphereLight args={['#9eb6c8', '#08080c', 0.28]} />
       <spotLight
-        position={[7, 10, 4]}
-        angle={0.42}
-        penumbra={0.7}
-        intensity={48}
+        position={[6.5, 11, 3.6]}
+        angle={0.4}
+        penumbra={0.72}
+        intensity={56}
         color={BRAND.orange}
         castShadow
         shadow-mapSize={[reduced ? 512 : 2048, reduced ? 512 : 2048]}
+        shadow-bias={-0.00012}
       />
-      <spotLight position={[-8, 8, -3]} angle={0.5} penumbra={0.8} intensity={28} color={BRAND.blue} />
-      <spotLight position={[0, 9, -8]} angle={0.35} penumbra={0.6} intensity={18} color={BRAND.green} />
-      <pointLight position={[0, 2.4, 0]} intensity={6} color="#cdd8e6" distance={10} />
+      <spotLight position={[-7.4, 8.5, -2.8]} angle={0.48} penumbra={0.82} intensity={24} color={BRAND.blue} />
+      <spotLight position={[0.2, 9.2, -7.6]} angle={0.32} penumbra={0.55} intensity={20} color={BRAND.green} />
+      <pointLight position={[0, 2.5, 0]} intensity={5.2} color="#d7e2ee" distance={11} />
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]} receiveShadow>
         <circleGeometry args={[16, 64]} />
@@ -72,8 +73,8 @@ export function Studio({ reduced }) {
           blur={[300, 80]}
           resolution={reduced ? 256 : 1536}
           mixBlur={0.85}
-          mixStrength={2.4}
-          roughness={0.82}
+          mixStrength={reduced ? 1.6 : 2.65}
+          roughness={0.78}
           depthScale={0.6}
           minDepthThreshold={0.4}
           maxDepthThreshold={1.4}
@@ -106,7 +107,7 @@ export function Studio({ reduced }) {
       <GodRay color={BRAND.blue} position={[-3.8, 4.4, -1.6]} rotation={[0.1, 0.4, 0.3]} />
       <GodRay color={BRAND.green} position={[0.4, 4.6, -3.4]} rotation={[0.25, 0, 0]} scale={[0.9, 6.2, 0.9]} />
 
-      <Sparkles count={reduced ? 20 : 70} scale={[14, 5, 14]} size={2.2} speed={0.25} color="#d7e4f2" opacity={0.45} />
+      <Sparkles count={reduced ? 0 : 80} scale={[14, 5, 14]} size={2.1} speed={0.22} color="#d7e4f2" opacity={0.42} />
       <ContactShadows position={[0, 0, 0]} opacity={0.45} scale={20} blur={2.4} far={8} color="#000" />
     </>
   )
