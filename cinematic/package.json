@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node ./scripts/publish.mjs && node ./scripts/clean-stale-assets.mjs",
+    "scan-assets": "node ./scripts/scan-assets.mjs",
+    "build": "node ./scripts/scan-assets.mjs && vite build && node ./scripts/publish.mjs && node ./scripts/clean-stale-assets.mjs",
     "preview": "vite preview --host --port 4173"
   },
   "dependencies": {

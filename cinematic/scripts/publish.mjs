@@ -17,7 +17,7 @@ const assetsTo = join(root, 'assets')
 rmSync(assetsTo, { recursive: true, force: true })
 if (existsSync(assetsFrom)) cpSync(assetsFrom, assetsTo, { recursive: true })
 
-for (const extra of ['logo.jpg', 'motion']) {
+for (const extra of ['logo.jpg', 'motion', 'products']) {
   const from = join(build, extra)
   if (existsSync(from)) {
     const to = join(root, extra)

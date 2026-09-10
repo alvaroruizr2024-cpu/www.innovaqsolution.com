@@ -8,11 +8,10 @@ import { ProductFigure } from './ProductFigure.jsx'
 import { CameraRig } from './CameraRig.jsx'
 import { Studio } from './Studio.jsx'
 
-function Ring({ selected, hovered, onHover, onSelect, paused, ringRef }) {
+function Ring({ selected, hovered, onHover, onSelect, paused, ringRef, quality }) {
   useFrame((_, delta) => {
     if (!ringRef.current) return
-    const speed = paused ? 0.015 : 0.085
-    ringRef.current.rotation.y += delta * speed
+    ringRef.current.rotation.y += delta * (paused ? 0.012 : 0.08)
   })
 
   return (
@@ -28,43 +27,60 @@ function Ring({ selected, hovered, onHover, onSelect, paused, ringRef }) {
           onHover={onHover}
           onSelect={onSelect}
           paused={paused}
+          quality={quality}
         />
       ))}
     </group>
   )
 }
 
-function Effects({ reduced, introDone }) {
-  if (reduced) {
+function Effects({ quality, introDone, framed }) {
+  const ultra = quality === 'ultra'
+  if (!ultra) {
     return (
       <EffectComposer disableNormalPass>
-        <Bloom intensity={0.55} luminanceThreshold={0.28} mipmapBlur />
-        <Vignette offset={0.25} darkness={0.75} />
+        <Bloom intensity={0.5} luminanceThreshold={0.3} mipmapBlur />
+        <Vignette offset={0.28} darkness={0.72} />
       </EffectComposer>
     )
   }
   return (
     <EffectComposer disableNormalPass multisampling={0}>
-      <DepthOfField focusDistance={0.018} focalLength={0.018} bokehScale={introDone ? 2.6 : 3.4} height={480} />
-      <Bloom intensity={0.85} luminanceThreshold={0.22} luminanceSmoothing={0.3} mipmapBlur />
-      <ChromaticAberration offset={[0.0006, 0.0004]} radialModulation modulationOffset={0.4} />
-      <Noise premultiply blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.22} />
-      <Vignette offset={0.2} darkness={0.82} />
+      <DepthOfField
+        focusDistance={framed ? 0.012 : 0.018}
+        focalLength={framed ? 0.014 : 0.02}
+        bokehScale={framed ? 3.6 : introDone ? 2.4 : 3.2}
+        height={720}
+      />
+      <Bloom intensity={framed ? 1.15 : 0.9} luminanceThreshold={0.18} luminanceSmoothing={0.28} mipmapBlur />
+      <ChromaticAberration offset={[0.00055, 0.00035]} radialModulation modulationOffset={0.42} />
+      <Noise premultiply blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.18} />
+      <Vignette offset={0.18} darkness={0.84} />
     </EffectComposer>
   )
 }
 
-export function ShowroomCanvas({ selected, hovered, onHover, onSelect, introDone, setIntroDone, reduced }) {
+export function ShowroomCanvas({ selected, hovered, onHover, onSelect, introDone, setIntroDone, quality }) {
   const ringRef = useRef()
   const paused = Boolean(selected || hovered)
-  const dpr = useMemo(() => (reduced ? [1, 1.25] : [1, 1.75]), [reduced])
+  const reduced = quality === 'performance'
+  const dpr = useMemo(() => (reduced ? [1, 1.15] : [1, 2]), [reduced])
 
   return (
     <Canvas
-      shadows
+      shadows={!reduced}
       dpr={dpr}
-      camera={{ position: [13.8, 7.6, 0.2], fov: 42, near: 0.1, far: 60 }}
-      gl={{ antialias: false, powerPreference: 'high-performance', alpha: false }}
+      camera={{ position: [14.2, 7.8, 0.2], fov: 40, near: 0.1, far: 70 }}
+      gl={{
+        antialias: !reduced,
+        powerPreference: 'high-performance',
+        alpha: false,
+        stencil: false,
+      }}
+      onCreated={({ gl }) => {
+        gl.toneMappingExposure = 1.12
+        gl.outputColorSpace = gl.outputColorSpace
+      }}
       onPointerMissed={() => onSelect(null)}
     >
       <Suspense fallback={null}>
@@ -76,9 +92,17 @@ export function ShowroomCanvas({ selected, hovered, onHover, onSelect, introDone
           onSelect={onSelect}
           paused={paused}
           ringRef={ringRef}
+          quality={quality}
         />
-        <CameraRig introDone={introDone} setIntroDone={setIntroDone} selected={selected} ringRef={ringRef} reduced={reduced} />
-        <Effects reduced={reduced} introDone={introDone} />
+        <CameraRig
+          introDone={introDone}
+          setIntroDone={setIntroDone}
+          selected={selected}
+          hovered={hovered}
+          ringRef={ringRef}
+          reduced={reduced}
+        />
+        <Effects quality={quality} introDone={introDone} framed={Boolean(selected || hovered)} />
         <Preload all />
       </Suspense>
     </Canvas>

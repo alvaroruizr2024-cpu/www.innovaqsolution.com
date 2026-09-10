@@ -39,6 +39,7 @@ export const PRODUCTS = [
   {
     code: 'ERP360',
     name: 'ERP 360',
+    alias: 'SumaERP',
     color: BRAND.orange,
     accent: '#ffd19a',
     shape: 'stack',
@@ -305,7 +306,15 @@ export const COPY = {
     skip: 'Saltar órbita',
     settle: 'Explorar showroom',
     orbitHint: 'Órbita de apertura 360°',
-    interactHint: 'Arrastra · hover · clic en cualquier producto',
+    interactHint: 'Arrastra · hover · clic · ← →',
+    keysHint: 'Teclado: ← → explora · Esc cierra · Enter selecciona',
+    next: 'Siguiente',
+    prev: 'Anterior',
+    exploreNext: 'Explorar el siguiente producto',
+    qualityUltra: 'Ultra 4K',
+    qualityPerf: 'Rendimiento',
+    chapter: 'Capítulo',
+    film: 'Galería 4K · 11 productos',
     equalNote: 'Once piezas. Misma órbita. Sin pieza central.',
     wa: 'WhatsApp comercial',
     waHint: 'Conversación directa con un especialista',
@@ -333,10 +342,12 @@ export const COPY = {
     sentBody: 'Se abrió el cliente de correo con los datos. También puede continuar por WhatsApp.',
     portal: 'Portal /global',
     footer: '© 2026 INNOVAQ SOLUTIONS SAC. Todos los derechos reservados.',
-    videoTitle: 'Slots de motion cinemático',
+    videoTitle: 'Slots Higgsfield / Seedance',
     videoSub:
-      'Espacios para clips generados (calidad tipo Higgsfield / Seedance / NanoBanana). No hay APIs inventadas: deposite MP4 en /cinematic/motion/.',
-    videoEmpty: 'Slot vacío — agregue el MP4 generado',
+      'Motion cinemático por drop-in. Sin APIs inventadas: deposite loops en /cinematic/public/motion/ y stills 4K Nano Banana 2 en /cinematic/public/products/<CODIGO>/.',
+    videoEmpty: 'Slot vacío — el 3D procedural cubre este producto hasta que deposite el archivo',
+    videoReady: 'Loop listo',
+    stillReady: 'Still 4K listo',
     close: 'Cerrar',
     consultCta: 'Consultar este producto',
     reduced: 'Modo reducido',
@@ -349,7 +360,15 @@ export const COPY = {
     skip: 'Skip orbit',
     settle: 'Explore showroom',
     orbitHint: '360° opening orbit',
-    interactHint: 'Drag · hover · click any product',
+    interactHint: 'Drag · hover · click · ← →',
+    keysHint: 'Keys: ← → browse · Esc close · Enter select',
+    next: 'Next',
+    prev: 'Previous',
+    exploreNext: 'Explore the next product',
+    qualityUltra: 'Ultra 4K',
+    qualityPerf: 'Performance',
+    chapter: 'Chapter',
+    film: '4K gallery · 11 products',
     equalNote: 'Eleven pieces. Same orbit. No centerpiece.',
     wa: 'Commercial WhatsApp',
     waHint: 'Direct conversation with a specialist',
@@ -377,10 +396,12 @@ export const COPY = {
     sentBody: 'Your email client opened with the details. You can also continue on WhatsApp.',
     portal: '/global portal',
     footer: '© 2026 INNOVAQ SOLUTIONS SAC. All rights reserved.',
-    videoTitle: 'Cinematic motion slots',
+    videoTitle: 'Higgsfield / Seedance slots',
     videoSub:
-      'Slots for generated clips (Higgsfield / Seedance / NanoBanana quality bar). No invented APIs: drop MP4s into /cinematic/motion/.',
-    videoEmpty: 'Empty slot — add the generated MP4',
+      'Cinematic motion by drop-in. No invented APIs: put loops in /cinematic/public/motion/ and Nano Banana 2 4K stills in /cinematic/public/products/<CODE>/.',
+    videoEmpty: 'Empty slot — procedural 3D covers this product until you drop the file',
+    videoReady: 'Loop ready',
+    stillReady: '4K still ready',
     close: 'Close',
     consultCta: 'Consult this product',
     reduced: 'Reduced mode',
@@ -392,6 +413,16 @@ export const VIDEO_SLOTS = [
   { id: 'sectors', file: 'sectors-reel.mp4', es: 'Sectores industriales', en: 'Industrial sectors' },
   { id: 'detail', file: 'product-detail.mp4', es: 'Detalle de producto', en: 'Product detail' },
 ]
+
+export function neighbor(code, dir = 1) {
+  const i = PRODUCTS.findIndex((p) => p.code === code)
+  const idx = i < 0 ? 0 : (i + dir + PRODUCTS.length) % PRODUCTS.length
+  return PRODUCTS[idx]
+}
+
+export function productIndex(code) {
+  return Math.max(0, PRODUCTS.findIndex((p) => p.code === code))
+}
 
 export function waUrl(lang, product) {
   const name = product?.name || 'portafolio 360'

@@ -60,7 +60,7 @@ export function Studio({ reduced }) {
         intensity={48}
         color={BRAND.orange}
         castShadow
-        shadow-mapSize={[1024, 1024]}
+        shadow-mapSize={[reduced ? 512 : 2048, reduced ? 512 : 2048]}
       />
       <spotLight position={[-8, 8, -3]} angle={0.5} penumbra={0.8} intensity={28} color={BRAND.blue} />
       <spotLight position={[0, 9, -8]} angle={0.35} penumbra={0.6} intensity={18} color={BRAND.green} />
@@ -70,7 +70,7 @@ export function Studio({ reduced }) {
         <circleGeometry args={[16, 64]} />
         <MeshReflectorMaterial
           blur={[300, 80]}
-          resolution={reduced ? 256 : 1024}
+          resolution={reduced ? 256 : 1536}
           mixBlur={0.85}
           mixStrength={2.4}
           roughness={0.82}

@@ -1,11 +1,13 @@
-# Motion slots
+# Motion slots (Higgsfield / Seedance)
 
-Drop generated cinematic MP4 clips here. No third-party motion APIs are wired.
+Drop generated cinematic loops here. **No APIs are wired.**
 
-Expected filenames (referenced by the landing):
+Filenames (first existing `.webm` then `.mp4` is used):
 
-- `hero-orbit.mp4`
-- `sectors-reel.mp4`
-- `product-detail.mp4`
+- `hero-orbit.webm|mp4`
+- `sectors-reel.webm|mp4`
+- `product-detail.webm|mp4`
 
-Quality bar only: Higgsfield / Seedance / NanoBanana. Replace these files and rebuild or refresh.
+Per-product loops live in `../products/<CODE>/loop.webm`.
+
+After dropping files: `cd cinematic && npm run build` then merge to `main` for GitHub Pages.
