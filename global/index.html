@@ -196,7 +196,7 @@ const CURRENCIES = {
 
 const T = {
   en: {
-    nav: { home: 'Home', products: 'Products', services: 'Services', pricing: 'Pricing', sectors: 'Sectors', contact: 'Contact', signin: 'Sign In', trial: 'Start Free Trial', dashboard: 'Dashboard', signout: 'Sign Out' },
+    nav: { home: 'Home', products: 'Products', services: 'Services', pricing: 'Pricing', sectors: 'Sectors', contact: 'Contact', showroom: '3D Showroom', signin: 'Sign In', trial: 'Start Free Trial', dashboard: 'Dashboard', signout: 'Sign Out' },
     hero: { badge: 'Digital Transformation for Global Industry', title1: 'Elevating Standards in', title2: 'Safety, Quality &', title3: 'Regulatory Compliance', desc: 'Integrated solutions in SIG 360, ERP 360, Specialized Training, MINTRA Audits and ISO Implementation for Mining, Construction and Energy sectors.', cta: 'Request a Demo', cta2: 'View Products', stats: [['19+', 'Years Experience'], ['500+', 'Audit Hours'], ['4', 'ISO Standards'], ['70%', 'Cost Savings']] },
     services: { title: 'Our Services', sub: 'Comprehensive solutions for industrial excellence and regulatory compliance', more: 'Learn more' },
     sectors: { title: 'Industries We Serve', sub: '12+ sectors with specialized solutions adapted to each industry' },
@@ -208,7 +208,7 @@ const T = {
     footer: { rights: '© 2026 INNOVAQ SOLUTIONS SAC. All rights reserved.', made: 'Calidad Innovadora. Soluciones Prácticas.', slogan: 'Innovative Quality. Practical Solutions.' },
   },
   es: {
-    nav: { home: 'Inicio', products: 'Productos', services: 'Servicios', pricing: 'Precios', sectors: 'Sectores', contact: 'Contacto', signin: 'Ingresar', trial: 'Prueba Gratuita', dashboard: 'Panel', signout: 'Cerrar Sesión' },
+    nav: { home: 'Inicio', products: 'Productos', services: 'Servicios', pricing: 'Precios', sectors: 'Sectores', contact: 'Contacto', showroom: 'Showroom 3D', signin: 'Ingresar', trial: 'Prueba Gratuita', dashboard: 'Panel', signout: 'Cerrar Sesión' },
     hero: { badge: 'Transformación Digital para la Industria', title1: 'Elevando Estándares en', title2: 'Seguridad, Calidad y', title3: 'Cumplimiento Normativo', desc: 'Soluciones integrales en SIG 360, ERP 360, Capacitación Especializada, Auditoría MINTRA e Implementación ISO para Minería, Construcción y Energía.', cta: 'Solicitar Demo', cta2: 'Ver Productos', stats: [['19+', 'Años Experiencia'], ['500+', 'Horas Auditoría'], ['4', 'Normas ISO'], ['70%', 'Ahorro vs Int.']] },
     services: { title: 'Nuestros Servicios', sub: 'Soluciones integrales para la excelencia industrial y cumplimiento normativo', more: 'Más información' },
     sectors: { title: 'Sectores que Atendemos', sub: '12+ sectores con soluciones especializadas adaptadas a cada industria' },
@@ -270,6 +270,7 @@ function Header() {
           {navItems.map(([p, label]) => (
             <button key={p} onClick={() => go(p)} style={{ background: page === p ? B.blue + '10' : 'transparent', border: page === p ? `1px solid ${B.blue}25` : '1px solid transparent', borderRadius: 8, padding: '5px 12px', color: page === p ? B.blue : B.textMuted, fontSize: 13, fontWeight: page === p ? 700 : 500, cursor: 'pointer', fontFamily: "'DM Sans',sans-serif", transition: 'all 0.15s' }}>{label}</button>
           ))}
+          <a href="/cinematic/" style={{ background: 'transparent', border: `1px solid ${B.orange}55`, borderRadius: 8, padding: '5px 12px', color: B.orange, fontSize: 13, fontWeight: 700, textDecoration: 'none', fontFamily: "'DM Sans',sans-serif" }}>{t('nav.showroom')}</a>
           <div style={{ width: 1, height: 18, background: B.border, margin: '0 4px' }} />
           <select value={lang} onChange={e => setLang(e.target.value)} style={sel}><option value="es">🇪🇸 ES</option><option value="en">🇺🇸 EN</option></select>
           <select value={currency} onChange={e => setCurrency(e.target.value)} style={sel}>{Object.entries(CURRENCIES).map(([c, v]) => <option key={c} value={c}>{v.flag} {c}</option>)}</select>
