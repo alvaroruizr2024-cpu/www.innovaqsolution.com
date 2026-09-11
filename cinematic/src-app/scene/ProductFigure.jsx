@@ -269,7 +269,7 @@ function ProductMesh({ product, lite }) {
   }
 }
 
-export function ProductFigure({ product, index, total, selected, hovered, onHover, onSelect, paused, quality }) {
+export function ProductFigure({ product, index, total, selected, hovered, onHover, onSelect, paused, quality, reducedMotion }) {
   const group = useRef()
   const holo = useHolo(product.color, product.accent)
   const angle = (index / total) * Math.PI * 2
@@ -285,9 +285,10 @@ export function ProductFigure({ product, index, total, selected, hovered, onHove
     const t = state.clock.elapsedTime
     holo.uniforms.uTime.value = t
     holo.uniforms.uBoost.value = THREE.MathUtils.damp(holo.uniforms.uBoost.value, hot ? 1 : 0, 6, delta)
-    group.current.rotation.y += delta * (paused ? 0.12 : 0.5)
+    if (!reducedMotion) group.current.rotation.y += delta * (paused ? 0.1 : 0.48)
     const lift = selected ? 0.34 : hovered ? 0.18 : 0
-    group.current.position.y = THREE.MathUtils.damp(group.current.position.y, 0.98 + lift + Math.sin(t * 1.05 + index) * 0.04, 4, delta)
+    const bob = reducedMotion ? 0 : Math.sin(t * 1.05 + index) * 0.04
+    group.current.position.y = THREE.MathUtils.damp(group.current.position.y, 0.98 + lift + bob, 4, delta)
     const s = selected ? 1.16 : hovered ? 1.08 : 1
     group.current.scale.setScalar(THREE.MathUtils.damp(group.current.scale.x, s, 6, delta))
   })

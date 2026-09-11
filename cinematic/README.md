@@ -40,5 +40,6 @@ Published copies: `/cinematic/products/` and `/cinematic/motion/`.
 - 11 equal-orbit 3D heroes (distinct silhouettes, brand emissive)
 - 360° opening camera, then hover/select cinematic framing (DOF + bloom)
 - Keyboard `←` `→` · Esc · Enter · film rail · WhatsApp per product
-- Quality: **Ultra 4K** (DPR cap 2) / **Performance** (mobile default)
-- Spanish default + English · no prices
+- Quality: **Ultra 4K** defaults on desktop (DPR cap 2, ACES, DOF). **Performance** on phones / reduced-motion / save-data. Toggle persists.
+- First-visit guided hint (dismissible). Keyboard `←` `→`, named film rail, side Next/Previous.
+- WhatsApp `+51 900 801 059` is the primary CTA on float, hero, and product cards. **No prices.**
