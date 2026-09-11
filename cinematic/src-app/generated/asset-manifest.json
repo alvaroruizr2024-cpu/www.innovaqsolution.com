@@ -1,6 +1,40 @@
 {
-  "generatedAt": "2026-09-10T15:13:15.559Z",
+  "generatedAt": "2026-09-11T02:22:44.119Z",
   "note": "Only files that exist on disk are listed. Missing slots never get a URL — no 404s.",
-  "products": {},
+  "products": {
+    "SIG360": {
+      "still": "./products/SIG360/still-4k.webp"
+    },
+    "ERP360": {
+      "still": "./products/ERP360/still-4k.webp"
+    },
+    "TPM360": {
+      "still": "./products/TPM360/still-4k.webp"
+    },
+    "MTP360": {
+      "still": "./products/MTP360/still-4k.webp"
+    },
+    "PMO360": {
+      "still": "./products/PMO360/still-4k.webp"
+    },
+    "AGRO360": {
+      "still": "./products/AGRO360/still-4k.webp"
+    },
+    "FOOD360": {
+      "still": "./products/FOOD360/still-4k.webp"
+    },
+    "HOTEL360": {
+      "still": "./products/HOTEL360/still-4k.webp"
+    },
+    "SALUD360": {
+      "still": "./products/SALUD360/still-4k.webp"
+    },
+    "CATASTRO360": {
+      "still": "./products/CATASTRO360/still-4k.webp"
+    },
+    "MEDCONGRESS": {
+      "still": "./products/MEDCONGRESS/still-4k.webp"
+    }
+  },
   "motion": {}
 }
