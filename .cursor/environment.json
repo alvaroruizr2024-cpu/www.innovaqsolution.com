@@ -1,0 +1,20 @@
+{
+  "name": "INNOVAQ Solutions website",
+  "install": "cd cinematic && npm ci",
+  "terminals": [
+    {
+      "name": "cinematic-dev",
+      "command": "cd cinematic && npm run dev",
+      "description": "Vite dev server for the cinematic WebGL showroom app (http://localhost:5173)."
+    },
+    {
+      "name": "static-site",
+      "command": "python3 -m http.server 8000",
+      "description": "Static file server for the full GitHub Pages site root, incl. index.html and all product pages (http://localhost:8000)."
+    }
+  ],
+  "ports": [
+    { "name": "cinematic (vite dev)", "port": 5173 },
+    { "name": "static site", "port": 8000 }
+  ]
+}
