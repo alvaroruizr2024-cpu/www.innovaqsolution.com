@@ -1,15 +1,18 @@
 {
-  "generatedAt": "2026-09-11T02:22:44.119Z",
+  "generatedAt": "2026-09-11T20:36:43.779Z",
   "note": "Only files that exist on disk are listed. Missing slots never get a URL — no 404s.",
   "products": {
     "SIG360": {
-      "still": "./products/SIG360/still-4k.webp"
+      "still": "./products/SIG360/still-4k.webp",
+      "loop": "./products/SIG360/loop.webm"
     },
     "ERP360": {
-      "still": "./products/ERP360/still-4k.webp"
+      "still": "./products/ERP360/still-4k.webp",
+      "loop": "./products/ERP360/loop.webm"
     },
     "TPM360": {
-      "still": "./products/TPM360/still-4k.webp"
+      "still": "./products/TPM360/still-4k.webp",
+      "loop": "./products/TPM360/loop.webm"
     },
     "MTP360": {
       "still": "./products/MTP360/still-4k.webp"
