@@ -9,8 +9,8 @@ export const COMPANY = {
   name: 'INNOVAQ SOLUTIONS SAC',
   ruc: '20606205105',
   city: 'Trujillo, La Libertad, Perú',
-  phone: '+51 900 801 059',
-  waDigits: '51900801059',
+  phone: '+51 939 521 784',
+  waDigits: '51939521784',
   email: 'contacto@innovaqsolution.com',
   portal: 'https://www.innovaqsolution.com/global',
   slogan: {
@@ -352,9 +352,9 @@ export const COPY = {
     consultCta: 'Consultar este producto',
     reduced: 'Modo reducido',
     hintTitle: 'Cómo recorrer el showroom',
-    hintBody: 'Once productos, misma órbita. Use ← →, la cinta inferior o Siguiente/Anterior. WhatsApp +51 900 801 059 es el canal principal — sin precios.',
+    hintBody: 'Once productos, misma órbita. Use ← →, la cinta inferior o Siguiente/Anterior. WhatsApp +51 939 521 784 es el canal principal — sin precios.',
     hintDismiss: 'Entendido, explorar',
-    waNumber: '+51 900 801 059',
+    waNumber: '+51 939 521 784',
   },
   en: {
     badge: 'Cinematic showroom · 11 products in equal orbit',
@@ -410,9 +410,9 @@ export const COPY = {
     consultCta: 'Consult this product',
     reduced: 'Reduced mode',
     hintTitle: 'How to browse the showroom',
-    hintBody: 'Eleven products, same orbit. Use ← →, the film rail, or Next/Previous. WhatsApp +51 900 801 059 is the primary channel — no prices.',
+    hintBody: 'Eleven products, same orbit. Use ← →, the film rail, or Next/Previous. WhatsApp +51 939 521 784 is the primary channel — no prices.',
     hintDismiss: 'Got it, explore',
-    waNumber: '+51 900 801 059',
+    waNumber: '+51 939 521 784',
   },
 }
 
@@ -436,7 +436,7 @@ export function waUrl(lang, product) {
   const name = product?.name || 'portafolio 360'
   const text =
     lang === 'es'
-      ? `Hola INNOVAQ SOLUTIONS SAC, soy de una empresa en Perú y quiero una consultoría sobre ${name}. Sin precios por web — coordinar por este canal. +51 900 801 059`
-      : `Hello INNOVAQ SOLUTIONS SAC, I represent a company and would like a consultation on ${name}. No web pricing — please coordinate here. +51 900 801 059`
+      ? `Hola INNOVAQ SOLUTIONS SAC, soy de una empresa en Perú y quiero una consultoría sobre ${name}. Sin precios por web — coordinar por este canal. +51 939 521 784`
+      : `Hello INNOVAQ SOLUTIONS SAC, I represent a company and would like a consultation on ${name}. No web pricing — please coordinate here. +51 939 521 784`
   return `https://wa.me/${COMPANY.waDigits}?text=${encodeURIComponent(text)}`
 }
