@@ -13,7 +13,7 @@ export class ErrorBoundary extends Component {
     return (
       <div className="nowebgl" role="alert">
         <p style={{ padding: 28, maxWidth: 520 }}>
-          WebGL no pudo iniciar en este dispositivo. Use WhatsApp +51 900 801 059 o el formulario más abajo.
+          WebGL no pudo iniciar en este dispositivo. Use WhatsApp +51 939 521 784 o el formulario más abajo.
         </p>
       </div>
     )
