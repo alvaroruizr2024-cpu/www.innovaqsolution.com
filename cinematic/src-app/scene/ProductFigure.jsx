@@ -271,6 +271,7 @@ function ProductMesh({ product, lite }) {
 
 export function ProductFigure({ product, index, total, selected, hovered, onHover, onSelect, paused, quality, reducedMotion }) {
   const group = useRef()
+  const screen = useRef()
   const holo = useHolo(product.color, product.accent)
   const angle = (index / total) * Math.PI * 2
   const radius = 6.15
@@ -291,6 +292,10 @@ export function ProductFigure({ product, index, total, selected, hovered, onHove
     group.current.position.y = THREE.MathUtils.damp(group.current.position.y, 0.98 + lift + bob, 4, delta)
     const s = selected ? 1.16 : hovered ? 1.08 : 1
     group.current.scale.setScalar(THREE.MathUtils.damp(group.current.scale.x, s, 6, delta))
+    // al encuadrar, la pantalla sube por encima de la figura para que no quede tapada
+    if (screen.current) {
+      screen.current.position.y = THREE.MathUtils.damp(screen.current.position.y, hot ? 1.05 : 0, 5, delta)
+    }
   })
 
   return (
@@ -338,10 +343,14 @@ export function ProductFigure({ product, index, total, selected, hovered, onHove
             <primitive object={holo} attach="material" />
           </mesh>
         )}
-        {media.still && <StillBillboard url={media.still} accent={product.color} />}
+        {media.still && (
+          <group ref={screen}>
+            <StillBillboard url={media.still} accent={product.color} />
+          </group>
+        )}
         {media.loop && !lite && <LoopScreen url={media.loop} />}
         {hot && (
-          <Html position={[0, 1.55, 0]} center distanceFactor={10} zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
+          <Html position={[0, -0.62, 0.35]} center distanceFactor={10} zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
             <div className="world-label" style={{ '--c': product.color }}>
               <span>{String(index + 1).padStart(2, '0')}</span>
               {product.name}
