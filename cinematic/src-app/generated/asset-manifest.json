@@ -1,43 +1,53 @@
 {
-  "generatedAt": "2026-09-11T20:55:44.687Z",
-  "note": "Only files that exist on disk are listed. Missing slots never get a URL — no 404s.",
+  "generatedAt": "2026-09-18T03:47:13.340Z",
+  "note": "Only files that exist on disk are listed. Missing slots never get a URL — no 404s. Paths are relative to the Vite base (/cinematic/); media.js prefixes them.",
   "products": {
     "SIG360": {
-      "still": "./products/SIG360/still-4k.webp",
-      "loop": "./products/SIG360/loop.webm"
+      "still": "products/SIG360/still-4k.webp",
+      "loop": "products/SIG360/loop.webm"
     },
     "ERP360": {
-      "still": "./products/ERP360/still-4k.webp",
-      "loop": "./products/ERP360/loop.webm"
+      "still": "products/ERP360/still-4k.webp",
+      "loop": "products/ERP360/loop.webm"
     },
     "TPM360": {
-      "still": "./products/TPM360/still-4k.webp",
-      "loop": "./products/TPM360/loop.webm"
+      "still": "products/TPM360/still-4k.webp",
+      "loop": "products/TPM360/loop.webm"
     },
     "MTP360": {
-      "still": "./products/MTP360/still-4k.webp"
+      "still": "products/MTP360/still-4k.webp",
+      "loop": "products/MTP360/loop.webm"
     },
     "PMO360": {
-      "still": "./products/PMO360/still-4k.webp"
+      "still": "products/PMO360/still-4k.webp",
+      "loop": "products/PMO360/loop.webm"
     },
     "AGRO360": {
-      "still": "./products/AGRO360/still-4k.webp"
+      "still": "products/AGRO360/still-4k.webp",
+      "loop": "products/AGRO360/loop.webm"
     },
     "FOOD360": {
-      "still": "./products/FOOD360/still-4k.webp"
+      "still": "products/FOOD360/still-4k.webp",
+      "loop": "products/FOOD360/loop.webm"
     },
     "HOTEL360": {
-      "still": "./products/HOTEL360/still-4k.webp"
+      "still": "products/HOTEL360/still-4k.webp",
+      "loop": "products/HOTEL360/loop.webm"
     },
     "SALUD360": {
-      "still": "./products/SALUD360/still-4k.webp"
+      "still": "products/SALUD360/still-4k.webp",
+      "loop": "products/SALUD360/loop.webm"
     },
     "CATASTRO360": {
-      "still": "./products/CATASTRO360/still-4k.webp"
+      "still": "products/CATASTRO360/still-4k.webp",
+      "loop": "products/CATASTRO360/loop.webm"
     },
     "MEDCONGRESS": {
-      "still": "./products/MEDCONGRESS/still-4k.webp"
+      "still": "products/MEDCONGRESS/still-4k.webp",
+      "loop": "products/MEDCONGRESS/loop.webm"
     }
   },
-  "motion": {}
+  "motion": {
+    "hero-orbit": "motion/hero-orbit.webm"
+  }
 }

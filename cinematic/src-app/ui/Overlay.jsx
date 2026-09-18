@@ -1,5 +1,5 @@
 import { COMPANY, PRODUCTS, neighbor, productIndex, waUrl } from '../content.js'
-import { productMedia } from '../media.js'
+import { BASE, productMedia } from '../media.js'
 
 export function Overlay({
   lang,
@@ -31,7 +31,7 @@ export function Overlay({
     <div className="hud" aria-live="polite">
       <header className="hud-top">
         <a className="brand" href="#top">
-          <img src="./logo.jpg" alt="INNOVAQ" />
+          <img src={`${BASE}logo.jpg`} alt="INNOVAQ" />
           <span>
             <strong>INNOVAQ</strong>
             <small>SOLUTIONS SAC</small>
@@ -42,7 +42,8 @@ export function Overlay({
           <a href="#servicios">{t.services}</a>
           <a href="#sectores">{t.sectors}</a>
           <a href="#demo">{t.demo}</a>
-          <a href="../global/" className="ghost">
+          <a href="/consultoria/">{t.consulting}</a>
+          <a href="/global/" className="ghost">
             {t.portal}
           </a>
         </nav>
@@ -61,7 +62,8 @@ export function Overlay({
               <a href="#servicios">{t.services}</a>
               <a href="#sectores">{t.sectors}</a>
               <a href="#demo">{t.demo}</a>
-              <a href="../global/">{t.portal}</a>
+              <a href="/consultoria/">{t.consulting}</a>
+              <a href="/global/">{t.portal}</a>
             </div>
           </details>
           <button type="button" className="lang" onClick={() => setLang(lang === 'es' ? 'en' : 'es')} aria-label="Language">

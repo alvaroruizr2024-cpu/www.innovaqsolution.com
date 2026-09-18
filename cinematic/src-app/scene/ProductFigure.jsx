@@ -297,11 +297,11 @@ export function ProductFigure({ product, index, total, selected, hovered, onHove
     <group position={[x, 0, z]} rotation={[0, -angle + Math.PI, 0]}>
       <mesh receiveShadow position={[0, 0.06, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[0.78, lite ? 24 : 48]} />
-        <meshStandardMaterial color="#141820" metalness={0.82} roughness={0.26} />
+        <meshPhysicalMaterial color="#141820" metalness={0.82} roughness={0.24} clearcoat={0.7} clearcoatRoughness={0.12} envMapIntensity={1.2} />
       </mesh>
-      <mesh position={[0, 0.15, 0]}>
+      <mesh position={[0, 0.15, 0]} castShadow receiveShadow>
         <cylinderGeometry args={[0.66, 0.74, 0.18, lite ? 16 : 36]} />
-        <meshStandardMaterial color="#0c1018" metalness={0.86} roughness={0.3} />
+        <meshPhysicalMaterial color="#0c1018" metalness={0.86} roughness={0.28} clearcoat={0.6} clearcoatRoughness={0.18} envMapIntensity={1.1} />
       </mesh>
       <mesh position={[0, 0.24, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.52, 0.62, lite ? 24 : 48]} />
@@ -338,7 +338,7 @@ export function ProductFigure({ product, index, total, selected, hovered, onHove
             <primitive object={holo} attach="material" />
           </mesh>
         )}
-        {media.still && <StillBillboard url={media.still} />}
+        {media.still && <StillBillboard url={media.still} accent={product.color} />}
         {media.loop && !lite && <LoopScreen url={media.loop} />}
         {hot && (
           <Html position={[0, 1.55, 0]} center distanceFactor={10} zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>

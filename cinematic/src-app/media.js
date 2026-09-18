@@ -1,13 +1,25 @@
 import manifestJson from './generated/asset-manifest.json'
 
+/** Base pública del bundle (/cinematic/). Permite servir el portal también desde la raíz del sitio. */
+export const BASE = import.meta.env.BASE_URL || './'
+
 export const ASSET_MANIFEST = manifestJson
 
+export function assetUrl(rel) {
+  if (!rel) return null
+  return BASE + rel.replace(/^\.?\//, '')
+}
+
 export function productMedia(code) {
-  return ASSET_MANIFEST.products?.[code] || {}
+  const entry = ASSET_MANIFEST.products?.[code] || {}
+  return {
+    still: assetUrl(entry.still),
+    loop: assetUrl(entry.loop),
+  }
 }
 
 export function motionSrc(id) {
-  return ASSET_MANIFEST.motion?.[id] || null
+  return assetUrl(ASSET_MANIFEST.motion?.[id])
 }
 
 export function hasAnyProductMedia() {

@@ -39,6 +39,7 @@ export default function App() {
   const [quality, setQuality] = useState('ultra')
   const [reducedMotion, setReducedMotion] = useState(false)
   const [hint, setHint] = useState(false)
+  const [ready, setReady] = useState(false)
   const t = COPY[lang]
 
   useEffect(() => {
@@ -133,6 +134,7 @@ export default function App() {
           setIntroDone={setIntroDone}
           quality={quality}
           reducedMotion={reducedMotion}
+          onReady={() => setReady(true)}
         />
       </ErrorBoundary>
     )
@@ -141,6 +143,10 @@ export default function App() {
   return (
     <div id="top" className={`app ${introDone ? 'settled' : 'orbiting'} q-${quality} ${reducedMotion ? 'reduced-motion' : ''}`}>
       <div className="stage">{canvas}</div>
+      <div className={`loader ${ready || !webgl ? 'hidden' : ''}`} aria-hidden={ready}>
+        <div className="loader-ring" />
+        <p>{lang === 'es' ? 'Preparando el showroom cinematográfico…' : 'Preparing the cinematic showroom…'}</p>
+      </div>
       <Overlay
         lang={lang}
         setLang={setLang}
