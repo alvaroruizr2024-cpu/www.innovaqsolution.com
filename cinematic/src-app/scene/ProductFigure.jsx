@@ -292,9 +292,9 @@ export function ProductFigure({ product, index, total, selected, hovered, onHove
     group.current.position.y = THREE.MathUtils.damp(group.current.position.y, 0.98 + lift + bob, 4, delta)
     const s = selected ? 1.16 : hovered ? 1.08 : 1
     group.current.scale.setScalar(THREE.MathUtils.damp(group.current.scale.x, s, 6, delta))
-    // al encuadrar, la pantalla sube por encima de la figura para que no quede tapada
+    // al encuadrar, la pantalla se despega unos cm de la figura (ya está 1.6 m por encima del pedestal)
     if (screen.current) {
-      screen.current.position.y = THREE.MathUtils.damp(screen.current.position.y, hot ? 1.05 : 0, 5, delta)
+      screen.current.position.y = THREE.MathUtils.damp(screen.current.position.y, hot ? 0.12 : 0, 5, delta)
     }
   })
 

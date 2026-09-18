@@ -67,11 +67,13 @@ export function CameraRig({ introDone, setIntroDone, selected, hovered, ringRef,
       // más lejos y desplazada hacia fuera: la figura no tapa su pantalla (queda en 3/4)
       // 45° fuera del eje de la pantalla y más alta: la figura queda a un lado y la
       // pantalla se ve completa detrás, en escorzo
-      // (la pantalla del producto sube ~1 m al encuadrar, ver ProductFigure)
-      const along = selected ? 5.0 : 5.6
-      const out = selected ? 3.6 : 4.0
-      const height = selected ? 2.6 : 2.8
-      focus.set(px - fx * 0.3, selected ? 1.75 : 1.6, pz - fz * 0.3)
+      // La figura ocupa y≈0.9–2.1 y su pantalla y≈2.8–3.6 (mundo, con escala 1.16):
+      // foco en el centro de ese bloque (2.2) y distancia ≈6.8 m para que con 33° de fov
+      // entren los dos con margen.
+      const along = selected ? 5.7 : 6.2
+      const out = selected ? 3.7 : 4.0
+      const height = selected ? 3.0 : 3.2
+      focus.set(px - fx * 0.3, selected ? 2.2 : 2.1, pz - fz * 0.3)
       desired.current.set(px + fx * along + ox * out, height, pz + fz * along + oz * out)
     } else {
       // respiración: el foco sube y baja 4 cm, como una steadicam en reposo
