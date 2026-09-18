@@ -1,0 +1,33 @@
+{
+  "_fuente": "Copia de .claude/skills/launch-kit/assets/brand-innovaq.json con los textos del kit SIG360. Única fuente de verdad del kit: cambia aquí y regenera deck, piezas y documento.",
+  "brand": "INNOVAQ SOLUTIONS",
+  "tokens": {
+    "color-bg": "#0d4a6e",
+    "color-fg": "#FFFFFF",
+    "color-primary": "#126695",
+    "color-primary-light": "#2B9BCB",
+    "color-accent": "#F1912B",
+    "color-accent-light": "#f5aa5a",
+    "color-success": "#7AB648",
+    "color-neutral": "#777873",
+    "color-surface": "#FBFBF9",
+    "color-text": "#1a1a2e",
+    "font-heading": "Inter, 'Segoe UI', Arial, sans-serif",
+    "font-body": "Inter, 'Segoe UI', Arial, sans-serif"
+  },
+  "text": {
+    "brand": "INNOVAQ",
+    "kicker": "Lanzamiento · SIG 360°",
+    "headline": "La auditoría siempre llega. <em>Tu SIG</em> debería estar listo.",
+    "sub": "ISO 9001, 14001, 45001 y 37001 en una sola plataforma. Desde US$ 29/mes.",
+    "cta": "Prueba 30 días gratis",
+    "handle": "innovaqsolution.com · @innovaqsolutions",
+    "launch_date": "Lunes 28 de septiembre de 2026",
+    "price_from": "US$ 29/mes",
+    "trial": "30 días gratis"
+  },
+  "assets": {
+    "logo": "1000608638.jpg",
+    "product": "tiktok-engine/assets/products/SIG360_HD.png"
+  }
+}
