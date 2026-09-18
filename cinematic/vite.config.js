@@ -21,7 +21,7 @@ function assetManifestPlugin() {
 export default defineConfig({
   root: resolve(dir, 'src-app'),
   publicDir: resolve(dir, 'public'),
-  base: './',
+  base: '/cinematic/',
   plugins: [react(), assetManifestPlugin()],
   build: {
     outDir: resolve(dir, 'build'),

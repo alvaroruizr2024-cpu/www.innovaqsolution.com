@@ -271,6 +271,7 @@ function ProductMesh({ product, lite }) {
 
 export function ProductFigure({ product, index, total, selected, hovered, onHover, onSelect, paused, quality, reducedMotion }) {
   const group = useRef()
+  const screen = useRef()
   const holo = useHolo(product.color, product.accent)
   const angle = (index / total) * Math.PI * 2
   const radius = 6.15
@@ -291,17 +292,21 @@ export function ProductFigure({ product, index, total, selected, hovered, onHove
     group.current.position.y = THREE.MathUtils.damp(group.current.position.y, 0.98 + lift + bob, 4, delta)
     const s = selected ? 1.16 : hovered ? 1.08 : 1
     group.current.scale.setScalar(THREE.MathUtils.damp(group.current.scale.x, s, 6, delta))
+    // al encuadrar, la pantalla se despega unos cm de la figura (ya está 1.6 m por encima del pedestal)
+    if (screen.current) {
+      screen.current.position.y = THREE.MathUtils.damp(screen.current.position.y, hot ? 0.12 : 0, 5, delta)
+    }
   })
 
   return (
     <group position={[x, 0, z]} rotation={[0, -angle + Math.PI, 0]}>
       <mesh receiveShadow position={[0, 0.06, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[0.78, lite ? 24 : 48]} />
-        <meshStandardMaterial color="#141820" metalness={0.82} roughness={0.26} />
+        <meshPhysicalMaterial color="#141820" metalness={0.82} roughness={0.24} clearcoat={0.7} clearcoatRoughness={0.12} envMapIntensity={1.2} />
       </mesh>
-      <mesh position={[0, 0.15, 0]}>
+      <mesh position={[0, 0.15, 0]} castShadow receiveShadow>
         <cylinderGeometry args={[0.66, 0.74, 0.18, lite ? 16 : 36]} />
-        <meshStandardMaterial color="#0c1018" metalness={0.86} roughness={0.3} />
+        <meshPhysicalMaterial color="#0c1018" metalness={0.86} roughness={0.28} clearcoat={0.6} clearcoatRoughness={0.18} envMapIntensity={1.1} />
       </mesh>
       <mesh position={[0, 0.24, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.52, 0.62, lite ? 24 : 48]} />
@@ -338,10 +343,14 @@ export function ProductFigure({ product, index, total, selected, hovered, onHove
             <primitive object={holo} attach="material" />
           </mesh>
         )}
-        {media.still && <StillBillboard url={media.still} />}
+        {media.still && (
+          <group ref={screen}>
+            <StillBillboard url={media.still} accent={product.color} />
+          </group>
+        )}
         {media.loop && !lite && <LoopScreen url={media.loop} />}
         {hot && (
-          <Html position={[0, 1.55, 0]} center distanceFactor={10} zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
+          <Html position={[0, -0.62, 0.35]} center distanceFactor={10} zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
             <div className="world-label" style={{ '--c': product.color }}>
               <span>{String(index + 1).padStart(2, '0')}</span>
               {product.name}

@@ -43,20 +43,20 @@ export function scanAssets(root) {
     const still = firstExisting(dir, STILL_NAMES)
     const loop = firstExisting(dir, LOOP_NAMES)
     const entry = {}
-    if (still) entry.still = `./products/${code}/${still}`
-    if (loop) entry.loop = `./products/${code}/${loop}`
+    if (still) entry.still = `products/${code}/${still}`
+    if (loop) entry.loop = `products/${code}/${loop}`
     if (entry.still || entry.loop) products[code] = entry
   }
 
   const motion = {}
   for (const id of MOTION_IDS) {
     const file = firstExisting(motionDir, [`${id}.webm`, `${id}.mp4`])
-    if (file) motion[id] = `./motion/${file}`
+    if (file) motion[id] = `motion/${file}`
   }
 
   return {
     generatedAt: new Date().toISOString(),
-    note: 'Only files that exist on disk are listed. Missing slots never get a URL — no 404s.',
+    note: 'Only files that exist on disk are listed. Missing slots never get a URL — no 404s. Paths are relative to the Vite base (/cinematic/); media.js prefixes them.',
     products,
     motion,
   }

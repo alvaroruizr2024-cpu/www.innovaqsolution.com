@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>{{headline}}</title>
+<style>
+  /* Los tokens (--color-*, --font-*) los inyecta render_social.py desde brand.json.
+     Cambia un color en el JSON y se corrige en los cuatro formatos. */
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; }
+  body {
+    background: var(--color-bg, #0B1F3A);
+    color: var(--color-fg, #ffffff);
+    font-family: var(--font-body, "Inter", "Segoe UI", Arial, sans-serif);
+    display: flex; flex-direction: column;
+    padding: var(--pad, 96px);
+    position: relative;
+  }
+  .accent-bar { position: absolute; left: 0; top: 0; width: 100%; height: 14px; background: var(--color-accent, #F5A623); }
+  .logo { height: var(--logo-h, 64px); width: auto; object-fit: contain; align-self: flex-start;
+          background: #fff; padding: 10px 14px; border-radius: 10px; box-sizing: content-box; }
+  .logo-text { font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-size: 28px; color: var(--color-accent, #F5A623); }
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 28px; }
+  .kicker { font-size: 26px; letter-spacing: .18em; text-transform: uppercase; color: var(--color-accent, #F5A623); font-weight: 600; }
+  h1 { font-family: var(--font-heading, var(--font-body)); font-weight: 800; line-height: 1.02; font-size: var(--h1, 104px); max-width: 18ch; }
+  h1 em { font-style: normal; color: var(--color-accent, #F5A623); }
+  .sub { font-size: var(--sub, 40px); line-height: 1.25; max-width: 30ch; opacity: .9; }
+  .footer { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; font-size: 26px; opacity: .85; }
+  .cta { background: var(--color-accent, #F5A623); color: var(--color-bg, #0B1F3A); font-weight: 700; padding: 18px 34px; border-radius: 12px; font-size: 28px; }
+  .art { position: absolute; inset: 0; pointer-events: none; z-index: -1; overflow: hidden; }
+  .art img { position: absolute; right: -6%; bottom: 0; height: 100%; width: auto; object-fit: cover;
+             -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%); mask-image: linear-gradient(90deg, transparent 0%, #000 45%); opacity: .9; }
+  body { isolation: isolate; }
+  .body, .footer, .logo, .accent-bar { position: relative; z-index: 1; }
+  [data-format="landscape"] .art img { right: -4%; height: 104%; }
+  [data-format="square"] .art img, [data-format="portrait"] .art img {
+    right: 0; bottom: -4%; height: 52%; width: 100%; -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 45%); mask-image: linear-gradient(180deg, transparent 0%, #000 45%); }
+  [data-format="story"] .art img { right: 0; bottom: 0; height: 46%; width: 100%; -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 40%); mask-image: linear-gradient(180deg, transparent 0%, #000 40%); }
+  [data-format="square"] .body, [data-format="portrait"] .body { justify-content: flex-start; padding-top: 24px; }
+  [data-format="story"] .body { justify-content: flex-start; padding-top: 40px; }
+  [data-format="story"] .footer { margin-bottom: 42%; }
+  [data-format="square"] .footer, [data-format="portrait"] .footer { margin-bottom: 44%; }
+
+  /* Ajustes por formato: el script pone data-format en <html> */
+  [data-format="landscape"] body { --pad: 110px; --h1: 118px; --sub: 42px; }
+  [data-format="landscape"] .body { max-width: 62%; }
+  [data-format="square"]    body { --pad: 84px;  --h1: 96px;  --sub: 36px; }
+  [data-format="portrait"]  body { --pad: 84px;  --h1: 104px; --sub: 38px; }
+  [data-format="story"]     body { --pad: 92px;  --h1: 112px; --sub: 40px; --logo-h: 72px; }
+  [data-format="story"]     .body { justify-content: center; }
+  [data-format="story"]     .footer { flex-direction: column; align-items: flex-start; }
+</style>
+</head>
+<body>
+  <div class="accent-bar"></div>
+  <div class="art"><img src="{{asset.product}}" alt=""></div>
+  <img class="logo" src="{{asset.logo}}" alt="" onerror="this.outerHTML='<div class=logo-text>{{brand}}</div>'">
+  <div class="body">
+    <div class="kicker">{{kicker}}</div>
+    <h1>{{headline}}</h1>
+    <p class="sub">{{sub}}</p>
+  </div>
+  <div class="footer">
+    <span class="cta">{{cta}}</span>
+    <span>{{handle}}</span>
+  </div>
+</body>
+</html>

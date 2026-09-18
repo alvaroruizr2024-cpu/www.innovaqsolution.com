@@ -2,7 +2,9 @@
 
 Dark WebGL landing for **INNOVAQ SOLUTIONS SAC** (RUC 20606205105, Trujillo, Perú).
 
-Additive folder. `/global` stays the SaaS portal.
+**Es la portada del sitio**: `npm run build` publica el mismo `index.html` en `/cinematic/` y en la raíz del repo
+(los assets son absolutos `/cinematic/...`). `/global` sigue siendo el portal SaaS y la landing de consultoría
+anterior vive en `/consultoria/`.
 
 ## Preview
 
@@ -33,7 +35,25 @@ git add cinematic && git commit -m "Add product media" && git push
 
 `npm run build` scans disk and writes `src-app/generated/asset-manifest.json`. Missing files are **never requested** (no 404s). Procedural 3D heroes fill empty slots.
 
+### Movimiento sin créditos de IA
+
+`python3 scripts/kenburns.py` genera con ffmpeg (Ken Burns + fundidos) lo que falte:
+
+- `public/products/<CODE>/loop.webm|mp4` (8 s, 1280×720, zoom de respiración sin corte) para cada producto con still y sin loop.
+- `public/motion/hero-orbit`, `sectors-reel`, `product-detail` (1920×1080) a partir de los stills de producto, de `../assets/hero-v6/` y de `../tiktok-engine/assets/products/`.
+
+Un loop generado por Higgsfield/Seedance con el mismo nombre lo reemplaza sin tocar código. `--force` regenera todo.
+
 Published copies: `/cinematic/products/` and `/cinematic/motion/`.
+
+## Render (calidad cinematográfica)
+
+- **IBL de estudio** sin HDRI externo: `Environment` + `Lightformer` (softbox cenital, contraluces naranja/azul de marca, kicker verde, tira frontal) → reflejos reales en metales, clearcoat, biseles y piso.
+- Sombras suaves PCSS (`SoftShadows`), oclusión ambiental `N8AO`, `SMAA`.
+- Post en HDR lineal: DoF con **rack focus real** (el foco sigue al producto), bloom, grading (contraste/saturación), aberración cromática, grano, viñeta y **ACES al final** de la cadena.
+- Cámara steadicam: órbita de apertura 360°, respiración de fov, cierre de óptica 39°→33° al encuadrar.
+- Stills en pantallas con bisel metálico y lámina de vidrio; ciclorama con degradado.
+- Pantalla de carga hasta el primer frame WebGL.
 
 ## Experience
 

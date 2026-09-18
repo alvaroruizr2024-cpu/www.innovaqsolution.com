@@ -9,7 +9,7 @@ import {
   VIDEO_SLOTS,
   waUrl,
 } from '../content.js'
-import { motionSrc, productMedia } from '../media.js'
+import { BASE, motionSrc, productMedia } from '../media.js'
 
 function Chapter({ n, children, ...props }) {
   return (
@@ -154,9 +154,9 @@ function MotionSlots({ lang, t }) {
           return (
           <figure key={slot.id} className="video-slot">
             <div className="video-frame">
-              <img src="./motion/poster.svg" alt="" />
+              <img src={`${BASE}motion/poster.svg`} alt="" />
               {src ? (
-                <video controls playsInline loop muted preload="metadata" poster="./motion/poster.svg" src={src} />
+                <video controls playsInline loop muted autoPlay preload="metadata" poster={`${BASE}motion/poster.svg`} src={src} />
               ) : null}
             </div>
             <figcaption>
@@ -295,7 +295,7 @@ export function SiteFooter({ lang, t }) {
         </p>
       </div>
       <div>
-        <a href="../global/">{t.portal}</a>
+        <a href="/global/">{t.portal}</a>
         <p>{t.consult}</p>
         <p>{t.footer}</p>
       </div>

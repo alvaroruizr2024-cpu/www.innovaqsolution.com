@@ -341,6 +341,7 @@ export const COPY = {
     sent: 'Solicitud lista en su correo',
     sentBody: 'Se abrió el cliente de correo con los datos. También puede continuar por WhatsApp.',
     portal: 'Portal /global',
+    consulting: 'Consultoría',
     footer: '© 2026 INNOVAQ SOLUTIONS SAC. Todos los derechos reservados.',
     videoTitle: 'Slots Higgsfield / Seedance',
     videoSub:
@@ -399,6 +400,7 @@ export const COPY = {
     sent: 'Request ready in your mail client',
     sentBody: 'Your email client opened with the details. You can also continue on WhatsApp.',
     portal: '/global portal',
+    consulting: 'Consulting',
     footer: '© 2026 INNOVAQ SOLUTIONS SAC. All rights reserved.',
     videoTitle: 'Higgsfield / Seedance slots',
     videoSub:
@@ -418,8 +420,8 @@ export const COPY = {
 
 export const VIDEO_SLOTS = [
   { id: 'hero-orbit', file: 'hero-orbit.mp4', es: 'Órbita de showroom', en: 'Showroom orbit' },
-  { id: 'sectors', file: 'sectors-reel.mp4', es: 'Sectores industriales', en: 'Industrial sectors' },
-  { id: 'detail', file: 'product-detail.mp4', es: 'Detalle de producto', en: 'Product detail' },
+  { id: 'sectors-reel', file: 'sectors-reel.mp4', es: 'Sectores industriales', en: 'Industrial sectors' },
+  { id: 'product-detail', file: 'product-detail.mp4', es: 'Detalle de producto', en: 'Product detail' },
 ]
 
 export function neighbor(code, dir = 1) {

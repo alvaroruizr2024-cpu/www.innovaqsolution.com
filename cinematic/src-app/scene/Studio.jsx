@@ -3,6 +3,53 @@ import { useFrame } from '@react-three/fiber'
 import { ContactShadows, MeshReflectorMaterial, Sparkles } from '@react-three/drei'
 import * as THREE from 'three'
 import { fogFragment, fogVertex } from '../shaders.js'
+
+const cycVertex = `
+  varying vec3 vWorld;
+  void main() {
+    vWorld = (modelMatrix * vec4(position, 1.0)).xyz;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`
+const cycFragment = `
+  uniform vec3 uTop;
+  uniform vec3 uHorizon;
+  uniform vec3 uFloor;
+  varying vec3 vWorld;
+  void main() {
+    float h = clamp(vWorld.y / 26.0, -1.0, 1.0);
+    vec3 c = h >= 0.0 ? mix(uHorizon, uTop, pow(h, 0.65)) : mix(uHorizon, uFloor, pow(-h, 0.5));
+    // viñeta angular: más oscuro hacia atrás para dar profundidad al set
+    float depth = smoothstep(-40.0, 10.0, vWorld.z);
+    gl_FragColor = vec4(c * mix(0.75, 1.0, depth), 1.0);
+  }
+`
+
+/** Ciclorama: esfera invertida con degradado azul-noche → negro. Sustituye al fondo plano. */
+function Cyclorama() {
+  const mat = useMemo(
+    () =>
+      new THREE.ShaderMaterial({
+        uniforms: {
+          uTop: { value: new THREE.Color('#0e2238') },
+          uHorizon: { value: new THREE.Color('#070b12') },
+          uFloor: { value: new THREE.Color('#04060a') },
+        },
+        vertexShader: cycVertex,
+        fragmentShader: cycFragment,
+        side: THREE.BackSide,
+        depthWrite: false,
+        fog: false,
+      }),
+    [],
+  )
+  return (
+    <mesh position={[0, 6, 0]} renderOrder={-10}>
+      <sphereGeometry args={[42, 48, 32]} />
+      <primitive object={mat} attach="material" />
+    </mesh>
+  )
+}
 import { BRAND } from '../content.js'
 
 function VolumetricFog() {
@@ -37,7 +84,7 @@ function GodRay({ color, position, rotation, scale = [1.1, 6.5, 1.1] }) {
   return (
     <mesh position={position} rotation={rotation} scale={scale}>
       <coneGeometry args={[1, 1, 24, 1, true]} />
-      <meshBasicMaterial color={color} transparent opacity={0.045} depthWrite={false} side={THREE.DoubleSide} />
+      <meshBasicMaterial color={color} transparent opacity={0.028} depthWrite={false} side={THREE.DoubleSide} blending={THREE.AdditiveBlending} />
     </mesh>
   )
 }
@@ -51,8 +98,9 @@ export function Studio({ reduced }) {
   return (
     <>
       <color attach="background" args={['#05070c']} />
-      <fog attach="fog" args={['#05070c', 10, 28]} />
-      <hemisphereLight args={['#9eb6c8', '#08080c', 0.28]} />
+      <fog attach="fog" args={['#05070c', 12, 34]} />
+      <Cyclorama />
+      <hemisphereLight args={['#9eb6c8', '#08080c', 0.18]} />
       <spotLight
         position={[6.5, 11, 3.6]}
         angle={0.4}
@@ -74,13 +122,14 @@ export function Studio({ reduced }) {
           resolution={reduced ? 256 : 1536}
           mixBlur={0.85}
           mixStrength={reduced ? 1.6 : 2.65}
-          roughness={0.78}
-          depthScale={0.6}
+          roughness={0.62}
+          depthScale={0.7}
           minDepthThreshold={0.4}
-          maxDepthThreshold={1.4}
+          maxDepthThreshold={1.5}
           color="#0a0d12"
-          metalness={0.72}
-          mirror={0.35}
+          metalness={0.8}
+          mirror={0.45}
+          envMapIntensity={0.9}
         />
       </mesh>
 
@@ -95,7 +144,7 @@ export function Studio({ reduced }) {
 
       <mesh position={[0, 0.04, 0]}>
         <cylinderGeometry args={[2.1, 2.3, 0.08, 48]} />
-        <meshStandardMaterial color="#10141c" metalness={0.9} roughness={0.25} />
+        <meshPhysicalMaterial color="#10141c" metalness={0.9} roughness={0.22} clearcoat={0.8} clearcoatRoughness={0.15} envMapIntensity={1.3} />
       </mesh>
       <mesh position={[0, 0.12, 0]}>
         <cylinderGeometry args={[0.55, 0.7, 0.16, 32]} />

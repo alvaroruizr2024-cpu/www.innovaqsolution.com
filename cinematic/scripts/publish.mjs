@@ -1,4 +1,4 @@
-import { cpSync, existsSync, mkdirSync, rmSync } from 'fs'
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'fs'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -11,6 +11,13 @@ if (!existsSync(join(build, 'index.html'))) {
 }
 
 cpSync(join(build, 'index.html'), join(root, 'index.html'))
+
+// El portal 3D también es la portada del sitio: misma página, canónica en la raíz.
+// Los assets ya son absolutos (/cinematic/...) gracias a `base` en vite.config.js.
+const siteRoot = join(root, '..')
+const html = readFileSync(join(build, 'index.html'), 'utf8')
+  .replaceAll('https://www.innovaqsolution.com/cinematic/', 'https://www.innovaqsolution.com/')
+writeFileSync(join(siteRoot, 'index.html'), html)
 
 const assetsFrom = join(build, 'assets')
 const assetsTo = join(root, 'assets')
@@ -27,4 +34,4 @@ for (const extra of ['logo.jpg', 'motion', 'products']) {
 }
 
 mkdirSync(join(root, 'motion'), { recursive: true })
-console.log('Published cinematic build to /cinematic for GitHub Pages.')
+console.log('Published cinematic build to /cinematic and site root index.html for GitHub Pages.')
