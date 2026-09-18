@@ -52,7 +52,8 @@ export function CameraRig({ introDone, setIntroDone, selected, hovered, ringRef,
       const index = PRODUCTS.findIndex((p) => p.code === framed)
       const localAngle = (index / PRODUCTS.length) * Math.PI * 2
       const ringY = ringRef.current?.rotation.y || 0
-      const a = localAngle + ringY
+      // el grupo del anillo gira +ringY sobre Y, lo que mueve un punto de ángulo θ a θ − ringY
+      const a = localAngle - ringY
       const px = Math.cos(a) * RING_RADIUS
       const pz = Math.sin(a) * RING_RADIUS
       // Cada figura mira en tangente al anillo (rotación -a+π): su pantalla apunta hacia
