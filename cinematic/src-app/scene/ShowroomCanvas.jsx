@@ -92,7 +92,7 @@ function Effects({ quality, introDone, framed, focusRef }) {
       {/* Rack focus real: el foco sigue al producto encuadrado (o al centro del anillo) */}
       <DepthOfField
         target={focusRef.current}
-        worldFocusRange={framed ? 2.4 : 7.5}
+        worldFocusRange={framed ? 5.5 : 7.5}
         bokehScale={framed ? 3.6 : introDone ? 2.0 : 3.0}
         height={800}
       />
