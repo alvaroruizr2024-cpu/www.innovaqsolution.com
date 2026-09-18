@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T03:57:27.097Z",
+  "generatedAt": "2026-09-18T03:59:58.797Z",
   "note": "Only files that exist on disk are listed. Missing slots never get a URL — no 404s. Paths are relative to the Vite base (/cinematic/); media.js prefixes them.",
   "products": {
     "SIG360": {
@@ -49,6 +49,7 @@
   },
   "motion": {
     "hero-orbit": "motion/hero-orbit.webm",
-    "sectors-reel": "motion/sectors-reel.webm"
+    "sectors-reel": "motion/sectors-reel.webm",
+    "product-detail": "motion/product-detail.webm"
   }
 }
