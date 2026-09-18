@@ -65,10 +65,12 @@ export function CameraRig({ introDone, setIntroDone, selected, hovered, ringRef,
       const ox = Math.cos(a)
       const oz = Math.sin(a)
       // más lejos y desplazada hacia fuera: la figura no tapa su pantalla (queda en 3/4)
-      const along = selected ? 6.0 : 6.6
-      const out = selected ? 2.6 : 2.9
-      const height = selected ? 2.2 : 2.5
-      focus.set(px - fx * 0.3, selected ? 1.35 : 1.25, pz - fz * 0.3)
+      // 45° fuera del eje de la pantalla y más alta: la figura queda a un lado y la
+      // pantalla se ve completa detrás, en escorzo
+      const along = selected ? 4.6 : 5.2
+      const out = selected ? 4.6 : 5.0
+      const height = selected ? 3.0 : 3.2
+      focus.set(px - fx * 0.35, selected ? 1.4 : 1.3, pz - fz * 0.35)
       desired.current.set(px + fx * along + ox * out, height, pz + fz * along + oz * out)
     } else {
       // respiración: el foco sube y baja 4 cm, como una steadicam en reposo
