@@ -8,10 +8,10 @@
 #   scripts/stack.sh settings [DIR]        # escribe/mezcla .claude/settings.json del repo
 #   scripts/stack.sh gitignore [DIR]       # añade graphify-out/ al .gitignore del repo
 #
-# Los plugins de marketplace (Ponytail, Agent Skills) se instalan con comandos /plugin
-# DENTRO de una sesión de Claude Code; este script no puede ejecutarlos, así que los
-# imprime. OmniRoute solo se instala con --omniroute: enruta prompts y código a
-# proveedores externos y el usuario tiene que decidirlo expresamente.
+# Ponytail se instala con `claude plugin marketplace add` + `claude plugin install`
+# (CLI de Claude Code 2.x); si `claude` no está en PATH, el script imprime los comandos
+# /plugin equivalentes. OmniRoute solo se instala con --omniroute: enruta prompts y
+# código a proveedores externos y el usuario tiene que decidirlo expresamente.
 set -euo pipefail
 
 SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -29,13 +29,14 @@ repo_root() {
 
 check_ponytail() {
   local found=0
+  if have claude && claude plugin list 2>/dev/null | grep -q 'ponytail@ponytail'; then found=1; fi
   for f in "$HOME/.claude/plugins/installed_plugins.json" "$HOME/.claude/settings.json"; do
     [ -f "$f" ] && grep -q 'ponytail' "$f" 2>/dev/null && found=1
   done
-  if [ "$found" = 1 ]; then ok "Ponytail: plugin registrado en ~/.claude"; else
-    miss "Ponytail: no aparece en ~/.claude — en Claude Code ejecuta:"
-    info "/plugin marketplace add DietrichGebert/ponytail"
-    info "/plugin install ponytail@ponytail"
+  if [ "$found" = 1 ]; then ok "Ponytail: plugin instalado ($(claude plugin list 2>/dev/null | grep -A1 ponytail@ponytail | grep -o 'Version: .*' || echo 'registrado en ~/.claude'))"; else
+    miss "Ponytail: no instalado — desde terminal:"
+    info "claude plugin marketplace add DietrichGebert/ponytail && claude plugin install ponytail@ponytail"
+    info "o dentro de Claude Code: /plugin marketplace add DietrichGebert/ponytail  →  /plugin install ponytail@ponytail"
   fi
 }
 
@@ -113,6 +114,15 @@ do_install() {
   # -a claude-code: solo Claude Code (sin -a intenta registrar en los 70+ agentes y algunos fallan en modo global)
   if have npx; then npx -y skills add addyosmani/agent-skills -g -y -a claude-code || miss "npx skills falló; usa los comandos /plugin de abajo"; else miss "sin npx; usa los comandos /plugin de abajo"; fi
 
+  echo "== Ponytail"
+  if have claude; then
+    if claude plugin list 2>/dev/null | grep -q 'ponytail@ponytail'; then ok "ya instalado"; else
+      claude plugin marketplace add DietrichGebert/ponytail && claude plugin install ponytail@ponytail || miss "claude plugin falló; usa los comandos /plugin de abajo"
+    fi
+  else
+    miss "claude cli no está en PATH; instala Ponytail dentro de Claude Code (comandos abajo)"
+  fi
+
   echo "== OmniRoute"
   if [ "$with_omni" = 1 ]; then
     have npm && npm install -g omniroute || miss "npm no disponible; alternativa: docker run -p 20128:20128 diegosouzapw/omniroute"
@@ -124,13 +134,13 @@ do_install() {
 
   cat <<'TXT'
 
-== Pendiente DENTRO de Claude Code (no se puede hacer desde aquí):
+== Si algo de arriba falló, dentro de Claude Code:
   /plugin marketplace add DietrichGebert/ponytail
   /plugin install ponytail@ponytail
   /plugin marketplace add addyosmani/agent-skills
-  /plugin install agent-skills@addy-agent-skills
+  /plugin install agent-skills@addy-agent-skills   (solo si NO se instaló con npx skills)
 
-  O deja que el repo lo haga solo: scripts/stack.sh settings
+  Para que el repo lo mantenga solo para todo el equipo: scripts/stack.sh settings
 TXT
 }
 

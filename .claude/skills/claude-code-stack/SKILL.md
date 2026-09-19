@@ -22,19 +22,21 @@ prompts.
 
 ## 0. Qué hay antes de empezar
 
-**Dónde estás.** Los comandos `/plugin` solo existen dentro de una sesión de Claude
-Code (CLI local, app de escritorio o extensión de IDE). Desde una sesión remota
-(Claude Code web, Cowork) o desde un script no se pueden ejecutar, y `ANTHROPIC_BASE_URL`
-del usuario no afecta a las sesiones remotas. Antes de prometer nada, di en una línea en
-qué entorno estás y qué parte va a quedar hecha y qué parte queda como comandos para el
-usuario.
+**Dónde estás.** Todo se puede instalar desde la terminal si `claude` (2.x) está en
+PATH: `claude plugin marketplace add` y `claude plugin install` hacen lo mismo que los
+comandos `/plugin` de dentro de la sesión. Lo que se instala así queda en la máquina
+donde corre el script: en una sesión remota (Claude Code web, Cowork) queda en ese
+contenedor efímero, no en el equipo del usuario; lo durable ahí es `stack.sh settings`
+(el repo instala los plugins al abrirse). `ANTHROPIC_BASE_URL` del usuario tampoco afecta
+a las sesiones remotas. Antes de prometer nada, di en una línea en qué entorno estás y
+qué parte queda hecha dónde.
 
-| Plugin       | Se instala con                         | Desde terminal/script | Desde `/plugin` |
-|--------------|----------------------------------------|-----------------------|-----------------|
-| Agent Skills | marketplace o `npx skills add`          | sí                    | sí              |
-| Ponytail     | marketplace                             | no                    | sí              |
-| Graphify     | `uv tool install graphifyy` + `graphify install` | sí           | no              |
-| OmniRoute    | `npm i -g omniroute` (servidor local)   | sí, solo con permiso  | no              |
+| Plugin       | Se instala con                                   | Terminal/script | `/plugin` |
+|--------------|--------------------------------------------------|-----------------|-----------|
+| Agent Skills | `npx skills add -g -a claude-code` o marketplace | sí              | sí        |
+| Ponytail     | marketplace (`claude plugin install`)            | sí              | sí        |
+| Graphify     | `uv tool install graphifyy` + `graphify install` | sí              | no        |
+| OmniRoute    | `npm i -g omniroute` (servidor local)            | sí, con permiso | no        |
 
 **El script.** `scripts/stack.sh` hace todo lo que se puede hacer sin estar dentro de
 Claude Code: `check` (qué hay, qué falta), `install [--omniroute]`, `settings` (deja el
@@ -91,9 +93,9 @@ falla a la mitad, lo que ya quedó instalado es lo más valioso.
    agentes que conoce. Verifica que exista `using-agent-skills`: es la meta-skill que
    enruta el resto.
 2. **Ponytail** (cambia cómo se escribe el código a partir de ahora):
-   ```
-   /plugin marketplace add DietrichGebert/ponytail
-   /plugin install ponytail@ponytail
+   ```bash
+   claude plugin marketplace add DietrichGebert/ponytail
+   claude plugin install ponytail@ponytail        # o /plugin ... dentro de la sesión
    ```
    Queda en modo `full` en cada sesión. Cámbialo con `/ponytail lite|full|ultra|off`.
 3. **Graphify** (necesita el repo ya en su estado final para que el grafo sirva):
@@ -167,8 +169,9 @@ comandos exactos), y los archivos del repo que cambiaron (`.gitignore`,
   de la suite sí usa. `full` es el modo para módulos comunes.
 - **Instalar Agent Skills dos veces** (marketplace y `npx skills add -g`): dos copias de
   25 skills en el contexto. Una sola vía por máquina.
-- **Dar por hecho un `/plugin` desde una sesión remota.** No se ejecutó; entrégalo como
-  comandos y díselo.
+- **Instalar desde una sesión remota y creer que quedó en el equipo del usuario.** Quedó
+  en el contenedor. Lo que llega a su máquina es el `settings.json` del repo y los
+  comandos exactos en la entrega.
 
 ## Referencias
 

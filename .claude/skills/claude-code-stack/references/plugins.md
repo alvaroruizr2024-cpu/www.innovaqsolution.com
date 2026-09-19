@@ -26,12 +26,16 @@ proyectos cambian rápido (OmniRoute pasó de 160 a 352 proveedores en pocos mes
 - Funciona en Claude Code, Codex CLI, Copilot, Cursor, Windsurf, Cline, Aider,
   OpenCode, Gemini CLI y más.
 
-**Instalar en Claude Code (dos comandos, dentro de la sesión):**
+**Instalar (desde la terminal, con el CLI de Claude Code 2.x):**
 
+```bash
+claude plugin marketplace add DietrichGebert/ponytail
+claude plugin install ponytail@ponytail
+claude plugin list          # debe mostrar ponytail@ponytail · enabled
 ```
-/plugin marketplace add DietrichGebert/ponytail
-/plugin install ponytail@ponytail
-```
+
+O dentro de la sesión: `/plugin marketplace add DietrichGebert/ponytail` y
+`/plugin install ponytail@ponytail`. Probado el 19-09-2026: versión 4.10.0, scope user.
 
 **Usar:**
 
@@ -169,7 +173,8 @@ limita el primer `/graphify` a las carpetas de código.
   usa el agente para saltarse pasos" con su contraargumento, y termina con requisitos de
   evidencia (tests pasando, salida del build, datos en runtime). Funciona en 70+ agentes.
 
-**Instalar en Claude Code:**
+**Instalar en Claude Code (dentro de la sesión, o con `claude plugin ...` desde la
+terminal):**
 
 ```
 /plugin marketplace add addyosmani/agent-skills
