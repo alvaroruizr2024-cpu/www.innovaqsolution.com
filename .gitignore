@@ -1,0 +1,21 @@
+# Local Claude Code overrides — machine-specific, do not commit
+.claude/settings.local.json
+.claude/.credentials.json
+
+# Node / Vite (cinematic/)
+node_modules/
+cinematic/node_modules/
+cinematic/build/.vite/
+cinematic/build/stats.html
+*.log
+npm-debug.log*
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
