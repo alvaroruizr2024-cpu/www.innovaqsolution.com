@@ -50,6 +50,29 @@ La primera vez que uses el MCP de Figma, Claude Code te pedirá iniciar sesión 
 3. Para copiar el estilo de una web de referencia: `/taste https://linear.app`.
 4. Para construir: `Build me a landing page for <tu producto>`.
 
+## Aplicarlo a INNOVAQ
+
+El repo ya trae los dos archivos que leen estas skills, así que no hace falta correr
+`/impeccable init` desde cero:
+
+- `PRODUCT.md` (raíz): quién es el cliente, productos, voz, CTA de WhatsApp y
+  restricciones (sin precios en el showroom, precios solo en `global/`).
+- `DESIGN.md` (raíz): paleta de los dos temas (cinematic oscuro y suite claro),
+  tipografía, radios, componentes y antipatrones, extraídos del código real.
+
+Flujo por landing de producto (`sig360/`, `ERP360/`, `TPM360/`, …):
+
+1. `/impeccable critique sig360` para listar qué se ve genérico.
+2. `/taste https://linear.app` (o la web de referencia que quieras) para tomar ritmo y
+   jerarquía; Claude los aplica con la paleta de `DESIGN.md`.
+3. "Rediseña el hero de SIG360 siguiendo DESIGN.md y PRODUCT.md".
+4. `/impeccable audit sig360` y, con el MCP de Playwright, "abre sig360/index.html,
+   captura móvil y escritorio y dime qué se rompe".
+
+Si `/impeccable init` pregunta por datos que ya están en `PRODUCT.md`, responde que los
+lea de ahí. Cuando cambie la marca, edita `DESIGN.md` y el JSON de la skill
+`launch-kit` (`.claude/skills/launch-kit/assets/brand-innovaq.json`) a la vez.
+
 ## Windows
 
 El script está pensado para macOS y Linux. En Windows ejecútalo desde Git Bash o WSL,
