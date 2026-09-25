@@ -40,7 +40,7 @@ Documento interno para el equipo comercial y de soporte. Fuente única de textos
 | Enterprise | US$ 349 | US$ 3 490 | Ilimitados | Ilimitadas |
 
 - 30 días gratis en todos los planes, sin tarjeta. Precios en dólares, sin IGV.
-- **Vigencia de la oferta de lanzamiento: por confirmar.** El sitio aún muestra "hasta abril 2026" (`global/index.html:476`), fecha ya vencida. No prometer precio de lanzamiento hasta tener nueva fecha.
+- No hay "precio de lanzamiento" con fecha: la única promesa es la prueba gratis de 30 días. El sitio ya no muestra la vigencia vencida de abril 2026.
 
 ## Calendario de publicación
 
@@ -66,7 +66,7 @@ Está diseñada por auditores para pasar auditorías, no solo para archivar docu
 
 Prueba 30 días gratis, sin tarjeta. Planes desde US$ 29 al mes.
 
-👉 innovaqsolution.com/global · WhatsApp +51 900 801 059
+👉 innovaqsolution.com/global · WhatsApp +51 939 521 784
 
 #SIG360 #ISO45001 #ISO9001 #ISO14001 #ISO37001 #SeguridadIndustrial
 
@@ -79,7 +79,7 @@ SIG 360°: ISO 9001, 14001, 45001 y 37001 en una sola plataforma.
 
 ### Facebook (200–400 caracteres)
 
-¿Cuánto tardas en reunir la evidencia cuando llega una auditoría? Con SIG 360° está lista siempre: cuatro normas ISO en un solo sistema, control documentario, IPERC y auditorías desde el celular. Prueba 30 días gratis. Escríbenos por WhatsApp: +51 900 801 059.
+¿Cuánto tardas en reunir la evidencia cuando llega una auditoría? Con SIG 360° está lista siempre: cuatro normas ISO en un solo sistema, control documentario, IPERC y auditorías desde el celular. Prueba 30 días gratis. Escríbenos por WhatsApp: +51 939 521 784.
 #SIG360 #ISO #SeguridadYSalud
 
 ### TikTok (caption 60–120 caracteres)
@@ -103,11 +103,11 @@ Hola [nombre], ¿pudiste revisar SIG 360°? Si me dices qué norma te audita pri
 | Rol | Responsable | Contacto |
 |---|---|---|
 | Dirección técnica y demo | Ing. Alvaro Ruiz Reyna | contacto@innovaqsolution.com |
-| Comercial | Equipo comercial INNOVAQ | comercial@innovaqsolutions.com · WhatsApp +51 900 801 059 |
+| Comercial | Equipo comercial INNOVAQ | comercial@innovaqsolutions.com · WhatsApp +51 939 521 784 |
 | Publicación en redes | Por asignar | — |
 | Soporte a pruebas de 30 días | Por asignar | — |
 
 ## Notas de coherencia
 
-- El número de WhatsApp de este kit es el del portal `/global` (+51 900 801 059). El portal 3D usa +51 939 521 784 y la landing de consultoría +51 938 430 657: unificar antes del lanzamiento.
+- WhatsApp unificado en todo el dominio: +51 939 521 784 (portal 3D, `/consultoria/`, `/global`, campañas y este kit).
 - Colores, titular y CTA salen de `brand.json`. Deck, piezas y este documento usan el mismo naranja `#F1912B` y el mismo precio "desde US$ 29/mes".
