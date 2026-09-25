@@ -19,5 +19,5 @@
 
 - Fecha de lanzamiento asumida (lunes 28/09/2026); cambiarla solo afecta el calendario de `equipo.md`.
 - Precios y planes tomados del array `PRODUCTS` en `global/index.html:159`.
-- El sitio aún muestra "Precio de lanzamiento válido hasta Abril 2026" (`global/index.html:476`); esa fecha ya pasó, así que el kit usa solo "30 días gratis" y no promete precio de lanzamiento. Confirmar si hay nueva vigencia.
+- Decisión (25/09/2026): sin precio de lanzamiento con fecha; la única promesa es "30 días gratis". El texto vencido de abril 2026 se retiró de `/global`.
 - Mensaje de "única plataforma en Perú que integra 4 normas" es copy oficial del sitio; se mantiene tal cual.
