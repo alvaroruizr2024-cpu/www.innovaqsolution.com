@@ -1,5 +1,5 @@
 {
- "generado": "2026-09-25",
+ "generado": "2026-09-26",
  "empresa": {
   "name": "TOURS PANASUR E.I.R.L.",
   "ruc": "20259263230",
@@ -37,21 +37,27 @@
    "tag": "9001",
    "name": "Gestión de la Calidad",
    "color": "#2563EB",
-   "progress": 40
+   "progress": 61,
+   "requisitos": 28,
+   "requisitos_con_fila": 17
   },
   {
    "code": "ISO 14001:2026",
    "tag": "14001",
    "name": "Gestión Ambiental",
    "color": "#059669",
-   "progress": 43
+   "progress": 58,
+   "requisitos": 24,
+   "requisitos_con_fila": 14
   },
   {
    "code": "ISO 45001:2018",
    "tag": "45001",
    "name": "Seguridad y Salud en el Trabajo",
    "color": "#D97706",
-   "progress": 43
+   "progress": 60,
+   "requisitos": 25,
+   "requisitos_con_fila": 15
   }
  ],
  "clausulas": [
@@ -62,7 +68,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": true
+   "es_titulo": true,
+   "n_docs": 0
   },
   {
    "code": "4.1",
@@ -75,7 +82,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 0
   },
   {
    "code": "4.2",
@@ -91,8 +99,9 @@
     54
    ],
    "dossier_caps": [],
-   "cobertura": 0,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 3
   },
   {
    "code": "4.3",
@@ -107,8 +116,9 @@
     56
    ],
    "dossier_caps": [],
-   "cobertura": 50,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 0
   },
   {
    "code": "4.4",
@@ -123,8 +133,9 @@
     56
    ],
    "dossier_caps": [],
-   "cobertura": 50,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 0
   },
   {
    "code": "5",
@@ -133,7 +144,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": true
+   "es_titulo": true,
+   "n_docs": 0
   },
   {
    "code": "5.1",
@@ -148,7 +160,8 @@
     "17"
    ],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 0
   },
   {
    "code": "5.2",
@@ -163,7 +176,8 @@
     "2"
    ],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 0
   },
   {
    "code": "5.3",
@@ -176,7 +190,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 2
   },
   {
    "code": "5.4",
@@ -191,8 +206,9 @@
    "dossier_caps": [
     "9"
    ],
-   "cobertura": 50,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 2
   },
   {
    "code": "6",
@@ -201,7 +217,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": true
+   "es_titulo": true,
+   "n_docs": 0
   },
   {
    "code": "6.1",
@@ -217,8 +234,9 @@
     80
    ],
    "dossier_caps": [],
-   "cobertura": 67,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 3
   },
   {
    "code": "6.1.2",
@@ -242,8 +260,9 @@
     "2",
     "10"
    ],
-   "cobertura": 50,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 12
   },
   {
    "code": "6.1.3",
@@ -260,7 +279,18 @@
    "dossier_caps": [
     "2"
    ],
-   "cobertura": 33,
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 3
+  },
+  {
+   "code": "6.1.4",
+   "title": "Código 6.1.4 en la matriz 2026-09-26",
+   "normas": [],
+   "docs": [],
+   "dossier_caps": [],
+   "cobertura": null,
+   "n_docs": 8,
    "es_titulo": false
   },
   {
@@ -281,8 +311,9 @@
     "1",
     "4"
    ],
-   "cobertura": 50,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 3
   },
   {
    "code": "6.3",
@@ -293,7 +324,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 5
   },
   {
    "code": "7",
@@ -302,7 +334,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": true
+   "es_titulo": true,
+   "n_docs": 0
   },
   {
    "code": "7.1",
@@ -318,7 +351,8 @@
     "15"
    ],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 0
   },
   {
    "code": "7.2",
@@ -337,8 +371,9 @@
     "11",
     "16"
    ],
-   "cobertura": 50,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 2
   },
   {
    "code": "7.3",
@@ -358,8 +393,9 @@
     "11",
     "17"
    ],
-   "cobertura": 50,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 0
   },
   {
    "code": "7.4",
@@ -379,8 +415,9 @@
     9
    ],
    "dossier_caps": [],
-   "cobertura": 50,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 21
   },
   {
    "code": "7.5",
@@ -400,7 +437,28 @@
    "dossier_caps": [
     "2"
    ],
-   "cobertura": 20,
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 3
+  },
+  {
+   "code": "7.5.2",
+   "title": "Código 7.5.2 en la matriz 2026-09-26",
+   "normas": [],
+   "docs": [],
+   "dossier_caps": [],
+   "cobertura": null,
+   "n_docs": 30,
+   "es_titulo": false
+  },
+  {
+   "code": "7.5.3",
+   "title": "Código 7.5.3 en la matriz 2026-09-26",
+   "normas": [],
+   "docs": [],
+   "dossier_caps": [],
+   "cobertura": null,
+   "n_docs": 44,
    "es_titulo": false
   },
   {
@@ -410,7 +468,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": true
+   "es_titulo": true,
+   "n_docs": 0
   },
   {
    "code": "8.1",
@@ -482,7 +541,18 @@
     "15",
     "18"
    ],
-   "cobertura": 57,
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 68
+  },
+  {
+   "code": "8.1.2",
+   "title": "Código 8.1.2 en la matriz 2026-09-26",
+   "normas": [],
+   "docs": [],
+   "dossier_caps": [],
+   "cobertura": null,
+   "n_docs": 15,
    "es_titulo": false
   },
   {
@@ -502,8 +572,9 @@
    "dossier_caps": [
     "7"
    ],
-   "cobertura": 25,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 6
   },
   {
    "code": "8.3",
@@ -514,7 +585,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 0
   },
   {
    "code": "8.4",
@@ -525,7 +597,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 2
   },
   {
    "code": "8.5",
@@ -536,6 +609,17 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 7
+  },
+  {
+   "code": "8.5.1",
+   "title": "Código 8.5.1 en la matriz 2026-09-26",
+   "normas": [],
+   "docs": [],
+   "dossier_caps": [],
+   "cobertura": null,
+   "n_docs": 1,
    "es_titulo": false
   },
   {
@@ -549,8 +633,9 @@
     81
    ],
    "dossier_caps": [],
-   "cobertura": 0,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 6
   },
   {
    "code": "8.7",
@@ -561,7 +646,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 2
   },
   {
    "code": "9",
@@ -570,7 +656,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": true
+   "es_titulo": true,
+   "n_docs": 0
   },
   {
    "code": "9.1",
@@ -591,8 +678,9 @@
     "6",
     "12"
    ],
-   "cobertura": 50,
-   "es_titulo": false
+   "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 22
   },
   {
    "code": "9.2",
@@ -607,7 +695,8 @@
     "13"
    ],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 0
   },
   {
    "code": "9.3",
@@ -620,7 +709,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 0
   },
   {
    "code": "10",
@@ -629,7 +719,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": true
+   "es_titulo": true,
+   "n_docs": 0
   },
   {
    "code": "10.1",
@@ -642,7 +733,8 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 0
   },
   {
    "code": "10.2",
@@ -657,7 +749,8 @@
     "8"
    ],
    "cobertura": null,
-   "es_titulo": false
+   "es_titulo": false,
+   "n_docs": 7
   },
   {
    "code": "10.3",
@@ -670,6 +763,17 @@
    "docs": [],
    "dossier_caps": [],
    "cobertura": null,
+   "es_titulo": false,
+   "n_docs": 1
+  },
+  {
+   "code": "99.2",
+   "title": "Código 99.2 en la matriz 2026-09-26 (fuera de las cláusulas 4 a 10)",
+   "normas": [],
+   "docs": [],
+   "dossier_caps": [],
+   "cobertura": null,
+   "n_docs": 6,
    "es_titulo": false
   }
  ],
@@ -2908,8 +3012,8 @@
  ],
  "dossier": {
   "nombre": "Dossier SSO – Acceso Principal Hanaqpampa (submittal 0045.A)",
-  "indice": "Anexo 18 Guía SSOMA ENGIE V03 (XLS de 18 capítulos / 117 ítems). 2026-09-25: 37 copias archivadas en carpetas Gil/MA; el checklist SI/NO/NA de 0045.A no se reauditó",
-  "fecha_estado": "2026-09-25",
+  "indice": "Anexo 18 Guía SSOMA ENGIE V03 (XLS de 18 capítulos / 117 ítems). 2026-09-26: 93 copias nuevas (57 Gil SSO, 36 MA 0034.A; 51 vigentes, 8 en revisión ENGIE, 34 obsoletos: 23 Gil y 11 MA) más 37 copias del 2026-09-25. El checklist SI/NO/NA de 0045.A no se reauditó.",
+  "fecha_estado": "2026-09-26",
   "drive_root": "1um84TwJJzFyALk39ttuTjQaSbu6Tgrrb",
   "capitulos": [
    {
@@ -5549,6 +5653,11 @@
  ],
  "timeline": [
   {
+   "date": "2026-09-26",
+   "title": "Matriz de trazabilidad Procore–dossier–SIG",
+   "desc": "284 filas (85 submittals, 136 homologaciones, 63 correos). Vigencia: 86 vigentes, 65 obsoletos, 21 en revisión ENGIE, 12 sin archivo, 43 sin dossier, 57 registros. Accesos SIG: 272, 0 errores. 93 copias nuevas (57 Gil SSO, 36 MA 0034.A) más 37 del 09-25. Comentarios ENGIE abiertos: SSO-0041 (21), SSO-0042 (24), ASC-0032 (3)."
+  },
+  {
    "date": "2026-09-25",
    "title": "Lista maestra Hannaqpampa y submittals Procore",
    "desc": "85 archivos (45 códigos): 35 vigentes en Drive, 13 en revisión ENGIE, 25 obsoletos, 12 sin archivo en Drive. 37 copias a carpetas Gil/MA. Procore: 71 revisiones del TSV + 4 solo en la matriz. Checklist 0045.A no reauditado (81 SI / 28 NO / 8 N/A, 76 %)."
@@ -6029,6 +6138,11 @@
     "id": "12JcgHj8oFi9wkvLidqJxYqvR4ouaISTN",
     "nombre": "SIG PANASUR",
     "tipo": "folder"
+   },
+   "lista_hannaqpampa_2026_09_26": {
+    "id": "1fwAjqFNzLVAAHECNHFCcBts6nN7BomMI",
+    "nombre": "SIG-00.1_Matriz_Trazabilidad_Procore-Dossier-SIG_2026-09-26.xlsx",
+    "tipo": "sheet"
    }
   },
   "gmail": {
@@ -6608,6 +6722,12 @@
    }
   ],
   "timeline": [
+   {
+    "date": "2026-09-26",
+    "icon": "≡",
+    "title": "Matriz de trazabilidad Procore–dossier–SIG",
+    "desc": "284 filas (85 submittals, 136 homologaciones, 63 correos). Vigencia: 86 vigentes, 65 obsoletos, 21 en revisión ENGIE, 12 sin archivo, 43 sin dossier, 57 registros. Accesos SIG: 272, 0 errores. 93 copias nuevas (57 Gil SSO, 36 MA 0034.A) más 37 del 09-25. Comentarios ENGIE abiertos: SSO-0041 (21), SSO-0042 (24), ASC-0032 (3)."
+   },
    {
     "date": "2026-09-25",
     "icon": "≡",
@@ -8002,5 +8122,105 @@
    ],
    "trinorma": false
   }
- ]
+ ],
+ "trazabilidad": {
+  "fecha": "2026-09-26",
+  "fuente_lista_maestra": {
+   "drive_id": "1fwAjqFNzLVAAHECNHFCcBts6nN7BomMI",
+   "nombre": "SIG-00.1_Matriz_Trazabilidad_Procore-Dossier-SIG_2026-09-26.xlsx",
+   "filas": 284,
+   "por_fuente": {
+    "procore_submittals_0925": 85,
+    "Homologaciones Procore HANQ (73/73 rev.) 2026-09-26": 136,
+    "Procore Correspondence (correos) 2026-09-25": 63
+   },
+   "por_vigencia": {
+    "vigente": 86,
+    "obsoleto": 65,
+    "en revisión ENGIE": 21,
+    "sin_archivo_dossier": 12,
+    "sin dossier (solo SIG→espejo)": 43,
+    "registro": 57
+   },
+   "por_clausula": {
+    "10.2": 7,
+    "10.3": 1,
+    "4.2": 3,
+    "5.3": 2,
+    "5.4": 2,
+    "6.1": 3,
+    "6.1.2": 12,
+    "6.1.3": 3,
+    "6.1.4": 8,
+    "6.2": 3,
+    "6.3": 5,
+    "7.2": 2,
+    "7.4": 21,
+    "7.5": 3,
+    "7.5.2": 30,
+    "7.5.3": 44,
+    "8.1": 68,
+    "8.1.2": 15,
+    "8.2": 6,
+    "8.4": 2,
+    "8.5": 7,
+    "8.5.1": 1,
+    "8.6": 6,
+    "8.7": 2,
+    "9.1": 22,
+    "99.2": 6
+   },
+   "codigos_submittal": 45
+  },
+  "accesos_sig": {
+   "total": 272,
+   "submittals_0925": 73,
+   "correos": 63,
+   "homologaciones": 136,
+   "errores": 0,
+   "lista_anterior_0925": "1K7IB_Cp9qrjJr6_pus16mJSFBeZ0Kj_y"
+  },
+  "copias_dossier_0926": {
+   "total": 93,
+   "gil_sso": 57,
+   "ma_0034A": 36,
+   "vigentes": 51,
+   "en_revision_engie": 8,
+   "obsoletos": 34,
+   "obsoletos_gil": 23,
+   "obsoletos_ma": 11
+  },
+  "copias_dossier_0925": 37,
+  "comentarios_engie_abiertos": [
+   {
+    "codigo": "SSO-0041",
+    "rev": "A",
+    "comentarios": 21,
+    "estado": "RB abierto en revisión ENGIE"
+   },
+   {
+    "codigo": "SSO-0042",
+    "rev": "A/B",
+    "comentarios": 24,
+    "estado": "RC responde; ALA/AAA pendientes"
+   },
+   {
+    "codigo": "ASC-0032",
+    "rev": "A/B",
+    "comentarios": 3,
+    "estado": "3 pendientes; sin dossier (social)"
+   }
+  ],
+  "resueltos_0926": [
+   "ENV-0003 R0 (APROB+DOC) en MA 5.1",
+   "ENV-0004 R0 (APROB+DOC) en MA 9.1",
+   "ENV-0005 R0 APROB en Gil 5.1",
+   "SSO-0037/0038 RA vigentes (R0 abierto en revisión)"
+  ],
+  "faltantes": [
+   "SSO-0044 R0 documento",
+   "ENV-0005 R0 documento",
+   "MAIL-881 adjuntos (01-08, 11)"
+  ]
+ }
 }
