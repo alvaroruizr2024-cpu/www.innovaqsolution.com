@@ -1,5 +1,5 @@
 {
- "generado": "2026-09-04",
+ "generado": "2026-09-25",
  "empresa": {
   "name": "TOURS PANASUR E.I.R.L.",
   "ruc": "20259263230",
@@ -37,21 +37,21 @@
    "tag": "9001",
    "name": "Gestión de la Calidad",
    "color": "#2563EB",
-   "progress": 48
+   "progress": 40
   },
   {
    "code": "ISO 14001:2026",
    "tag": "14001",
    "name": "Gestión Ambiental",
    "color": "#059669",
-   "progress": 50
+   "progress": 43
   },
   {
    "code": "ISO 45001:2018",
    "tag": "45001",
    "name": "Seguridad y Salud en el Trabajo",
    "color": "#D97706",
-   "progress": 50
+   "progress": 43
   }
  ],
  "clausulas": [
@@ -72,11 +72,9 @@
     "14001",
     "45001"
    ],
-   "docs": [
-    1
-   ],
+   "docs": [],
    "dossier_caps": [],
-   "cobertura": 60,
+   "cobertura": null,
    "es_titulo": false
   },
   {
@@ -88,10 +86,12 @@
     "45001"
    ],
    "docs": [
-    1
+    50,
+    53,
+    54
    ],
    "dossier_caps": [],
-   "cobertura": 60,
+   "cobertura": 0,
    "es_titulo": false
   },
   {
@@ -103,10 +103,11 @@
     "45001"
    ],
    "docs": [
-    2
+    11,
+    56
    ],
    "dossier_caps": [],
-   "cobertura": 60,
+   "cobertura": 50,
    "es_titulo": false
   },
   {
@@ -118,10 +119,11 @@
     "45001"
    ],
    "docs": [
-    3
+    11,
+    56
    ],
    "dossier_caps": [],
-   "cobertura": 60,
+   "cobertura": 50,
    "es_titulo": false
   },
   {
@@ -156,13 +158,11 @@
     "14001",
     "45001"
    ],
-   "docs": [
-    5
-   ],
+   "docs": [],
    "dossier_caps": [
     "2"
    ],
-   "cobertura": 60,
+   "cobertura": null,
    "es_titulo": false
   },
   {
@@ -173,11 +173,9 @@
     "14001",
     "45001"
    ],
-   "docs": [
-    7
-   ],
+   "docs": [],
    "dossier_caps": [],
-   "cobertura": 60,
+   "cobertura": null,
    "es_titulo": false
   },
   {
@@ -187,12 +185,13 @@
     "45001"
    ],
    "docs": [
-    44
+    13,
+    60
    ],
    "dossier_caps": [
     "9"
    ],
-   "cobertura": 60,
+   "cobertura": 50,
    "es_titulo": false
   },
   {
@@ -213,10 +212,12 @@
     "45001"
    ],
    "docs": [
-    8
+    10,
+    55,
+    80
    ],
    "dossier_caps": [],
-   "cobertura": 60,
+   "cobertura": 67,
    "es_titulo": false
   },
   {
@@ -227,17 +228,21 @@
     "45001"
    ],
    "docs": [
-    32,
-    41,
-    42,
-    57,
-    61
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    46
    ],
    "dossier_caps": [
     "2",
     "10"
    ],
-   "cobertura": 32,
+   "cobertura": 50,
    "es_titulo": false
   },
   {
@@ -248,12 +253,14 @@
     "45001"
    ],
    "docs": [
-    18
+    47,
+    48,
+    49
    ],
    "dossier_caps": [
     "2"
    ],
-   "cobertura": 50,
+   "cobertura": 33,
    "es_titulo": false
   },
   {
@@ -265,14 +272,16 @@
     "45001"
    ],
    "docs": [
-    9,
-    39
+    11,
+    56,
+    80,
+    85
    ],
    "dossier_caps": [
     "1",
     "4"
    ],
-   "cobertura": 30,
+   "cobertura": 50,
    "es_titulo": false
   },
   {
@@ -281,11 +290,9 @@
    "normas": [
     "9001"
    ],
-   "docs": [
-    10
-   ],
+   "docs": [],
    "dossier_caps": [],
-   "cobertura": 60,
+   "cobertura": null,
    "es_titulo": false
   },
   {
@@ -305,15 +312,12 @@
     "14001",
     "45001"
    ],
-   "docs": [
-    28,
-    31
-   ],
+   "docs": [],
    "dossier_caps": [
     "3",
     "15"
    ],
-   "cobertura": 12,
+   "cobertura": null,
    "es_titulo": false
   },
   {
@@ -325,14 +329,15 @@
     "45001"
    ],
    "docs": [
-    12
+    42,
+    43
    ],
    "dossier_caps": [
     "3",
     "11",
     "16"
    ],
-   "cobertura": 25,
+   "cobertura": 50,
    "es_titulo": false
   },
   {
@@ -344,13 +349,16 @@
     "45001"
    ],
    "docs": [
-    12
+    13,
+    42,
+    43,
+    60
    ],
    "dossier_caps": [
     "11",
     "17"
    ],
-   "cobertura": 25,
+   "cobertura": 50,
    "es_titulo": false
   },
   {
@@ -362,10 +370,16 @@
     "45001"
    ],
    "docs": [
-    13
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
    ],
    "dossier_caps": [],
-   "cobertura": 60,
+   "cobertura": 50,
    "es_titulo": false
   },
   {
@@ -377,12 +391,16 @@
     "45001"
    ],
    "docs": [
-    11
+    51,
+    52,
+    63,
+    82,
+    83
    ],
    "dossier_caps": [
     "2"
    ],
-   "cobertura": 60,
+   "cobertura": 20,
    "es_titulo": false
   },
   {
@@ -403,16 +421,58 @@
     "45001"
    ],
    "docs": [
+    1,
     10,
+    12,
+    14,
+    15,
+    16,
+    17,
+    18,
     19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    27,
+    28,
+    29,
     30,
+    31,
+    32,
     33,
+    34,
     35,
+    36,
+    37,
+    38,
+    39,
+    40,
     41,
-    50,
-    52,
-    54,
-    59
+    55,
+    57,
+    58,
+    59,
+    61,
+    62,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    80,
+    84
    ],
    "dossier_caps": [
     "2",
@@ -422,7 +482,7 @@
     "15",
     "18"
    ],
-   "cobertura": 42,
+   "cobertura": 57,
    "es_titulo": false
   },
   {
@@ -434,15 +494,15 @@
     "45001"
    ],
    "docs": [
-    21,
-    36,
-    38,
-    49
+    44,
+    45,
+    78,
+    79
    ],
    "dossier_caps": [
     "7"
    ],
-   "cobertura": 50,
+   "cobertura": 25,
    "es_titulo": false
   },
   {
@@ -451,11 +511,9 @@
    "normas": [
     "9001"
    ],
-   "docs": [
-    22
-   ],
+   "docs": [],
    "dossier_caps": [],
-   "cobertura": 25,
+   "cobertura": null,
    "es_titulo": false
   },
   {
@@ -464,11 +522,9 @@
    "normas": [
     "9001"
    ],
-   "docs": [
-    19
-   ],
+   "docs": [],
    "dossier_caps": [],
-   "cobertura": 60,
+   "cobertura": null,
    "es_titulo": false
   },
   {
@@ -477,15 +533,9 @@
    "normas": [
     "9001"
    ],
-   "docs": [
-    19,
-    23,
-    24,
-    25,
-    26
-   ],
+   "docs": [],
    "dossier_caps": [],
-   "cobertura": 29,
+   "cobertura": null,
    "es_titulo": false
   },
   {
@@ -495,7 +545,8 @@
     "9001"
    ],
    "docs": [
-    27
+    26,
+    81
    ],
    "dossier_caps": [],
    "cobertura": 0,
@@ -507,11 +558,9 @@
    "normas": [
     "9001"
    ],
-   "docs": [
-    26
-   ],
+   "docs": [],
    "dossier_caps": [],
-   "cobertura": 60,
+   "cobertura": null,
    "es_titulo": false
   },
   {
@@ -532,11 +581,8 @@
     "45001"
    ],
    "docs": [
-    17,
-    18,
-    29,
-    37,
-    55
+    57,
+    58
    ],
    "dossier_caps": [
     "1",
@@ -545,7 +591,7 @@
     "6",
     "12"
    ],
-   "cobertura": 52,
+   "cobertura": 50,
    "es_titulo": false
   },
   {
@@ -556,13 +602,11 @@
     "14001",
     "45001"
    ],
-   "docs": [
-    14
-   ],
+   "docs": [],
    "dossier_caps": [
     "13"
    ],
-   "cobertura": 60,
+   "cobertura": null,
    "es_titulo": false
   },
   {
@@ -573,11 +617,9 @@
     "14001",
     "45001"
    ],
-   "docs": [
-    15
-   ],
+   "docs": [],
    "dossier_caps": [],
-   "cobertura": 60,
+   "cobertura": null,
    "es_titulo": false
   },
   {
@@ -610,14 +652,11 @@
     "14001",
     "45001"
    ],
-   "docs": [
-    16,
-    48
-   ],
+   "docs": [],
    "dossier_caps": [
     "8"
    ],
-   "cobertura": 55,
+   "cobertura": null,
    "es_titulo": false
   },
   {
@@ -628,1297 +667,2249 @@
     "14001",
     "45001"
    ],
-   "docs": [
-    16
-   ],
+   "docs": [],
    "dossier_caps": [],
-   "cobertura": 60,
+   "cobertura": null,
    "es_titulo": false
   }
  ],
  "lista_maestra": [
   {
    "n": 1,
-   "codigo": "TP-SIG-ANX-001",
-   "documento": "Analisis de contexto FODA PESTEL y partes interesadas",
-   "norma": "TODAS",
-   "clausula": "4.1 4.2",
-   "clase": "VOL-CRITICO",
-   "carpeta": "4",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir a Drive",
+   "codigo": "CON-0013 / 0",
+   "codigo_base": "CON-0013",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-AX-PTS-CON-0013",
+   "documento": "PETS Izaje de cargas",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0013",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1j7Tr_19nuuqwv6-wydFoaGjPOHX_n2Cb/view",
+   "accion": "Ya existía en dossier (no duplicado)",
    "hs": [
-    "4.1",
-    "4.2"
+    "8.1"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1j7Tr_19nuuqwv6-wydFoaGjPOHX_n2Cb/view",
+   "file_id": "1j7Tr_19nuuqwv6-wydFoaGjPOHX_n2Cb",
+   "vigencia": "vigente"
   },
   {
    "n": 2,
-   "codigo": "TP-SIG-ALC-003",
-   "documento": "Alcance del SIG",
-   "norma": "TODAS",
-   "clausula": "4.3",
-   "clase": "OBL-ISO",
-   "carpeta": "4",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir y ampliar a ISO 37001",
+   "codigo": "SSO-0039 / 0",
+   "codigo_base": "SSO-0039",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0039",
+   "documento": "MATRIZ DE IDENTIFICACIÓN DE PELIGROS, EVALUACIÓN DE RIESGOS Y CONTROL",
+   "norma": "45001",
+   "clausula": "6.1.2",
+   "clausula_texto": "6.1.2 Identificación de peligros y evaluación de riesgos (45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.6 IPERC Línea Base",
+   "carpeta_sig": "06_Planificacion/6.1.2_Aspectos_Peligros_IPERC/S_Peligros_IPERC",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1AI7yBohRyJpUOGuqrnlvek8I6ZCI8g6g/view",
+   "accion": "Ya existía en dossier (no duplicado)",
    "hs": [
-    "4.3"
+    "6.1.2"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1y08C-PZ7LhHtFgG4jeFVk6CLRU8-G3CR",
+   "link_archivo": "https://drive.google.com/file/d/1AI7yBohRyJpUOGuqrnlvek8I6ZCI8g6g/view",
+   "file_id": "1AI7yBohRyJpUOGuqrnlvek8I6ZCI8g6g",
+   "vigencia": "vigente"
   },
   {
    "n": 3,
-   "codigo": "TP-SIG-MAP-005",
-   "documento": "Mapa de procesos y fichas de proceso",
-   "norma": "9001",
-   "clausula": "4.4",
-   "clase": "VOL-CRITICO",
-   "carpeta": "4",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir a Drive",
+   "codigo": "SSO-0040 / 0",
+   "codigo_base": "SSO-0040",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0040",
+   "documento": "MAPA DE RIESGOS",
+   "norma": "—",
+   "clausula": "6.1.2 / 7.4",
+   "clausula_texto": "6.1.2 / 7.4 Comunicación (mapa de riesgos)",
+   "clase": "vigente",
+   "carpeta": "Gil › 08 › 8.3 Mapa de Riesgos",
+   "carpeta_sig": "06_Planificacion/6.1.2_Aspectos_Peligros_IPERC/S_Peligros_IPERC",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1CNDShcEnKlnGR1tuxwHVKkHLLk_xdl_j/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "4.4"
+    "6.1.2",
+    "7.4"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1tRTpvhzTWXnoqX_UqyjzkX5ZLgaeBtwq",
+   "link_archivo": "https://drive.google.com/file/d/1CNDShcEnKlnGR1tuxwHVKkHLLk_xdl_j/view",
+   "file_id": "1CNDShcEnKlnGR1tuxwHVKkHLLk_xdl_j",
+   "vigencia": "vigente"
   },
   {
    "n": 4,
-   "codigo": "TP-SIG-MAN-006",
-   "documento": "Manual del SIG",
-   "norma": "TODAS",
-   "clausula": "-",
-   "clase": "VOL",
-   "carpeta": "0",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir y ampliar a ISO 37001",
-   "hs": [],
-   "trinorma": true
+   "codigo": "SSO-0040 / 0",
+   "codigo_base": "SSO-0040",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0040",
+   "documento": "MAPA DE RIESGOS",
+   "norma": "—",
+   "clausula": "6.1.2 / 7.4",
+   "clausula_texto": "6.1.2 / 7.4 Comunicación (mapa de riesgos)",
+   "clase": "vigente",
+   "carpeta": "Gil › 08 › 8.3 Mapa de Riesgos",
+   "carpeta_sig": "06_Planificacion/6.1.2_Aspectos_Peligros_IPERC/S_Peligros_IPERC",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1ft63zUmFaeosMmU6ASS_qc2RCV6bHWxd/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "6.1.2",
+    "7.4"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1tRTpvhzTWXnoqX_UqyjzkX5ZLgaeBtwq",
+   "link_archivo": "https://drive.google.com/file/d/1ft63zUmFaeosMmU6ASS_qc2RCV6bHWxd/view",
+   "file_id": "1ft63zUmFaeosMmU6ASS_qc2RCV6bHWxd",
+   "vigencia": "vigente"
   },
   {
    "n": 5,
-   "codigo": "TP-SIG-POL-002",
-   "documento": "Politica integrada de gestion",
-   "norma": "9001 14001 45001",
-   "clausula": "5.2",
-   "clase": "OBL-ISO",
-   "carpeta": "5",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir a Drive",
+   "codigo": "SSO-0040 / 0",
+   "codigo_base": "SSO-0040",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0040",
+   "documento": "MAPA DE RIESGOS",
+   "norma": "—",
+   "clausula": "6.1.2 / 7.4",
+   "clausula_texto": "6.1.2 / 7.4 Comunicación (mapa de riesgos)",
+   "clase": "vigente",
+   "carpeta": "Gil › 08 › 8.3 Mapa de Riesgos",
+   "carpeta_sig": "06_Planificacion/6.1.2_Aspectos_Peligros_IPERC/S_Peligros_IPERC",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1TvyY48KoSzBaDodbRuefhH9fMh5IikZX/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "5.2"
+    "6.1.2",
+    "7.4"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1tRTpvhzTWXnoqX_UqyjzkX5ZLgaeBtwq",
+   "link_archivo": "https://drive.google.com/file/d/1TvyY48KoSzBaDodbRuefhH9fMh5IikZX/view",
+   "file_id": "1TvyY48KoSzBaDodbRuefhH9fMh5IikZX",
+   "vigencia": "vigente"
   },
   {
    "n": 6,
-   "codigo": "TP-SIG-POL-XXX",
-   "documento": "Politica antisoborno (independiente)",
-   "norma": "37001",
-   "clausula": "5.2",
-   "clase": "OBL-ISO",
-   "carpeta": "5",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7",
+   "codigo": "SSO-0040 / 0",
+   "codigo_base": "SSO-0040",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0040",
+   "documento": "MAPA DE RIESGOS",
+   "norma": "—",
+   "clausula": "6.1.2 / 7.4",
+   "clausula_texto": "6.1.2 / 7.4 Comunicación (mapa de riesgos)",
+   "clase": "vigente",
+   "carpeta": "Gil › 08 › 8.3 Mapa de Riesgos",
+   "carpeta_sig": "06_Planificacion/6.1.2_Aspectos_Peligros_IPERC/S_Peligros_IPERC",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1VOR1CtbE1bDX8-1aKqgPQbNruhxf_rT3/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "5.2"
+    "6.1.2",
+    "7.4"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1tRTpvhzTWXnoqX_UqyjzkX5ZLgaeBtwq",
+   "link_archivo": "https://drive.google.com/file/d/1VOR1CtbE1bDX8-1aKqgPQbNruhxf_rT3/view",
+   "file_id": "1VOR1CtbE1bDX8-1aKqgPQbNruhxf_rT3",
+   "vigencia": "vigente"
   },
   {
    "n": 7,
-   "codigo": "TP-SIG-ROL-004",
-   "documento": "Matriz de roles responsabilidades y autoridades",
-   "norma": "45001 37001",
-   "clausula": "5.3",
-   "clase": "OBL-ISO",
-   "carpeta": "5",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir y ampliar a ISO 37001",
+   "codigo": "SSO-0040 / A",
+   "codigo_base": "SSO-0040",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0040",
+   "documento": "MAPA DE RIESGOS",
+   "norma": "—",
+   "clausula": "6.1.2 / 7.4",
+   "clausula_texto": "6.1.2 / 7.4 Comunicación (mapa de riesgos)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 08 › 8.3 Mapa de Riesgos › _obsoletos",
+   "carpeta_sig": "06_Planificacion/6.1.2_Aspectos_Peligros_IPERC/S_Peligros_IPERC",
+   "estado": "OBSOLETO",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1tworB20-LbqC_QpiaOAC4TlUVQvYd2gM/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "5.3"
+    "6.1.2",
+    "7.4"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1pY_JTjIdtbck2PIohIAAZh65-iXGAJdc",
+   "link_archivo": "https://drive.google.com/file/d/1tworB20-LbqC_QpiaOAC4TlUVQvYd2gM/view",
+   "file_id": "1tworB20-LbqC_QpiaOAC4TlUVQvYd2gM",
+   "vigencia": "obsoleto"
   },
   {
    "n": 8,
-   "codigo": "TP-SIG-MRO-013",
-   "documento": "Matriz de riesgos y oportunidades del SIG",
-   "norma": "TODAS",
-   "clausula": "6.1",
-   "clase": "OBL-ISO",
-   "carpeta": "6",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir a Drive",
+   "codigo": "SSO-0040 / A",
+   "codigo_base": "SSO-0040",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0040",
+   "documento": "MAPA DE RIESGOS",
+   "norma": "—",
+   "clausula": "6.1.2 / 7.4",
+   "clausula_texto": "6.1.2 / 7.4 Comunicación (mapa de riesgos)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 08 › 8.3 Mapa de Riesgos › _obsoletos",
+   "carpeta_sig": "06_Planificacion/6.1.2_Aspectos_Peligros_IPERC/S_Peligros_IPERC",
+   "estado": "OBSOLETO",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1kULaVMmu05JGWR5G0_NKOG6-mr6lDQoD/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "6.1"
+    "6.1.2",
+    "7.4"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1pY_JTjIdtbck2PIohIAAZh65-iXGAJdc",
+   "link_archivo": "https://drive.google.com/file/d/1kULaVMmu05JGWR5G0_NKOG6-mr6lDQoD/view",
+   "file_id": "1kULaVMmu05JGWR5G0_NKOG6-mr6lDQoD",
+   "vigencia": "obsoleto"
   },
   {
    "n": 9,
-   "codigo": "TP-SIG-OBJ-020",
-   "documento": "Objetivos del SIG y programa de gestion",
-   "norma": "TODAS",
-   "clausula": "6.2",
-   "clase": "OBL-ISO",
-   "carpeta": "6",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir a Drive",
+   "codigo": "SSO-0040 / A",
+   "codigo_base": "SSO-0040",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0040",
+   "documento": "MAPA DE RIESGOS",
+   "norma": "—",
+   "clausula": "6.1.2 / 7.4",
+   "clausula_texto": "6.1.2 / 7.4 Comunicación (mapa de riesgos)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 08 › 8.3 Mapa de Riesgos › _obsoletos",
+   "carpeta_sig": "06_Planificacion/6.1.2_Aspectos_Peligros_IPERC/S_Peligros_IPERC",
+   "estado": "OBSOLETO",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1XAiFnGVlV8Kxr1lteDOJZHcZW0ECChJr/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "6.2"
+    "6.1.2",
+    "7.4"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1pY_JTjIdtbck2PIohIAAZh65-iXGAJdc",
+   "link_archivo": "https://drive.google.com/file/d/1XAiFnGVlV8Kxr1lteDOJZHcZW0ECChJr/view",
+   "file_id": "1XAiFnGVlV8Kxr1lteDOJZHcZW0ECChJr",
+   "vigencia": "obsoleto"
   },
   {
    "n": 10,
-   "codigo": "TP-SIG-PGC-007",
-   "documento": "Procedimiento de gestion del cambio",
-   "norma": "TODAS",
-   "clausula": "6.3 8.1.3",
-   "clase": "OBL-ISO",
-   "carpeta": "6",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir a Drive",
+   "codigo": "ENV-0002 / 0",
+   "codigo_base": "ENV-0002",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PLN-ENV-0002",
+   "documento": "Plan de Manejo Ambiental (PMA)",
+   "norma": "14001",
+   "clausula": "6.1 / 8.1",
+   "clausula_texto": "6.1 / 8.1 (14001) Plan de Manejo Ambiental",
+   "clase": "vigente",
+   "carpeta": "MA 0034.A › 2.1",
+   "carpeta_sig": "06_Planificacion/6.1.4_Planificacion_acciones/A_PMA_programas",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/18jm32QXt_h8vju1MBiGTyX7WxvIdH8qt/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "6.3",
+    "6.1",
     "8.1"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1gQz5piri6C0iqnC91bftMi-OYiT6gwMG",
+   "link_archivo": "https://drive.google.com/file/d/18jm32QXt_h8vju1MBiGTyX7WxvIdH8qt/view",
+   "file_id": "18jm32QXt_h8vju1MBiGTyX7WxvIdH8qt",
+   "vigencia": "vigente"
   },
   {
    "n": 11,
-   "codigo": "TP-SIG-LMD-001",
-   "documento": "Control de informacion documentada y lista maestra",
-   "norma": "TODAS",
-   "clausula": "7.5",
-   "clase": "OBL-ISO",
-   "carpeta": "0",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Reemplazar por LMD-002 (este archivo)",
+   "codigo": "SSO-0001 / 0",
+   "codigo_base": "SSO-0001",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PLN-SSO-0001",
+   "documento": "Plan de Seguridad, Salud Ocupacional y Medio Ambiente (PSSO / Plan SSO",
+   "norma": "—",
+   "clausula": "6.2 / 4.3 / 4.4",
+   "clausula_texto": "6.2 Objetivos y planificación / 4.3-4.4 SGSST (Plan SSOMA)",
+   "clase": "vigente",
+   "carpeta": "Gil › 01 › 1.1 Plan y Programa SST",
+   "carpeta_sig": "06_Planificacion/6.1.4_Planificacion_acciones/S_PlanSSO_PASST",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1lMrpTvAvwsxfbpenafKZZKtpW2T3uFwb/view",
+   "accion": "Ya existía en dossier (no duplicado)",
    "hs": [
-    "7.5"
+    "6.2",
+    "4.3",
+    "4.4"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1CsfBZ7JXiQRsl2bD7EaiJqVwBv4ANoTb",
+   "link_archivo": "https://drive.google.com/file/d/1lMrpTvAvwsxfbpenafKZZKtpW2T3uFwb/view",
+   "file_id": "1lMrpTvAvwsxfbpenafKZZKtpW2T3uFwb",
+   "vigencia": "vigente"
   },
   {
    "n": 12,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Competencia formacion y matriz de competencias",
-   "norma": "TODAS",
-   "clausula": "7.2 7.3",
-   "clase": "OBL-ISO",
-   "carpeta": "7",
-   "estado": "POR CONFIRMAR",
+   "codigo": "SSO-0043 / 0",
+   "codigo_base": "SSO-0043",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PLN-SSO-0043",
+   "documento": "PLAN DE FATIGA Y SOMNOLENCIA",
+   "norma": "—",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Control operacional (fatiga)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.13 Estándares de Seguridad",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/S_SST_SSO",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1lscSvx9fBbVv44-eGf08-oQaE8bpCHIM/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1cHAbofx4No5pFzROAg47xrvy3QuR_al7",
+   "link_archivo": "https://drive.google.com/file/d/1lscSvx9fBbVv44-eGf08-oQaE8bpCHIM/view",
+   "file_id": "1lscSvx9fBbVv44-eGf08-oQaE8bpCHIM",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 13,
+   "codigo": "SSO-0044 / 0",
+   "codigo_base": "SSO-0044",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PLN-SSO-0044",
+   "documento": "PLAN DE RECONOCIMIENTOS Y SANCIONES",
+   "norma": "—",
+   "clausula": "5.4 / 7.3",
+   "clausula_texto": "5.4 Consulta y participación / 7.3 (reconocimientos y sanciones)",
+   "clase": "vigente",
+   "carpeta": "Gil › 12 Cultura Justa › (solo APROBACION; ZIP sin documento)",
+   "carpeta_sig": "05_Liderazgo_y_participacion/5.4_Consulta_participacion_CSST",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1zjHvP-1MRE7A0dgzxFCzewM68QGndE67/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "5.4",
+    "7.3"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1mC2WMngRbN2uCoLTvrQM9xj_WD9zHmII",
+   "link_archivo": "https://drive.google.com/file/d/1zjHvP-1MRE7A0dgzxFCzewM68QGndE67/view",
+   "file_id": "1zjHvP-1MRE7A0dgzxFCzewM68QGndE67",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 14,
+   "codigo": "ENV-0008 / 0",
+   "codigo_base": "ENV-0008",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PTS-ENV-0008",
+   "documento": "PETS Abastecimiento de Combustible",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "MA 0034.A › 4.3",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/A_Ambiente_ENV",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1Ia_l-WIcwikXAwEvKbDgEXYaqf2LGTzK/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/19ow_UtyOIiSFr1APXSJwYqEjOPiCYKko",
+   "link_archivo": "https://drive.google.com/file/d/1Ia_l-WIcwikXAwEvKbDgEXYaqf2LGTzK/view",
+   "file_id": "1Ia_l-WIcwikXAwEvKbDgEXYaqf2LGTzK",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 15,
+   "codigo": "ENV-0008 / 0",
+   "codigo_base": "ENV-0008",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PTS-ENV-0008",
+   "documento": "PETS Abastecimiento de Combustible",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › ENV-0008/_en_revision_ENGIE (copia Gil; pendiente pasar a vigente, no movida)",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/A_Ambiente_ENV",
+   "estado": "PARCIAL",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1TIn5_6H0Tn1yg0pBTFD6cN0rbC1CXjJ1/view",
+   "accion": "Ya existía (copia en Gil 2.11)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1TIn5_6H0Tn1yg0pBTFD6cN0rbC1CXjJ1/view",
+   "file_id": "1TIn5_6H0Tn1yg0pBTFD6cN0rbC1CXjJ1",
+   "vigencia": "en revisión ENGIE"
+  },
+  {
+   "n": 16,
+   "codigo": "ENV-0009 / 0",
+   "codigo_base": "ENV-0009",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PTS-ENV-0009",
+   "documento": "PETS Limpieza de Baños Quimicos Portatiles",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "MA 0034.A › 5.4",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/A_Ambiente_ENV",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1qVpFdC4ieQNvrb1NT2DweBsODD_nY5d3/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1whSLYenKlePTfI8X05qP2yTEpha4kabW",
+   "link_archivo": "https://drive.google.com/file/d/1qVpFdC4ieQNvrb1NT2DweBsODD_nY5d3/view",
+   "file_id": "1qVpFdC4ieQNvrb1NT2DweBsODD_nY5d3",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 17,
+   "codigo": "ENV-0009 / 0",
+   "codigo_base": "ENV-0009",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PTS-ENV-0009",
+   "documento": "PETS Limpieza de Baños Quimicos Portatiles",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › ENV-0009/_en_revision_ENGIE (copia Gil; pendiente pasar a vigente, no movida)",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/A_Ambiente_ENV",
+   "estado": "PARCIAL",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/15N1hyUBZJnieABu1CaX4hMM18M8lcq7T/view",
+   "accion": "Ya existía (copia en Gil 2.11)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/15N1hyUBZJnieABu1CaX4hMM18M8lcq7T/view",
+   "file_id": "15N1hyUBZJnieABu1CaX4hMM18M8lcq7T",
+   "vigencia": "en revisión ENGIE"
+  },
+  {
+   "n": 18,
+   "codigo": "ENV-0012 / 0",
+   "codigo_base": "ENV-0012",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PTS-ENV-0012",
+   "documento": "PETS Recojo y Disposicion de Residuos Solidos EPS-RS",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "MA 0034.A › 5.3",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/A_Ambiente_ENV",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1mN_XhgzMWbRgmFoVx9hrK_gTqfhgrq9x/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/12ANtTXH3cCCbxcEkLgZx4PACCl83_Ci8",
+   "link_archivo": "https://drive.google.com/file/d/1mN_XhgzMWbRgmFoVx9hrK_gTqfhgrq9x/view",
+   "file_id": "1mN_XhgzMWbRgmFoVx9hrK_gTqfhgrq9x",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 19,
+   "codigo": "ENV-0012 / 0",
+   "codigo_base": "ENV-0012",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PTS-ENV-0012",
+   "documento": "PETS Recojo y Disposicion de Residuos Solidos EPS-RS",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › ENV-0012/_en_revision_ENGIE (copia Gil; pendiente pasar a vigente, no movida)",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/A_Ambiente_ENV",
+   "estado": "PARCIAL",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1M__LiQJ3G_qbh4ZLXgs8PwN9pSVOPVNW/view",
+   "accion": "Ya existía (copia en Gil 2.11)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1M__LiQJ3G_qbh4ZLXgs8PwN9pSVOPVNW/view",
+   "file_id": "1M__LiQJ3G_qbh4ZLXgs8PwN9pSVOPVNW",
+   "vigencia": "en revisión ENGIE"
+  },
+  {
+   "n": 20,
+   "codigo": "ENV-0025 / A",
+   "codigo_base": "ENV-0025",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-PTS-ENV-0025",
+   "documento": "PETS Manejo y gestion de producctos quimicos y peligros",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "MA 0034.A › 4.5",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/A_Ambiente_ENV",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1laa9EQSDx1Q9QJuUy7q_TkPLwzEdDyEX/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1JSZt-JqqCdrmnjkCp6CEoQggRieCdVzt",
+   "link_archivo": "https://drive.google.com/file/d/1laa9EQSDx1Q9QJuUy7q_TkPLwzEdDyEX/view",
+   "file_id": "1laa9EQSDx1Q9QJuUy7q_TkPLwzEdDyEX",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 21,
+   "codigo": "ENV-0025 / A",
+   "codigo_base": "ENV-0025",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-PTS-ENV-0025",
+   "documento": "PETS Manejo y gestion de producctos quimicos y peligros",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › ENV-0025/_en_revision_ENGIE (copia Gil; pendiente pasar a vigente, no movida)",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/A_Ambiente_ENV",
+   "estado": "PARCIAL",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1xUgPQDvCcexR1-5IlfZ1jFg3FCYmKs0h/view",
+   "accion": "Ya existía (copia en Gil 2.11)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1xUgPQDvCcexR1-5IlfZ1jFg3FCYmKs0h/view",
+   "file_id": "1xUgPQDvCcexR1-5IlfZ1jFg3FCYmKs0h",
+   "vigencia": "en revisión ENGIE"
+  },
+  {
+   "n": 22,
+   "codigo": "SSO-0010 / 0",
+   "codigo_base": "SSO-0010",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PTS-SSO-0010",
+   "documento": "PETS Transporte y Entrega de Alimentos en Obra",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › (raíz 2.11)",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/S_SST_SSO",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1XlMV6jfhQXwjzmypI-Mtd0zNUuKivGd9/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1XlMV6jfhQXwjzmypI-Mtd0zNUuKivGd9/view",
+   "file_id": "1XlMV6jfhQXwjzmypI-Mtd0zNUuKivGd9",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 23,
+   "codigo": "SSO-0016 / 0",
+   "codigo_base": "SSO-0016",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PTS-SSO-0016",
+   "documento": "PETS Seguridad Patrimonial",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › (raíz 2.11)",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/S_SST_SSO",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/16XhZaM2tGoCRKdGTpT6FEJl0-RTcuf60/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/16XhZaM2tGoCRKdGTpT6FEJl0-RTcuf60/view",
+   "file_id": "16XhZaM2tGoCRKdGTpT6FEJl0-RTcuf60",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 24,
+   "codigo": "SSO-0018 / 0",
+   "codigo_base": "SSO-0018",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PTS-SSO-0018",
+   "documento": "PETS Ambulancia y Traslado Asistido",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › SSO-0018",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/S_SST_SSO",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1569S4afYFQCAyP0yQ1wvNvZa7nnEGz9e/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/16Ma5PqYll67VegKl_r-OJLd63W-No94_",
+   "link_archivo": "https://drive.google.com/file/d/1569S4afYFQCAyP0yQ1wvNvZa7nnEGz9e/view",
+   "file_id": "1569S4afYFQCAyP0yQ1wvNvZa7nnEGz9e",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 25,
+   "codigo": "SSO-0018 / B",
+   "codigo_base": "SSO-0018",
+   "rev": "B",
+   "numero": "EEP-HANQ-MAR-GN-PTS-SSO-0018",
+   "documento": "PETS Ambulancia y Traslado Asistido",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › SSO-0018/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/S_SST_SSO",
+   "estado": "OBSOLETO",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/10H9ubYm8gv_2Wm3mfW0vu24No2aRZeeh/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1U_KbsgWAnzD-ApqGRceEoE2-hNB9HvDn",
+   "link_archivo": "https://drive.google.com/file/d/10H9ubYm8gv_2Wm3mfW0vu24No2aRZeeh/view",
+   "file_id": "10H9ubYm8gv_2Wm3mfW0vu24No2aRZeeh",
+   "vigencia": "obsoleto"
+  },
+  {
+   "n": 26,
+   "codigo": "QLT-0031 / 0",
+   "codigo_base": "QLT-0031",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PRT-QLT-0031",
+   "documento": "PPI : RELLENOS-TERRAPLENES",
+   "norma": "—",
+   "clausula": "8.6",
+   "clausula_texto": "8.6 Liberación (PPI)",
+   "clase": "sin carpeta",
+   "carpeta": "—",
+   "carpeta_sig": "08_Operacion/8.6_Liberacion_protocolos",
+   "estado": "NO EXISTE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
    "evidencia": "",
-   "accion": "Verificar si existe en archivo fisico",
+   "accion": "Sin carpeta en dossier Gil/MA: protocolo de calidad (PPI). Sugerido: dossier de calidad / SIG 8.6",
+   "hs": [
+    "8.6"
+   ],
+   "trinorma": false,
+   "link_carpeta": "",
+   "link_archivo": "",
+   "file_id": "",
+   "vigencia": ""
+  },
+  {
+   "n": 27,
+   "codigo": "CON-0006 / 0",
+   "codigo_base": "CON-0006",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0006",
+   "documento": "PETS Movilizacion y Desmovilizacion",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0006",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1ry6LrtEtIUWhmzrYNoqTNyNCNiEkvC0I/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1ry6LrtEtIUWhmzrYNoqTNyNCNiEkvC0I/view",
+   "file_id": "1ry6LrtEtIUWhmzrYNoqTNyNCNiEkvC0I",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 28,
+   "codigo": "CON-0007 / 0",
+   "codigo_base": "CON-0007",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0007",
+   "documento": "PETS Trazo y Replanteo Topografico",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0007",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1hN2Ec2Yo-n4vvG54ahTFfO_pbjPIeCl3/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1hN2Ec2Yo-n4vvG54ahTFfO_pbjPIeCl3/view",
+   "file_id": "1hN2Ec2Yo-n4vvG54ahTFfO_pbjPIeCl3",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 29,
+   "codigo": "CON-0011 / 0",
+   "codigo_base": "CON-0011",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0011",
+   "documento": "PETS Regado con Cisterna para Control de Polvo",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0011",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1kDrPQKIpxTijtpYRXXXSGkDXhkyh72mO/view",
+   "accion": "Ya existía en dossier (no duplicado) · ref. secundaria: Ref. secundaria MA 6.1",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1kDrPQKIpxTijtpYRXXXSGkDXhkyh72mO/view",
+   "file_id": "1kDrPQKIpxTijtpYRXXXSGkDXhkyh72mO",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 30,
+   "codigo": "CON-0014 / 0",
+   "codigo_base": "CON-0014",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0014",
+   "documento": "PETS Transporte de Material Granular",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0014",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1gDjSoLXqTs9g6xwEYhCFtoPhRDtcVHHQ/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1gDjSoLXqTs9g6xwEYhCFtoPhRDtcVHHQ/view",
+   "file_id": "1gDjSoLXqTs9g6xwEYhCFtoPhRDtcVHHQ",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 31,
+   "codigo": "CON-0015 / 0",
+   "codigo_base": "CON-0015",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0015",
+   "documento": "PETS Colocacion de Afirmado",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0015 (raíz; superada, no movida)",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1qwqckpPIiLTjD-8esq0JSZH19FocbJ_K/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1qwqckpPIiLTjD-8esq0JSZH19FocbJ_K/view",
+   "file_id": "1qwqckpPIiLTjD-8esq0JSZH19FocbJ_K",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 32,
+   "codigo": "CON-0015 / 1",
+   "codigo_base": "CON-0015",
+   "rev": "1",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0015",
+   "documento": "PETS Colocacion de Afirmado",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0015",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1KJwu2dBy9ioxcLdQgCWfKufImeN5IFoV/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1KJwu2dBy9ioxcLdQgCWfKufImeN5IFoV/view",
+   "file_id": "1KJwu2dBy9ioxcLdQgCWfKufImeN5IFoV",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 33,
+   "codigo": "CON-0015 / 1",
+   "codigo_base": "CON-0015",
+   "rev": "1",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0015",
+   "documento": "PETS Colocacion de Afirmado",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0015/_en_revision_ENGIE (APROBACION)",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "PARCIAL",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1rrFyMupXTcG1Pu_lCt7kqjEGXGILrmIW/view",
+   "accion": "Ya existía",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1rrFyMupXTcG1Pu_lCt7kqjEGXGILrmIW/view",
+   "file_id": "1rrFyMupXTcG1Pu_lCt7kqjEGXGILrmIW",
+   "vigencia": "en revisión ENGIE"
+  },
+  {
+   "n": 34,
+   "codigo": "CON-0017 / 0",
+   "codigo_base": "CON-0017",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0017",
+   "documento": "PETS Mantenimiento Diario de Equipos",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0017",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/13D2qUsItIhG-_794kKVNUxDe3s3zthSe/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/13D2qUsItIhG-_794kKVNUxDe3s3zthSe/view",
+   "file_id": "13D2qUsItIhG-_794kKVNUxDe3s3zthSe",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 35,
+   "codigo": "CON-0019 / 0",
+   "codigo_base": "CON-0019",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0019",
+   "documento": "PETS Transporte de Personal e insumos",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0019",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/16SweHZr1FL3Xk1lLd_pr4fzHnQMVgyEV/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/16SweHZr1FL3Xk1lLd_pr4fzHnQMVgyEV/view",
+   "file_id": "16SweHZr1FL3Xk1lLd_pr4fzHnQMVgyEV",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 36,
+   "codigo": "CON-0020 / 0",
+   "codigo_base": "CON-0020",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0020",
+   "documento": "PETS  Excavacion y Movimiento de Tierras",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0020",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1uhZEcMdmveTKqbG--BWMWOepGb-JjLQk/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1uhZEcMdmveTKqbG--BWMWOepGb-JjLQk/view",
+   "file_id": "1uhZEcMdmveTKqbG--BWMWOepGb-JjLQk",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 37,
+   "codigo": "CON-0021 / 0",
+   "codigo_base": "CON-0021",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0021",
+   "documento": "PETS Construccion de Cuneta",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0021",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1JXqJRuXq0b8vKzgO2Qc7cGX8SkKzaquO/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1JXqJRuXq0b8vKzgO2Qc7cGX8SkKzaquO/view",
+   "file_id": "1JXqJRuXq0b8vKzgO2Qc7cGX8SkKzaquO",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 38,
+   "codigo": "CON-0022 / 0",
+   "codigo_base": "CON-0022",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0022",
+   "documento": "PETS Transporte a DME",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0022",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1u8up6ciUOkAf2LVTJU5VwD3CB2YH9coX/view",
+   "accion": "Ya existía en dossier (no duplicado) · ref. secundaria: Ref. secundaria MA 5.5",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/1u8up6ciUOkAf2LVTJU5VwD3CB2YH9coX/view",
+   "file_id": "1u8up6ciUOkAf2LVTJU5VwD3CB2YH9coX",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 39,
+   "codigo": "CON-0024 / 0",
+   "codigo_base": "CON-0024",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0024",
+   "documento": "PETS Vigía- Control De Tránsito Vehicular",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0024",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1UY_wvNOgaD63dVc8GahDWh06VhymmRxZ/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1oT43JVvdAPiAkqSiHuLlSSW09MzVv4br",
+   "link_archivo": "https://drive.google.com/file/d/1UY_wvNOgaD63dVc8GahDWh06VhymmRxZ/view",
+   "file_id": "1UY_wvNOgaD63dVc8GahDWh06VhymmRxZ",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 40,
+   "codigo": "QLT-0028 / 0",
+   "codigo_base": "QLT-0028",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-QLT-0028",
+   "documento": "PROCEDIMIENTO DE DENSIDAD DE CAMPO",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › QLT-0028",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/Q_Calidad_QLT",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/1yqPCc9Auarbrxr5um4V6vetqIWA-A_OB/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1VVQaFAFwlE2iUq0-6eGIHcpOlK8IcfG_",
+   "link_archivo": "https://drive.google.com/file/d/1yqPCc9Auarbrxr5um4V6vetqIWA-A_OB/view",
+   "file_id": "1yqPCc9Auarbrxr5um4V6vetqIWA-A_OB",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 41,
+   "codigo": "QLT-0029 / 0",
+   "codigo_base": "QLT-0029",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PTS-QLT-0029",
+   "documento": "PROCEDIMIENTO DE LWD",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › QLT-0029",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/Q_Calidad_QLT",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "https://drive.google.com/file/d/15zmWE60GbltHiaJfgj5AfWEkffjsYxft/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1mJpMdqylSfUuF7eY9oZGCRC5MD0mePFh",
+   "link_archivo": "https://drive.google.com/file/d/15zmWE60GbltHiaJfgj5AfWEkffjsYxft/view",
+   "file_id": "15zmWE60GbltHiaJfgj5AfWEkffjsYxft",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 42,
+   "codigo": "SSO-0037 / 0",
+   "codigo_base": "SSO-0037",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0037",
+   "documento": "PROGRAMA DE CAPACITACIONES",
+   "norma": "—",
+   "clausula": "7.2 / 7.3",
+   "clausula_texto": "7.2 Competencia / 7.3 Toma de conciencia",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 11 › 11.1 Plan Anual Capacitación › _en_revision_ENGIE",
+   "carpeta_sig": "07_Apoyo/7.2_Competencia/S_SST",
+   "estado": "PARCIAL",
+   "estado_procore": "Abierto",
+   "evidencia": "https://drive.google.com/file/d/1fdlRqYzYlylWlVvPt42tdV9m6B-npMLV/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
     "7.2",
     "7.3"
    ],
-   "trinorma": true
-  },
-  {
-   "n": 13,
-   "codigo": "TP-SIG-COM-030",
-   "documento": "Plan de comunicaciones internas y externas",
-   "norma": "TODAS",
-   "clausula": "7.4",
-   "clase": "OBL-ISO",
-   "carpeta": "7",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir a Drive",
-   "hs": [
-    "7.4"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 14,
-   "codigo": "TP-SIG-AUD-008",
-   "documento": "Procedimiento de auditoria interna",
-   "norma": "TODAS",
-   "clausula": "9.2",
-   "clase": "OBL-ISO",
-   "carpeta": "13",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir - falta ejecutar el ciclo",
-   "hs": [
-    "9.2"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 15,
-   "codigo": "TP-SIG-FOR-ACT",
-   "documento": "Acta de revision por la direccion",
-   "norma": "TODAS",
-   "clausula": "9.3",
-   "clase": "OBL-ISO",
-   "carpeta": "9",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir - falta ejecutar la revision",
-   "hs": [
-    "9.3"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 16,
-   "codigo": "TP-SIG-NCA-010",
-   "documento": "No conformidad accion correctiva y mejora",
-   "norma": "TODAS",
-   "clausula": "10.2 10.3",
-   "clase": "OBL-ISO",
-   "carpeta": "10",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir a Drive",
-   "hs": [
-    "10.2",
-    "10.3"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 17,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Seguimiento medicion y tablero de indicadores",
-   "norma": "TODAS",
-   "clausula": "9.1",
-   "clase": "OBL-ISO",
-   "carpeta": "9",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 8",
-   "hs": [
-    "9.1"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 18,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Evaluacion de cumplimiento legal y matriz legal integrada",
-   "norma": "TODAS",
-   "clausula": "6.1.3 9.1.2",
-   "clase": "OBL-ISO/LEGAL",
-   "carpeta": "6",
-   "estado": "PARCIAL",
-   "evidencia": "Matriz legal SST del proyecto",
-   "accion": "Ampliar a ambiental calidad y antisoborno",
-   "hs": [
-    "6.1.3",
-    "9.1"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 19,
-   "codigo": "TP-SIG-PCO-039",
-   "documento": "Compras evaluacion de proveedores y contratistas",
-   "norma": "9001 45001 37001",
-   "clausula": "8.4 8.1.4 8.5",
-   "clase": "OBL-ISO",
-   "carpeta": "08.01",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir y ampliar a ISO 37001",
-   "hs": [
-    "8.1",
-    "8.4",
-    "8.5"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 20,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Programa anual de capacitacion y simulacros",
-   "norma": "LEY 29783",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "7",
-   "estado": "EN DRIVE",
-   "evidencia": "Programa_Charlas_SSOMA_Hanaqpampa_2026_B.xlsx",
-   "accion": "Elevar a nivel corporativo",
-   "hs": [],
-   "trinorma": true
-  },
-  {
-   "n": 21,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Revision de requisitos del cliente",
-   "norma": "9001",
-   "clausula": "8.2",
-   "clase": "OBL-ISO",
-   "carpeta": "08.02",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 6",
-   "hs": [
-    "8.2"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 22,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Diseno y desarrollo o exclusion justificada",
-   "norma": "9001",
-   "clausula": "8.3",
-   "clase": "OBL-ISO",
-   "carpeta": "08.02",
-   "estado": "POR CONFIRMAR",
-   "evidencia": "",
-   "accion": "Decidir si aplica - probable exclusion",
-   "hs": [
-    "8.3"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 23,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Prestacion del servicio y control de la produccion",
-   "norma": "9001",
-   "clausula": "8.5.1",
-   "clase": "OBL-ISO",
-   "carpeta": "08.02",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 6",
-   "hs": [
-    "8.5"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 24,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Identificacion y trazabilidad",
-   "norma": "9001",
-   "clausula": "8.5.2",
-   "clase": "OBL-ISO",
-   "carpeta": "08.02",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 6",
-   "hs": [
-    "8.5"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 25,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Propiedad del cliente y proveedores externos",
-   "norma": "9001",
-   "clausula": "8.5.3",
-   "clase": "OBL-ISO",
-   "carpeta": "08.02",
-   "estado": "POR CONFIRMAR",
-   "evidencia": "",
-   "accion": "Verificar si custodia bienes de ENGIE",
-   "hs": [
-    "8.5"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 26,
-   "codigo": "TP-SIG-FOR-015",
-   "documento": "Preservacion y control de salidas no conformes",
-   "norma": "9001",
-   "clausula": "8.5.4 8.7",
-   "clase": "OBL-ISO",
-   "carpeta": "08.02",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir formato - falta procedimiento",
-   "hs": [
-    "8.5",
-    "8.7"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 27,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Liberacion de productos y servicios",
-   "norma": "9001",
-   "clausula": "8.6",
-   "clase": "OBL-ISO",
-   "carpeta": "08.02",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 6",
-   "hs": [
-    "8.6"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 28,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Control de equipos de medicion y programa de calibracion",
-   "norma": "9001",
-   "clausula": "7.1.5",
-   "clase": "OBL-ISO",
-   "carpeta": "7",
-   "estado": "POR CONFIRMAR",
-   "evidencia": "",
-   "accion": "Verificar equipos topografia y densimetros",
-   "hs": [
-    "7.1"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 29,
-   "codigo": "TP-SIG-PSC-052",
-   "documento": "Satisfaccion del cliente quejas y reclamos",
-   "norma": "9001",
-   "clausula": "9.1.2",
-   "clase": "OBL-ISO",
-   "carpeta": "9",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir a Drive",
-   "hs": [
-    "9.1"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 30,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Plan de calidad del servicio o del proyecto",
-   "norma": "9001",
-   "clausula": "8.1",
-   "clase": "VOL-CRITICO",
-   "carpeta": "08.02",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 6",
-   "hs": [
-    "8.1"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 31,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Conocimientos de la organizacion",
-   "norma": "9001",
-   "clausula": "7.1.6",
-   "clase": "VOL-CRITICO",
-   "carpeta": "7",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 6",
-   "hs": [
-    "7.1"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 32,
-   "codigo": "TP-SIG-IAA-014",
-   "documento": "Matriz de aspectos e impactos ambientales",
-   "norma": "14001",
-   "clausula": "6.1.2",
-   "clase": "OBL-ISO",
-   "carpeta": "6",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir - contrastar con IPERC-AMB-018",
-   "hs": [
-    "6.1.2"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 33,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Plan de manejo ambiental",
-   "norma": "14001",
-   "clausula": "8.1",
-   "clase": "VOL-CRITICO",
-   "carpeta": "08.03",
-   "estado": "EN DRIVE",
-   "evidencia": "COMPROMISOS AMBIENTALES",
-   "accion": "Consolidar y codificar",
-   "hs": [
-    "8.1"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 34,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Gestion integral de residuos solidos y plan de minimizacion",
-   "norma": "DL 1278",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "08.03",
-   "estado": "POR CONFIRMAR",
-   "evidencia": "COMPROMISOS AMBIENTALES",
-   "accion": "Verificar si esta aprobado",
-   "hs": [],
-   "trinorma": true
-  },
-  {
-   "n": 35,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Manejo de sustancias peligrosas y hojas MSDS",
-   "norma": "14001",
-   "clausula": "8.1",
-   "clase": "OBL-LEGAL",
-   "carpeta": "08.03",
-   "estado": "POR CONFIRMAR",
-   "evidencia": "IPERC-PC-007 Combustible",
-   "accion": "Verificar inventario y MSDS",
-   "hs": [
-    "8.1"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 36,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Control de derrames y kit antiderrames",
-   "norma": "14001",
-   "clausula": "8.2",
-   "clase": "VOL-CRITICO",
-   "carpeta": "08.03",
-   "estado": "PARCIAL",
-   "evidencia": "HQP0033 derrames en indice fotografico",
-   "accion": "Formalizar procedimiento",
-   "hs": [
-    "8.2"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 37,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Programa de monitoreo ambiental",
-   "norma": "14001",
-   "clausula": "9.1.1",
-   "clase": "OBL-LEGAL",
-   "carpeta": "9",
-   "estado": "EN DRIVE",
-   "evidencia": "INFORME MENSUAL AMBIENTAL",
-   "accion": "Formalizar como programa anual",
-   "hs": [
-    "9.1"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 38,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Emergencias ambientales",
-   "norma": "14001",
-   "clausula": "8.2",
-   "clase": "OBL-ISO",
-   "carpeta": "08.03",
-   "estado": "PARCIAL",
-   "evidencia": "Hoja de emergencias en IAA-014",
-   "accion": "Integrar al plan de emergencias",
-   "hs": [
-    "8.2"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 39,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Programa de uso eficiente de recursos",
-   "norma": "14001",
-   "clausula": "6.2",
-   "clase": "VOL",
-   "carpeta": "08.03",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 5",
-   "hs": [
-    "6.2"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 40,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Declaracion anual de residuos y manifiestos",
-   "norma": "DL 1278",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "11.2",
-   "estado": "POR CONFIRMAR",
-   "evidencia": "",
-   "accion": "Verificar con administracion",
-   "hs": [],
-   "trinorma": true
-  },
-  {
-   "n": 41,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Perspectiva de ciclo de vida del servicio",
-   "norma": "14001",
-   "clausula": "6.1.2 8.1",
-   "clase": "OBL-ISO",
-   "carpeta": "08.03",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 5",
-   "hs": [
-    "6.1.2",
-    "8.1"
-   ],
-   "trinorma": true
-  },
-  {
-   "n": 42,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Procedimiento IPERC y matriz IPERC",
-   "norma": "45001 LEY 29783",
-   "clausula": "6.1.2",
-   "clase": "OBL-ISO/LEGAL",
-   "carpeta": "6",
-   "estado": "EN DRIVE",
-   "evidencia": "30+ matrices IPERC por actividad + HAZID",
-   "accion": "Armonizar - falta procedimiento marco",
-   "hs": [
-    "6.1.2"
-   ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1UaYQXhtPP69V4o-6O2mnvJ04VMAzxnAL",
+   "link_archivo": "https://drive.google.com/file/d/1fdlRqYzYlylWlVvPt42tdV9m6B-npMLV/view",
+   "file_id": "1fdlRqYzYlylWlVvPt42tdV9m6B-npMLV",
+   "vigencia": "en revisión ENGIE"
   },
   {
    "n": 43,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Reglamento Interno de SST",
-   "norma": "LEY 29783 art 34",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "08.04",
-   "estado": "POR CONFIRMAR",
-   "evidencia": "",
-   "accion": "Verificar aprobacion y difusion",
-   "hs": [],
-   "trinorma": true
+   "codigo": "SSO-0037 / A",
+   "codigo_base": "SSO-0037",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0037",
+   "documento": "PROGRAMA DE CAPACITACIONES",
+   "norma": "—",
+   "clausula": "7.2 / 7.3",
+   "clausula_texto": "7.2 Competencia / 7.3 Toma de conciencia",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 11 › 11.1 Plan Anual Capacitación › _en_revision_ENGIE",
+   "carpeta_sig": "07_Apoyo/7.2_Competencia/S_SST",
+   "estado": "PARCIAL",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "https://drive.google.com/file/d/18IeNKXoDnWPY5Ecan1bBel5pQw3ixIlj/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "7.2",
+    "7.3"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1UaYQXhtPP69V4o-6O2mnvJ04VMAzxnAL",
+   "link_archivo": "https://drive.google.com/file/d/18IeNKXoDnWPY5Ecan1bBel5pQw3ixIlj/view",
+   "file_id": "18IeNKXoDnWPY5Ecan1bBel5pQw3ixIlj",
+   "vigencia": "en revisión ENGIE"
   },
   {
    "n": 44,
-   "codigo": "TP-SIG-PCP-009",
-   "documento": "Consulta y participacion de los trabajadores",
-   "norma": "45001",
-   "clausula": "5.4",
-   "clase": "OBL-ISO",
-   "carpeta": "5",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "",
-   "accion": "Subir a Drive",
+   "codigo": "SSO-0038 / 0",
+   "codigo_base": "SSO-0038",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0038",
+   "documento": "PROGRAMA DE SIMULACROS",
+   "norma": "—",
+   "clausula": "8.2",
+   "clausula_texto": "8.2 Preparación y respuesta ante emergencias",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 05 › 5.2 Programa Simulacros › _en_revision_ENGIE",
+   "carpeta_sig": "08_Operacion/8.2_Emergencias/S_SST",
+   "estado": "PARCIAL",
+   "estado_procore": "Abierto",
+   "evidencia": "https://drive.google.com/file/d/1rcL4eLpG-Ag7FZ952BRu9QANGrQAbD0M/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "5.4"
+    "8.2"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/11fy0aUtSS_KS0-o-4R9zp9hQOMU4pZ2X",
+   "link_archivo": "https://drive.google.com/file/d/1rcL4eLpG-Ag7FZ952BRu9QANGrQAbD0M/view",
+   "file_id": "1rcL4eLpG-Ag7FZ952BRu9QANGrQAbD0M",
+   "vigencia": "en revisión ENGIE"
   },
   {
    "n": 45,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Comite de SST convocatoria acta y libro de actas",
-   "norma": "DS 005-2012-TR",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "5",
-   "estado": "POR CONFIRMAR",
-   "evidencia": "",
-   "accion": "Confirmar numero de trabajadores",
-   "hs": [],
-   "trinorma": true
+   "codigo": "SSO-0038 / A",
+   "codigo_base": "SSO-0038",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0038",
+   "documento": "PROGRAMA DE SIMULACROS",
+   "norma": "—",
+   "clausula": "8.2",
+   "clausula_texto": "8.2 Preparación y respuesta ante emergencias",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 05 › 5.2 Programa Simulacros › _en_revision_ENGIE",
+   "carpeta_sig": "08_Operacion/8.2_Emergencias/S_SST",
+   "estado": "PARCIAL",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "https://drive.google.com/file/d/1StHQ_8blrZ5j5InfTe6XyUVVFjXn180M/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.2"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/11fy0aUtSS_KS0-o-4R9zp9hQOMU4pZ2X",
+   "link_archivo": "https://drive.google.com/file/d/1StHQ_8blrZ5j5InfTe6XyUVVFjXn180M/view",
+   "file_id": "1StHQ_8blrZ5j5InfTe6XyUVVFjXn180M",
+   "vigencia": "en revisión ENGIE"
   },
   {
    "n": 46,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Programa Anual de SST",
-   "norma": "LEY 29783",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "08.04",
-   "estado": "EN DRIVE",
-   "evidencia": "PLAN SSOMA OBRA 2026",
-   "accion": "Elevar a nivel corporativo",
-   "hs": [],
-   "trinorma": true
+   "codigo": "SSO-0039 / A",
+   "codigo_base": "SSO-0039",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0039",
+   "documento": "MATRIZ DE IDENTIFICACIÓN DE PELIGROS, EVALUACIÓN DE RIESGOS Y CONTROL",
+   "norma": "45001",
+   "clausula": "6.1.2",
+   "clausula_texto": "6.1.2 Identificación de peligros y evaluación de riesgos (45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.6 IPERC Línea Base › _obsoletos",
+   "carpeta_sig": "06_Planificacion/6.1.2_Aspectos_Peligros_IPERC/S_Peligros_IPERC",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "https://drive.google.com/file/d/1RiQY0BYAWkUgmmUTymjtt3E34UBTbD9Q/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "6.1.2"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1TpPFVu1uQ5C3f4SThbXB2XN9BeCGjrJf",
+   "link_archivo": "https://drive.google.com/file/d/1RiQY0BYAWkUgmmUTymjtt3E34UBTbD9Q/view",
+   "file_id": "1RiQY0BYAWkUgmmUTymjtt3E34UBTbD9Q",
+   "vigencia": "obsoleto"
   },
   {
    "n": 47,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Plan Anual de SST",
-   "norma": "LEY 29783",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "08.04",
-   "estado": "EN DRIVE",
-   "evidencia": "PSSOMA_PANASUR_HANAQPAMPA_2026_v2",
-   "accion": "Elevar a nivel corporativo",
-   "hs": [],
-   "trinorma": true
+   "codigo": "SSO-0042 / A",
+   "codigo_base": "SSO-0042",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0042",
+   "documento": "MATRIZ DE REQUISITOS LEGALES",
+   "norma": "—",
+   "clausula": "6.1.3",
+   "clausula_texto": "6.1.3 Requisitos legales y otros requisitos",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.10 Matriz Requisitos Legales › _obsoletos",
+   "carpeta_sig": "06_Planificacion/6.1.3_Requisitos_legales/S_SST",
+   "estado": "OBSOLETO",
+   "estado_procore": "Abierto",
+   "evidencia": "https://drive.google.com/file/d/1XOSp07wzryuj7HLJttb-1Q1liIKSP3Yd/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals) · ref. secundaria: Ref. secundaria MA 2.3",
+   "hs": [
+    "6.1.3"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1jaUS5BdxYeM9B1tXRucN-Pq7iw32getg",
+   "link_archivo": "https://drive.google.com/file/d/1XOSp07wzryuj7HLJttb-1Q1liIKSP3Yd/view",
+   "file_id": "1XOSp07wzryuj7HLJttb-1Q1liIKSP3Yd",
+   "vigencia": "obsoleto"
   },
   {
    "n": 48,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Investigacion de incidentes y enfermedades ocupacionales",
-   "norma": "45001",
-   "clausula": "10.2",
-   "clase": "OBL-ISO/LEGAL",
-   "carpeta": "10",
+   "codigo": "SSO-0042 / B",
+   "codigo_base": "SSO-0042",
+   "rev": "B",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0042",
+   "documento": "MATRIZ DE REQUISITOS LEGALES",
+   "norma": "—",
+   "clausula": "6.1.3",
+   "clausula_texto": "6.1.3 Requisitos legales y otros requisitos",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 02 › 2.10 Matriz Requisitos Legales › _en_revision_ENGIE",
+   "carpeta_sig": "06_Planificacion/6.1.3_Requisitos_legales/S_SST",
    "estado": "PARCIAL",
-   "evidencia": "Formato en FOR-000",
-   "accion": "Falta procedimiento",
+   "estado_procore": "Reviewed with comments",
+   "evidencia": "https://drive.google.com/file/d/1PqIgobQ39YF9vKI_BDPa69uZNnQvkw-V/view",
+   "accion": "Ya existía en dossier (no duplicado) · ref. secundaria: Ref. secundaria MA 2.3",
    "hs": [
-    "10.2"
+    "6.1.3"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1fFRqaj7ut7MkRLvqd1-U125fwhdQ9q5r",
+   "link_archivo": "https://drive.google.com/file/d/1PqIgobQ39YF9vKI_BDPa69uZNnQvkw-V/view",
+   "file_id": "1PqIgobQ39YF9vKI_BDPa69uZNnQvkw-V",
+   "vigencia": "en revisión ENGIE"
   },
   {
    "n": 49,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Plan de emergencias brigadas y simulacros",
-   "norma": "45001",
-   "clausula": "8.2",
-   "clase": "OBL-ISO/LEGAL",
-   "carpeta": "08.04",
-   "estado": "EN DRIVE",
-   "evidencia": "Incluido en PSSOMA del proyecto",
-   "accion": "Extraer y codificar aparte",
+   "codigo": "SSO-0042 / C",
+   "codigo_base": "SSO-0042",
+   "rev": "C",
+   "numero": "EEP-HANQ-MAR-GN-DGN-SSO-0042",
+   "documento": "MATRIZ DE REQUISITOS LEGALES",
+   "norma": "—",
+   "clausula": "6.1.3",
+   "clausula_texto": "6.1.3 Requisitos legales y otros requisitos",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 02 › 2.10 Matriz Requisitos Legales › _en_revision_ENGIE",
+   "carpeta_sig": "06_Planificacion/6.1.3_Requisitos_legales/S_SST",
+   "estado": "PARCIAL",
+   "estado_procore": "Abierto",
+   "evidencia": "https://drive.google.com/file/d/1HUeZqXkrTsCFqWLqHyBvlzFRoqSFFx_J/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals) · ref. secundaria: Ref. secundaria MA 2.3",
    "hs": [
-    "8.2"
+    "6.1.3"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1fFRqaj7ut7MkRLvqd1-U125fwhdQ9q5r",
+   "link_archivo": "https://drive.google.com/file/d/1HUeZqXkrTsCFqWLqHyBvlzFRoqSFFx_J/view",
+   "file_id": "1HUeZqXkrTsCFqWLqHyBvlzFRoqSFFx_J",
+   "vigencia": "en revisión ENGIE"
   },
   {
    "n": 50,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Control operacional y jerarquia de controles",
-   "norma": "45001",
-   "clausula": "8.1.1 8.1.2",
-   "clase": "OBL-ISO",
-   "carpeta": "08.01",
-   "estado": "PARCIAL",
-   "evidencia": "Aplicado en IPERC",
-   "accion": "Falta procedimiento marco",
+   "codigo": "ASC-0033 / A",
+   "codigo_base": "ASC-0033",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-DOS-ASC-0033",
+   "documento": "DOSSIER SOCIAL",
+   "norma": "—",
+   "clausula": "4.2",
+   "clausula_texto": "4.2 Partes interesadas (social)",
+   "clase": "sin carpeta",
+   "carpeta": "—",
+   "carpeta_sig": "",
+   "estado": "NO EXISTE",
+   "estado_procore": "Abierto",
+   "evidencia": "",
+   "accion": "Dossier social: fuera de alcance",
    "hs": [
-    "8.1"
+    "4.2"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "",
+   "link_archivo": "",
+   "file_id": "",
+   "vigencia": ""
   },
   {
    "n": 51,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Estandares y PETS por actividad critica",
-   "norma": "DS 011-2019-TR",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "08.04",
-   "estado": "EN DRIVE",
-   "evidencia": "PETS-PROYECTO HANNAQPAMPA",
-   "accion": "Codificar e integrar a lista maestra",
-   "hs": [],
-   "trinorma": true
+   "codigo": "ENV-0034 / A",
+   "codigo_base": "ENV-0034",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-DOS-ENV-0034",
+   "documento": "DOSSIER MEDIO AMBIENTE",
+   "norma": "—",
+   "clausula": "7.5",
+   "clausula_texto": "7.5 Información documentada (dossier MA)",
+   "clase": "sin carpeta",
+   "carpeta": "—",
+   "carpeta_sig": "",
+   "estado": "NO EXISTE",
+   "estado_procore": "Abierto",
+   "evidencia": "",
+   "accion": "Es el propio dossier MA 0034.A (solo carátula)",
+   "hs": [
+    "7.5"
+   ],
+   "trinorma": false,
+   "link_carpeta": "",
+   "link_archivo": "",
+   "file_id": "",
+   "vigencia": ""
   },
   {
    "n": 52,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Permisos de trabajo de alto riesgo",
-   "norma": "45001",
-   "clausula": "8.1.1",
-   "clase": "VOL-CRITICO",
-   "carpeta": "08.04",
-   "estado": "POR CONFIRMAR",
+   "codigo": "SSO-0045 / A",
+   "codigo_base": "SSO-0045",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-DOS-SSO-0045",
+   "documento": "DOSSIER SSO",
+   "norma": "—",
+   "clausula": "7.5",
+   "clausula_texto": "7.5 Información documentada (dossier SSO)",
+   "clase": "sin carpeta",
+   "carpeta": "—",
+   "carpeta_sig": "",
+   "estado": "NO EXISTE",
+   "estado_procore": "Abierto",
    "evidencia": "",
-   "accion": "Verificar formatos PETAR en obra",
+   "accion": "Es el propio DOSSIER SSO 0045.A (solo carátula; no se toca)",
    "hs": [
-    "8.1"
+    "7.5"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "",
+   "link_archivo": "",
+   "file_id": "",
+   "vigencia": ""
   },
   {
    "n": 53,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Programa de salud ocupacional y vigilancia medica",
-   "norma": "RM 312-2011-MINSA",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "08.04",
-   "estado": "EN DRIVE",
-   "evidencia": "EMOS PANASUR",
-   "accion": "Formalizar como programa",
-   "hs": [],
-   "trinorma": true
+   "codigo": "ASC-0032 / A",
+   "codigo_base": "ASC-0032",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-PLN-ASC-0032",
+   "documento": "PLAN DE GESTIÓN SOCIAL",
+   "norma": "—",
+   "clausula": "4.2",
+   "clausula_texto": "4.2 Partes interesadas (social; fuera de alcance SIG 3 normas)",
+   "clase": "sin carpeta",
+   "carpeta": "—",
+   "carpeta_sig": "",
+   "estado": "NO EXISTE",
+   "estado_procore": "Reviewed with comments",
+   "evidencia": "",
+   "accion": "Social: fuera de alcance de los dossiers SSO/MA",
+   "hs": [
+    "4.2"
+   ],
+   "trinorma": false,
+   "link_carpeta": "",
+   "link_archivo": "",
+   "file_id": "",
+   "vigencia": ""
   },
   {
    "n": 54,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Procedimiento de EPP y matriz por puesto",
-   "norma": "45001",
-   "clausula": "8.1.2",
-   "clase": "VOL-CRITICO",
-   "carpeta": "08.04",
-   "estado": "PARCIAL",
-   "evidencia": "Formato de entrega en FOR-000",
-   "accion": "Falta matriz por puesto",
+   "codigo": "ASC-0032 / B",
+   "codigo_base": "ASC-0032",
+   "rev": "B",
+   "numero": "EEP-HANQ-MAR-GN-PLN-ASC-0032",
+   "documento": "PLAN DE GESTIÓN SOCIAL",
+   "norma": "—",
+   "clausula": "4.2",
+   "clausula_texto": "4.2 Partes interesadas (social; fuera de alcance SIG 3 normas)",
+   "clase": "sin carpeta",
+   "carpeta": "—",
+   "carpeta_sig": "",
+   "estado": "NO EXISTE",
+   "estado_procore": "Abierto",
+   "evidencia": "",
+   "accion": "Social: fuera de alcance",
    "hs": [
-    "8.1"
+    "4.2"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "",
+   "link_archivo": "",
+   "file_id": "",
+   "vigencia": ""
   },
   {
    "n": 55,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Inspecciones planificadas y programa anual",
-   "norma": "45001",
-   "clausula": "9.1.1",
-   "clase": "VOL-CRITICO",
-   "carpeta": "9",
-   "estado": "PARCIAL",
-   "evidencia": "Registro en FOR-000",
-   "accion": "Falta programa anual",
+   "codigo": "ENV-0002 / B",
+   "codigo_base": "ENV-0002",
+   "rev": "B",
+   "numero": "EEP-HANQ-MAR-GN-PLN-ENV-0002",
+   "documento": "Plan de Manejo Ambiental (PMA)",
+   "norma": "14001",
+   "clausula": "6.1 / 8.1",
+   "clausula_texto": "6.1 / 8.1 (14001) Plan de Manejo Ambiental",
+   "clase": "vigente",
+   "carpeta": "MA 0034.A › 2.1",
+   "carpeta_sig": "06_Planificacion/6.1.4_Planificacion_acciones/A_PMA_programas",
+   "estado": "EN DRIVE",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "https://drive.google.com/file/d/1KzUBmdGN90Q_87z7DdvMTNIzqYgVKEZK/view",
+   "accion": "Ya existía en dossier (no duplicado)",
    "hs": [
-    "9.1"
+    "6.1",
+    "8.1"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1gQz5piri6C0iqnC91bftMi-OYiT6gwMG",
+   "link_archivo": "https://drive.google.com/file/d/1KzUBmdGN90Q_87z7DdvMTNIzqYgVKEZK/view",
+   "file_id": "1KzUBmdGN90Q_87z7DdvMTNIzqYgVKEZK",
+   "vigencia": "vigente"
   },
   {
    "n": 56,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Observacion de conductas",
-   "norma": "45001",
-   "clausula": "-",
-   "clase": "VOL",
-   "carpeta": "10",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Opcional",
-   "hs": [],
-   "trinorma": true
+   "codigo": "SSO-0001 / A",
+   "codigo_base": "SSO-0001",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-PLN-SSO-0001",
+   "documento": "Plan de Seguridad, Salud Ocupacional y Medio Ambiente (PSSO / Plan SSO",
+   "norma": "—",
+   "clausula": "6.2 / 4.3 / 4.4",
+   "clausula_texto": "6.2 Objetivos y planificación / 4.3-4.4 SGSST (Plan SSOMA)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 01 › 1.1 Plan y Programa SST › _obsoletos",
+   "carpeta_sig": "06_Planificacion/6.1.4_Planificacion_acciones/S_PlanSSO_PASST",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "https://drive.google.com/file/d/1zfTgcXSkAMvwFQmhA8Jfs7bVHvNIQDGX/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "6.2",
+    "4.3",
+    "4.4"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1OgQU4gaPhauKYWFWdImDhHLGbHYatYjU",
+   "link_archivo": "https://drive.google.com/file/d/1zfTgcXSkAMvwFQmhA8Jfs7bVHvNIQDGX/view",
+   "file_id": "1zfTgcXSkAMvwFQmhA8Jfs7bVHvNIQDGX",
+   "vigencia": "obsoleto"
   },
   {
    "n": 57,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Plan de gestion de fatiga y somnolencia",
+   "codigo": "SSO-0041 / A",
+   "codigo_base": "SSO-0041",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-PLN-SSO-0041",
+   "documento": "PLAN DE VIGILANCIA A LA SALUD",
    "norma": "45001",
-   "clausula": "6.1.2",
-   "clase": "VOL-CRITICO",
-   "carpeta": "08.04",
-   "estado": "NO EXISTE",
-   "evidencia": "Dashboard dashcam sugiere data disponible",
-   "accion": "Generar Lote 4 - PRIORITARIO",
+   "clausula": "8.1 / 9.1",
+   "clausula_texto": "8.1 / 9.1 Vigilancia de la salud (45001)",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 04 › 4.1 Programa Salud Ocupacional › _en_revision_ENGIE",
+   "carpeta_sig": "09_Evaluacion_desempeno/9.1_Seguimiento_medicion/S_Salud_higiene_ocup",
+   "estado": "PARCIAL",
+   "estado_procore": "Reviewed with comments",
+   "evidencia": "https://drive.google.com/file/d/12LpA9IYHnRaj_ogID6li6IiSqjy22_6j/view",
+   "accion": "Ya existía en dossier (no duplicado)",
    "hs": [
-    "6.1.2"
+    "8.1",
+    "9.1"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/14v-niUcYwzdgNNzybmkuSSth_UL3TV10",
+   "link_archivo": "https://drive.google.com/file/d/12LpA9IYHnRaj_ogID6li6IiSqjy22_6j/view",
+   "file_id": "12LpA9IYHnRaj_ogID6li6IiSqjy22_6j",
+   "vigencia": "en revisión ENGIE"
   },
   {
    "n": 58,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Vigilancia por altura geografica",
-   "norma": "RM 312-2011-MINSA",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "08.04",
-   "estado": "POR CONFIRMAR",
-   "evidencia": "EMOS PANASUR",
-   "accion": "Verificar protocolo de altura en EMOs",
-   "hs": [],
-   "trinorma": true
+   "codigo": "SSO-0041 / B",
+   "codigo_base": "SSO-0041",
+   "rev": "B",
+   "numero": "EEP-HANQ-MAR-GN-PLN-SSO-0041",
+   "documento": "PLAN DE VIGILANCIA A LA SALUD",
+   "norma": "45001",
+   "clausula": "8.1 / 9.1",
+   "clausula_texto": "8.1 / 9.1 Vigilancia de la salud (45001)",
+   "clase": "en revisión ENGIE",
+   "carpeta": "Gil › 04 › 4.1 Programa Salud Ocupacional › _en_revision_ENGIE",
+   "carpeta_sig": "09_Evaluacion_desempeno/9.1_Seguimiento_medicion/S_Salud_higiene_ocup",
+   "estado": "PARCIAL",
+   "estado_procore": "Abierto",
+   "evidencia": "https://drive.google.com/file/d/1KFuh7tLN7h01xXMn1TjNJks8eaO1NsJM/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "8.1",
+    "9.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/14v-niUcYwzdgNNzybmkuSSth_UL3TV10",
+   "link_archivo": "https://drive.google.com/file/d/1KFuh7tLN7h01xXMn1TjNJks8eaO1NsJM/view",
+   "file_id": "1KFuh7tLN7h01xXMn1TjNJks8eaO1NsJM",
+   "vigencia": "en revisión ENGIE"
   },
   {
    "n": 59,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Gestion de seguridad vial y parque automotor",
-   "norma": "DS 017-2009-MTC",
+   "codigo": "SSO-0043 / A",
+   "codigo_base": "SSO-0043",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-PLN-SSO-0043",
+   "documento": "PLAN DE FATIGA Y SOMNOLENCIA",
+   "norma": "—",
    "clausula": "8.1",
-   "clase": "VOL-CRITICO",
-   "carpeta": "08.04",
-   "estado": "PARCIAL",
-   "evidencia": "IPERC movilizacion y transporte DME",
-   "accion": "Generar procedimiento",
+   "clausula_texto": "8.1 Control operacional (fatiga)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.13 Estándares de Seguridad › _obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/S_SST_SSO",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "https://drive.google.com/file/d/1PAJDt_UD7Rc5nl5fgWJK2YVpg0xOI-Wh/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
     "8.1"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1fksG7y-MCkM_y30kb5xPatEEJ4z2boOZ",
+   "link_archivo": "https://drive.google.com/file/d/1PAJDt_UD7Rc5nl5fgWJK2YVpg0xOI-Wh/view",
+   "file_id": "1PAJDt_UD7Rc5nl5fgWJK2YVpg0xOI-Wh",
+   "vigencia": "obsoleto"
   },
   {
    "n": 60,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Programa de ergonomia y riesgo disergonomico",
-   "norma": "RM 375-2008-TR",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "08.04",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 4",
-   "hs": [],
-   "trinorma": true
+   "codigo": "SSO-0044 / A",
+   "codigo_base": "SSO-0044",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-PLN-SSO-0044",
+   "documento": "PLAN DE RECONOCIMIENTOS Y SANCIONES",
+   "norma": "—",
+   "clausula": "5.4 / 7.3",
+   "clausula_texto": "5.4 Consulta y participación / 7.3 (reconocimientos y sanciones)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 12 Cultura Justa › _obsoletos",
+   "carpeta_sig": "05_Liderazgo_y_participacion/5.4_Consulta_participacion_CSST",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "https://drive.google.com/file/d/1PogB5tKOgaQp_tCMTdypqxfKnMKm7jxZ/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "5.4",
+    "7.3"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1PJb0zvkS6n_wc9t5PxjpMOxHpOclKqRL",
+   "link_archivo": "https://drive.google.com/file/d/1PogB5tKOgaQp_tCMTdypqxfKnMKm7jxZ/view",
+   "file_id": "1PogB5tKOgaQp_tCMTdypqxfKnMKm7jxZ",
+   "vigencia": "obsoleto"
   },
   {
    "n": 61,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Programa de riesgos psicosociales",
-   "norma": "45001",
-   "clausula": "6.1.2",
-   "clase": "VOL-CRITICO",
-   "carpeta": "08.04",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 4",
+   "codigo": "ENV-0008 / B",
+   "codigo_base": "ENV-0008",
+   "rev": "B",
+   "numero": "EEP-HANQ-MAR-GN-PTS-ENV-0008",
+   "documento": "PETS Abastecimiento de Combustible",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "MA 0034.A › 4.3 › _obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/A_Ambiente_ENV",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed with comments",
+   "evidencia": "https://drive.google.com/file/d/1X2__PBxn8NZNRSuOeYuYfmG0EO1UQkFl/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "6.1.2"
+    "8.1"
    ],
-   "trinorma": true
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/10rntaXWvGJo4zMfWlFu5yRLfcuMtOV2s",
+   "link_archivo": "https://drive.google.com/file/d/1X2__PBxn8NZNRSuOeYuYfmG0EO1UQkFl/view",
+   "file_id": "1X2__PBxn8NZNRSuOeYuYfmG0EO1UQkFl",
+   "vigencia": "obsoleto"
   },
   {
    "n": 62,
-   "codigo": "TP-SIG-FOR-000",
-   "documento": "Registros obligatorios DS 005-2012-TR (10)",
-   "norma": "DS 005-2012-TR",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "11.1",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "Cuaderno de 19 formatos",
-   "accion": "Subir y verificar cobertura de los 10",
-   "hs": [],
-   "trinorma": true
+   "codigo": "SSO-0018 / A",
+   "codigo_base": "SSO-0018",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-PTS-SSO-0018",
+   "documento": "PETS Ambulancia y Traslado Asistido",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › SSO-0018/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/S_SST_SSO",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed with comments",
+   "evidencia": "https://drive.google.com/file/d/1GIyHdhgWTqnxpBc3lCbnJzP1yQrT6LJS/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1U_KbsgWAnzD-ApqGRceEoE2-hNB9HvDn",
+   "link_archivo": "https://drive.google.com/file/d/1GIyHdhgWTqnxpBc3lCbnJzP1yQrT6LJS/view",
+   "file_id": "1GIyHdhgWTqnxpBc3lCbnJzP1yQrT6LJS",
+   "vigencia": "obsoleto"
   },
   {
    "n": 63,
-   "codigo": "TP-SIG-MRS-XXX",
-   "documento": "Evaluacion de riesgos de soborno",
-   "norma": "37001",
-   "clausula": "4.5",
-   "clase": "OBL-ISO",
-   "carpeta": "4",
+   "codigo": "QLT-0035 / A",
+   "codigo_base": "QLT-0035",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-MT-DOS-QLT-0035",
+   "documento": "DOSSIER CALIDAD",
+   "norma": "—",
+   "clausula": "7.5",
+   "clausula_texto": "7.5 Información documentada (dossier calidad)",
+   "clase": "sin carpeta",
+   "carpeta": "—",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/Q_Calidad_QLT",
    "estado": "NO EXISTE",
+   "estado_procore": "Abierto",
    "evidencia": "",
-   "accion": "Generar Lote 7 - PIEDRA ANGULAR",
+   "accion": "Es el propio dossier de calidad (solo carátula)",
    "hs": [
-    "4"
+    "7.5"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "",
+   "link_archivo": "",
+   "file_id": "",
+   "vigencia": ""
   },
   {
    "n": 64,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Funcion antisoborno designacion y estatuto",
-   "norma": "37001",
-   "clausula": "5.3.2",
-   "clase": "OBL-ISO",
-   "carpeta": "5",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7",
+   "codigo": "CON-0015 / 1A",
+   "codigo_base": "CON-0015",
+   "rev": "1A",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0015",
+   "documento": "PETS Colocacion de Afirmado",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0015/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed with comments",
+   "evidencia": "https://drive.google.com/file/d/12WTtCy-zld1tOo0Z8Ns3CGSSksraoM7K/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "5.3"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Ow3KdvJG7FEALPlJuOHS41RDL66IOK0Q",
+   "link_archivo": "https://drive.google.com/file/d/12WTtCy-zld1tOo0Z8Ns3CGSSksraoM7K/view",
+   "file_id": "12WTtCy-zld1tOo0Z8Ns3CGSSksraoM7K",
+   "vigencia": "obsoleto"
   },
   {
    "n": 65,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Delegacion de decisiones y matriz de facultades",
-   "norma": "37001",
-   "clausula": "5.3.3",
-   "clase": "OBL-ISO",
-   "carpeta": "5",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7",
+   "codigo": "CON-0015 / 1B",
+   "codigo_base": "CON-0015",
+   "rev": "1B",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0015",
+   "documento": "PETS Colocacion de Afirmado",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0015/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "https://drive.google.com/file/d/1gXLDJo_kTU6PMGYtXNSAVy9yPHXTgKhf/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "5.3"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Ow3KdvJG7FEALPlJuOHS41RDL66IOK0Q",
+   "link_archivo": "https://drive.google.com/file/d/1gXLDJo_kTU6PMGYtXNSAVy9yPHXTgKhf/view",
+   "file_id": "1gXLDJo_kTU6PMGYtXNSAVy9yPHXTgKhf",
+   "vigencia": "obsoleto"
   },
   {
    "n": 66,
-   "codigo": "TP-SIG-COD-012",
-   "documento": "Codigo de etica y conducta",
-   "norma": "37001",
-   "clausula": "5.2",
-   "clase": "VOL-CRITICO",
-   "carpeta": "5",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "Con capitulo antisoborno",
-   "accion": "Subir a Drive",
+   "codigo": "CON-0017 / B",
+   "codigo_base": "CON-0017",
+   "rev": "B",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0017",
+   "documento": "PETS Mantenimiento Diario de Equipos",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0017/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed with comments",
+   "evidencia": "https://drive.google.com/file/d/1wthdwK2rNZhPdvKNJCyGF6e0AAVwFboi/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "5.2"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1U0YXzArHQ-autJsHjxkrsxTRKaTiVu27",
+   "link_archivo": "https://drive.google.com/file/d/1wthdwK2rNZhPdvKNJCyGF6e0AAVwFboi/view",
+   "file_id": "1wthdwK2rNZhPdvKNJCyGF6e0AAVwFboi",
+   "vigencia": "obsoleto"
   },
   {
    "n": 67,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Debida diligencia personal socios y transacciones",
-   "norma": "37001",
-   "clausula": "8.2",
-   "clase": "OBL-ISO",
-   "carpeta": "08.05",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7",
+   "codigo": "CON-0019 / A",
+   "codigo_base": "CON-0019",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0019",
+   "documento": "PETS Transporte de Personal e insumos",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0019/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "https://drive.google.com/file/d/17E0lz9anxdoRKjve1WW9uhLxDfNDbUp0/view",
+   "accion": "Ya existía en dossier (no duplicado)",
    "hs": [
-    "8.2"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Co6CSFGk-JOzOKpVmc3799L1hcFZnOsc",
+   "link_archivo": "https://drive.google.com/file/d/17E0lz9anxdoRKjve1WW9uhLxDfNDbUp0/view",
+   "file_id": "17E0lz9anxdoRKjve1WW9uhLxDfNDbUp0",
+   "vigencia": "obsoleto"
   },
   {
    "n": 68,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Controles financieros",
-   "norma": "37001",
-   "clausula": "8.3",
-   "clase": "OBL-ISO",
-   "carpeta": "08.05",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7",
+   "codigo": "CON-0021 / A",
+   "codigo_base": "CON-0021",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0021",
+   "documento": "PETS Construccion de Cuneta",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0021/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "OBSOLETO",
+   "estado_procore": "Accepted with comments",
+   "evidencia": "https://drive.google.com/file/d/1cndeunUbwTrBjyUrUcYIwm7MZ9X1IoMr/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "8.3"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1DRdLVGH_icHmKxZ09quIexv5jM7fXl7w",
+   "link_archivo": "https://drive.google.com/file/d/1cndeunUbwTrBjyUrUcYIwm7MZ9X1IoMr/view",
+   "file_id": "1cndeunUbwTrBjyUrUcYIwm7MZ9X1IoMr",
+   "vigencia": "obsoleto"
   },
   {
    "n": 69,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Controles no financieros",
-   "norma": "37001",
-   "clausula": "8.4",
-   "clase": "OBL-ISO",
-   "carpeta": "08.05",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7",
+   "codigo": "CON-0021 / B",
+   "codigo_base": "CON-0021",
+   "rev": "B",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0021",
+   "documento": "PETS Construccion de Cuneta",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0021/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "https://drive.google.com/file/d/1a5ENZH4ogFiCzVgdy4VS0JE5loW5Grqg/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "8.4"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1DRdLVGH_icHmKxZ09quIexv5jM7fXl7w",
+   "link_archivo": "https://drive.google.com/file/d/1a5ENZH4ogFiCzVgdy4VS0JE5loW5Grqg/view",
+   "file_id": "1a5ENZH4ogFiCzVgdy4VS0JE5loW5Grqg",
+   "vigencia": "obsoleto"
   },
   {
    "n": 70,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Compromisos de socios de negocio y clausula contractual",
-   "norma": "37001",
-   "clausula": "8.5 8.6",
-   "clase": "OBL-ISO",
-   "carpeta": "08.05",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7",
+   "codigo": "CON-0022 / A",
+   "codigo_base": "CON-0022",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0022",
+   "documento": "PETS Transporte a DME",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0022/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed with comments",
+   "evidencia": "https://drive.google.com/file/d/1AoEMj0A36lVWWor4WdV-AdxjNWXAz-fu/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals) · ref. secundaria: Ref. secundaria MA 5.5",
    "hs": [
-    "8.5",
-    "8.6"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1ekh0_2JZUCoP_-anJFlY0d3Uw20ONgh9",
+   "link_archivo": "https://drive.google.com/file/d/1AoEMj0A36lVWWor4WdV-AdxjNWXAz-fu/view",
+   "file_id": "1AoEMj0A36lVWWor4WdV-AdxjNWXAz-fu",
+   "vigencia": "obsoleto"
   },
   {
    "n": 71,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Regalos hospitalidad donaciones y patrocinios",
-   "norma": "37001",
-   "clausula": "8.7",
-   "clase": "OBL-ISO",
-   "carpeta": "08.05",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7",
+   "codigo": "CON-0022 / B",
+   "codigo_base": "CON-0022",
+   "rev": "B",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0022",
+   "documento": "PETS Transporte a DME",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0022/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "https://drive.google.com/file/d/1CauAAhjMn_Ln3HlWyzoza3Q-OBbaTO52/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals) · ref. secundaria: Ref. secundaria MA 5.5",
    "hs": [
-    "8.7"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1ekh0_2JZUCoP_-anJFlY0d3Uw20ONgh9",
+   "link_archivo": "https://drive.google.com/file/d/1CauAAhjMn_Ln3HlWyzoza3Q-OBbaTO52/view",
+   "file_id": "1CauAAhjMn_Ln3HlWyzoza3Q-OBbaTO52",
+   "vigencia": "obsoleto"
   },
   {
    "n": 72,
-   "codigo": "TP-SIG-FOR-019",
-   "documento": "Declaracion y gestion de conflictos de interes",
-   "norma": "37001",
-   "clausula": "8.7",
-   "clase": "OBL-ISO",
-   "carpeta": "08.05",
-   "estado": "GENERADO NO SUBIDO",
-   "evidencia": "Formato FOR-019",
-   "accion": "Subir - falta procedimiento",
+   "codigo": "CON-0024 / A",
+   "codigo_base": "CON-0024",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-MT-PTS-CON-0024",
+   "documento": "PETS Vigía- Control De Tránsito Vehicular",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0024/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "https://drive.google.com/file/d/1hdAF1jTRXRNCkCRZWnOU5ZizKmS-BU2l/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "8.7"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1PMwAWJcfxbuthCpNsJpd3viypNLY1aF_",
+   "link_archivo": "https://drive.google.com/file/d/1hdAF1jTRXRNCkCRZWnOU5ZizKmS-BU2l/view",
+   "file_id": "1hdAF1jTRXRNCkCRZWnOU5ZizKmS-BU2l",
+   "vigencia": "obsoleto"
   },
   {
    "n": 73,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Canal de denuncias y proteccion al denunciante",
-   "norma": "37001 LEY 29733",
-   "clausula": "8.9",
-   "clase": "OBL-ISO/LEGAL",
-   "carpeta": "08.05",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7",
+   "codigo": "QLT-0028 / A",
+   "codigo_base": "QLT-0028",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-MT-PTS-QLT-0028",
+   "documento": "PROCEDIMIENTO DE DENSIDAD DE CAMPO",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › QLT-0028/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/Q_Calidad_QLT",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed with comments",
+   "evidencia": "https://drive.google.com/file/d/1TqrYarQXnnvAGNCFruAKbqkaP4V8OQlf/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "8"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1VkI6_yz2a7_3LFOPCM7nnwqTfkQP7H5V",
+   "link_archivo": "https://drive.google.com/file/d/1TqrYarQXnnvAGNCFruAKbqkaP4V8OQlf/view",
+   "file_id": "1TqrYarQXnnvAGNCFruAKbqkaP4V8OQlf",
+   "vigencia": "obsoleto"
   },
   {
    "n": 74,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Investigacion interna y tratamiento del soborno",
-   "norma": "37001",
-   "clausula": "8.10",
-   "clase": "OBL-ISO",
-   "carpeta": "08.05",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7",
+   "codigo": "QLT-0028 / B",
+   "codigo_base": "QLT-0028",
+   "rev": "B",
+   "numero": "EEP-HANQ-MAR-MT-PTS-QLT-0028",
+   "documento": "PROCEDIMIENTO DE DENSIDAD DE CAMPO",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › QLT-0028/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/Q_Calidad_QLT",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed with comments",
+   "evidencia": "https://drive.google.com/file/d/1xncIIYUdSm1ZwfZ2z0OIr9GYz4mCJjxQ/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "8"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1VkI6_yz2a7_3LFOPCM7nnwqTfkQP7H5V",
+   "link_archivo": "https://drive.google.com/file/d/1xncIIYUdSm1ZwfZ2z0OIr9GYz4mCJjxQ/view",
+   "file_id": "1xncIIYUdSm1ZwfZ2z0OIr9GYz4mCJjxQ",
+   "vigencia": "obsoleto"
   },
   {
    "n": 75,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Gestion de la inadecuacion de controles",
-   "norma": "37001",
-   "clausula": "8.8",
-   "clase": "OBL-ISO",
-   "carpeta": "08.05",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7",
+   "codigo": "QLT-0029 / A",
+   "codigo_base": "QLT-0029",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-MT-PTS-QLT-0029",
+   "documento": "PROCEDIMIENTO DE LWD",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › QLT-0029/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/Q_Calidad_QLT",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed with comments",
+   "evidencia": "https://drive.google.com/file/d/1_QtL5UUEOBtdEYBP_OXKcSYKzsk-onT9/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
    "hs": [
-    "8"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/13KJ_SDhcA2QXVC2CHzzpGMNDVkb71t3q",
+   "link_archivo": "https://drive.google.com/file/d/1_QtL5UUEOBtdEYBP_OXKcSYKzsk-onT9/view",
+   "file_id": "1_QtL5UUEOBtdEYBP_OXKcSYKzsk-onT9",
+   "vigencia": "obsoleto"
   },
   {
    "n": 76,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Declaracion antisoborno del personal y clausula laboral",
-   "norma": "37001",
-   "clausula": "7.2.2",
-   "clase": "OBL-ISO",
-   "carpeta": "08.05",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7",
+   "codigo": "QLT-0029 / B",
+   "codigo_base": "QLT-0029",
+   "rev": "B",
+   "numero": "EEP-HANQ-MAR-MT-PTS-QLT-0029",
+   "documento": "PROCEDIMIENTO DE LWD",
+   "norma": "9001 14001 45001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Planificación y control operacional (9001/14001/45001)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › QLT-0029/_obsoletos",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/Q_Calidad_QLT",
+   "estado": "OBSOLETO",
+   "estado_procore": "Reviewed with comments",
+   "evidencia": "https://drive.google.com/file/d/1G987NtGzoLs5sWSXXAKapXNP2LCrpLry/view",
+   "accion": "Ya existía en dossier (no duplicado)",
    "hs": [
-    "7.2"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/13KJ_SDhcA2QXVC2CHzzpGMNDVkb71t3q",
+   "link_archivo": "https://drive.google.com/file/d/1G987NtGzoLs5sWSXXAKapXNP2LCrpLry/view",
+   "file_id": "1G987NtGzoLs5sWSXXAKapXNP2LCrpLry",
+   "vigencia": "obsoleto"
   },
   {
    "n": 77,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Formacion y sensibilizacion antisoborno por nivel de riesgo",
-   "norma": "37001",
-   "clausula": "7.3",
-   "clase": "OBL-ISO",
-   "carpeta": "7",
+   "codigo": "ENV-0003 / A",
+   "codigo_base": "ENV-0003",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-PLN-ENV-0003",
+   "documento": "Plan de Manejo de Residuos Sólidos y Aguas residuales",
+   "norma": "14001",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 (14001) Residuos y aguas residuales",
+   "clase": "sin carpeta",
+   "carpeta": "—",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/A_Ambiente_ENV",
    "estado": "NO EXISTE",
+   "estado_procore": "Reviewed with comments",
    "evidencia": "",
-   "accion": "Generar Lote 7",
+   "accion": "No está en Drive (solo copia local procore-full); Rev0 IFC pendiente de descarga. Destino sugerido MA 5.1",
    "hs": [
-    "7.3"
+    "8.1"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "",
+   "link_archivo": "",
+   "file_id": "",
+   "vigencia": ""
   },
   {
    "n": 78,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Plan de cultura antisoborno y sus indicadores",
-   "norma": "37001",
-   "clausula": "5.1",
-   "clase": "OBL-ISO",
-   "carpeta": "5",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7 - NOVEDAD 2025",
-   "hs": [
-    "5.1"
-   ],
-   "trinorma": false
-  },
-  {
-   "n": 79,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Revision por la funcion antisoborno y organo de gobierno",
-   "norma": "37001",
-   "clausula": "9.3 9.4",
-   "clase": "OBL-ISO",
-   "carpeta": "9",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 8",
-   "hs": [
-    "9",
-    "9.3"
-   ],
-   "trinorma": false
-  },
-  {
-   "n": 80,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Modelo de Prevencion Ley 30424 y tabla de correspondencia",
-   "norma": "DS 002-2019-JUS",
-   "clausula": "-",
-   "clase": "OBL-LEGAL",
-   "carpeta": "08.05",
-   "estado": "NO EXISTE",
-   "evidencia": "",
-   "accion": "Generar Lote 7 - CLAVE PARA LICITAR",
-   "hs": [],
-   "trinorma": true
-  },
-  {
-   "n": 81,
-   "codigo": "TP-SIG-XXX",
-   "documento": "Debida diligencia reforzada en contrataciones publicas",
-   "norma": "37001",
+   "codigo": "ENV-0004 / A",
+   "codigo_base": "ENV-0004",
+   "rev": "A",
+   "numero": "EEP-HANQ-MAR-GN-PLN-ENV-0004",
+   "documento": "Plan de Contingencia Ambiental",
+   "norma": "14001",
    "clausula": "8.2",
-   "clase": "VOL-CRITICO",
-   "carpeta": "08.05",
+   "clausula_texto": "8.2 (14001) Contingencia ambiental",
+   "clase": "sin carpeta",
+   "carpeta": "—",
+   "carpeta_sig": "08_Operacion/8.2_Emergencias/A_Ambiente",
    "estado": "NO EXISTE",
+   "estado_procore": "Reviewed with comments",
    "evidencia": "",
-   "accion": "Generar Lote 7",
+   "accion": "No está en Drive (solo local); Rev0 IFC pendiente. Destino sugerido MA 9.1",
    "hs": [
     "8.2"
    ],
-   "trinorma": false
+   "trinorma": false,
+   "link_carpeta": "",
+   "link_archivo": "",
+   "file_id": "",
+   "vigencia": ""
+  },
+  {
+   "n": 79,
+   "codigo": "ENV-0005 / 0",
+   "codigo_base": "ENV-0005",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PLN-ENV-0005",
+   "documento": "Plan de Respuesta ante Emergencias",
+   "norma": "—",
+   "clausula": "8.2",
+   "clausula_texto": "8.2 Preparación y respuesta ante emergencias",
+   "clase": "sin carpeta",
+   "carpeta": "—",
+   "carpeta_sig": "08_Operacion/8.2_Emergencias/A_Ambiente",
+   "estado": "NO EXISTE",
+   "estado_procore": "Reviewed without comments",
+   "evidencia": "",
+   "accion": "Solo APROBACION local, no en Drive; DOC Rev0 pendiente. Destino Gil 5.1 / MA 9.1 (RevA APROB ya en Gil 5.1/_en_revision_ENGIE: 1JrB0S_wykSZi-DsTkRbfA8CHSvF7ikFl)",
+   "hs": [
+    "8.2"
+   ],
+   "trinorma": false,
+   "link_carpeta": "",
+   "link_archivo": "",
+   "file_id": "",
+   "vigencia": ""
+  },
+  {
+   "n": 80,
+   "codigo": "QLT-0027 / 0",
+   "codigo_base": "QLT-0027",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-PLN-QLT-0027",
+   "documento": "PLAN DE CALIDAD ACCESO C.S. HANAQPAMPA_R-0",
+   "norma": "9001",
+   "clausula": "6.1 / 6.2 / 8.1",
+   "clausula_texto": "6.1-6.2 / 8.1 (9001) Plan de calidad",
+   "clase": "sin carpeta",
+   "carpeta": "—",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/Q_Calidad_QLT",
+   "estado": "NO EXISTE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "",
+   "accion": "No está en Drive (solo local). Plan de calidad: sin carpeta en dossier SSO/MA (sugerido dossier calidad / SIG 6.1.4)",
+   "hs": [
+    "6.1",
+    "6.2",
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "",
+   "link_archivo": "",
+   "file_id": "",
+   "vigencia": ""
+  },
+  {
+   "n": 81,
+   "codigo": "QLT-0030 / 0",
+   "codigo_base": "QLT-0030",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-MT-PRT-QLT-0030",
+   "documento": "PPI : EXCAVACIONES-Y-CORTE-DE-TERRENO",
+   "norma": "—",
+   "clausula": "8.6",
+   "clausula_texto": "8.6 Liberación (PPI)",
+   "clase": "sin carpeta",
+   "carpeta": "—",
+   "carpeta_sig": "08_Operacion/8.6_Liberacion_protocolos",
+   "estado": "NO EXISTE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION",
+   "evidencia": "",
+   "accion": "No está en Drive (solo local). PPI: sin carpeta en dossier SSO/MA (sugerido SIG 8.6)",
+   "hs": [
+    "8.6"
+   ],
+   "trinorma": false,
+   "link_carpeta": "",
+   "link_archivo": "",
+   "file_id": "",
+   "vigencia": ""
+  },
+  {
+   "n": 82,
+   "codigo": "CON-0026 / B",
+   "codigo_base": "CON-0026",
+   "rev": "B",
+   "numero": "EEP-HANQ-MAR-GN-DGN-CON-0026",
+   "documento": "Listado maestro de documentos (MDL)",
+   "norma": "—",
+   "clausula": "7.5",
+   "clausula_texto": "7.5.3 Control de la información documentada (MDL)",
+   "clase": "obsoleto",
+   "carpeta": "Gil › 02 › 2.15 Listado maestro (MDL) › _obsoletos",
+   "carpeta_sig": "07_Apoyo/7.5_Informacion_documentada",
+   "estado": "OBSOLETO",
+   "estado_procore": "(ZIP 2026-09-25)",
+   "evidencia": "https://drive.google.com/file/d/1PGEzmjePwgk_-30-ZLRnK1aphtMDO2zs/view",
+   "accion": "COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+   "hs": [
+    "7.5"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/15G-vGuZpwKt7GsJVLHiHU1u6FrjQ3gme",
+   "link_archivo": "https://drive.google.com/file/d/1PGEzmjePwgk_-30-ZLRnK1aphtMDO2zs/view",
+   "file_id": "1PGEzmjePwgk_-30-ZLRnK1aphtMDO2zs",
+   "vigencia": "obsoleto"
+  },
+  {
+   "n": 83,
+   "codigo": "CON-0026 / 0",
+   "codigo_base": "CON-0026",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-GN-DGN-CON-0026",
+   "documento": "Listado maestro de documentos (MDL)",
+   "norma": "—",
+   "clausula": "7.5",
+   "clausula_texto": "7.5.3 Control de la información documentada (MDL)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.15 Listado maestro (MDL)",
+   "carpeta_sig": "07_Apoyo/7.5_Informacion_documentada",
+   "estado": "EN DRIVE",
+   "estado_procore": "ISSUED FOR CONSTRUCTION (según dossier)",
+   "evidencia": "https://drive.google.com/file/d/1Rva0aIHoKprYU1A9qpl_1F-l3ipX5u2A/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "7.5"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1Mq_lUjNMC9XA_EKfSoV5wzXuyHbg0BWr",
+   "link_archivo": "https://drive.google.com/file/d/1Rva0aIHoKprYU1A9qpl_1F-l3ipX5u2A/view",
+   "file_id": "1Rva0aIHoKprYU1A9qpl_1F-l3ipX5u2A",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 84,
+   "codigo": "CON-0023 / 0",
+   "codigo_base": "CON-0023",
+   "rev": "0",
+   "numero": "EEP-HANQ-MAR-CV-PTS-CON-0023",
+   "documento": "PETS Señalización definitiva",
+   "norma": "—",
+   "clausula": "8.1",
+   "clausula_texto": "8.1 Control operacional (señalización)",
+   "clase": "vigente",
+   "carpeta": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0023",
+   "carpeta_sig": "08_Operacion/8.1_Control_operacional/C_Construccion_CON",
+   "estado": "EN DRIVE",
+   "estado_procore": "(descarga previa; no en ZIP 09-25)",
+   "evidencia": "https://drive.google.com/file/d/1OTVEppsfAWM4tHosCbqJS_nPXLtv6Ffa/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1vmWegXHhVnZTnCWmr4y8J4SwHNvq0NaU",
+   "link_archivo": "https://drive.google.com/file/d/1OTVEppsfAWM4tHosCbqJS_nPXLtv6Ffa/view",
+   "file_id": "1OTVEppsfAWM4tHosCbqJS_nPXLtv6Ffa",
+   "vigencia": "vigente"
+  },
+  {
+   "n": 85,
+   "codigo": "SSO-0036 / 0",
+   "codigo_base": "SSO-0036",
+   "rev": "0",
+   "numero": "",
+   "documento": "Programa anual SST (aprobación)",
+   "norma": "—",
+   "clausula": "6.2",
+   "clausula_texto": "6.2 Programa anual SST",
+   "clase": "vigente",
+   "carpeta": "Gil › 01 › 1.1 Plan y Programa SST › (APROBACION)",
+   "carpeta_sig": "06_Planificacion/6.2_Objetivos_metas/S_SST",
+   "estado": "EN DRIVE",
+   "estado_procore": "(descarga previa; no en ZIP 09-25)",
+   "evidencia": "https://drive.google.com/file/d/1xaFLZegVwDCiwrUhYzWp-v4NIgd1Sw1q/view",
+   "accion": "Ya existía en dossier (no duplicado)",
+   "hs": [
+    "6.2"
+   ],
+   "trinorma": false,
+   "link_carpeta": "https://drive.google.com/drive/folders/1CsfBZ7JXiQRsl2bD7EaiJqVwBv4ANoTb",
+   "link_archivo": "https://drive.google.com/file/d/1xaFLZegVwDCiwrUhYzWp-v4NIgd1Sw1q/view",
+   "file_id": "1xaFLZegVwDCiwrUhYzWp-v4NIgd1Sw1q",
+   "vigencia": "vigente"
   }
  ],
  "dossier": {
   "nombre": "Dossier SSO – Acceso Principal Hanaqpampa (submittal 0045.A)",
-  "indice": "Anexo 18 Guía SSOMA ENGIE V03 (XLS de 18 capítulos / 117 ítems)",
-  "fecha_estado": "2026-09-01",
+  "indice": "Anexo 18 Guía SSOMA ENGIE V03 (XLS de 18 capítulos / 117 ítems). 2026-09-25: 37 copias archivadas en carpetas Gil/MA; el checklist SI/NO/NA de 0045.A no se reauditó",
+  "fecha_estado": "2026-09-25",
   "drive_root": "1um84TwJJzFyALk39ttuTjQaSbu6Tgrrb",
   "capitulos": [
    {
@@ -3280,180 +4271,829 @@
   ],
   "procore": [
    {
-    "codigo": "0045.A",
-    "titulo": "Dossier SSO Acceso Principal",
-    "revision": "A",
-    "estado": "ATRASADO",
-    "fecha_limite": "2026-08-15",
+    "codigo": "CON-0013",
+    "titulo": "PETS Izaje de cargas",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
     "fecha_envio": "",
-    "capitulo_dossier": "--",
-    "observacion": "Revisión ENGIE reprogramada 01/09/2026; coordinar con M. Alcántara / R. Revilla",
-    "fuente": "procore"
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0013",
+    "observacion": "ok (4 archivos); ok_zip (4 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
    },
    {
-    "codigo": "0034.A",
-    "titulo": "Dossier Medio Ambiente",
-    "revision": "A",
-    "estado": "ATRASADO",
-    "fecha_limite": "2026-08-15",
+    "codigo": "SSO-0039",
+    "titulo": "MATRIZ DE IDENTIFICACIÓN DE PELIGROS, EVALUACIÓN DE RIESGOS Y CONTROL ",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
     "fecha_envio": "",
-    "capitulo_dossier": "--",
-    "observacion": "Índice propuesto en TP-SSOMA-VDD-001-2026 (51 ítems)",
-    "fuente": "procore"
+    "capitulo_dossier": "Gil › 02 › 2.6 IPERC Línea Base",
+    "observacion": "ok (1 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
    },
    {
-    "codigo": "0035.A",
-    "titulo": "Dossier Calidad",
-    "revision": "A",
-    "estado": "ATRASADO",
-    "fecha_limite": "2026-08-15",
+    "codigo": "SSO-0040",
+    "titulo": "MAPA DE RIESGOS",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
     "fecha_envio": "",
-    "capitulo_dossier": "--",
-    "observacion": "Índice propuesto en TP-SSOMA-VDD-001-2026 (41 ítems)",
-    "fuente": "procore"
+    "capitulo_dossier": "Gil › 08 › 8.3 Mapa de Riesgos",
+    "observacion": "ok (5 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
    },
    {
-    "codigo": "0001.0",
-    "titulo": "Plan SSO",
-    "revision": "0",
-    "estado": "DISTRIBUIDO",
-    "fecha_limite": "2026-08-20",
-    "fecha_envio": "2026-08-28",
-    "capitulo_dossier": "1.1",
-    "observacion": "Distribuido por ENGIE 28/08/2026",
-    "fuente": "procore"
-   },
-   {
-    "codigo": "0036.0",
-    "titulo": "PASST",
-    "revision": "0",
-    "estado": "DISTRIBUIDO",
-    "fecha_limite": "2026-08-24",
-    "fecha_envio": "2026-08-28",
-    "capitulo_dossier": "2.8b",
-    "observacion": "Devuelto con comentarios 22/08; distribuido 28/08",
-    "fuente": "procore"
-   },
-   {
-    "codigo": "0039.0",
-    "titulo": "IPERC Línea Base",
-    "revision": "0",
-    "estado": "DISTRIBUIDO",
-    "fecha_limite": "2026-08-20",
-    "fecha_envio": "2026-08-28",
-    "capitulo_dossier": "10.2",
-    "observacion": "",
-    "fuente": "procore"
-   },
-   {
-    "codigo": "0040.0",
-    "titulo": "Mapa de Riesgos",
-    "revision": "0",
-    "estado": "DISTRIBUIDO",
-    "fecha_limite": "2026-08-20",
-    "fecha_envio": "2026-08-28",
-    "capitulo_dossier": "10.5",
-    "observacion": "",
-    "fuente": "procore"
-   },
-   {
-    "codigo": "0043.0",
-    "titulo": "Plan de Fatiga y Somnolencia",
-    "revision": "0",
-    "estado": "DISTRIBUIDO",
-    "fecha_limite": "2026-08-20",
-    "fecha_envio": "2026-08-28",
-    "capitulo_dossier": "5.1",
-    "observacion": "PANASUR-SSOMA-PFS-001 Rev.A",
-    "fuente": "procore"
-   },
-   {
-    "codigo": "0044.0",
-    "titulo": "Plan de Reconocimientos y Sanciones",
-    "revision": "0",
-    "estado": "DISTRIBUIDO",
-    "fecha_limite": "2026-08-20",
-    "fecha_envio": "2026-08-28",
-    "capitulo_dossier": "17.2",
-    "observacion": "",
-    "fuente": "procore"
-   },
-   {
-    "codigo": "0042.A",
-    "titulo": "Matriz de Requisitos Legales",
+    "codigo": "SSO-0040",
+    "titulo": "MAPA DE RIESGOS",
     "revision": "A",
-    "estado": "ENVIADO",
+    "estado": "ISSUED FOR CONSTRUCTION",
     "fecha_limite": "",
-    "fecha_envio": "2026-09-01",
-    "capitulo_dossier": "2.12",
-    "observacion": "EEP-HANQ-MAR-GN-DGN-SSO-0042",
-    "fuente": "procore"
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 08 › 8.3 Mapa de Riesgos › _obsoletos",
+    "observacion": "ok (4 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
    },
    {
-    "codigo": "0037.A",
-    "titulo": "Programa de Capacitaciones",
-    "revision": "A",
-    "estado": "ENVIADO",
-    "fecha_limite": "",
-    "fecha_envio": "2026-09-01",
-    "capitulo_dossier": "11.1",
-    "observacion": "EEP-HANQ-MAR-GN-DGN-SSO-0037",
-    "fuente": "procore"
-   },
-   {
-    "codigo": "0038.A",
-    "titulo": "Programa de Simulacros",
-    "revision": "A",
-    "estado": "ENVIADO",
-    "fecha_limite": "",
-    "fecha_envio": "2026-09-01",
-    "capitulo_dossier": "7.2",
-    "observacion": "EEP-HANQ-MAR-GN-DGN-SSO-0038",
-    "fuente": "procore"
-   },
-   {
-    "codigo": "CON-0019.A",
-    "titulo": "PETS Transporte de Personal e Insumos",
-    "revision": "A",
-    "estado": "ENVIADO",
-    "fecha_limite": "",
-    "fecha_envio": "2026-08-27",
-    "capitulo_dossier": "2.14",
-    "observacion": "EEP-HANQ-MAR-MT-PTS-CON-0019 + IPERC-019 + IAAS-019",
-    "fuente": "procore"
-   },
-   {
-    "codigo": "CON-0011.0",
-    "titulo": "PETS Regado con Cisterna",
+    "codigo": "ENV-0002",
+    "titulo": "Plan de Manejo Ambiental (PMA)",
     "revision": "0",
-    "estado": "DISTRIBUIDO",
+    "estado": "ISSUED FOR CONSTRUCTION",
     "fecha_limite": "",
-    "fecha_envio": "2026-07-22",
-    "capitulo_dossier": "2.14",
-    "observacion": "",
-    "fuente": "procore"
+    "fecha_envio": "",
+    "capitulo_dossier": "MA 0034.A › 2.1",
+    "observacion": "ok (2 archivos); ok_zip (1 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
    },
    {
-    "codigo": "ASP-008",
-    "titulo": "PETS Aditivo supresor de polvo + IPERC/IAAS ASP-029",
+    "codigo": "SSO-0001",
+    "titulo": "Plan de Seguridad, Salud Ocupacional y Medio Ambiente (PSSO / Plan SSO",
     "revision": "0",
-    "estado": "DISTRIBUIDO",
+    "estado": "ISSUED FOR CONSTRUCTION",
     "fecha_limite": "",
-    "fecha_envio": "2026-07-31",
-    "capitulo_dossier": "2.14",
-    "observacion": "ATS-029 Rev.B alineado a HDS MgCl2",
-    "fuente": "procore"
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 01 › 1.1 Plan y Programa SST",
+    "observacion": "ok (13 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
    },
    {
-    "codigo": "CUN-021.B",
-    "titulo": "IPERC/IAAS Cuneta triangular",
+    "codigo": "SSO-0043",
+    "titulo": "PLAN DE FATIGA Y SOMNOLENCIA",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.13 Estándares de Seguridad",
+    "observacion": "ok (5 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0044",
+    "titulo": "PLAN DE RECONOCIMIENTOS Y SANCIONES",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 12 Cultura Justa › (solo APROBACION; ZIP sin documento)",
+    "observacion": "ok (1 archivos) · Ya existía en dossier (no duplicado) · RESUMEN_ZIP marca esta revisión como falta (sin ZIP); se conserva el estado del TSV",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ENV-0008",
+    "titulo": "PETS Abastecimiento de Combustible",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "MA 0034.A › 4.3 · Gil › 02 › 2.11 PETS (= oficial 2.14) › ENV-0008/_en_revision_ENGIE (copia Gil; pendiente pasar a vigente, no movida)",
+    "observacion": "ok (15 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals) · Ya existía (copia en Gil 2.11)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ENV-0009",
+    "titulo": "PETS Limpieza de Baños Quimicos Portatiles",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "MA 0034.A › 5.4 · Gil › 02 › 2.11 PETS (= oficial 2.14) › ENV-0009/_en_revision_ENGIE (copia Gil; pendiente pasar a vigente, no movida)",
+    "observacion": "ok (9 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals) · Ya existía (copia en Gil 2.11)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ENV-0012",
+    "titulo": "PETS Recojo y Disposicion de Residuos Solidos EPS-RS",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "MA 0034.A › 5.3 · Gil › 02 › 2.11 PETS (= oficial 2.14) › ENV-0012/_en_revision_ENGIE (copia Gil; pendiente pasar a vigente, no movida)",
+    "observacion": "ok (9 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals) · Ya existía (copia en Gil 2.11)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ENV-0025",
+    "titulo": "PETS Manejo y gestion de producctos quimicos y peligros",
+    "revision": "A",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "MA 0034.A › 4.5 · Gil › 02 › 2.11 PETS (= oficial 2.14) › ENV-0025/_en_revision_ENGIE (copia Gil; pendiente pasar a vigente, no movida)",
+    "observacion": "ok (9 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals) · Ya existía (copia en Gil 2.11)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0010",
+    "titulo": "PETS Transporte y Entrega de Alimentos en Obra",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › (raíz 2.11)",
+    "observacion": "ok (9 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0016",
+    "titulo": "PETS Seguridad Patrimonial",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › (raíz 2.11)",
+    "observacion": "ok (9 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0018",
+    "titulo": "PETS Ambulancia y Traslado Asistido",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › SSO-0018",
+    "observacion": "ok (9 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0018",
+    "titulo": "PETS Ambulancia y Traslado Asistido",
     "revision": "B",
-    "estado": "ENVIADO",
+    "estado": "ISSUED FOR CONSTRUCTION",
     "fecha_limite": "",
-    "fecha_envio": "2026-08-13",
-    "capitulo_dossier": "10.4",
-    "observacion": "Levanta 10 observaciones de ENGIE",
-    "fuente": "procore"
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › SSO-0018/_obsoletos",
+    "observacion": "ok (9 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "QLT-0031",
+    "titulo": "PPI : RELLENOS-TERRAPLENES",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "—",
+    "observacion": "ok (5 archivos) · Sin carpeta en dossier Gil/MA: protocolo de calidad (PPI). Sugerido: dossier de calidad / SIG 8.6",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0006",
+    "titulo": "PETS Movilizacion y Desmovilizacion",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0006",
+    "observacion": "ok (7 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0007",
+    "titulo": "PETS Trazo y Replanteo Topografico",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0007",
+    "observacion": "ok (7 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0011",
+    "titulo": "PETS Regado con Cisterna para Control de Polvo",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0011",
+    "observacion": "ok (7 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0014",
+    "titulo": "PETS Transporte de Material Granular",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0014",
+    "observacion": "ok (7 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0015",
+    "titulo": "PETS Colocacion de Afirmado",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0015 (raíz; superada, no movida)",
+    "observacion": "ok (9 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0015",
+    "titulo": "PETS Colocacion de Afirmado",
+    "revision": "1",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0015 · Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0015/_en_revision_ENGIE (APROBACION)",
+    "observacion": "ok (11 archivos) · Ya existía en dossier (no duplicado) · Ya existía",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0017",
+    "titulo": "PETS Mantenimiento Diario de Equipos",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0017",
+    "observacion": "ok (15 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0019",
+    "titulo": "PETS Transporte de Personal e insumos",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0019",
+    "observacion": "ok (9 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0020",
+    "titulo": "PETS  Excavacion y Movimiento de Tierras",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0020",
+    "observacion": "ok (9 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0021",
+    "titulo": "PETS Construccion de Cuneta",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0021",
+    "observacion": "ok (9 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0022",
+    "titulo": "PETS Transporte a DME",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0022",
+    "observacion": "ok (13 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0024",
+    "titulo": "PETS Vigía- Control De Tránsito Vehicular",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0024",
+    "observacion": "ok (9 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "QLT-0028",
+    "titulo": "PROCEDIMIENTO DE DENSIDAD DE CAMPO",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › QLT-0028",
+    "observacion": "ok_zip (4 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "QLT-0029",
+    "titulo": "PROCEDIMIENTO DE LWD",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › QLT-0029",
+    "observacion": "ok_zip (7 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0037",
+    "titulo": "PROGRAMA DE CAPACITACIONES",
+    "revision": "0",
+    "estado": "Abierto",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 11 › 11.1 Plan Anual Capacitación › _en_revision_ENGIE",
+    "observacion": "ok_zip (2 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0037",
+    "titulo": "PROGRAMA DE CAPACITACIONES",
+    "revision": "A",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 11 › 11.1 Plan Anual Capacitación › _en_revision_ENGIE",
+    "observacion": "ok_zip (2 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0038",
+    "titulo": "PROGRAMA DE SIMULACROS",
+    "revision": "0",
+    "estado": "Abierto",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 05 › 5.2 Programa Simulacros › _en_revision_ENGIE",
+    "observacion": "ok_zip (2 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0038",
+    "titulo": "PROGRAMA DE SIMULACROS",
+    "revision": "A",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 05 › 5.2 Programa Simulacros › _en_revision_ENGIE",
+    "observacion": "ok_zip (2 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0039",
+    "titulo": "MATRIZ DE IDENTIFICACIÓN DE PELIGROS, EVALUACIÓN DE RIESGOS Y CONTROL ",
+    "revision": "A",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.6 IPERC Línea Base › _obsoletos",
+    "observacion": "ok (5 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0042",
+    "titulo": "MATRIZ DE REQUISITOS LEGALES",
+    "revision": "A",
+    "estado": "Abierto",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.10 Matriz Requisitos Legales › _obsoletos",
+    "observacion": "ok_zip (3 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0042",
+    "titulo": "MATRIZ DE REQUISITOS LEGALES",
+    "revision": "B",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.10 Matriz Requisitos Legales › _en_revision_ENGIE",
+    "observacion": "ok_zip (3 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0042",
+    "titulo": "MATRIZ DE REQUISITOS LEGALES",
+    "revision": "C",
+    "estado": "Abierto",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.10 Matriz Requisitos Legales › _en_revision_ENGIE",
+    "observacion": "ok_zip (2 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ASC-0033",
+    "titulo": "DOSSIER SOCIAL",
+    "revision": "A",
+    "estado": "Abierto",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "—",
+    "observacion": "ok_zip (1 archivos) · Dossier social: fuera de alcance",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ENV-0034",
+    "titulo": "DOSSIER MEDIO AMBIENTE",
+    "revision": "A",
+    "estado": "Abierto",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "—",
+    "observacion": "ok_zip (1 archivos) · Es el propio dossier MA 0034.A (solo carátula)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0045",
+    "titulo": "DOSSIER SSO",
+    "revision": "A",
+    "estado": "Abierto",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "—",
+    "observacion": "ok_zip (1 archivos) · Es el propio DOSSIER SSO 0045.A (solo carátula; no se toca)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ASC-0032",
+    "titulo": "PLAN DE GESTIÓN SOCIAL",
+    "revision": "A",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "—",
+    "observacion": "ok_zip (3 archivos) · Social: fuera de alcance de los dossiers SSO/MA",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ASC-0032",
+    "titulo": "PLAN DE GESTIÓN SOCIAL",
+    "revision": "B",
+    "estado": "Abierto",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "—",
+    "observacion": "ok_zip (2 archivos) · Social: fuera de alcance",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ENV-0002",
+    "titulo": "Plan de Manejo Ambiental (PMA)",
+    "revision": "B",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "MA 0034.A › 2.1",
+    "observacion": "ok (8 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0001",
+    "titulo": "Plan de Seguridad, Salud Ocupacional y Medio Ambiente (PSSO / Plan SSO",
+    "revision": "A",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 01 › 1.1 Plan y Programa SST › _obsoletos",
+    "observacion": "ok (11 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0041",
+    "titulo": "PLAN DE VIGILANCIA A LA SALUD",
+    "revision": "A",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 04 › 4.1 Programa Salud Ocupacional › _en_revision_ENGIE",
+    "observacion": "ok_zip (3 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0041",
+    "titulo": "PLAN DE VIGILANCIA A LA SALUD",
+    "revision": "B",
+    "estado": "Abierto",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 04 › 4.1 Programa Salud Ocupacional › _en_revision_ENGIE",
+    "observacion": "ok_zip (2 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0043",
+    "titulo": "PLAN DE FATIGA Y SOMNOLENCIA",
+    "revision": "A",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.13 Estándares de Seguridad › _obsoletos",
+    "observacion": "ok (5 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0044",
+    "titulo": "PLAN DE RECONOCIMIENTOS Y SANCIONES",
+    "revision": "A",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 12 Cultura Justa › _obsoletos",
+    "observacion": "ok (5 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ENV-0008",
+    "titulo": "PETS Abastecimiento de Combustible",
+    "revision": "B",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "MA 0034.A › 4.3 › _obsoletos",
+    "observacion": "ok (13 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0018",
+    "titulo": "PETS Ambulancia y Traslado Asistido",
+    "revision": "A",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › SSO-0018/_obsoletos",
+    "observacion": "ok (11 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "QLT-0035",
+    "titulo": "DOSSIER CALIDAD",
+    "revision": "A",
+    "estado": "Abierto",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "—",
+    "observacion": "ok_zip (1 archivos) · Es el propio dossier de calidad (solo carátula)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0015",
+    "titulo": "PETS Colocacion de Afirmado",
+    "revision": "1A",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0015/_obsoletos",
+    "observacion": "ok (15 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0015",
+    "titulo": "PETS Colocacion de Afirmado",
+    "revision": "1B",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0015/_obsoletos",
+    "observacion": "ok (13 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0017",
+    "titulo": "PETS Mantenimiento Diario de Equipos",
+    "revision": "B",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0017/_obsoletos",
+    "observacion": "ok (15 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0019",
+    "titulo": "PETS Transporte de Personal e insumos",
+    "revision": "A",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0019/_obsoletos",
+    "observacion": "ok (9 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0021",
+    "titulo": "PETS Construccion de Cuneta",
+    "revision": "A",
+    "estado": "Accepted with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0021/_obsoletos",
+    "observacion": "ok (15 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0021",
+    "titulo": "PETS Construccion de Cuneta",
+    "revision": "B",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0021/_obsoletos",
+    "observacion": "ok (15 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0022",
+    "titulo": "PETS Transporte a DME",
+    "revision": "A",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0022/_obsoletos",
+    "observacion": "ok (9 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0022",
+    "titulo": "PETS Transporte a DME",
+    "revision": "B",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0022/_obsoletos",
+    "observacion": "ok (23 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0024",
+    "titulo": "PETS Vigía- Control De Tránsito Vehicular",
+    "revision": "A",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0024/_obsoletos",
+    "observacion": "ok (15 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "QLT-0028",
+    "titulo": "PROCEDIMIENTO DE DENSIDAD DE CAMPO",
+    "revision": "A",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › QLT-0028/_obsoletos",
+    "observacion": "ok_zip (8 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "QLT-0028",
+    "titulo": "PROCEDIMIENTO DE DENSIDAD DE CAMPO",
+    "revision": "B",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › QLT-0028/_obsoletos",
+    "observacion": "ok_zip (7 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "QLT-0029",
+    "titulo": "PROCEDIMIENTO DE LWD",
+    "revision": "A",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › QLT-0029/_obsoletos",
+    "observacion": "ok_zip (7 archivos) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "QLT-0029",
+    "titulo": "PROCEDIMIENTO DE LWD",
+    "revision": "B",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › QLT-0029/_obsoletos",
+    "observacion": "ok_zip (7 archivos) · Ya existía en dossier (no duplicado)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ENV-0003",
+    "titulo": "Plan de Manejo de Residuos Sólidos y Aguas residuales",
+    "revision": "A",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "—",
+    "observacion": "ok (2 archivos) · No está en Drive (solo copia local procore-full); Rev0 IFC pendiente de descarga. Destino sugerido MA 5.1",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ENV-0004",
+    "titulo": "Plan de Contingencia Ambiental",
+    "revision": "A",
+    "estado": "Reviewed with comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "—",
+    "observacion": "ok (2 archivos) · No está en Drive (solo local); Rev0 IFC pendiente. Destino sugerido MA 9.1",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "ENV-0005",
+    "titulo": "Plan de Respuesta ante Emergencias",
+    "revision": "0",
+    "estado": "Reviewed without comments",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "—",
+    "observacion": "ok (1 archivos) · Solo APROBACION local, no en Drive; DOC Rev0 pendiente. Destino Gil 5.1 / MA 9.1 (RevA APROB ya en Gil 5.1/_en_revision_ENGIE: 1JrB0S_wykSZi-DsTkRbfA8CHSvF7ikFl)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "QLT-0027",
+    "titulo": "PLAN DE CALIDAD ACCESO C.S. HANAQPAMPA_R-0",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "—",
+    "observacion": "ok (2 archivos) · No está en Drive (solo local). Plan de calidad: sin carpeta en dossier SSO/MA (sugerido dossier calidad / SIG 6.1.4)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "QLT-0030",
+    "titulo": "PPI : EXCAVACIONES-Y-CORTE-DE-TERRENO",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "—",
+    "observacion": "ok (2 archivos) · No está en Drive (solo local). PPI: sin carpeta en dossier SSO/MA (sugerido SIG 8.6)",
+    "fuente": "PENDIENTES_DESCARGA.tsv + lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0026",
+    "titulo": "Listado maestro de documentos (MDL)",
+    "revision": "B",
+    "estado": "(ZIP 2026-09-25)",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.15 Listado maestro (MDL) › _obsoletos",
+    "observacion": "ZIP extra en RESUMEN_ZIP_2026-09-25 (no está en PENDIENTES_DESCARGA.tsv) · COPIADO 2026-09-25 (copy_file desde Procore_Submittals)",
+    "fuente": "lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0026",
+    "titulo": "Listado maestro de documentos (MDL)",
+    "revision": "0",
+    "estado": "ISSUED FOR CONSTRUCTION (según dossier)",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.15 Listado maestro (MDL)",
+    "observacion": "no está en PENDIENTES_DESCARGA.tsv · Ya existía en dossier (no duplicado)",
+    "fuente": "lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "CON-0023",
+    "titulo": "PETS Señalización definitiva",
+    "revision": "0",
+    "estado": "(descarga previa; no en ZIP 09-25)",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 02 › 2.11 PETS (= oficial 2.14) › CON-0023",
+    "observacion": "no está en PENDIENTES_DESCARGA.tsv · Ya existía en dossier (no duplicado)",
+    "fuente": "lista maestra 2026-09-25"
+   },
+   {
+    "codigo": "SSO-0036",
+    "titulo": "Programa anual SST (aprobación)",
+    "revision": "0",
+    "estado": "(descarga previa; no en ZIP 09-25)",
+    "fecha_limite": "",
+    "fecha_envio": "",
+    "capitulo_dossier": "Gil › 01 › 1.1 Plan y Programa SST › (APROBACION)",
+    "observacion": "no está en PENDIENTES_DESCARGA.tsv · Ya existía en dossier (no duplicado)",
+    "fuente": "lista maestra 2026-09-25"
    }
   ]
  },
@@ -3909,6 +5549,11 @@
  ],
  "timeline": [
   {
+   "date": "2026-09-25",
+   "title": "Lista maestra Hannaqpampa y submittals Procore",
+   "desc": "85 archivos (45 códigos): 35 vigentes en Drive, 13 en revisión ENGIE, 25 obsoletos, 12 sin archivo en Drive. 37 copias a carpetas Gil/MA. Procore: 71 revisiones del TSV + 4 solo en la matriz. Checklist 0045.A no reauditado (81 SI / 28 NO / 8 N/A, 76 %)."
+  },
+  {
    "date": "2026-09-16",
    "icon": "📘",
    "title": "Publicación ISO 9001:2026",
@@ -4317,39 +5962,73 @@
   "drive": {
    "sig_root": {
     "id": "11shlVXWTQQ59tgqEobtZ1-nQT_GSBIow",
-    "nombre": "SIG TOURS PANASUR - ISO 9001 14001 45001 37001 (20 carpetas armonizadas 00–99)"
+    "nombre": "SIG TOURS PANASUR - ISO 9001 14001 45001 37001 (20 carpetas armonizadas 00–99)",
+    "tipo": "folder"
    },
    "lmd002": {
     "id": "1YDXr8YgqbnJKmqI19jrrsYMCmeFLI1vSbj86PC7uPYM",
-    "nombre": "TP-SIG-LMD-002-2026 Lista Maestra (estado real)"
+    "nombre": "TP-SIG-LMD-002-2026 Lista Maestra (estado real)",
+    "tipo": "sheet"
    },
    "dossier_root": {
     "id": "1um84TwJJzFyALk39ttuTjQaSbu6Tgrrb",
-    "nombre": "DOSSIER SSO - ACCESO PRINCIPAL HANAQPAMPA (0045.A) — 18 capítulos / 117 subcarpetas"
+    "nombre": "DOSSIER SSO - ACCESO PRINCIPAL HANAQPAMPA (0045.A) — 18 capítulos / 117 subcarpetas",
+    "tipo": "folder"
    },
    "dossier_estado": {
     "id": "11gYKAPoGIwR63LLVn0TNJcBagYeR2WHY",
-    "nombre": "Estructura_final_de_Dossier_SSO_PANASUR_ESTADO_31-08-2026.xlsx"
+    "nombre": "Estructura_final_de_Dossier_SSO_PANASUR_ESTADO_31-08-2026.xlsx",
+    "tipo": "folder"
    },
    "gmail_inventario": {
     "id": "17atFLJJM9l0fI9dh8wqaLsd2PBHGqfKKFbo_bNrSG8c",
-    "nombre": "INVENTARIO DE EVIDENCIAS EN GMAIL (02-09-2026)"
+    "nombre": "INVENTARIO DE EVIDENCIAS EN GMAIL (02-09-2026)",
+    "tipo": "sheet"
    },
    "pac001": {
     "id": "1Ops6QrAvwZl9EY-CbHVBK7s0ifZv_zNpGnSNKHFq5Fg",
-    "nombre": "TP-SSOMA-PAC-001-2026 Plan de Acción de Cierre de Brechas (28 acciones)"
+    "nombre": "TP-SSOMA-PAC-001-2026 Plan de Acción de Cierre de Brechas (28 acciones)",
+    "tipo": "sheet"
    },
    "hqp_root": {
     "id": "1PjtwMH3W9X8oy8LcRq4RIIhslN2Fda7S",
-    "nombre": "Compromisos ambientales HQP0003–HQP0052"
+    "nombre": "Compromisos ambientales HQP0003–HQP0052",
+    "tipo": "folder"
    },
    "evidencias_mensuales": {
     "id": "1M7iCv3M_oPIbJtbjLS0Tfzmo_kSguncT",
-    "nombre": "Evidencias mensuales SSOMA (abril–julio)"
+    "nombre": "Evidencias mensuales SSOMA (abril–julio)",
+    "tipo": "folder"
    },
    "pets_aprobados": {
     "id": "1xc6--bEc5xAmB2hgNcSDAdK0gfkKB005",
-    "nombre": "18 PETS aprobados + matrices IAAS/IPERC (difusión QR Sub Comité)"
+    "nombre": "18 PETS aprobados + matrices IAAS/IPERC (difusión QR Sub Comité)",
+    "tipo": "folder"
+   },
+   "lista_hannaqpampa_2026_09_25": {
+    "id": "1K7IB_Cp9qrjJr6_pus16mJSFBeZ0Kj_y",
+    "nombre": "Lista maestra Hannaqpampa 2026-09-25 (85 archivos, xlsx)",
+    "tipo": "sheet"
+   },
+   "lista_maestra_carpeta": {
+    "id": "1dVthOpsqbtPMYb10rPQ3lDTZVllq1Z1q",
+    "nombre": "00.1_Lista_maestra",
+    "tipo": "folder"
+   },
+   "procore_correos_2026_09_25": {
+    "id": "1fO3wtKp6S5sIhEJp8z_LyxSfePx8Pw5W",
+    "nombre": "Procore_Correos_2026-09-25",
+    "tipo": "folder"
+   },
+   "trabajo_dossier": {
+    "id": "1Tlz8hMOHbTeIBxiJQFg5Vy-9xF1juhNL",
+    "nombre": "_Trabajo_Dossier",
+    "tipo": "folder"
+   },
+   "sig_panasur": {
+    "id": "12JcgHj8oFi9wkvLidqJxYqvR4ouaISTN",
+    "nombre": "SIG PANASUR",
+    "tipo": "folder"
    }
   },
   "gmail": {
@@ -4930,6 +6609,12 @@
   ],
   "timeline": [
    {
+    "date": "2026-09-25",
+    "icon": "≡",
+    "title": "Lista maestra Hannaqpampa y submittals Procore",
+    "desc": "85 archivos (45 códigos): 35 vigentes en Drive, 13 en revisión ENGIE, 25 obsoletos, 12 sin archivo en Drive. 37 copias a carpetas Gil/MA. Procore: 71 revisiones del TSV + 4 solo en la matriz. Checklist 0045.A no reauditado (81 SI / 28 NO / 8 N/A, 76 %)."
+   },
+   {
     "date": "2026-09-04",
     "icon": "🚀",
     "title": "SIG 360 v3 publicado",
@@ -5038,5 +6723,1284 @@
     "desc": "Periodo 2025-2027"
    }
   ]
- }
+ },
+ "lista_lmd002": [
+  {
+   "n": 1,
+   "codigo": "TP-SIG-ANX-001",
+   "documento": "Analisis de contexto FODA PESTEL y partes interesadas",
+   "norma": "TODAS",
+   "clausula": "4.1 4.2",
+   "clase": "VOL-CRITICO",
+   "carpeta": "4",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir a Drive",
+   "hs": [
+    "4.1",
+    "4.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 2,
+   "codigo": "TP-SIG-ALC-003",
+   "documento": "Alcance del SIG",
+   "norma": "TODAS",
+   "clausula": "4.3",
+   "clase": "OBL-ISO",
+   "carpeta": "4",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir y ampliar a ISO 37001",
+   "hs": [
+    "4.3"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 3,
+   "codigo": "TP-SIG-MAP-005",
+   "documento": "Mapa de procesos y fichas de proceso",
+   "norma": "9001",
+   "clausula": "4.4",
+   "clase": "VOL-CRITICO",
+   "carpeta": "4",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir a Drive",
+   "hs": [
+    "4.4"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 4,
+   "codigo": "TP-SIG-MAN-006",
+   "documento": "Manual del SIG",
+   "norma": "TODAS",
+   "clausula": "-",
+   "clase": "VOL",
+   "carpeta": "0",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir y ampliar a ISO 37001",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 5,
+   "codigo": "TP-SIG-POL-002",
+   "documento": "Politica integrada de gestion",
+   "norma": "9001 14001 45001",
+   "clausula": "5.2",
+   "clase": "OBL-ISO",
+   "carpeta": "5",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir a Drive",
+   "hs": [
+    "5.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 6,
+   "codigo": "TP-SIG-POL-XXX",
+   "documento": "Politica antisoborno (independiente)",
+   "norma": "37001",
+   "clausula": "5.2",
+   "clase": "OBL-ISO",
+   "carpeta": "5",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "5.2"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 7,
+   "codigo": "TP-SIG-ROL-004",
+   "documento": "Matriz de roles responsabilidades y autoridades",
+   "norma": "45001 37001",
+   "clausula": "5.3",
+   "clase": "OBL-ISO",
+   "carpeta": "5",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir y ampliar a ISO 37001",
+   "hs": [
+    "5.3"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 8,
+   "codigo": "TP-SIG-MRO-013",
+   "documento": "Matriz de riesgos y oportunidades del SIG",
+   "norma": "TODAS",
+   "clausula": "6.1",
+   "clase": "OBL-ISO",
+   "carpeta": "6",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir a Drive",
+   "hs": [
+    "6.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 9,
+   "codigo": "TP-SIG-OBJ-020",
+   "documento": "Objetivos del SIG y programa de gestion",
+   "norma": "TODAS",
+   "clausula": "6.2",
+   "clase": "OBL-ISO",
+   "carpeta": "6",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir a Drive",
+   "hs": [
+    "6.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 10,
+   "codigo": "TP-SIG-PGC-007",
+   "documento": "Procedimiento de gestion del cambio",
+   "norma": "TODAS",
+   "clausula": "6.3 8.1.3",
+   "clase": "OBL-ISO",
+   "carpeta": "6",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir a Drive",
+   "hs": [
+    "6.3",
+    "8.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 11,
+   "codigo": "TP-SIG-LMD-001",
+   "documento": "Control de informacion documentada y lista maestra",
+   "norma": "TODAS",
+   "clausula": "7.5",
+   "clase": "OBL-ISO",
+   "carpeta": "0",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Reemplazar por LMD-002 (este archivo)",
+   "hs": [
+    "7.5"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 12,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Competencia formacion y matriz de competencias",
+   "norma": "TODAS",
+   "clausula": "7.2 7.3",
+   "clase": "OBL-ISO",
+   "carpeta": "7",
+   "estado": "POR CONFIRMAR",
+   "evidencia": "",
+   "accion": "Verificar si existe en archivo fisico",
+   "hs": [
+    "7.2",
+    "7.3"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 13,
+   "codigo": "TP-SIG-COM-030",
+   "documento": "Plan de comunicaciones internas y externas",
+   "norma": "TODAS",
+   "clausula": "7.4",
+   "clase": "OBL-ISO",
+   "carpeta": "7",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir a Drive",
+   "hs": [
+    "7.4"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 14,
+   "codigo": "TP-SIG-AUD-008",
+   "documento": "Procedimiento de auditoria interna",
+   "norma": "TODAS",
+   "clausula": "9.2",
+   "clase": "OBL-ISO",
+   "carpeta": "13",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir - falta ejecutar el ciclo",
+   "hs": [
+    "9.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 15,
+   "codigo": "TP-SIG-FOR-ACT",
+   "documento": "Acta de revision por la direccion",
+   "norma": "TODAS",
+   "clausula": "9.3",
+   "clase": "OBL-ISO",
+   "carpeta": "9",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir - falta ejecutar la revision",
+   "hs": [
+    "9.3"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 16,
+   "codigo": "TP-SIG-NCA-010",
+   "documento": "No conformidad accion correctiva y mejora",
+   "norma": "TODAS",
+   "clausula": "10.2 10.3",
+   "clase": "OBL-ISO",
+   "carpeta": "10",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir a Drive",
+   "hs": [
+    "10.2",
+    "10.3"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 17,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Seguimiento medicion y tablero de indicadores",
+   "norma": "TODAS",
+   "clausula": "9.1",
+   "clase": "OBL-ISO",
+   "carpeta": "9",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 8",
+   "hs": [
+    "9.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 18,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Evaluacion de cumplimiento legal y matriz legal integrada",
+   "norma": "TODAS",
+   "clausula": "6.1.3 9.1.2",
+   "clase": "OBL-ISO/LEGAL",
+   "carpeta": "6",
+   "estado": "PARCIAL",
+   "evidencia": "Matriz legal SST del proyecto",
+   "accion": "Ampliar a ambiental calidad y antisoborno",
+   "hs": [
+    "6.1.3",
+    "9.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 19,
+   "codigo": "TP-SIG-PCO-039",
+   "documento": "Compras evaluacion de proveedores y contratistas",
+   "norma": "9001 45001 37001",
+   "clausula": "8.4 8.1.4 8.5",
+   "clase": "OBL-ISO",
+   "carpeta": "08.01",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir y ampliar a ISO 37001",
+   "hs": [
+    "8.1",
+    "8.4",
+    "8.5"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 20,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Programa anual de capacitacion y simulacros",
+   "norma": "LEY 29783",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "7",
+   "estado": "EN DRIVE",
+   "evidencia": "Programa_Charlas_SSOMA_Hanaqpampa_2026_B.xlsx",
+   "accion": "Elevar a nivel corporativo",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 21,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Revision de requisitos del cliente",
+   "norma": "9001",
+   "clausula": "8.2",
+   "clase": "OBL-ISO",
+   "carpeta": "08.02",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 6",
+   "hs": [
+    "8.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 22,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Diseno y desarrollo o exclusion justificada",
+   "norma": "9001",
+   "clausula": "8.3",
+   "clase": "OBL-ISO",
+   "carpeta": "08.02",
+   "estado": "POR CONFIRMAR",
+   "evidencia": "",
+   "accion": "Decidir si aplica - probable exclusion",
+   "hs": [
+    "8.3"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 23,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Prestacion del servicio y control de la produccion",
+   "norma": "9001",
+   "clausula": "8.5.1",
+   "clase": "OBL-ISO",
+   "carpeta": "08.02",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 6",
+   "hs": [
+    "8.5"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 24,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Identificacion y trazabilidad",
+   "norma": "9001",
+   "clausula": "8.5.2",
+   "clase": "OBL-ISO",
+   "carpeta": "08.02",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 6",
+   "hs": [
+    "8.5"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 25,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Propiedad del cliente y proveedores externos",
+   "norma": "9001",
+   "clausula": "8.5.3",
+   "clase": "OBL-ISO",
+   "carpeta": "08.02",
+   "estado": "POR CONFIRMAR",
+   "evidencia": "",
+   "accion": "Verificar si custodia bienes de ENGIE",
+   "hs": [
+    "8.5"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 26,
+   "codigo": "TP-SIG-FOR-015",
+   "documento": "Preservacion y control de salidas no conformes",
+   "norma": "9001",
+   "clausula": "8.5.4 8.7",
+   "clase": "OBL-ISO",
+   "carpeta": "08.02",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir formato - falta procedimiento",
+   "hs": [
+    "8.5",
+    "8.7"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 27,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Liberacion de productos y servicios",
+   "norma": "9001",
+   "clausula": "8.6",
+   "clase": "OBL-ISO",
+   "carpeta": "08.02",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 6",
+   "hs": [
+    "8.6"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 28,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Control de equipos de medicion y programa de calibracion",
+   "norma": "9001",
+   "clausula": "7.1.5",
+   "clase": "OBL-ISO",
+   "carpeta": "7",
+   "estado": "POR CONFIRMAR",
+   "evidencia": "",
+   "accion": "Verificar equipos topografia y densimetros",
+   "hs": [
+    "7.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 29,
+   "codigo": "TP-SIG-PSC-052",
+   "documento": "Satisfaccion del cliente quejas y reclamos",
+   "norma": "9001",
+   "clausula": "9.1.2",
+   "clase": "OBL-ISO",
+   "carpeta": "9",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir a Drive",
+   "hs": [
+    "9.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 30,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Plan de calidad del servicio o del proyecto",
+   "norma": "9001",
+   "clausula": "8.1",
+   "clase": "VOL-CRITICO",
+   "carpeta": "08.02",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 6",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 31,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Conocimientos de la organizacion",
+   "norma": "9001",
+   "clausula": "7.1.6",
+   "clase": "VOL-CRITICO",
+   "carpeta": "7",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 6",
+   "hs": [
+    "7.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 32,
+   "codigo": "TP-SIG-IAA-014",
+   "documento": "Matriz de aspectos e impactos ambientales",
+   "norma": "14001",
+   "clausula": "6.1.2",
+   "clase": "OBL-ISO",
+   "carpeta": "6",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir - contrastar con IPERC-AMB-018",
+   "hs": [
+    "6.1.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 33,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Plan de manejo ambiental",
+   "norma": "14001",
+   "clausula": "8.1",
+   "clase": "VOL-CRITICO",
+   "carpeta": "08.03",
+   "estado": "EN DRIVE",
+   "evidencia": "COMPROMISOS AMBIENTALES",
+   "accion": "Consolidar y codificar",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 34,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Gestion integral de residuos solidos y plan de minimizacion",
+   "norma": "DL 1278",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "08.03",
+   "estado": "POR CONFIRMAR",
+   "evidencia": "COMPROMISOS AMBIENTALES",
+   "accion": "Verificar si esta aprobado",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 35,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Manejo de sustancias peligrosas y hojas MSDS",
+   "norma": "14001",
+   "clausula": "8.1",
+   "clase": "OBL-LEGAL",
+   "carpeta": "08.03",
+   "estado": "POR CONFIRMAR",
+   "evidencia": "IPERC-PC-007 Combustible",
+   "accion": "Verificar inventario y MSDS",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 36,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Control de derrames y kit antiderrames",
+   "norma": "14001",
+   "clausula": "8.2",
+   "clase": "VOL-CRITICO",
+   "carpeta": "08.03",
+   "estado": "PARCIAL",
+   "evidencia": "HQP0033 derrames en indice fotografico",
+   "accion": "Formalizar procedimiento",
+   "hs": [
+    "8.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 37,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Programa de monitoreo ambiental",
+   "norma": "14001",
+   "clausula": "9.1.1",
+   "clase": "OBL-LEGAL",
+   "carpeta": "9",
+   "estado": "EN DRIVE",
+   "evidencia": "INFORME MENSUAL AMBIENTAL",
+   "accion": "Formalizar como programa anual",
+   "hs": [
+    "9.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 38,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Emergencias ambientales",
+   "norma": "14001",
+   "clausula": "8.2",
+   "clase": "OBL-ISO",
+   "carpeta": "08.03",
+   "estado": "PARCIAL",
+   "evidencia": "Hoja de emergencias en IAA-014",
+   "accion": "Integrar al plan de emergencias",
+   "hs": [
+    "8.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 39,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Programa de uso eficiente de recursos",
+   "norma": "14001",
+   "clausula": "6.2",
+   "clase": "VOL",
+   "carpeta": "08.03",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 5",
+   "hs": [
+    "6.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 40,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Declaracion anual de residuos y manifiestos",
+   "norma": "DL 1278",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "11.2",
+   "estado": "POR CONFIRMAR",
+   "evidencia": "",
+   "accion": "Verificar con administracion",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 41,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Perspectiva de ciclo de vida del servicio",
+   "norma": "14001",
+   "clausula": "6.1.2 8.1",
+   "clase": "OBL-ISO",
+   "carpeta": "08.03",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 5",
+   "hs": [
+    "6.1.2",
+    "8.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 42,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Procedimiento IPERC y matriz IPERC",
+   "norma": "45001 LEY 29783",
+   "clausula": "6.1.2",
+   "clase": "OBL-ISO/LEGAL",
+   "carpeta": "6",
+   "estado": "EN DRIVE",
+   "evidencia": "30+ matrices IPERC por actividad + HAZID",
+   "accion": "Armonizar - falta procedimiento marco",
+   "hs": [
+    "6.1.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 43,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Reglamento Interno de SST",
+   "norma": "LEY 29783 art 34",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "08.04",
+   "estado": "POR CONFIRMAR",
+   "evidencia": "",
+   "accion": "Verificar aprobacion y difusion",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 44,
+   "codigo": "TP-SIG-PCP-009",
+   "documento": "Consulta y participacion de los trabajadores",
+   "norma": "45001",
+   "clausula": "5.4",
+   "clase": "OBL-ISO",
+   "carpeta": "5",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "",
+   "accion": "Subir a Drive",
+   "hs": [
+    "5.4"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 45,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Comite de SST convocatoria acta y libro de actas",
+   "norma": "DS 005-2012-TR",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "5",
+   "estado": "POR CONFIRMAR",
+   "evidencia": "",
+   "accion": "Confirmar numero de trabajadores",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 46,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Programa Anual de SST",
+   "norma": "LEY 29783",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "08.04",
+   "estado": "EN DRIVE",
+   "evidencia": "PLAN SSOMA OBRA 2026",
+   "accion": "Elevar a nivel corporativo",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 47,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Plan Anual de SST",
+   "norma": "LEY 29783",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "08.04",
+   "estado": "EN DRIVE",
+   "evidencia": "PSSOMA_PANASUR_HANAQPAMPA_2026_v2",
+   "accion": "Elevar a nivel corporativo",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 48,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Investigacion de incidentes y enfermedades ocupacionales",
+   "norma": "45001",
+   "clausula": "10.2",
+   "clase": "OBL-ISO/LEGAL",
+   "carpeta": "10",
+   "estado": "PARCIAL",
+   "evidencia": "Formato en FOR-000",
+   "accion": "Falta procedimiento",
+   "hs": [
+    "10.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 49,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Plan de emergencias brigadas y simulacros",
+   "norma": "45001",
+   "clausula": "8.2",
+   "clase": "OBL-ISO/LEGAL",
+   "carpeta": "08.04",
+   "estado": "EN DRIVE",
+   "evidencia": "Incluido en PSSOMA del proyecto",
+   "accion": "Extraer y codificar aparte",
+   "hs": [
+    "8.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 50,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Control operacional y jerarquia de controles",
+   "norma": "45001",
+   "clausula": "8.1.1 8.1.2",
+   "clase": "OBL-ISO",
+   "carpeta": "08.01",
+   "estado": "PARCIAL",
+   "evidencia": "Aplicado en IPERC",
+   "accion": "Falta procedimiento marco",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 51,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Estandares y PETS por actividad critica",
+   "norma": "DS 011-2019-TR",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "08.04",
+   "estado": "EN DRIVE",
+   "evidencia": "PETS-PROYECTO HANNAQPAMPA",
+   "accion": "Codificar e integrar a lista maestra",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 52,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Permisos de trabajo de alto riesgo",
+   "norma": "45001",
+   "clausula": "8.1.1",
+   "clase": "VOL-CRITICO",
+   "carpeta": "08.04",
+   "estado": "POR CONFIRMAR",
+   "evidencia": "",
+   "accion": "Verificar formatos PETAR en obra",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 53,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Programa de salud ocupacional y vigilancia medica",
+   "norma": "RM 312-2011-MINSA",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "08.04",
+   "estado": "EN DRIVE",
+   "evidencia": "EMOS PANASUR",
+   "accion": "Formalizar como programa",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 54,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Procedimiento de EPP y matriz por puesto",
+   "norma": "45001",
+   "clausula": "8.1.2",
+   "clase": "VOL-CRITICO",
+   "carpeta": "08.04",
+   "estado": "PARCIAL",
+   "evidencia": "Formato de entrega en FOR-000",
+   "accion": "Falta matriz por puesto",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 55,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Inspecciones planificadas y programa anual",
+   "norma": "45001",
+   "clausula": "9.1.1",
+   "clase": "VOL-CRITICO",
+   "carpeta": "9",
+   "estado": "PARCIAL",
+   "evidencia": "Registro en FOR-000",
+   "accion": "Falta programa anual",
+   "hs": [
+    "9.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 56,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Observacion de conductas",
+   "norma": "45001",
+   "clausula": "-",
+   "clase": "VOL",
+   "carpeta": "10",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Opcional",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 57,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Plan de gestion de fatiga y somnolencia",
+   "norma": "45001",
+   "clausula": "6.1.2",
+   "clase": "VOL-CRITICO",
+   "carpeta": "08.04",
+   "estado": "NO EXISTE",
+   "evidencia": "Dashboard dashcam sugiere data disponible",
+   "accion": "Generar Lote 4 - PRIORITARIO",
+   "hs": [
+    "6.1.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 58,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Vigilancia por altura geografica",
+   "norma": "RM 312-2011-MINSA",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "08.04",
+   "estado": "POR CONFIRMAR",
+   "evidencia": "EMOS PANASUR",
+   "accion": "Verificar protocolo de altura en EMOs",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 59,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Gestion de seguridad vial y parque automotor",
+   "norma": "DS 017-2009-MTC",
+   "clausula": "8.1",
+   "clase": "VOL-CRITICO",
+   "carpeta": "08.04",
+   "estado": "PARCIAL",
+   "evidencia": "IPERC movilizacion y transporte DME",
+   "accion": "Generar procedimiento",
+   "hs": [
+    "8.1"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 60,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Programa de ergonomia y riesgo disergonomico",
+   "norma": "RM 375-2008-TR",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "08.04",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 4",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 61,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Programa de riesgos psicosociales",
+   "norma": "45001",
+   "clausula": "6.1.2",
+   "clase": "VOL-CRITICO",
+   "carpeta": "08.04",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 4",
+   "hs": [
+    "6.1.2"
+   ],
+   "trinorma": true
+  },
+  {
+   "n": 62,
+   "codigo": "TP-SIG-FOR-000",
+   "documento": "Registros obligatorios DS 005-2012-TR (10)",
+   "norma": "DS 005-2012-TR",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "11.1",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "Cuaderno de 19 formatos",
+   "accion": "Subir y verificar cobertura de los 10",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 63,
+   "codigo": "TP-SIG-MRS-XXX",
+   "documento": "Evaluacion de riesgos de soborno",
+   "norma": "37001",
+   "clausula": "4.5",
+   "clase": "OBL-ISO",
+   "carpeta": "4",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7 - PIEDRA ANGULAR",
+   "hs": [
+    "4"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 64,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Funcion antisoborno designacion y estatuto",
+   "norma": "37001",
+   "clausula": "5.3.2",
+   "clase": "OBL-ISO",
+   "carpeta": "5",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "5.3"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 65,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Delegacion de decisiones y matriz de facultades",
+   "norma": "37001",
+   "clausula": "5.3.3",
+   "clase": "OBL-ISO",
+   "carpeta": "5",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "5.3"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 66,
+   "codigo": "TP-SIG-COD-012",
+   "documento": "Codigo de etica y conducta",
+   "norma": "37001",
+   "clausula": "5.2",
+   "clase": "VOL-CRITICO",
+   "carpeta": "5",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "Con capitulo antisoborno",
+   "accion": "Subir a Drive",
+   "hs": [
+    "5.2"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 67,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Debida diligencia personal socios y transacciones",
+   "norma": "37001",
+   "clausula": "8.2",
+   "clase": "OBL-ISO",
+   "carpeta": "08.05",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "8.2"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 68,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Controles financieros",
+   "norma": "37001",
+   "clausula": "8.3",
+   "clase": "OBL-ISO",
+   "carpeta": "08.05",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "8.3"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 69,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Controles no financieros",
+   "norma": "37001",
+   "clausula": "8.4",
+   "clase": "OBL-ISO",
+   "carpeta": "08.05",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "8.4"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 70,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Compromisos de socios de negocio y clausula contractual",
+   "norma": "37001",
+   "clausula": "8.5 8.6",
+   "clase": "OBL-ISO",
+   "carpeta": "08.05",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "8.5",
+    "8.6"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 71,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Regalos hospitalidad donaciones y patrocinios",
+   "norma": "37001",
+   "clausula": "8.7",
+   "clase": "OBL-ISO",
+   "carpeta": "08.05",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "8.7"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 72,
+   "codigo": "TP-SIG-FOR-019",
+   "documento": "Declaracion y gestion de conflictos de interes",
+   "norma": "37001",
+   "clausula": "8.7",
+   "clase": "OBL-ISO",
+   "carpeta": "08.05",
+   "estado": "GENERADO NO SUBIDO",
+   "evidencia": "Formato FOR-019",
+   "accion": "Subir - falta procedimiento",
+   "hs": [
+    "8.7"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 73,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Canal de denuncias y proteccion al denunciante",
+   "norma": "37001 LEY 29733",
+   "clausula": "8.9",
+   "clase": "OBL-ISO/LEGAL",
+   "carpeta": "08.05",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "8"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 74,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Investigacion interna y tratamiento del soborno",
+   "norma": "37001",
+   "clausula": "8.10",
+   "clase": "OBL-ISO",
+   "carpeta": "08.05",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "8"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 75,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Gestion de la inadecuacion de controles",
+   "norma": "37001",
+   "clausula": "8.8",
+   "clase": "OBL-ISO",
+   "carpeta": "08.05",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "8"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 76,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Declaracion antisoborno del personal y clausula laboral",
+   "norma": "37001",
+   "clausula": "7.2.2",
+   "clase": "OBL-ISO",
+   "carpeta": "08.05",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "7.2"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 77,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Formacion y sensibilizacion antisoborno por nivel de riesgo",
+   "norma": "37001",
+   "clausula": "7.3",
+   "clase": "OBL-ISO",
+   "carpeta": "7",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "7.3"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 78,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Plan de cultura antisoborno y sus indicadores",
+   "norma": "37001",
+   "clausula": "5.1",
+   "clase": "OBL-ISO",
+   "carpeta": "5",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7 - NOVEDAD 2025",
+   "hs": [
+    "5.1"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 79,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Revision por la funcion antisoborno y organo de gobierno",
+   "norma": "37001",
+   "clausula": "9.3 9.4",
+   "clase": "OBL-ISO",
+   "carpeta": "9",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 8",
+   "hs": [
+    "9",
+    "9.3"
+   ],
+   "trinorma": false
+  },
+  {
+   "n": 80,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Modelo de Prevencion Ley 30424 y tabla de correspondencia",
+   "norma": "DS 002-2019-JUS",
+   "clausula": "-",
+   "clase": "OBL-LEGAL",
+   "carpeta": "08.05",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7 - CLAVE PARA LICITAR",
+   "hs": [],
+   "trinorma": true
+  },
+  {
+   "n": 81,
+   "codigo": "TP-SIG-XXX",
+   "documento": "Debida diligencia reforzada en contrataciones publicas",
+   "norma": "37001",
+   "clausula": "8.2",
+   "clase": "VOL-CRITICO",
+   "carpeta": "08.05",
+   "estado": "NO EXISTE",
+   "evidencia": "",
+   "accion": "Generar Lote 7",
+   "hs": [
+    "8.2"
+   ],
+   "trinorma": false
+  }
+ ]
 }
