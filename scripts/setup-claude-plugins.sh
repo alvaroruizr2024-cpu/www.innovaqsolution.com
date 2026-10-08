@@ -75,8 +75,9 @@ if [ "$SKIP_OMNIROUTE" = 1 ]; then
 else
   need npm
   npm install -g omniroute
-  ok "OmniRoute instalado. Arranca con:  omniroute launch   (dashboard en http://localhost:20128)"
-  echo "      Conecta Claude Code con el asistente:  omniroute setup-claude"
+  ok "OmniRoute instalado. Servidor + dashboard:  omniroute serve   (http://localhost:20128)"
+  echo "      Asistente de configuracion:  omniroute setup"
+  echo "      Abrir Claude Code via OmniRoute:  omniroute launch"
 fi
 
 # ---------------------------------------------------------------------------
@@ -84,13 +85,23 @@ log "4/5  Headroom (compresion de contexto para reducir tokens)"
 if [ "$SKIP_HEADROOM" = 1 ]; then
   warn "Omitido (--skip-headroom)"
 else
+  # Siempre en un entorno aislado: con pip --user, litellm choca con la
+  # libreria cryptography del sistema en algunas distros y el proxy no arranca.
   if command -v uv >/dev/null 2>&1; then
     uv tool install "headroom-ai[all]"
+  elif command -v pipx >/dev/null 2>&1; then
+    pipx install "headroom-ai[all]"
   else
-    need pip
-    pip install --user "headroom-ai[all]"
+    need python3
+    HEADROOM_VENV="${HEADROOM_VENV:-$HOME/.local/share/headroom-venv}"
+    python3 -m venv "$HEADROOM_VENV"
+    "$HEADROOM_VENV/bin/pip" install -q "headroom-ai[all]"
+    mkdir -p "$HOME/.local/bin"
+    ln -sf "$HEADROOM_VENV/bin/headroom" "$HOME/.local/bin/headroom"
+    case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) warn "Agrega $HOME/.local/bin al PATH para usar 'headroom'." ;; esac
   fi
   ok "Headroom instalado. Lanza Claude Code a traves de Headroom con:  headroom wrap claude"
+  echo "      Diagnostico:  headroom doctor"
 fi
 
 # ---------------------------------------------------------------------------
@@ -103,7 +114,7 @@ cat <<EOF
     - .claude/skills/task-observer  (activado por CLAUDE.md; hook SessionStart
       opcional, ver docs/CLAUDE_PLUGINS.md)
   Herramientas externas:
-    - omniroute launch  /  omniroute setup-claude
+    - omniroute serve  /  omniroute setup  /  omniroute launch
     - headroom wrap claude
 
   Siguiente paso: abre una sesion NUEVA de Claude Code en este repo y pide

@@ -28,9 +28,13 @@ Repositorio: https://github.com/diegosouzapw/OmniRoute
 
 ```bash
 npm install -g omniroute
-omniroute launch            # API + dashboard en http://localhost:20128
-omniroute setup-claude      # asistente que configura Claude Code
+omniroute serve             # servidor + dashboard en http://localhost:20128
+omniroute setup             # asistente: contraseña admin y proveedores
+omniroute launch            # abre Claude Code apuntando a OmniRoute
 ```
+
+`omniroute launch` acepta `--profile <nombre>` y `--token <token>`, y pasa el
+resto de argumentos al binario `claude`. Verificado con OmniRoute 3.8.51.
 
 Configuración manual, si prefieres variables de entorno:
 
@@ -62,11 +66,17 @@ guarda en `~/.claude-mem/`.
 Repositorio: https://github.com/headroomlabs-ai/headroom
 
 ```bash
-pip install "headroom-ai[all]"      # o: uv tool install "headroom-ai[all]"
+uv tool install "headroom-ai[all]"  # o: pipx install "headroom-ai[all]"
 headroom wrap claude                # lanza Claude Code a través del proxy
 headroom doctor                     # diagnóstico
 headroom unwrap claude              # deshacer
 ```
+
+Instálalo siempre en un entorno aislado (uv, pipx o un venv, que es lo que
+hace el script). Con `pip install --user` el proxy puede fallar al arrancar por
+un conflicto entre `litellm` y la librería `cryptography` del sistema.
+Verificado con Headroom 0.40.0: el proxy responde en `/health` y
+`headroom doctor` lo marca en verde.
 
 `headroom wrap claude` arranca un proxy local (puerto 8787) y lanza Claude Code
 con `ANTHROPIC_BASE_URL` apuntando a él. Opciones: `--memory`, `--code-graph`.
