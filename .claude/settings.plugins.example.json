@@ -1,0 +1,19 @@
+{
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": { "source": "github", "repo": "openai/codex-plugin-cc" }
+    },
+    "thedotmack": {
+      "source": { "source": "github", "repo": "thedotmack/claude-mem" }
+    },
+    "headroom-marketplace": {
+      "source": { "source": "github", "repo": "headroomlabs-ai/headroom" }
+    }
+  },
+  "enabledPlugins": {
+    "codex@openai-codex": true,
+    "claude-mem@thedotmack": true,
+    "headroom@headroom-marketplace": true,
+    "claude-code-setup@anthropic-plugin-directory": true
+  }
+}

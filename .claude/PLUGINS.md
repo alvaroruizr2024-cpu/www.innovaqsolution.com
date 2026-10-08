@@ -4,6 +4,10 @@
 este proyecto, así que cualquier sesión de Claude Code (local o en la nube) que
 se abra sobre este repo los instala y habilita automáticamente.
 
+Ese archivo no está versionado (`.claude/.gitignore` lo excluye). La plantilla
+`settings.plugins.example.json`, en esta misma carpeta, lleva el contenido:
+cópiala a `.claude/settings.json` una vez por máquina.
+
 ## Plugins habilitados
 
 | Plugin | Marketplace (repo) | Qué aporta |
