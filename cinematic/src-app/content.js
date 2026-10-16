@@ -9,8 +9,6 @@ export const COMPANY = {
   name: 'INNOVAQ SOLUTIONS SAC',
   ruc: '20606205105',
   city: 'Trujillo, La Libertad, Perú',
-  phone: '+51 939 521 784',
-  waDigits: '51939521784',
   email: 'contacto@innovaqsolution.com',
   portal: 'https://www.innovaqsolution.com/global',
   slogan: {
@@ -316,8 +314,8 @@ export const COPY = {
     chapter: 'Capítulo',
     film: 'Galería 4K · 11 productos',
     equalNote: 'Once piezas. Misma órbita. Sin pieza central.',
-    wa: 'WhatsApp comercial',
-    waHint: 'Conversación directa con un especialista',
+    wa: 'Escríbanos por correo',
+    waHint: 'Un especialista le responderá por correo',
     demo: 'Solicitar demo',
     trial: 'Pedir prueba',
     consult: 'Solo consultoría — sin precios en esta experiencia',
@@ -339,7 +337,7 @@ export const COPY = {
     message: 'Mensaje',
     send: 'Enviar solicitud',
     sent: 'Solicitud lista en su correo',
-    sentBody: 'Se abrió el cliente de correo con los datos. También puede continuar por WhatsApp.',
+    sentBody: 'Se abrió el cliente de correo con los datos.',
     portal: 'Portal /global',
     consulting: 'Consultoría',
     footer: '© 2026 INNOVAQ SOLUTIONS SAC. Todos los derechos reservados.',
@@ -353,9 +351,9 @@ export const COPY = {
     consultCta: 'Consultar este producto',
     reduced: 'Modo reducido',
     hintTitle: 'Cómo recorrer el showroom',
-    hintBody: 'Once productos, misma órbita. Use ← →, la cinta inferior o Siguiente/Anterior. WhatsApp +51 939 521 784 es el canal principal — sin precios.',
+    hintBody: 'Once productos, misma órbita. Use ← →, la cinta inferior o Siguiente/Anterior. Consultas por correo o formulario — sin precios.',
     hintDismiss: 'Entendido, explorar',
-    waNumber: '+51 939 521 784',
+    waNumber: 'contacto@innovaqsolution.com',
   },
   en: {
     badge: 'Cinematic showroom · 11 products in equal orbit',
@@ -375,8 +373,8 @@ export const COPY = {
     chapter: 'Chapter',
     film: '4K gallery · 11 products',
     equalNote: 'Eleven pieces. Same orbit. No centerpiece.',
-    wa: 'Commercial WhatsApp',
-    waHint: 'Direct conversation with a specialist',
+    wa: 'Email us',
+    waHint: 'A specialist will reply by email',
     demo: 'Request a demo',
     trial: 'Request a trial',
     consult: 'Consultation only — no prices on this experience',
@@ -398,7 +396,7 @@ export const COPY = {
     message: 'Message',
     send: 'Send request',
     sent: 'Request ready in your mail client',
-    sentBody: 'Your email client opened with the details. You can also continue on WhatsApp.',
+    sentBody: 'Your email client opened with the details.',
     portal: '/global portal',
     consulting: 'Consulting',
     footer: '© 2026 INNOVAQ SOLUTIONS SAC. All rights reserved.',
@@ -412,9 +410,9 @@ export const COPY = {
     consultCta: 'Consult this product',
     reduced: 'Reduced mode',
     hintTitle: 'How to browse the showroom',
-    hintBody: 'Eleven products, same orbit. Use ← →, the film rail, or Next/Previous. WhatsApp +51 939 521 784 is the primary channel — no prices.',
+    hintBody: 'Eleven products, same orbit. Use ← →, the film rail, or Next/Previous. Inquiries by email or form — no prices.',
     hintDismiss: 'Got it, explore',
-    waNumber: '+51 939 521 784',
+    waNumber: 'contacto@innovaqsolution.com',
   },
 }
 
@@ -436,9 +434,13 @@ export function productIndex(code) {
 
 export function waUrl(lang, product) {
   const name = product?.name || 'portafolio 360'
-  const text =
+  const subject =
     lang === 'es'
-      ? `Hola INNOVAQ SOLUTIONS SAC, soy de una empresa en Perú y quiero una consultoría sobre ${name}. Sin precios por web — coordinar por este canal. +51 939 521 784`
-      : `Hello INNOVAQ SOLUTIONS SAC, I represent a company and would like a consultation on ${name}. No web pricing — please coordinate here. +51 939 521 784`
-  return `https://wa.me/${COMPANY.waDigits}?text=${encodeURIComponent(text)}`
+      ? `Consultoría ${name} — INNOVAQ`
+      : `Consultation ${name} — INNOVAQ`
+  const body =
+    lang === 'es'
+      ? `Hola INNOVAQ SOLUTIONS SAC, soy de una empresa en Perú y quiero una consultoría sobre ${name}.`
+      : `Hello INNOVAQ SOLUTIONS SAC, I represent a company and would like a consultation on ${name}.`
+  return `mailto:${COMPANY.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }

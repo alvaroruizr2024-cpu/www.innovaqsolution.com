@@ -64,7 +64,7 @@ function Products({ lang, t }) {
             <h3>{p.name}{p.alias ? <small> · {p.alias}</small> : null}</h3>
             <p className="sub">{p.sub[lang]}</p>
             <p>{p.desc[lang]}</p>
-            <a className="text-wa" href={waUrl(lang, p)} target="_blank" rel="noreferrer">
+            <a className="text-wa" href={waUrl(lang, p)}>
               {t.consultCta}
             </a>
           </article>
@@ -221,7 +221,7 @@ function DemoForm({ lang, t, open, setOpen, selected }) {
         <div className="thanks">
           <h3>{t.sent}</h3>
           <p>{t.sentBody}</p>
-          <a className="btn wa" href={waUrl(lang, PRODUCTS.find((p) => p.code === form.interest))} target="_blank" rel="noreferrer">
+          <a className="btn wa" href={waUrl(lang, PRODUCTS.find((p) => p.code === form.interest))}>
             {t.wa}
           </a>
         </div>
@@ -270,7 +270,7 @@ function DemoForm({ lang, t, open, setOpen, selected }) {
             <button type="submit" className="btn ghost">
               {t.send}
             </button>
-            <a className="btn wa" href={waUrl(lang, PRODUCTS.find((p) => p.code === form.interest))} target="_blank" rel="noreferrer">
+            <a className="btn wa" href={waUrl(lang, PRODUCTS.find((p) => p.code === form.interest))}>
               {t.wa}
             </a>
           </div>
@@ -291,7 +291,7 @@ export function SiteFooter({ lang, t }) {
         <p>{COMPANY.slogan[lang]}</p>
         <p>RUC {COMPANY.ruc} · {COMPANY.city}</p>
         <p>
-          <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> · {COMPANY.phone}
+          <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
         </p>
       </div>
       <div>

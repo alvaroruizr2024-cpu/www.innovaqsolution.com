@@ -81,7 +81,7 @@ export function Overlay({
         <p className="lede">{t.subtitle}</p>
         <p className="equal">{t.equalNote}</p>
         <div className="cta-row">
-          <a className="btn wa" href={waUrl(lang, product)} target="_blank" rel="noreferrer">
+          <a className="btn wa" href={waUrl(lang, product)}>
             {t.wa} · {t.waNumber}
           </a>
           <button type="button" className="btn ghost" onClick={onOpenForm}>
@@ -158,7 +158,7 @@ export function Overlay({
             {media.loop ? <span>{t.videoReady}</span> : null}
           </p>
           <div className="card-actions">
-            <a className="btn wa slim" href={waUrl(lang, active)} target="_blank" rel="noreferrer">
+            <a className="btn wa slim" href={waUrl(lang, active)}>
               {t.consultCta} · {t.waNumber}
             </a>
             <button type="button" className="btn ghost slim" onClick={() => goRel(-1)}>
@@ -212,7 +212,7 @@ export function Overlay({
         ))}
       </div>
 
-      <a className="wa-float" href={waUrl(lang, product || active)} target="_blank" rel="noreferrer">
+      <a className="wa-float" href={waUrl(lang, product || active)}>
         <span className="wa-label">{t.wa}</span>
         <span className="wa-num">{t.waNumber}</span>
       </a>
@@ -227,7 +227,6 @@ export function Overlay({
         <span>{t.film}</span>
         <span>{COMPANY.city}</span>
         <span>RUC {COMPANY.ruc}</span>
-        <span>{COMPANY.phone}</span>
       </footer>
     </div>
   )
