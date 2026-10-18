@@ -26,7 +26,10 @@ Claude then reads and summarizes.
 
 ## Core workflow
 
-### 1. Install dependencies (once per session)
+### 1. Dependencies
+
+The script installs `yt-dlp` and `youtube-transcript-api` by itself when they
+are missing, using its own interpreter. To do it by hand:
 
 ```bash
 python3 -m pip install -q --user yt-dlp youtube-transcript-api
@@ -34,6 +37,8 @@ python3 -m pip install -q --user yt-dlp youtube-transcript-api
 
 Use `python3 -m pip`, not bare `pip`: in the cloud container `pip` can belong to
 a different interpreter and the import then fails with `No module named yt_dlp`.
+The container is reset between sessions, so a missing module is normal, not a
+sign that something broke.
 
 ### 2. Run the reader
 
@@ -109,6 +114,14 @@ google.com. This is NOT the network policy. The script handles it by retrying
 `yt-dlp` with the `web_embedded` player client (then `tv`), which returns
 metadata and auto-captions without cookies. Only report `network_blocked` when
 the 403 names a youtube.com host.
+
+## Verified cases
+
+With `youtube.com` allowed in the environment's network policy, the script has
+read: a 13-minute tutorial (`jMxAO6Lo8dc`), a 51-second Short (`U8HdT8DHe58`)
+and a 43-minute finished live stream (`gNLJUeMhNIU`), all with Spanish
+auto-captions via the `web_embedded` client. Expect roughly 1,400 caption
+segments and 55 KB of Markdown per 45 minutes of video.
 
 ## Gotchas
 

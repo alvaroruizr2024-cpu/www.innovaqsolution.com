@@ -25,6 +25,23 @@ from urllib.parse import parse_qs, urlparse
 VIDEO_ID_RE = re.compile(r"^[A-Za-z0-9_-]{11}$")
 
 
+def ensure_deps() -> None:
+    """Instala yt-dlp y youtube-transcript-api con el MISMO intérprete si faltan.
+    El contenedor de Claude Code web se reinicia entre sesiones y `pip` a secas
+    puede apuntar a otro Python."""
+    import importlib.util
+    import subprocess
+    missing = [m for m, pkg in (("yt_dlp", "yt-dlp"), ("youtube_transcript_api", "youtube-transcript-api"))
+               if importlib.util.find_spec(m) is None]
+    if not missing:
+        return
+    pkgs = {"yt_dlp": "yt-dlp", "youtube_transcript_api": "youtube-transcript-api"}
+    cmd = [sys.executable, "-m", "pip", "install", "-q", "--user"] + [pkgs[m] for m in missing]
+    subprocess.run(cmd, check=False, capture_output=True)
+    import site
+    site.main()  # recarga rutas --user para que el import posterior funcione
+
+
 def extract_video_id(url_or_id: str) -> str:
     s = url_or_id.strip()
     if VIDEO_ID_RE.match(s):
@@ -252,6 +269,7 @@ def main() -> int:
         return 3
     langs = [l.strip() for l in args.langs.split(",") if l.strip()]
     os.makedirs(args.out_dir, exist_ok=True)
+    ensure_deps()
 
     meta: dict = {}
     segs: list[dict] = []
