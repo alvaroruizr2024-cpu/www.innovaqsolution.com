@@ -50,9 +50,17 @@ def extract_video_id(url_or_id: str) -> str:
 
 
 def is_network_block(exc: BaseException) -> bool:
+    """True solo si el proxy bloquea YouTube. Un 403 hacia google.com/sorry es el
+    control anti-bot de YouTube (ver is_bot_check), no un bloqueo de red."""
     msg = str(exc)
-    return ("403" in msg and ("Tunnel" in msg or "CONNECT" in msg or "proxy" in msg.lower())) or \
+    proxy_403 = ("403" in msg and ("Tunnel" in msg or "CONNECT" in msg or "proxy" in msg.lower())) or \
         "EGRESS_BLOCKED" in msg or "Unable to connect to proxy" in msg
+    return proxy_403 and "google.com" not in msg
+
+
+def is_bot_check(exc: BaseException) -> bool:
+    msg = str(exc)
+    return "google.com" in msg or "not a bot" in msg or "/sorry/" in msg
 
 
 def fetch_transcript(video_id: str, langs: list[str]) -> tuple[list[dict], str | None]:
@@ -67,7 +75,7 @@ def fetch_transcript(video_id: str, langs: list[str]) -> tuple[list[dict], str |
     except Exception as e:  # noqa: BLE001
         if is_network_block(e):
             raise
-        return [], None
+        return [], None  # sin subtítulos, o control anti-bot: yt-dlp lo intentará
     chosen = None
     for code in langs:
         for t in tlist:
@@ -101,12 +109,33 @@ def fetch_metadata(video_id: str, langs: list[str], want_subs: bool) -> tuple[di
         import yt_dlp  # type: ignore
     except ImportError:
         return {}, [], None
-    opts = {"quiet": True, "no_warnings": True, "skip_download": True}
-    if want_subs:
-        opts.update({"writesubtitles": True, "writeautomaticsub": True,
-                     "subtitleslangs": langs + ["-live_chat"], "subtitlesformat": "json3"})
-    with yt_dlp.YoutubeDL(opts) as ydl:
-        info = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}", download=False)
+    base = {"quiet": True, "no_warnings": True, "skip_download": True, "ignore_no_formats_error": True}
+    # El cliente web normal recibe "Sign in to confirm you're not a bot" desde IPs de
+    # nube; web_embedded suele pasar y entrega metadatos + subtítulos igual.
+    clients = [None, ["web_embedded"], ["tv"]]
+    info, last_exc = None, None
+    for client in clients:
+        opts = dict(base)
+        if client:
+            opts["extractor_args"] = {"youtube": {"player_client": client}}
+        try:
+            with yt_dlp.YoutubeDL(opts) as ydl:
+                cand = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}", download=False)
+        except Exception as e:  # noqa: BLE001
+            last_exc = e
+            if is_network_block(e):
+                raise
+            continue
+        # Bajo control anti-bot el cliente web devuelve una respuesta degradada
+        # (sin duración, sin subtítulos, título traducido). Seguir con el siguiente.
+        has_caps = bool(cand.get("subtitles") or cand.get("automatic_captions"))
+        complete = bool(cand.get("duration")) and (has_caps or not want_subs)
+        if info is None or complete:
+            info = cand
+        if complete:
+            break
+    if info is None:
+        raise RuntimeError(f"yt-dlp no pudo extraer el video con ningún cliente: {last_exc}")
     meta = {
         "id": info.get("id"),
         "title": info.get("title"),
@@ -131,7 +160,8 @@ def fetch_metadata(video_id: str, langs: list[str], want_subs: bool) -> tuple[di
         subs = info.get("subtitles") or {}
         auto = info.get("automatic_captions") or {}
         for kind, table in (("manual", subs), ("auto", auto)):
-            for code in langs + list(table.keys()):
+            preferred = [c for l in langs for c in (f"{l}-orig", l)]
+            for code in preferred + list(table.keys()):
                 if code in table:
                     entry = next((f for f in table[code] if f.get("ext") == "json3"), None)
                     if not entry:

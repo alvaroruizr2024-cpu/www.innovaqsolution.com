@@ -29,8 +29,11 @@ Claude then reads and summarizes.
 ### 1. Install dependencies (once per session)
 
 ```bash
-pip install -q yt-dlp youtube-transcript-api
+python3 -m pip install -q --user yt-dlp youtube-transcript-api
 ```
+
+Use `python3 -m pip`, not bare `pip`: in the cloud container `pip` can belong to
+a different interpreter and the import then fails with `No module named yt_dlp`.
 
 ### 2. Run the reader
 
@@ -96,6 +99,16 @@ Do not try third-party mirrors (Invidious, Piped, jina, noembed): they are
 blocked by the same policy. Do not present a result from an external "video
 analysis" service as the video's content unless it demonstrably downloaded
 this video; generic scene descriptions are not evidence.
+
+## Bot check ("Sign in to confirm you're not a bot")
+
+From cloud IPs YouTube often redirects the watch page to a `google.com/sorry`
+captcha. Symptoms: `youtube-transcript-api` fails, `yt-dlp` with the default
+client says "Sign in to confirm you're not a bot", and `curl` returns a 302 to
+google.com. This is NOT the network policy. The script handles it by retrying
+`yt-dlp` with the `web_embedded` player client (then `tv`), which returns
+metadata and auto-captions without cookies. Only report `network_blocked` when
+the 403 names a youtube.com host.
 
 ## Gotchas
 
