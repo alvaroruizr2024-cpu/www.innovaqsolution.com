@@ -129,12 +129,15 @@ def fetch_metadata(video_id: str, langs: list[str], want_subs: bool) -> tuple[di
     base = {"quiet": True, "no_warnings": True, "skip_download": True, "ignore_no_formats_error": True}
     # El cliente web normal recibe "Sign in to confirm you're not a bot" desde IPs de
     # nube; web_embedded suele pasar y entrega metadatos + subtítulos igual.
-    clients = [None, ["web_embedded"], ["tv"]]
+    import time
+    clients = [None, ["web_embedded"], ["tv"], ["web_embedded"]]  # el último es un reintento tras pausa
     info, last_exc = None, None
-    for client in clients:
+    for i, client in enumerate(clients):
         opts = dict(base)
         if client:
             opts["extractor_args"] = {"youtube": {"player_client": client}}
+        if i > 0:
+            time.sleep(3 * i)  # YouTube limita ráfagas desde IPs de nube
         try:
             with yt_dlp.YoutubeDL(opts) as ydl:
                 cand = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}", download=False)
@@ -177,29 +180,47 @@ def fetch_metadata(video_id: str, langs: list[str], want_subs: bool) -> tuple[di
         subs = info.get("subtitles") or {}
         auto = info.get("automatic_captions") or {}
         for kind, table in (("manual", subs), ("auto", auto)):
+            # Orden: idiomas pedidos (pista original primero), luego cualquier pista
+            # original (*-orig). Nunca una traducción automática a otro idioma: es
+            # inútil y engañosa (p. ej. 'gu' para un video en español).
             preferred = [c for l in langs for c in (f"{l}-orig", l)]
-            for code in preferred + list(table.keys()):
-                if code in table:
-                    entry = next((f for f in table[code] if f.get("ext") == "json3"), None)
-                    if not entry:
-                        continue
-                    try:
-                        import urllib.request
-                        with urllib.request.urlopen(entry["url"], timeout=30) as r:
-                            data = json.load(r)
-                        for ev in data.get("events", []):
-                            text = "".join(s.get("utf8", "") for s in ev.get("segs", [])).strip()
-                            if text and text != "\n":
-                                segs.append({"start": round(ev.get("tStartMs", 0) / 1000, 2),
-                                             "duration": round(ev.get("dDurationMs", 0) / 1000, 2),
-                                             "text": text.replace("\n", " ")})
-                        source = f"{kind}:{code}"
-                        break
-                    except Exception:  # noqa: BLE001
-                        continue
+            preferred += [c for l in langs for c in table if c.startswith(f"{l}-") and c not in preferred]
+            originals = [c for c in table if c.endswith("-orig") and c not in preferred]
+            for code in preferred + originals:
+                if code not in table:
+                    continue
+                entry = next((f for f in table[code] if f.get("ext") == "json3"), None)
+                if not entry:
+                    continue
+                got = _fetch_json3(entry["url"])
+                if got:
+                    segs, source = got, f"{kind}:{code}"
+                    break
             if source:
                 break
     return meta, segs, source
+
+
+def _fetch_json3(url: str, attempts: int = 2) -> list[dict]:
+    import time
+    import urllib.request
+    for i in range(attempts):
+        try:
+            with urllib.request.urlopen(url, timeout=30) as r:
+                data = json.load(r)
+            out = []
+            for ev in data.get("events", []):
+                text = "".join(s.get("utf8", "") for s in ev.get("segs", [])).strip()
+                if text and text != "\n":
+                    out.append({"start": round(ev.get("tStartMs", 0) / 1000, 2),
+                                "duration": round(ev.get("dDurationMs", 0) / 1000, 2),
+                                "text": text.replace("\n", " ")})
+            if out:
+                return out
+        except Exception:  # noqa: BLE001
+            pass
+        time.sleep(2 * (i + 1))
+    return []
 
 
 def mmss(sec: float) -> str:
