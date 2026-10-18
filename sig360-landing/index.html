@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIG 360° | ISO 9001, 14001, 45001 y 37001 en una sola plataforma</title>
+  <meta name="description" content="La auditoría siempre llega. Tu SIG debería estar listo. ISO 9001, 14001, 45001 y 37001 en una sola plataforma. Desde US$ 29/mes y 30 días gratis.">
+  <link rel="canonical" href="https://www.innovaqsolution.com/sig360-landing/">
+  <meta property="og:title" content="SIG 360° | Sistema Integrado de Gestión ISO">
+  <meta property="og:description" content="4 normas ISO integradas bajo Annex SL. Prueba 30 días gratis.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.innovaqsolution.com/campaigns/sig360-202609/img/sig360-faena.jpg">
+  <meta name="theme-color" content="#0d4a6e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d4a6e; --bg-deep: #08344e;
+      --primary: #126695; --primary-light: #2B9BCB;
+      --accent: #F1912B; --accent-light: #f5aa5a; --success: #7AB648;
+      --surface: #FBFBF9; --text: #1a1a2e; --muted: #5b5d63;
+      --line: #e4e6e9; --on-dark: #ffffff; --on-dark-muted: #cfe3ef;
+      --s1: 4px; --s2: 8px; --s3: 16px; --s4: 24px; --s5: 32px; --s6: 48px; --s7: 80px; --s8: 112px;
+      --r: 14px; --shadow: 0 10px 30px rgba(13, 74, 110, .12);
+      --font: Inter, 'Segoe UI', Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--text); background: var(--surface); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1120px, 100% - 2 * var(--s4)); margin-inline: auto; }
+    section { padding-block: var(--s7); }
+    h1, h2, h3 { line-height: 1.15; letter-spacing: -.02em; }
+    h1 { font-size: clamp(2.25rem, 5.5vw, 4rem); font-weight: 800; }
+    h2 { font-size: clamp(1.75rem, 3.4vw, 2.5rem); font-weight: 800; }
+    h3 { font-size: 1.125rem; font-weight: 700; line-height: 1.3; }
+    .kicker { font-size: .8125rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--primary); margin-bottom: var(--s3); }
+    .lead { font-size: 1.125rem; color: var(--muted); max-width: 60ch; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); min-height: 48px; padding: 0 var(--s4); border-radius: 999px; font-weight: 700; font-size: 1rem; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; border: 2px solid transparent; }
+    .btn:focus-visible { outline: 3px solid var(--accent-light); outline-offset: 3px; }
+    .btn-accent { background: var(--accent); color: #1a1a2e; }
+    .btn-accent:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(241, 145, 43, .35); }
+    .btn-ghost { border-color: rgba(255, 255, 255, .45); color: var(--on-dark); }
+    .btn-ghost:hover { background: rgba(255, 255, 255, .1); }
+    .btn-outline { border-color: var(--primary); color: var(--primary); }
+    .btn-outline:hover { background: var(--primary); color: #fff; }
+
+    header.nav { position: sticky; top: 0; z-index: 10; background: rgba(8, 52, 78, .92); backdrop-filter: blur(10px); }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 64px; gap: var(--s3); }
+    .brand { color: #fff; font-weight: 800; letter-spacing: .04em; }
+    .brand span { color: var(--accent); }
+    .nav ul { display: flex; gap: var(--s4); list-style: none; }
+    .nav ul a { color: var(--on-dark-muted); font-size: .9375rem; font-weight: 500; }
+    .nav ul a:hover { color: #fff; }
+    .nav .btn { min-height: 40px; padding: 0 var(--s3); font-size: .9375rem; }
+
+    .hero { background: linear-gradient(160deg, var(--bg) 0%, var(--bg-deep) 100%); color: var(--on-dark); padding-block: var(--s7) var(--s8); overflow: hidden; }
+    .hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: var(--s6); align-items: center; }
+    .hero .kicker { color: var(--accent-light); }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero p.lead { color: var(--on-dark-muted); margin-block: var(--s4) var(--s5); }
+    .cta-row { display: flex; flex-wrap: wrap; gap: var(--s3); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: var(--s4); margin-top: var(--s5); color: var(--on-dark-muted); font-size: .9375rem; }
+    .hero-meta strong { color: #fff; }
+    .hero-img { border-radius: 20px; box-shadow: 0 30px 60px rgba(0, 0, 0, .35); border: 1px solid rgba(255, 255, 255, .15); }
+
+    .standards { background: #fff; border-bottom: 1px solid var(--line); padding-block: var(--s5); }
+    .standards .wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s3); text-align: center; }
+    .std b { display: block; font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+    .std span { font-size: .875rem; color: var(--muted); }
+
+    .intro { max-width: 720px; margin-bottom: var(--s6); }
+    .intro h2 { margin-bottom: var(--s3); }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: var(--r); padding: var(--s4); transition: transform .2s ease, box-shadow .2s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .card .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: rgba(43, 155, 203, .12); color: var(--primary); font-weight: 800; margin-bottom: var(--s3); }
+    .card p { color: var(--muted); font-size: .9375rem; margin-top: var(--s2); }
+
+    .problem { background: #fff; }
+    .problem .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s6); align-items: center; }
+    .problem img { border-radius: 20px; box-shadow: var(--shadow); }
+    .checks { list-style: none; display: grid; gap: var(--s3); margin-top: var(--s4); }
+    .checks li { padding-left: 32px; position: relative; }
+    .checks li::before { content: "✓"; position: absolute; left: 0; top: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--success); color: #fff; font-size: .8125rem; font-weight: 800; display: grid; place-items: center; }
+
+    .pricing .grid { grid-template-columns: repeat(4, 1fr); }
+    .plan { display: flex; flex-direction: column; gap: var(--s2); }
+    .plan.featured { border: 2px solid var(--accent); position: relative; }
+    .plan .tag { position: absolute; top: -13px; left: var(--s4); background: var(--accent); color: #1a1a2e; font-size: .75rem; font-weight: 800; padding: 3px 10px; border-radius: 999px; }
+    .price { font-size: 2.25rem; font-weight: 800; letter-spacing: -.02em; }
+    .price small { font-size: .9375rem; font-weight: 500; color: var(--muted); }
+    .plan ul { list-style: none; color: var(--muted); font-size: .9375rem; display: grid; gap: var(--s1); margin-block: var(--s2) var(--s3); }
+    .plan .btn { margin-top: auto; }
+    .note { margin-top: var(--s4); color: var(--muted); font-size: .9375rem; }
+
+    .final { background: linear-gradient(160deg, var(--bg) 0%, var(--bg-deep) 100%); color: var(--on-dark); text-align: center; }
+    .final p { color: var(--on-dark-muted); margin: var(--s3) auto var(--s5); max-width: 52ch; font-size: 1.125rem; }
+    .final .cta-row { justify-content: center; }
+    footer { background: #05202f; color: var(--on-dark-muted); padding-block: var(--s5); font-size: .875rem; }
+    footer .wrap { display: flex; flex-wrap: wrap; gap: var(--s3); justify-content: space-between; }
+    footer a:hover { color: #fff; }
+
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .btn, .card { transition: none; }
+    }
+    @media (max-width: 960px) {
+      .hero .wrap, .problem .wrap { grid-template-columns: 1fr; }
+      .grid, .pricing .grid { grid-template-columns: repeat(2, 1fr); }
+      .standards .wrap { grid-template-columns: repeat(2, 1fr); }
+      .nav ul { display: none; }
+    }
+    @media (max-width: 600px) {
+      section { padding-block: var(--s6); }
+      .grid, .pricing .grid { grid-template-columns: 1fr; }
+      .cta-row .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/">INNOVAQ <span>SIG 360°</span></a>
+      <nav aria-label="Principal">
+        <ul>
+          <li><a href="#normas">Normas</a></li>
+          <li><a href="#modulos">Módulos</a></li>
+          <li><a href="#precios">Precios</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn-accent" href="#contacto">Prueba gratis</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <p class="kicker">Sistema Integrado de Gestión</p>
+          <h1>La auditoría siempre llega. <em>Tu SIG</em> debería estar listo.</h1>
+          <p class="lead">ISO 9001, 14001, 45001 y 37001 en una sola plataforma. Evidencia ordenada, riesgos controlados y auditorías sin sobresaltos.</p>
+          <div class="cta-row">
+            <a class="btn btn-accent" href="#contacto">Prueba 30 días gratis</a>
+            <a class="btn btn-ghost" href="/sig360/">Ver la plataforma</a>
+          </div>
+          <div class="hero-meta">
+            <span><strong>Desde US$ 29/mes</strong> · Plan MYPE</span>
+            <span><strong>Annex SL</strong> · 4 normas unificadas</span>
+          </div>
+        </div>
+        <img class="hero-img" src="/campaigns/sig360-202609/img/sig360-faena.jpg" alt="Supervisor de seguridad revisando el SIG 360° en tablet en una faena" width="1408" height="768" fetchpriority="high">
+      </div>
+    </section>
+
+    <div class="standards" id="normas">
+      <div class="wrap">
+        <div class="std"><b>ISO 9001</b><span>Calidad</span></div>
+        <div class="std"><b>ISO 14001</b><span>Medio ambiente</span></div>
+        <div class="std"><b>ISO 45001</b><span>Seguridad y salud</span></div>
+        <div class="std"><b>ISO 37001</b><span>Antisoborno</span></div>
+      </div>
+    </div>
+
+    <section class="problem">
+      <div class="wrap">
+        <img class="reveal" src="/campaigns/sig360-202609/img/sig360-tablet.jpg" alt="Panel de SIG 360° mostrando el estado de cumplimiento" width="1408" height="768" loading="lazy">
+        <div class="reveal">
+          <p class="kicker">El problema</p>
+          <h2>Tu SIG vive en Excel, carpetas y correos.</h2>
+          <p class="lead" style="margin-top:16px">Cuando llega la auditoría interna, de cliente o SUNAFIL, la evidencia está dispersa. SIG 360° la reúne en un solo lugar.</p>
+          <ul class="checks">
+            <li>Única plataforma en Perú que integra las 4 normas.</li>
+            <li>Pensada para minería, construcción y sus contratistas.</li>
+            <li>Hasta 70 % más económica que plataformas internacionales.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="modulos">
+      <div class="wrap">
+        <div class="intro reveal">
+          <p class="kicker">Módulos</p>
+          <h2>Todo lo que una auditoría te va a pedir.</h2>
+          <p class="lead">Cada módulo comparte la misma información, así que lo registras una vez y lo usas en las cuatro normas.</p>
+        </div>
+        <div class="grid">
+          <article class="card reveal"><div class="ico">DC</div><h3>Control documentario</h3><p>Versiones, aprobaciones y 84+ plantillas ISO listas para usar.</p></article>
+          <article class="card reveal"><div class="ico">AU</div><h3>Gestión de auditorías</h3><p>Programa, ejecuta y da seguimiento a hallazgos con asistencia de IA.</p></article>
+          <article class="card reveal"><div class="ico">IP</div><h3>IPERC dinámica</h3><p>Identificación de peligros y evaluación de riesgos siempre actualizada.</p></article>
+          <article class="card reveal"><div class="ico">BT</div><h3>Riesgos Bow-Tie</h3><p>Visualiza causas, controles y consecuencias de cada riesgo crítico.</p></article>
+          <article class="card reveal"><div class="ico">NC</div><h3>No conformidades</h3><p>Acciones correctivas con responsables, plazos y trazabilidad.</p></article>
+          <article class="card reveal"><div class="ico">37</div><h3>Canal de denuncias E2EE</h3><p>Reportes confidenciales con cifrado de extremo a extremo.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing" id="precios" style="background:#fff">
+      <div class="wrap">
+        <div class="intro reveal">
+          <p class="kicker">Precios</p>
+          <h2>Empieza gratis. Crece cuando lo necesites.</h2>
+          <p class="lead">30 días gratis en todos los planes.</p>
+        </div>
+        <div class="grid">
+          <article class="card plan reveal"><h3>MYPE</h3><div class="price">US$ 29<small>/mes</small></div><ul><li>3 usuarios</li><li>1 sede</li></ul><a class="btn btn-outline" href="#contacto">Empezar</a></article>
+          <article class="card plan reveal"><h3>Starter</h3><div class="price">US$ 79<small>/mes</small></div><ul><li>10 usuarios</li><li>1 sede</li></ul><a class="btn btn-outline" href="#contacto">Empezar</a></article>
+          <article class="card plan featured reveal"><span class="tag">Más elegido</span><h3>Professional</h3><div class="price">US$ 179<small>/mes</small></div><ul><li>50 usuarios</li><li>5 sedes</li></ul><a class="btn btn-accent" href="#contacto">Empezar</a></article>
+          <article class="card plan reveal"><h3>Enterprise</h3><div class="price">US$ 349<small>/mes</small></div><ul><li>Usuarios ilimitados</li><li>Sedes ilimitadas</li></ul><a class="btn btn-outline" href="#contacto">Empezar</a></article>
+        </div>
+        <p class="note">Precios mensuales en dólares estadounidenses. Consulta el plan anual en <a href="/global/" style="color:var(--primary);font-weight:600">innovaqsolution.com/global</a>.</p>
+      </div>
+    </section>
+
+    <section class="final" id="contacto">
+      <div class="wrap reveal">
+        <h2>Que la próxima auditoría te encuentre listo.</h2>
+        <p>Cuéntanos tu operación y activamos tu prueba de 30 días.</p>
+        <div class="cta-row">
+          <a class="btn btn-accent" href="mailto:contacto@innovaqsolution.com?subject=Prueba%20gratis%20SIG%20360%C2%B0">Prueba 30 días gratis</a>
+          <a class="btn btn-ghost" href="/brochures/SIG_360.pdf">Descargar brochure</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© INNOVAQ SOLUTIONS SAC · Trujillo, Perú</span>
+      <a href="mailto:contacto@innovaqsolution.com">contacto@innovaqsolution.com</a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: .15 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
+</body>
+</html>
