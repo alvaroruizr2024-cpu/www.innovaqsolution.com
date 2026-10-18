@@ -1,0 +1,73 @@
+{
+  "name": "innovaq-mods",
+  "description": "Los 9 mods de Claude Code del video «Estos 9 MODS de Claude son MUY BESTIAS»: dos propios (clean-view, agent-dock) y siete de la comunidad enlazados a su repositorio de origen.",
+  "owner": {
+    "name": "Innovaq Solution",
+    "url": "https://github.com/alvaroruizr2024-cpu"
+  },
+  "plugins": [
+    {
+      "name": "clean-view",
+      "source": "./mods/clean-view",
+      "description": "/simple on oculta el detalle técnico y muestra una lista de pasos encima del prompt; /simple off lo restaura.",
+      "category": "ui",
+      "tags": ["mod", "clean-view", "transcript"]
+    },
+    {
+      "name": "agent-dock",
+      "source": "./mods/agent-dock",
+      "description": "/dock: elige cuántos subagentes usar en el siguiente encargo y sigue una tarjeta por agente en un panel.",
+      "category": "agents",
+      "tags": ["mod", "subagents", "pane"]
+    },
+    {
+      "name": "savvy-progress",
+      "source": "./mods/savvy-progress",
+      "description": "Barra de progreso encima del prompt y panel de subagentes (/agents-info): modelo, avance, contexto, coste estimado y tiempo. Copia local de la 1.2.1 de johnnyvizz/claude-kit, MIT, adaptable desde este repo.",
+      "category": "agents",
+      "tags": ["mod", "subagents", "progress"]
+    },
+    {
+      "name": "savvy-flow",
+      "source": { "source": "git-subdir", "url": "johnnyvizz/claude-kit", "path": "plugins/savvy-flow" },
+      "description": "Skill de orquestación que reparte un encargo entre subagentes por niveles; pareja de savvy-progress. Por johnnyvizz, MIT.",
+      "category": "agents",
+      "tags": ["skill", "orchestration"]
+    },
+    {
+      "name": "filetree",
+      "source": { "source": "github", "repo": "data-goblin/claude-code-filetree" },
+      "description": "Explorador de archivos estilo IDE: morado al leer, naranja al escribir, verde tras el commit. Por Kurt Buhler, MIT.",
+      "category": "ui",
+      "tags": ["mod", "files", "pane"]
+    },
+    {
+      "name": "next-steps",
+      "source": { "source": "git-subdir", "url": "anthropics/claude-plugins-community", "path": "next-steps" },
+      "description": "Hasta tres sugerencias de continuación encima del prompt tras cada turno; 1, 2 o 3 las copia al cuadro como borrador. Por Thariq Shihipar, MIT.",
+      "category": "productivity",
+      "tags": ["mod", "suggestions"]
+    },
+    {
+      "name": "recording-mode",
+      "source": { "source": "git-subdir", "url": "nateherkai/claude-code-mods", "path": "recording-mode" },
+      "description": "/rec oculta claves, datos personales y cifras de negocio en pantalla mientras grabas; /rec off lo quita. Por Nate Herk, MIT.",
+      "category": "privacy",
+      "tags": ["mod", "recording", "privacy"]
+    },
+    {
+      "name": "skins",
+      "source": { "source": "github", "repo": "hellosverre/claude-skins" },
+      "description": "Temas para la transcripción (noir, tokyo-night, dracula y doce más) y filas de herramientas con iconos; /skin los cambia en vivo. Por hellosverre, MIT.",
+      "category": "ui",
+      "tags": ["mod", "theme", "skin"]
+    },
+    {
+      "name": "replay-theater",
+      "source": { "source": "git-subdir", "url": "anthropics/claude-code-playground", "path": "claude-code/mods/replay-theater" },
+      "description": "/replay recorre una a una las ediciones de archivos del último turno, con su diff. Por Claude Code DevRel, Apache-2.0.",
+      "category": "review",
+      "tags": ["mod", "diff", "replay"]
+    }
+  ]
+}
