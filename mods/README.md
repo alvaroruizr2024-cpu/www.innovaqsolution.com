@@ -6,7 +6,7 @@ Un mod es un plugin de Claude Code con un módulo de *function hooks*: puede dib
 
 | # | Mod (video) | Nombre del plugin | Comando | Origen | Licencia |
 |---|---|---|---|---|---|
-| 1 | Subagent Progress | `savvy-progress` | `/agents-info` | [johnnyvizz/claude-kit](https://github.com/johnnyvizz/claude-kit/tree/main/plugins/savvy-progress) | MIT |
+| 1 | Subagent Progress | `savvy-progress` | `/agents-info` | [copia local 1.2.1](savvy-progress/) de [johnnyvizz/claude-kit](https://github.com/johnnyvizz/claude-kit/tree/main/plugins/savvy-progress) | MIT |
 | 2 | File Tree | `filetree` | `/filetree` | [data-goblin/claude-code-filetree](https://github.com/data-goblin/claude-code-filetree) | MIT |
 | 3 | Next Steps | `next-steps` | automático tras cada turno | [anthropics/claude-plugins-community](https://github.com/anthropics/claude-plugins-community/tree/main/next-steps) | MIT |
 | 4 | Recording Mode | `recording-mode` | `/rec`, `/rec off`, `/rec config` | [nateherkai/claude-code-mods](https://github.com/nateherkai/claude-code-mods) | MIT |

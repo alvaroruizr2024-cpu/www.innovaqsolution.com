@@ -22,8 +22,8 @@
     },
     {
       "name": "savvy-progress",
-      "source": { "source": "git-subdir", "url": "johnnyvizz/claude-kit", "path": "plugins/savvy-progress" },
-      "description": "Barra de progreso encima del prompt y panel de subagentes (/agents-info): modelo, avance, contexto, coste estimado y tiempo. Por johnnyvizz, MIT.",
+      "source": "./mods/savvy-progress",
+      "description": "Barra de progreso encima del prompt y panel de subagentes (/agents-info): modelo, avance, contexto, coste estimado y tiempo. Copia local de la 1.2.1 de johnnyvizz/claude-kit, MIT, adaptable desde este repo.",
       "category": "agents",
       "tags": ["mod", "subagents", "progress"]
     },
