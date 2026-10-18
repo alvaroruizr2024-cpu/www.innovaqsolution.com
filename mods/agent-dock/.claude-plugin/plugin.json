@@ -1,0 +1,9 @@
+{
+  "name": "agent-dock",
+  "version": "0.1.0",
+  "description": "/dock abre un panel para elegir cuántos subagentes usar en el siguiente encargo y seguir una tarjeta por agente: tarea, tipo, estado y tiempo.",
+  "author": { "name": "Innovaq Solution" },
+  "license": "MIT",
+  "keywords": ["claude-code-mods", "function-hooks", "subagents", "pane"],
+  "types": "./types/index.d.ts"
+}

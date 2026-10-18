@@ -1,0 +1,4 @@
+# Claude Code escribe aquí las declaraciones del motor al cargar un mod; no se versionan.
+*/.claude-plugin/types/
+*/tsconfig.json
+*/node_modules/

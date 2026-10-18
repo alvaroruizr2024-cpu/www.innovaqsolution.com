@@ -1,0 +1,9 @@
+{
+  "name": "clean-view",
+  "version": "0.1.0",
+  "description": "/simple on oculta el detalle técnico de la conversación (herramientas, comandos, resultados) y muestra una lista de pasos encima del prompt: qué hace Claude, qué terminó y qué falta. /simple off lo restaura.",
+  "author": { "name": "Innovaq Solution" },
+  "license": "MIT",
+  "keywords": ["claude-code-mods", "function-hooks", "clean-view", "ui"],
+  "types": "./types/index.d.ts"
+}
