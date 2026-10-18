@@ -10,7 +10,7 @@ Un mod es un plugin de Claude Code con un módulo de *function hooks*: puede dib
 | 2 | File Tree | `filetree` | `/filetree` | [data-goblin/claude-code-filetree](https://github.com/data-goblin/claude-code-filetree) | MIT |
 | 3 | Next Steps | `next-steps` | automático tras cada turno | [anthropics/claude-plugins-community](https://github.com/anthropics/claude-plugins-community/tree/main/next-steps) | MIT |
 | 4 | Recording Mode | `recording-mode` | `/rec`, `/rec off`, `/rec config` | [nateherkai/claude-code-mods](https://github.com/nateherkai/claude-code-mods) | MIT |
-| 5 | Clean View | `clean-view` | `/simple on`, `/simple off` | [este repo](clean-view/) | MIT |
+| 5 | Clean View | `clean-view` | `/simple on`, `/simple off`, `/simple` (dashboard) | [este repo](clean-view/) | MIT |
 | 6 | Agent Dock | `agent-dock` | `/dock [1-8]` | [este repo](agent-dock/) | MIT |
 | 7 | You Should Know | `cc-plugin-you-should-know@builtin` | ninguno, avisa solo | integrado en Claude Code | — |
 | 8 | Claude Skins | `skins` | `/skin`, `/skin <nombre>` | [hellosverre/claude-skins](https://github.com/hellosverre/claude-skins) | MIT |
@@ -77,7 +77,9 @@ claude plugin marketplace remove innovaq-mods   # quita el marketplace y todos s
 
 ### clean-view
 
-`/simple on` oculta el detalle técnico: cada fila de herramienta pasa a ser una línea tenue («Leyendo src/app.ts», «Ejecutando: instalar dependencias»), los resultados se ocultan y los grupos de lecturas se resumen en una línea. Encima del prompt aparece la lista de pasos del turno con su estado (● en curso, ✓ hecho, ✗ error) y el contador «n/m pasos». `/simple off` devuelve la vista normal. Nada se pierde: la transcripción sigue completa y el modelo ve lo mismo de siempre. No usa tokens adicionales.
+`/simple on` oculta el detalle técnico: cada fila de herramienta pasa a ser una línea tenue («Leyendo src/app.ts», «Ejecutando: instalar dependencias»), los resultados se ocultan y los grupos de lecturas se resumen en una línea. Encima del prompt aparece la lista de pasos del turno con su estado (● en curso, ✓ hecho, ✗ error), el contador «n/m pasos» y el botón **Panel**.
+
+`/simple` abre el dashboard interactivo: interruptor de la vista limpia (`v`), resumen del turno con duración, barras por tipo de paso (lectura, edición, comandos, web, agentes, plan), filtros Todos / En curso / Hechos / Errores (`1`-`4`), lista de pasos seleccionables con su detalle (ruta o comando completo, estado, duración y texto del error) e historial de los últimos 12 turnos (`h`). `/simple off` devuelve la vista normal. Nada se pierde: la transcripción sigue completa y el modelo ve lo mismo de siempre. No usa tokens adicionales.
 
 ### agent-dock
 
