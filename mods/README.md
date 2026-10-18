@@ -32,7 +32,21 @@ O, si ya tienes el repositorio clonado:
 bash mods/install-mods.sh
 ```
 
-El script registra este repositorio como *marketplace* (`innovaq-mods`), instala los ocho plugins con alcance de usuario y activa el mod integrado You Should Know. Después abre una sesión nueva: un mod carga al iniciar la sesión.
+El script registra este repositorio como *marketplace* (`innovaq-mods`), instala los ocho plugins y activa el mod integrado You Should Know. Después abre una sesión nueva: un mod carga al iniciar la sesión. Ejecutado dentro del clon, lee el marketplace de la carpeta local, así que funciona en cualquier rama.
+
+## Activarlos en tus proyectos
+
+Un plugin se activa por **alcance**, y el alcance decide en qué proyectos aparece:
+
+| Quieres | Comando | Dónde queda registrado |
+|---|---|---|
+| Para ti, en todos tus proyectos de esta máquina | `bash mods/install-mods.sh` | `~/.claude/settings.json` (alcance `user`, el predeterminado) |
+| Para todos los que trabajen en un proyecto | dentro de ese proyecto: `bash mods/install-mods.sh --scope project` | `.claude/settings.json` del proyecto, que haces commit |
+| Solo para ti y solo en un proyecto | dentro de ese proyecto: `bash mods/install-mods.sh --scope local` | `.claude/settings.local.json` del proyecto |
+
+Con el alcance `user` no hay que hacer nada más: cualquier carpeta donde abras `claude` tiene los mods. Con el alcance `project`, el commit enciende los mods para tus colaboradores pero no los descarga en sus máquinas: cada uno ejecuta el script (o `claude plugin install <mod>@innovaq-mods --scope project`) una vez. Si el mismo mod está en varios alcances, `local` manda sobre `project` y `project` sobre `user`.
+
+Las sesiones en la nube (claude.ai/code y las sesiones remotas de la app) no cargan los plugins de tu máquina ni los del `.claude/settings.json` del repo. Para tenerlos allí, añade a la *setup script* del entorno la línea `bash mods/install-mods.sh` (o la versión con `--ref main`), que instala en el contenedor al arrancar. Ten en cuenta que esas sesiones no dibujan paneles ni bandas: los comandos y hooks corren, lo visual se ve en terminal y escritorio.
 
 ## Instalación manual
 
