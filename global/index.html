@@ -15,9 +15,68 @@
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- business-schema:start -->
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.innovaqsolution.com/#organization",
+      "name": "INNOVAQ Solutions",
+      "legalName": "INNOVAQ SOLUTIONS SAC",
+      "url": "https://www.innovaqsolution.com/global/",
+      "logo": "https://www.innovaqsolution.com/1000608638.jpg",
+      "description": "Software empresarial y consultoría en sistemas de gestión, auditoría, capacitación, desarrollo de software y automatización con inteligencia artificial.",
+      "email": "contacto@innovaqsolution.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Trujillo",
+        "addressRegion": "La Libertad",
+        "addressCountry": "PE"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "email": "contacto@innovaqsolution.com"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.innovaqsolution.com/#website",
+      "url": "https://www.innovaqsolution.com/global/",
+      "name": "INNOVAQ Solutions",
+      "publisher": {
+        "@id": "https://www.innovaqsolution.com/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.innovaqsolution.com/global/#webpage",
+      "url": "https://www.innovaqsolution.com/global/",
+      "name": "INNOVAQ Solutions | Software empresarial y consultoría",
+      "about": {
+        "@id": "https://www.innovaqsolution.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.innovaqsolution.com/#website"
+      }
+    }
+  ]
+}</script>
+    <!-- business-schema:end -->
 </head>
 <body>
-    <div id="root"></div>
+    <!-- business-fallback:start -->
+    <div id="root">
+      <main style="font-family:system-ui,sans-serif;max-width:1080px;margin:48px auto;padding:24px;color:#0d4a6e">
+        <h1>INNOVAQ Solutions · Software empresarial y consultoría</h1>
+        <p>Software empresarial y consultoría en sistemas de gestión, auditoría, capacitación, desarrollo de software y automatización con inteligencia artificial.</p>
+        <p>Catálogo: SIG 360°, ERP 360, TPM360, MTP360, PMO360, AGRO 360, FOOD 360, HOTEL 360, SALUD 360, CATASTRO 360, MedCongress Pro.</p>
+        <p>Trujillo, La Libertad, Perú · <a href="mailto:contacto@innovaqsolution.com">contacto@innovaqsolution.com</a></p>
+        <p><a href="/global/empresa/">Ver información de la empresa y catálogo completo</a></p>
+      </main>
+    </div>
+    <!-- business-fallback:end -->
     <script type="text/babel">
 const { useState, useEffect, createContext, useContext, useCallback } = React;
 
@@ -882,9 +941,10 @@ function Footer() {
           <div>
             <h5 style={{ fontWeight: 800, fontSize: 12, marginBottom: 12, letterSpacing: '0.06em', textTransform: 'uppercase', color: B.orange }}>{lang === 'es' ? 'Contacto' : 'Contact'}</h5>
             <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', lineHeight: 2 }}>
-              📧 comercial@innovaqsolutions.com<br />
-              🌐 www.innovaqsolutions.com<br />
+              📧 <a href="mailto:contacto@innovaqsolution.com" style={{ color: 'inherit' }}>contacto@innovaqsolution.com</a><br />
+              🌐 <a href="https://www.innovaqsolution.com/global/" style={{ color: 'inherit' }}>www.innovaqsolution.com</a><br />
               📍 Trujillo, La Libertad, Perú
+              <br /><a href="/global/empresa/" style={{ color: '#fff', fontSize: 12 }}>{lang === 'es' ? 'Empresa y catálogo' : 'Company and catalog'}</a>
             </div>
           </div>
         </div>

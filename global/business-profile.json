@@ -1,0 +1,94 @@
+{
+  "name": "INNOVAQ Solutions",
+  "legalName": "INNOVAQ SOLUTIONS SAC",
+  "website": "https://www.innovaqsolution.com/global/",
+  "informationUrl": "https://www.innovaqsolution.com/global/empresa/",
+  "description": "Software empresarial y consultoría en sistemas de gestión, auditoría, capacitación, desarrollo de software y automatización con inteligencia artificial.",
+  "email": "contacto@innovaqsolution.com",
+  "location": {
+    "city": "Trujillo",
+    "region": "La Libertad",
+    "country": "Perú",
+    "countryCode": "PE"
+  },
+  "logo": "https://www.innovaqsolution.com/1000608638.jpg",
+  "products": [
+    {
+      "id": "SIG360",
+      "name": "SIG 360°",
+      "description": "Sistema Integrado de Gestión",
+      "url": "https://www.innovaqsolution.com/global/empresa/#sig360"
+    },
+    {
+      "id": "ERP360",
+      "name": "ERP 360",
+      "description": "SumaERP — Planificación de Recursos",
+      "url": "https://www.innovaqsolution.com/global/empresa/#erp360"
+    },
+    {
+      "id": "TPM360",
+      "name": "TPM360",
+      "description": "Mantenimiento Productivo Total",
+      "url": "https://www.innovaqsolution.com/global/empresa/#tpm360"
+    },
+    {
+      "id": "MTP360",
+      "name": "MTP360",
+      "description": "Plan Maestro de Capacitación",
+      "url": "https://www.innovaqsolution.com/global/empresa/#mtp360"
+    },
+    {
+      "id": "PMO360",
+      "name": "PMO360",
+      "description": "Sistema de Entrega de Valor PMO",
+      "url": "https://www.innovaqsolution.com/global/empresa/#pmo360"
+    },
+    {
+      "id": "AGRO360",
+      "name": "AGRO 360",
+      "description": "Gestión Agroindustrial Integral",
+      "url": "https://www.innovaqsolution.com/global/empresa/#agro360"
+    },
+    {
+      "id": "FOOD360",
+      "name": "FOOD 360",
+      "description": "ERP Alimentos y Bebidas",
+      "url": "https://www.innovaqsolution.com/global/empresa/#food360"
+    },
+    {
+      "id": "HOTEL360",
+      "name": "HOTEL 360",
+      "description": "ERP Hotelero Inteligente",
+      "url": "https://www.innovaqsolution.com/global/empresa/#hotel360"
+    },
+    {
+      "id": "SALUD360",
+      "name": "SALUD 360",
+      "description": "ERP Clínico con IA",
+      "url": "https://www.innovaqsolution.com/global/empresa/#salud360"
+    },
+    {
+      "id": "CATASTRO360",
+      "name": "CATASTRO 360",
+      "description": "Gestión Catastral con IA",
+      "url": "https://www.innovaqsolution.com/global/empresa/#catastro360"
+    },
+    {
+      "id": "MEDCONGRESS",
+      "name": "MedCongress Pro",
+      "description": "Gestor de Congresos Médicos",
+      "url": "https://www.innovaqsolution.com/global/empresa/#medcongress"
+    }
+  ],
+  "services": [
+    "Implementación ISO",
+    "Auditorías MINTRA",
+    "Capacitación Especializada",
+    "Software a Medida",
+    "Automatización con IA",
+    "Capacitación & Soporte"
+  ],
+  "commercialInformation": "Consultar precios, alcance, disponibilidad y condiciones en la página comercial o solicitar una propuesta al equipo de INNOVAQ.",
+  "sourceUrl": "https://www.innovaqsolution.com/global/",
+  "lastReviewed": "2026-11-14"
+}

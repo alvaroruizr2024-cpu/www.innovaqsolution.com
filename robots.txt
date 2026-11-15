@@ -1,0 +1,6 @@
+# Public business information for ChatGPT search.
+# No GPTBot rule is added: the existing training-crawler policy is unchanged.
+User-agent: OAI-SearchBot
+Allow: /global/
+
+Sitemap: https://www.innovaqsolution.com/global/sitemap.xml
