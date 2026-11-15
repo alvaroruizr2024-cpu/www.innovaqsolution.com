@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T15:28:45.989Z",
+  "generatedAt": "2026-11-15T02:02:04.571Z",
   "note": "Only files that exist on disk are listed. Missing slots never get a URL — no 404s. Paths are relative to the Vite base (/cinematic/); media.js prefixes them.",
   "products": {
     "SIG360": {

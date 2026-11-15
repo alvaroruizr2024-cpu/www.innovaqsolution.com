@@ -25,7 +25,7 @@ const profile = {
   website:`${base}/global/`, informationUrl:url,
   description:'Software empresarial y consultoría en sistemas de gestión, auditoría, capacitación, desarrollo de software y automatización con inteligencia artificial.',
   email:'contacto@innovaqsolution.com',
-  location:{city:'Trujillo',region:'La Libertad',country:'Perú',countryCode:'PE'},
+  location:{streetAddress:'MzE lt 22 Víctor Larco',city:'Trujillo',region:'La Libertad',country:'Perú',countryCode:'PE'},
   logo:`${base}/1000608638.jpg`, products, services,
   commercialInformation:'Consultar precios, alcance, disponibilidad y condiciones en la página comercial o solicitar una propuesta al equipo de INNOVAQ.',
   sourceUrl:`${base}/global/`, lastReviewed:updated
@@ -40,7 +40,7 @@ const faqs = [
 const org = {
   '@type':'Organization','@id':`${base}/#organization`, name:profile.name, legalName:profile.legalName,
   url:profile.website, logo:profile.logo, description:profile.description,email:profile.email,
-  address:{'@type':'PostalAddress',addressLocality:'Trujillo',addressRegion:'La Libertad',addressCountry:'PE'},
+  address:{'@type':'PostalAddress',streetAddress:profile.location.streetAddress,addressLocality:'Trujillo',addressRegion:'La Libertad',addressCountry:'PE'},
   contactPoint:{'@type':'ContactPoint',contactType:'sales',email:profile.email}
 };
 const mainSchema = {'@context':'https://schema.org','@graph':[
@@ -69,12 +69,12 @@ const html = `<!doctype html>
 </style></head><body>
 <a href="#contenido" class="skip">Saltar al contenido</a>
 <header><div class="wrap"><a class="brand" href="/global/"><img src="/1000608638.jpg" alt="" width="64" height="54">INNOVAQ SOLUTIONS</a><nav aria-label="Navegación de empresa"><a href="#soluciones">Soluciones</a><a href="#servicios">Servicios</a><a href="#contacto">Contacto</a></nav></div></header>
-<main id="contenido"><section class="hero"><div class="wrap hero-grid"><div><p class="eyebrow">Empresa y catálogo</p><h1>Tecnología y gestión para su empresa.</h1><p class="lead">${escape(profile.description)}</p><div class="actions"><a class="button" href="#soluciones">Explorar soluciones</a><a class="button secondary" href="/global/">Visitar página comercial</a></div></div><aside class="company" aria-label="Información de la empresa"><h2>INNOVAQ Solutions</h2><dl><dt>Razón social</dt><dd>${escape(profile.legalName)}</dd><dt>Ubicación</dt><dd>Trujillo, La Libertad, Perú</dd><dt>Contacto comercial</dt><dd><a href="mailto:${profile.email}">${profile.email}</a></dd><dt>Sitio web</dt><dd><a href="${profile.website}">www.innovaqsolution.com/global/</a></dd></dl></aside></div></section>
+<main id="contenido"><section class="hero"><div class="wrap hero-grid"><div><p class="eyebrow">Empresa y catálogo</p><h1>Tecnología y gestión para su empresa.</h1><p class="lead">${escape(profile.description)}</p><div class="actions"><a class="button" href="#soluciones">Explorar soluciones</a><a class="button secondary" href="/global/">Visitar página comercial</a></div></div><aside class="company" aria-label="Información de la empresa"><h2>INNOVAQ Solutions</h2><dl><dt>Razón social</dt><dd>${escape(profile.legalName)}</dd><dt>Dirección</dt><dd>${escape(profile.location.streetAddress)}, Trujillo, La Libertad, Perú</dd><dt>Contacto comercial</dt><dd><a href="mailto:${profile.email}">${profile.email}</a></dd><dt>Sitio web</dt><dd><a href="${profile.website}">www.innovaqsolution.com/global/</a></dd></dl></aside></div></section>
 <section class="section" id="soluciones"><div class="wrap"><p class="eyebrow">Software empresarial</p><h2>Una solución para cada proceso.</h2><p class="intro">Explore nuestro catálogo y consulte con el equipo de INNOVAQ el alcance adecuado para su operación.</p><div class="grid">${cards}</div><p class="intro" style="font-size:13px;margin-top:24px">Precios, alcance, disponibilidad y condiciones: consulte la página comercial o solicite una propuesta.</p></div></section>
 <section class="section" id="servicios"><div class="wrap"><p class="eyebrow">Consultoría y acompañamiento</p><h2>Conectamos herramientas y gestión.</h2><p class="intro">Servicios para implementar sistemas de gestión, desarrollar competencias y mejorar procesos.</p><ul class="services">${services.map(s=>`<li>${escape(s)}</li>`).join('')}</ul></div></section>
 <section class="section"><div class="wrap"><h2>Antes de empezar.</h2><div class="questions">${faqs.map(([q,a])=>`<details><summary>${escape(q)}</summary><p>${escape(a)}</p></details>`).join('')}</div></div></section>
 <div class="wrap"><section class="contact" id="contacto"><div><h2>Cuéntenos qué necesita mejorar.</h2><p>Indique su sector, el proceso y el número aproximado de usuarios o sedes. El equipo comercial revisará su consulta.</p></div><a class="button" href="mailto:${profile.email}?subject=Consulta%20comercial%20INNOVAQ">Escribir a INNOVAQ</a></section></div></main>
-<footer><div class="wrap"><span>INNOVAQ SOLUTIONS SAC · Trujillo, Perú</span><span>Información revisada: 14 de noviembre de 2026 · <a href="/global/business-profile.json">Ficha en JSON</a></span></div></footer>
+<footer><div class="wrap"><span>INNOVAQ SOLUTIONS SAC · ${escape(profile.location.streetAddress)}, Trujillo, Perú</span><span>Información revisada: 14 de noviembre de 2026 · <a href="/global/business-profile.json">Ficha en JSON</a></span></div></footer>
 </body></html>
 `;
 const fallback = `<div id="root">
@@ -82,7 +82,7 @@ const fallback = `<div id="root">
         <h1>INNOVAQ Solutions · Software empresarial y consultoría</h1>
         <p>${escape(profile.description)}</p>
         <p>Catálogo: ${products.map(p=>escape(p.name)).join(', ')}.</p>
-        <p>Trujillo, La Libertad, Perú · <a href="mailto:${profile.email}">${profile.email}</a></p>
+        <p>${escape(profile.location.streetAddress)}, Trujillo, La Libertad, Perú · <a href="mailto:${profile.email}">${profile.email}</a></p>
         <p><a href="/global/empresa/">Ver información de la empresa y catálogo completo</a></p>
       </main>
     </div>`;

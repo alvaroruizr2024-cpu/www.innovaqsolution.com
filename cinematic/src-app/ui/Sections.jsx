@@ -201,6 +201,7 @@ function DemoForm({ lang, t, open, setOpen, selected }) {
         form.message,
         '',
         'Consulta corporativa — sin precios en landing.',
+        COMPANY.address,
         COMPANY.city,
         `RUC ${COMPANY.ruc}`,
       ].join('\n'),
@@ -214,6 +215,7 @@ function DemoForm({ lang, t, open, setOpen, selected }) {
       <p className="chapter-no">07</p>
       <header className="sec-head">
         <p>{COMPANY.email}</p>
+        <p>{COMPANY.address} · {COMPANY.city}</p>
         <h2>{t.formTitle}</h2>
         <p className="lede">{t.formSub}</p>
       </header>
@@ -289,7 +291,8 @@ export function SiteFooter({ lang, t }) {
       <div>
         <strong>{COMPANY.name}</strong>
         <p>{COMPANY.slogan[lang]}</p>
-        <p>RUC {COMPANY.ruc} · {COMPANY.city}</p>
+        <p>RUC {COMPANY.ruc}</p>
+        <p>{COMPANY.address} · {COMPANY.city}</p>
         <p>
           <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
         </p>

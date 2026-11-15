@@ -9,7 +9,7 @@ Preparado el 14 de noviembre de 2026. La web y esta guía no crean ni verifican 
 - Página comercial: https://www.innovaqsolution.com/global/
 - Información pública y catálogo: https://www.innovaqsolution.com/global/empresa/
 - Correo publicado en la sección de contacto: contacto@innovaqsolution.com. Confirmar acceso antes de usarlo para verificar.
-- Ubicación publicada: Trujillo, La Libertad, Perú. No declarar una ubicación en EE. UU. para obtener acceso.
+- Ubicación publicada: MzE lt 22 Víctor Larco, Trujillo, La Libertad, Perú. Dirección actualizada por el representante el 14 de noviembre de 2026. No declarar una ubicación en EE. UU. para obtener acceso.
 - Categoría propuesta: software empresarial y consultoría de gestión; elegir la categoría equivalente disponible.
 - Descripción: INNOVAQ Solutions ofrece software empresarial y servicios de consultoría en sistemas de gestión, auditoría, capacitación, desarrollo de software y automatización con inteligencia artificial. Su catálogo incluye soluciones para gestión integrada, ERP, mantenimiento, capacitación, proyectos, agroindustria, alimentos, hotelería, salud, catastro y congresos.
 - Logo: https://www.innovaqsolution.com/1000608638.jpg

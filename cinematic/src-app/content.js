@@ -8,6 +8,7 @@ export const BRAND = {
 export const COMPANY = {
   name: 'INNOVAQ SOLUTIONS SAC',
   ruc: '20606205105',
+  address: 'MzE lt 22 Víctor Larco',
   city: 'Trujillo, La Libertad, Perú',
   email: 'contacto@innovaqsolution.com',
   portal: 'https://www.innovaqsolution.com/global',
