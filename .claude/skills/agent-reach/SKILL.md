@@ -188,6 +188,9 @@ va a reutilizar eso en informes o piezas de redes.
 
 ### Casos típicos en INNOVAQ y PANASUR
 
+Los prompts completos, listos para pegar, y el ritmo sugerido (semanal, mensual,
+trimestral) están en `references/casos-innovaq.md`. Resumen:
+
 - **Social listening de un producto** ("qué opina la gente de los ERP para restaurantes",
   para FOOD360): Exa para el panorama, `twitter search` y `opencli reddit search` para
   la conversación real, y una tabla final con fuente, fecha, cita y sentimiento.
@@ -197,8 +200,11 @@ va a reutilizar eso en informes o piezas de redes.
   técnico → post para `campaigns/`): `yt-dlp` para subtítulos y luego `launch-kit` si el
   resultado es una campaña. Para TikTok, `yt-dlp` también descarga el video; los
   subtítulos grabados en la imagen se leen extrayendo fotogramas.
-- **Monitoreo semanal:** una tarea programada que corra `agent-reach watch` y avise solo
-  si hay ❌ o versión nueva.
+- **Vigilancia normativa:** `scripts/vigilancia_rss.py` lee MTPE, SUNAFIL, MINEM,
+  OSINERGMIN, INACAL y El Peruano, filtra por SST, ISO, minería, construcción y
+  alimentos, y escribe un digest Markdown. Solo biblioteca estándar; corre en cualquier PC.
+- **Monitoreo semanal:** una tarea programada que corra el digest y `agent-reach watch`, y
+  avise solo si hay novedades, ❌ o versión nueva.
 
 ---
 
@@ -243,3 +249,5 @@ va a reutilizar eso en informes o piezas de redes.
 | `references/update-guide.md` | Copia literal de `docs/update.md`. Para actualizar. |
 | `references/video-transcripcion.md` | Transcripción y cronología del video de origen, con cada afirmación contrastada con el repositorio. |
 | `scripts/check_env.sh` | Chequeo de solo lectura del entorno (Python, pipx, Node, gh, CLIs, credenciales). Ejecútalo antes de proponer una ruta de instalación. |
+| `references/casos-innovaq.md` | Siete casos de uso de INNOVAQ y PANASUR con el prompt exacto, los canales que necesita cada uno y el ritmo sugerido. Léelo cuando el pedido sea de escucha social, competencia, prospección, normativa o monitoreo de marca. |
+| `scripts/vigilancia_rss.py` | Digest de novedades normativas y sectoriales desde feeds RSS/Atom peruanos, filtrado por palabras clave. `--hours`, `--feeds`, `--keywords`, `--out`. |
